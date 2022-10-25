@@ -990,13 +990,6 @@ fieldset input{
 
   
 /* ============================================== */
-
-@media screen and (max-width: 950px)
-{
-    footer{
-      
-    }
-}
   
 @media screen and (max-width: 680px)
 {
