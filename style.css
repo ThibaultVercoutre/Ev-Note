@@ -799,6 +799,7 @@ div#pages{
 }
 
 #section-notation {
+  text-align: center;
   position: relative;
   transform: translate(-100%,0px);
   display: flex;
@@ -812,6 +813,8 @@ div#pages{
 }
 
 #details-notations h1{
+  margin-right: 20px;
+  margin-left: 20px;
   margin-top: 85px;
 }
   
