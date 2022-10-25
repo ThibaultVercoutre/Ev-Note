@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Ev'Note</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+    integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+    integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+
+  <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"
+    integrity="sha512-E0DKVahIg0p1UHR2Kf9NX7x7TUewJb30mxkxEm2qOYTVJObgsAGpEol9F6iK6oefCbkJiA4/i6fnTHzM6H1kEA=="
+    crossorigin=""></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-zdT4Pc2tIrc6uoYly2Wp8jh6EPEWaveqqD3sT0lf5yei19BC1WulGuh5CesB0ldBKZieKGD7Qyf/G0jdSe016A=="
+    crossorigin=""></script>
+</head>
+
+<body>
+  <header>
+    <div id="titre">
+      <h1>Ev'Note</h1>
+      <div id="div-search">
+        <input class="button" id="search" placeholder="Rechercher un lieu..."></input>
+      </div>
+      <div class="button" id="loupe">
+        <div id="cercle"></div>
+        <div id="barre"></div>
+      </div>
+    </div>
+    <div id="compte"><a href="pages/php/user_connexion.php">
+        <h2 id="connect">Connexion</h2>
+        <div id="logo-connexion">
+          <span class="material-symbols-outlined">account_circle</span>
+          <!--<div id="rond-connexion">
+            <div id="rond-corps"></div>
+            <div id="rond-tete"></div>-->
+          </div>
+        </div>
+      </a></div>
+    </div>
+  </header>
+
+  <form action="#" method="post">
+    <div id="phrase-presentation">
+      <p>Vos lieux et événements sur Calais disponibles sur un seul endroit</p>
+    </div>
+    </div>
+    <div class="marquee">
+      <div class="elements-marquee">
+        <div class="element">
+          <div class="photo 1"></div>
+          <div class="informations">
+            <h4>Bar 1</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 2"></div>
+          <div class="informations">
+            <h4>Bar 2</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 3"></div>
+          <div class="informations">
+            <h4>Bar 3</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 4"></div>
+          <div class="informations">
+            <h4>Bar 4</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 5"></div>
+          <div class="informations">
+            <h4>Bar 5</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 6"></div>
+          <div class="informations">
+            <h4>Bar 6</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 7"></div>
+          <div class="informations">
+            <h4>Bar 7</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 8"></div>
+          <div class="informations">
+            <h4>Bar 8</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 9"></div>
+          <div class="informations">
+            <h4>Bar 9</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 10"></div>
+          <div class="informations">
+            <h4>Bar 10</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 1"></div>
+          <div class="informations">
+            <h4>Bar 1</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 2"></div>
+          <div class="informations">
+            <h4>Bar 2</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 3"></div>
+          <div class="informations">
+            <h4>Bar 3</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 4"></div>
+          <div class="informations">
+            <h4>Bar 4</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+        <div class="element">
+          <div class="photo 5"></div>
+          <div class="informations">
+            <h4>Bar 5</h4>
+            <div class="note">⭐⭐⭐⭐⭐</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pages">
+      <nav>
+        <div class="button drop" id="map">
+          <div class="carre">
+            <span class="material-symbols-outlined">location_on</span>
+            <!--
+              <span class="material-symbols-outlined">map</span>
+              <div id="carte">
+              <div id="carte-page-1"></div>
+              <div id="carte-page-2"></div>
+              <div id="carte-page-3"></div>
+            </div>-->
+          </div>
+        </div>
+        <div class="button drop" id="actu">
+          <div class="carre">
+            <div>
+              <div id="carre-photo"></div>
+              <div class="barre" id="barre1"></div>
+            </div>
+            <div class="barre" id="barre2"></div>
+            <div class="barre" id="barre3"></div>
+          </div>
+        </div>
+      </nav>
+      <div id="write-note">
+        <div class="button drop" id="note">
+          <div class="carre">
+            <span class="material-symbols-outlined">edit_note</span>
+            <!--<div id="manche"></div>
+            <div id="pointe-stylo"></div>
+            <div id="ecriture"></div>-->
+          </div>
+        </div>
+      </div>
+      <div id="map-actu">
+
+        <div class="parent" id="pages-map">
+          <div class="page child1" id="section-notation">
+            <div id="details-notations">
+              <h1 id="batiment-name">Nom de l'établissement</h1>
+              <h2>Note : ⭐⭐⭐⭐⭐</h2>
+              <h3>Avis</h3>
+              <p>Avis 1</p>
+              <p>Avis 2</p>
+              <!--<div class="les-avis">
+                <img class="avi" src="pages/img/alexis.webp"/>
+                <img class="avi" src="pages/img/thibault.jpg"/>
+                <img class="avi" src="pages/img/florian.webp"/>
+                <img class="avi" src="pages/img/julien.png"/>
+              </div>-->
+            </div>
+            <div id="closeNotation">
+              <div class="logo-close button">
+                <div class="croix1"></div>
+                <div class="croix2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="page child1 child2" id="section-map"></div>
+        </div>
+        <div class="parent" id="pages-actu">
+          <div class="page child1" id="section-fil-actu">
+          <main>
+            <!--< <p id="Description">Cette page à pour but de répertorier, dans un fil, les articles sur les évenements à venir. Vous pouvez y consulter les articles récemments éditer par les organisateurs et/ou informateurs. Vous les trouverez, ci-dessous, trier... </p> >-->
+
+            <aside>
+              <p><u>Fonctionnalités :</u><br /></p>
+              <p><a href="formulaire.html">Créer un article</a></p>
+            </aside>
+
+            <article>
+              <p>Soon...</p>
+            </article>
+          </main>
+        </div>
+          <div class="page child1 child2" id="section-creer-article">
+            
+          <div id="closeCreerArticle">
+            <div class="logo-close button">
+                <div class="croix1"></div>
+                <div class="croix2"></div>
+              </div>
+          </div>
+
+          <div class="scrollbar"></div>
+          <div class="clickScrollbar"></div>
+          
+          <div id="champ-remplit-art">
+          <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
+          
+          <form method="post" action="#">
+
+
+            <fieldset>
+              <legend id="Legend">Vos coordonnées</legend><br />
+
+              <label for="Nom">Nom</label><br />
+              <input type="text" name="Nom" id="Nom" placeholder="Exemple : Vercoutre" size="50" required /></br></br>
+
+              <label for="Prenom">Prénom</label><br />
+              <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50"
+                required /></br></br>
+
+              <label for="Mail">E-Mail</label><br />
+              <input type="email" name="Mail" id="Mail" placeholder="Exemple : xyz@leraciste.noob" size="50"
+                required /></br></br>
+
+            </fieldset><br />
+
+
+            <fieldset>
+              <legend id="Legend">Informations sur l'événement</legend><br />
+
+              <label for="NomEvent">Nom de l'événement</label><br />
+              <input type="text" name="NomEvent" id="NomEvent"
+                placeholder="Exemple : Compet OW2, qui aura un meilleur shoot que tibo ??" size="50"
+                required /></br></br>
+
+              <label for="Lieu">Adresse de l'événement</label><br />
+              <input type="text" name="Lieu" id="Lieu" placeholder="Exemple : 666 rue des ames damnées" size="50"
+                required /></br></br>
+
+              <label for="Ville">Ville</label><br />
+              <input type="text" name="Ville" id="Ville" placeholder="Exemple : Blendecques" size="50"
+                required /></br></br>
+
+              <label for="CP">Code postal</label><br />
+              <input type="number" name="CP" id="CP" placeholder="Exemple : 62575" required /></br></br>
+
+            </fieldset><br />
+
+
+            <fieldset>
+              <legend id="Legend">Image (optionnel)</legend>
+
+              <label for="IMG">Inserez une image</label></br>
+              <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" />
+
+            </fieldset>
+
+            <br />
+
+            <fieldset>
+              <legend id="Legend">Description de l'événement</legend>
+
+              <label for="Description">Décrivez l'événement en quelques lignes :</label></br></br>
+              <textarea name="Description" id="Description" rows="20" cols="100" required></textarea>
+
+            </fieldset>
+
+            </br>
+
+            <input type="submit" value="Envoyer" id="BoutonEnvoie" />
+
+          </form></div>
+          </main>
+        </div>
+        </div>
+        
+        <nav id="bouton-scroll">
+        </nav>
+      </div>
+    </div>
+  </form>
+  <nav id="nav-fin">
+    <div class="button drop" id="scroll">
+      <div class="carre">
+        <div id="barre-arrow">
+          <div id="pointe-arrow"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</body>
+
+<footer id="le-footer">
+  <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
+  <div id="foot-gauche">
+    <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
+    <a class="lien-footer"
+      href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact - Ev'Note&body=Bonjour M. Vercoutre, ">Nous
+      contacter</a>
+  </div>
+  <h2>Site réalisé dans le cadre d'un projet</br>École d'Ingénieurs du Littoral Côte d'Opale</h2>
+  <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
+  <!--<p>B. Florian</br>K. Julien</p>
+  <p>V. Alexis</br>V. Thibault</p>-->
+</footer>
+
+
+<foot>
+  <script src="script.js"></script>
+</foot>
+
+</html>
