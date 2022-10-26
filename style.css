@@ -105,6 +105,18 @@ footer{
   transition: 0.3s;
 }
 
+
+.leaflet-control-zoom-in{
+  background: linear-gradient(45deg, #4377B2, #4D98BF, #5FAEBE, #81C3C3, #F3FBF8, #76BBEC);
+  transition: 0.3s;
+  /*border-radius: 16px;*/
+}
+
+.leaflet-control-zoom-out{
+  background: linear-gradient(225deg, #4377B2, #4D98BF, #5FAEBE, #81C3C3, #F3FBF8, #76BBEC);
+  transition: 0.3s;
+}
+
 /**/
 
 #titre {
@@ -875,12 +887,12 @@ div#pages{
   
 /* button hover */
 
-.button:hover, #adresse-note:hover, #compte:hover, #loupe:hover, #write-note .drop:hover{
+.button:hover, #adresse-note:hover, #compte:hover, #loupe:hover, #write-note .drop:hover, .leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover{
   box-shadow: -2px 4px 4px grey;
   background: linear-gradient(#5FAEBE, #81C3C3);
 }
 
-.button:active, #adresse-note:active, #compte:active, #loupe:active, #write-note .drop:active{
+.button:active, #adresse-note:active, #compte:active, #loupe:active, #write-note .drop:active, .leaflet-control-zoom-out:active, .leaflet-control-zoom-in:active{
   background: linear-gradient(#4D98BF, #4D98BF);
   background-color: #4D98BF;
   box-shadow: 0px 0px;

@@ -33,11 +33,41 @@ window.onload = () => {
 
   L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
     attribution: '',
-    minZoom: 4,
-    maxZoom: 20
+    minZoom: 13,
+    maxZoom: 18
   }).addTo(mymap);
 
+
+  //var command = L.control({position: 'topright'});
+  
 };
+
+
+var cats = ["Bars", "Parcs", "Macdos", "Lycées"];
+var stamen = new L.StamenTileLayer("toner-lite");
+
+var command = L.control({position: 'topright'});
+command.onAdd = function (mymap) {
+    var div = L.DomUtil.create('div', 'command');
+    div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Points d\'intérêt</span><br /><span style="color:grey;font-size:14px;">(ville d\'Issy-Les-Moulineaux)</span></div>';
+    for (var i = 0; i < cats.length; i++) {
+        div.innerHTML += '<form><input id="' + cats[i] + '" type="checkbox"/>' + cats[i] + '</form>';
+    }
+    return div;
+};
+command.addTo(mymap);
+
+//Boutons zoom
+
+let Dzoom = document.querySelector(".leaflet-control-zoom");
+Dzoom.style.border = "0px";
+
+let Dzoomin = document.querySelector(".leaflet-control-zoom-in");
+let Dzoomout = document.querySelector(".leaflet-control-zoom-out");
+Dzoomin.style.borderRadius = "8px 8px 0px 0px";
+Dzoomout.style.borderRadius = "0px 0px 8px 8px";
+
+//========================================================================
 
 
 // ScrollBar =============================================================
@@ -230,20 +260,23 @@ var geocodeService = L.esri.Geocoding.geocodeService();
 var message;
 
 mymap.on('click', function(e) {
-  Snotation.style.transition = "0s";
-  Snotation.style.transform = "translate(-100%,0px)";
-  // On récupère les coordonnées du clic
-  pos = e.latlng;
+  console.log(e.originalEvent.path);
+  if(e.originalEvent.path.length != 13){
+    Snotation.style.transition = "0s";
+    Snotation.style.transform = "translate(-100%,0px)";
+    // On récupère les coordonnées du clic
+    pos = e.latlng;
 
-  //console.log(pos.lat, pos.lng);
+    //console.log(pos.lat, pos.lng);
 
-  geocodeService.reverse().latlng(e.latlng).run(function(error, result) {
-    if (error) {
-      return;
-    }
-    // On crée un marqueur
-    addMarker(pos, result);
-  })
+    geocodeService.reverse().latlng(e.latlng).run(function(error, result) {
+      if (error) {
+        return;
+      }
+      // On crée un marqueur
+      addMarker(pos, result);
+    })
+  }
 });
 
 Bloupe.onclick = function() {
