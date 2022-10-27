@@ -117,6 +117,15 @@ footer{
   transition: 0.3s;
 }
 
+div:has(> .command){
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 10px;
+  padding-top: 65px;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+
 /**/
 
 #titre {
@@ -165,8 +174,12 @@ footer{
   transform: translate(-2px, -2px);
 }
 
-#note .carre .material-symbols-outlined{
+#note .carre .material-symbols-outlined, #checkbox .carre .material-symbols-outlined{
   transform: scale(1.2,1.2);
+}
+
+#checkbox .carre .material-symbols-outlined{
+  transform: translate(0px, 2px);
 }
 
 #logo-connexion .material-symbols-outlined{
@@ -256,7 +269,7 @@ footer{
   width: 20px;
 }
 
-#write-note .carre{
+#interact .carre{
   height: 30px;
   width: 30px;
 }
@@ -676,7 +689,7 @@ footer{
 
 /* NAV */
 
-nav, #write-note{
+nav, #interact{
   height: 1vh;
 	display: flex;
 	justify-content: center;
@@ -687,11 +700,11 @@ nav, #write-note{
   z-index: 2;
 }
 
-#write-note{
+#interact{
   justify-content: end;
 }
   
-nav .drop, #write-note .drop{
+nav .drop, #interact .drop{
   height: 24px;
   width: 24px;
 	flex: 0;
@@ -704,7 +717,7 @@ nav .drop, #write-note .drop{
   box-shadow: 0 4px 30px rgba(67,119,178, 0.6);
 }
 
-#write-note .drop{
+#interact .drop{
   height: 36px;
   width: 36px;
 }
@@ -730,7 +743,7 @@ nav .drop, #write-note .drop{
   100% { transform: scale(1,1) translateY(50px); }
 }
 
-#note{
+#note, #checkbox{
   transform: translate(0px, 50px);
   animation: fadeInAnimation2 ease 3s;
   animation-iteration-count: 1;
@@ -887,12 +900,12 @@ div#pages{
   
 /* button hover */
 
-.button:hover, #adresse-note:hover, #compte:hover, #loupe:hover, #write-note .drop:hover, .leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover{
+.button:hover, #adresse-note:hover, #compte:hover, #loupe:hover, #interact .drop:hover, .leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover{
   box-shadow: -2px 4px 4px grey;
   background: linear-gradient(#5FAEBE, #81C3C3);
 }
 
-.button:active, #adresse-note:active, #compte:active, #loupe:active, #write-note .drop:active, .leaflet-control-zoom-out:active, .leaflet-control-zoom-in:active{
+.button:active, #adresse-note:active, #compte:active, #loupe:active, #interact .drop:active, .leaflet-control-zoom-out:active, .leaflet-control-zoom-in:active{
   background: linear-gradient(#4D98BF, #4D98BF);
   background-color: #4D98BF;
   box-shadow: 0px 0px;
