@@ -37,8 +37,6 @@ window.onload = () => {
     minZoom: 13,
     maxZoom: 18
   }).addTo(mymap);
-
-
   //var command = L.control({position: 'topright'});
   
 };
@@ -225,6 +223,7 @@ Bcheckbox.onclick = function() {
 
 BcloseNotation.onclick = function() {
   Snotation.style.transform = "translate(-100%,0px)";
+  Bcheckbox.style.display = "block";
 }
 
 BcloseCreerArticle.onclick = function() {
@@ -265,6 +264,7 @@ function test(e) {
   if (Bnotation != null) {
     if (e.target.id == Bnotation.id) {
       Snotation.style.transition = "0.3s";
+      Bcheckbox.style.display = "none";
       Snotation.style.transform = "translate(0px,0px)";
     }
   }
@@ -300,14 +300,14 @@ Bloupe.onclick = function() {
   let regex = "[Cc][Aa][Ll][Aa][Ii][Ss]"
   if(adresse.search(regex) == -1){
     adresse = adresse + " Calais";
-    console.log("modification");
+    //console.log("modification");
   }
   adresse.replace(" ", "%20");
   let url = new URL("http://nominatim.openstreetmap.org/search?q=" + adresse + "&format=json&limit=1");
   $.getJSON(url, function(data) {
     let pos = [data[0].lat,data[0].lon];
     if(data[0].display_name.search(" Calais,") != -1){
-      console.log('coucou');
+      //console.log('coucou');
       geocodeService.reverse().latlng(pos).run(function(error, result) {
         if (error) {
           return;
