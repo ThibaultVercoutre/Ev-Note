@@ -281,5 +281,17 @@ mymap.on('click', function(e) {
 
 Bloupe.onclick = function() {
   let adresse = Isearch.value;
-  console.log(adresse);
+  let regex = "[Cc][Aa][Ll][Aa][Ii][Ss]"
+  if(adresse.search(regex) == -1){
+    adresse = adresse + " Calais";
+  }
+  adresse.replace(" ", "%20");
+  let url = new URL("http://nominatim.openstreetmap.org/search?q=" + adresse + "&format=json&limit=1");
+  $.getJSON(url, function(data) {
+    latitude = data[0].lat;
+    longitude = data[0].lon;
+    retour = latitude + "," + longitude;
+    console.log(longitude, latitude);
+  });
+  
 }
