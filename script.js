@@ -4,6 +4,7 @@ let Bnotation = document.getElementById("notation");
 let BcloseNotation = document.getElementById("closeNotation");
 let BcloseCreerArticle = document.getElementById("closeCreerArticle");
 let BcreerArt = document.getElementById("note");
+let Bcheckbox = document.getElementById("checkbox");
 
 let Tadresse = document.getElementById("batiment-name");
 let Sfooter = document.getElementById("le-footer");
@@ -157,6 +158,7 @@ function affiche(S, S2) {
     progressBar.style.width = "0px";
     progressBarClick.style.width = "0px";
     BcreerArt.style.display = "none";
+    Bcheckbox.style.display = "block";
   }
   if (S == Sactu) {
     ScreerArt.style.display = "block";
@@ -165,6 +167,7 @@ function affiche(S, S2) {
     progressBar.style.width = "8px";
     progressBarClick.style.width = "8px";
     BcreerArt.style.display = "block";
+    Bcheckbox.style.display = "none";
   }
 }
 
@@ -205,6 +208,19 @@ Bactu.onclick = function() {
 BcreerArt.onclick = function() {
   ScreerArt.style.transition = "0.3s";
   ScreerArt.style.transform = "translate(0px,0px) scaleY(1)";
+}
+
+let Scheckbox = document.querySelector("div:has(> .command)");
+Scheckbox.style.display = "none";
+let ScheckboxPosition = 0;
+Bcheckbox.onclick = function() {
+  if(ScheckboxPosition == 0){
+    Scheckbox.style.display = "block";
+    ScheckboxPosition = 1;
+  }else{
+    Scheckbox.style.display = "none";
+    ScheckboxPosition = 0;
+  }
 }
 
 BcloseNotation.onclick = function() {
@@ -261,7 +277,7 @@ var message;
 
 mymap.on('click', function(e) {
   console.log(e.originalEvent.path);
-  if(e.originalEvent.path.length != 13){
+  if(e.originalEvent.path.length < 12){
     Snotation.style.transition = "0s";
     Snotation.style.transform = "translate(-100%,0px)";
     // On récupère les coordonnées du clic
@@ -281,5 +297,26 @@ mymap.on('click', function(e) {
 
 Bloupe.onclick = function() {
   let adresse = Isearch.value;
-  console.log(adresse);
+  let regex = "[Cc][Aa][Ll][Aa][Ii][Ss]"
+  if(adresse.search(regex) == -1){
+    adresse = adresse + " Calais";
+    console.log("modification");
+  }
+  adresse.replace(" ", "%20");
+  let url = new URL("http://nominatim.openstreetmap.org/search?q=" + adresse + "&format=json&limit=1");
+  $.getJSON(url, function(data) {
+    let pos = [data[0].lat,data[0].lon];
+    if(data[0].display_name.search(" Calais,") != -1){
+      console.log('coucou');
+      geocodeService.reverse().latlng(pos).run(function(error, result) {
+        if (error) {
+          return;
+        }
+        addMarker(pos, result);
+      })
+    }else{
+      console.log('dommage');
+    }
+  });
+  
 }
