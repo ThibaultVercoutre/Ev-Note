@@ -511,6 +511,7 @@ div:has(> .command){
   border-width: 2px 0px 2px 0px;
   min-height: 3vh;
   backdrop-filter: blur(10px);
+  background-color: #1439a9;
 }
 
 #phrase-presentation:before, #phrase-presentation:after{
@@ -533,11 +534,12 @@ div:has(> .command){
 }
   
 #phrase-presentation p{
-  color: whitesmoke;
-  margin: auto;
+  color: #5FAEBE;
+  font-family: 'Alkalami', 'Alkalami', Arial, sans-serif;
+  margin: 4px 0 4px 0;
   animation: scrollingPhrase 30s linear infinite;
   width: 100%;
-  font-size: 100%;
+  font-size: 24px;
 }
 
 @keyframes scrollingPhrase {
