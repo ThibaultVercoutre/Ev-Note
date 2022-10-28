@@ -179,7 +179,7 @@ div:has(> .command){
 }
 
 #checkbox .carre .material-symbols-outlined{
-  transform: translate(0px, 2px);
+  transform: translate(0px, 3px);
 }
 
 #logo-connexion .material-symbols-outlined{
@@ -503,7 +503,7 @@ div:has(> .command){
 /* Phrase présentation */
 
 #phrase-presentation{
-  margin-top: 2vh;
+  margin-top: 1vh;
   width: 100vw;
   position: relative;
   padding: auto;
@@ -557,7 +557,7 @@ div:has(> .command){
 }
 
 .marquee{
-  margin-top: 2vh;
+  margin-top: 1vh;
   width: var(--marquee-width);
   height: var(--marquee-height);
   position: relative;
@@ -853,7 +853,8 @@ div#pages{
 #details-notations{
   width: 100%;
   float: left;
-  padding-top: 85px;
+  padding-top: 75px;
+  margin: 10px;
 }
 
 #details-notations h1{
@@ -861,13 +862,57 @@ div#pages{
   border-radius: 16px;
   margin-right: 20px;
   margin-left: 20px;
-  box-shadow: 0 18px 200px -60px black;
+  box-shadow: -2px 2px 2px 2px black;
 }
 
-#details-notations .section-avis{
+#elements-notations{
+  padding: 10px;
+  display: flex;
+}
+
+#elements-notations .section-avis{
+  flex: auto;
+}
+
+#elements-notations .img{
   border: 2px solid black;
-  height: 15px;
-  width: 100%;
+  min-width: 25%;
+}
+
+.section-avis{
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: 10px;
+}
+
+.section-avis::-webkit-scrollbar{
+  width: 5px;
+  height: 50%;
+  background: transparent;
+}
+
+.section-avis::-webkit-resizer{
+  height: 50px;
+}
+
+.section-avis::-webkit-scrollbar-thumb{
+  width:10px;
+  border-radius: 5px;
+  height: 5px;
+  background: black;
+}
+
+#elements-notations{
+  border-radius: 16px;
+  box-shadow: -2px 2px 2px 2px black;
+  margin: 20px;
+  border: 2px solid #4377B2;
+  height: 40vh;
+  width: auto;
+  font-size: 50px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: 10px;
 }
 
 #closeNotation{
@@ -968,7 +1013,7 @@ nav#nav-fin #scroll .carre{
   transform: translate(-42%,2px) rotate(45deg);
 }
 
-/* Creation Artivle ============================= */
+/* Creation Article ============================= */
 
 #section-creer-article p{
   text-align: center;
