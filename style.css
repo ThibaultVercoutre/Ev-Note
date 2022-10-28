@@ -179,7 +179,7 @@ div:has(> .command){
 }
 
 #checkbox .carre .material-symbols-outlined{
-  transform: translate(0px, 2px);
+  transform: translate(0px, 3px);
 }
 
 #logo-connexion .material-symbols-outlined{
@@ -503,7 +503,7 @@ div:has(> .command){
 /* Phrase présentation */
 
 #phrase-presentation{
-  margin-top: 2vh;
+  margin-top: 1vh;
   width: 100vw;
   position: relative;
   padding: auto;
@@ -557,7 +557,7 @@ div:has(> .command){
 }
 
 .marquee{
-  margin-top: 2vh;
+  margin-top: 1vh;
   width: var(--marquee-width);
   height: var(--marquee-height);
   position: relative;
@@ -633,21 +633,6 @@ div:has(> .command){
   height: 50%;
   margin: 0px;
   color: whitesmoke;
-}
-
-.les-avis{
-  display: flex;
-  overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  width: 400px;
-}
-
-.avi{
-  scroll-snap-align: center;
-  flex: none;
-  width: 300px;
-  height: 300px;
-  margin: 0 20px;
 }
 
   
@@ -853,7 +838,8 @@ div#pages{
 #details-notations{
   width: 100%;
   float: left;
-  padding-top: 85px;
+  padding-top: 75px;
+  margin: 10px;
 }
 
 #details-notations h1{
@@ -861,13 +847,146 @@ div#pages{
   border-radius: 16px;
   margin-right: 20px;
   margin-left: 20px;
-  box-shadow: 0 18px 200px -60px black;
+  box-shadow: -2px 2px 2px 2px black;
 }
 
-#details-notations .section-avis{
-  border: 2px solid black;
-  height: 15px;
+#elements-notations{
+  padding: 10px;
+  display: flex;
+}
+
+#elements-notations .img{
+  border: 2px solid #082374;
+  min-width: 25%;
+}
+
+#elements-notations #section-avis{
+  flex: auto;
+  height: 100%;
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+}
+
+#elements-notations .img{
+  background: url("img/TheatreCalais.jpg") no-repeat center;
+  background-size: auto 100%;
+}
+
+#section-avis::-webkit-scrollbar{
+  width: 5px;
+  background: transparent;
+}
+
+
+#section-avis::-webkit-scrollbar-thumb{
+  width:10px;
+  border-radius: 5px;
+  height: 5px;
+  background: linear-gradient(#4377B2, #082374);
+}
+
+.avi{
+  scroll-snap-align: center;
+  width: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.avi .actions{
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  width: 25%;
+}
+
+
+.up, .down, .report{
+  transform-origin: bottom;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.up:hover, .down:hover, .report:hover{
+  transform: scale(1.1);
+}
+
+.up:active, .down:active, .report:active{
+  transform: scale(1);
+}
+
+.avi .actions .up:hover{
+  color: green;
+}
+
+.avi .actions .down:hover{
+  color: red;
+}
+
+.avi .actions .report:hover{
+  color: orange;
+}
+
+.avi .text-avi{
+  flex: 6;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  padding: 20px;
+}
+
+.avi .compte-note{
+  flex: 1;
+  display: flex;
+  height: 50px;
+  width: 50%;
+  padding-bottom: 2px;
+  margin-left: 20px;
+  border-bottom: 2px solid #082374;
+}
+
+.avi .compte-note .img-profil-note{
+  width: 50px;
+  height: 100%;
+  border-radius: 16px;
+  border: 2px solid #082374;
+  margin: 0px;
+  transform: translateX(-15px);
+}
+
+.avi .compte-note .img-profil-note img{
+  height: 100%;
   width: 100%;
+  border-radius: 14px;
+}
+
+.avi .compte-note .nom{
+  font-size: 100%;
+}
+
+.avi .compte-note .material-symbols-outlined{
+  color: green 
+}
+/*
+.avi:nth-child(2n){
+  background-color: blue;
+}
+
+.avi:nth-child(2n+1){
+  background-color: red;
+}*/
+
+#elements-notations{
+  border-radius: 16px;
+  box-shadow: -2px 2px 2px 2px black;
+  margin: 20px;
+  border: 2px solid #4377B2;
+  height: 40vh;
+  width: auto;
+  font-size: 50px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: 10px;
 }
 
 #closeNotation{
@@ -968,7 +1087,7 @@ nav#nav-fin #scroll .carre{
   transform: translate(-42%,2px) rotate(45deg);
 }
 
-/* Creation Artivle ============================= */
+/* Creation Article ============================= */
 
 #section-creer-article p{
   text-align: center;
