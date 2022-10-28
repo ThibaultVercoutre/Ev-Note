@@ -276,7 +276,6 @@ var geocodeService = L.esri.Geocoding.geocodeService();
 var message;
 
 mymap.on('click', function(e) {
-  console.log(e.originalEvent.path);
   if(e.originalEvent.path.length < 12){
     Snotation.style.transition = "0s";
     Snotation.style.transform = "translate(-100%,0px)";
@@ -320,3 +319,39 @@ Bloupe.onclick = function() {
   });
   
 }
+
+let Savi = document.getElementById("section-avis");
+
+let Bup = document.querySelectorAll(".up");
+let Bdown = document.querySelectorAll(".down");
+let Breport = document.querySelectorAll(".report");
+
+function action_avis(e) {
+  for(var i = 0; i < Bup.length; i++) {
+    if(e.target == Bup[i]) {
+      if(Bup[i].style.color == "green"){
+        Bup[i].style.color = "black";
+      }else{
+        Bup[i].style.color = "green";
+      }
+      Bdown[i].style.color = "black";
+    }
+    if(e.target == Bdown[i]) {
+      if(Bdown[i].style.color == "red"){
+        Bdown[i].style.color = "black";
+      }else{
+        Bdown[i].style.color = "red";
+      }
+      Bup[i].style.color = "black";
+    }
+    if(e.target == Breport[i]) {
+      if(Breport[i].style.color == "orange"){
+        Breport[i].style.color = "black";
+      }else{
+        Breport[i].style.color = "orange";
+      }
+    }
+  }
+}
+
+Savi.addEventListener('click', action_avis, false);
