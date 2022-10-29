@@ -7,6 +7,7 @@ let BcreerArt = document.getElementById("note");
 let Bcheckbox = document.getElementById("checkbox");
 
 let Tadresse = document.getElementById("batiment-name");
+let Tville = document.getElementById("ville-name-notation");
 let Sfooter = document.getElementById("le-footer");
 
 let Badressenote = null;
@@ -250,11 +251,21 @@ function addMarker(pos, result) {
   }
   )
 
-  Tadresse.textContent = result.address.Match_addr;
+  var resultat = result.address.Match_addr;
+  var index = resultat.indexOf(",");
+  Tville.textContent = "62100 Calais"; // Si Calais
+  if (index !== -1) {
+    var texte = resultat.split(",");
+    Tadresse.textContent = texte[0];
+    texte = texte[0];
+  } else {
+    var texte = resultat;
+    Tadresse.textContent = resultat;
+  }
 
   //marqueur.addTo(mymap);
   /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button" id="adresse-note">' + result.address.Match_addr + '</br>').openPopup();
+  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button" id="adresse-note">' + texte + '</br>').openPopup();
 
   Bnotation = document.getElementById("adresse-note");
 
