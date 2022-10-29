@@ -92,8 +92,6 @@ window.addEventListener("scroll", () => {
   }
 })
 
-
-
 progressBarClick.addEventListener("click", (e) => {
   let totalHeight = SremplirArt.scrollHeight - SremplirArt.clientHeight;
   let newPageScroll = e.layerY / progressBarClick.offsetHeight * totalHeight;
@@ -206,6 +204,7 @@ Bactu.onclick = function() {
 BcreerArt.onclick = function() {
   ScreerArt.style.transition = "0.3s";
   ScreerArt.style.transform = "translate(0px,0px) scaleY(1)";
+  BcreerArt.style.display = "none";
 }
 
 let Scheckbox = document.querySelector("div:has(> .command)");
@@ -228,6 +227,7 @@ BcloseNotation.onclick = function() {
 
 BcloseCreerArticle.onclick = function() {
   ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
+  BcreerArt.style.display = "block";
 }
 
 /*
