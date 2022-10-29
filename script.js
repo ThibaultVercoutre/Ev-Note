@@ -7,6 +7,7 @@ let BcreerArt = document.getElementById("note");
 let Bcheckbox = document.getElementById("checkbox");
 
 let Tadresse = document.getElementById("batiment-name");
+let Tville = document.getElementById("ville-name-notation");
 let Sfooter = document.getElementById("le-footer");
 
 let Badressenote = null;
@@ -37,8 +38,6 @@ window.onload = () => {
     minZoom: 13,
     maxZoom: 18
   }).addTo(mymap);
-
-
   //var command = L.control({position: 'topright'});
   
 };
@@ -225,6 +224,7 @@ Bcheckbox.onclick = function() {
 
 BcloseNotation.onclick = function() {
   Snotation.style.transform = "translate(-100%,0px)";
+  Bcheckbox.style.display = "block";
 }
 
 BcloseCreerArticle.onclick = function() {
@@ -251,11 +251,21 @@ function addMarker(pos, result) {
   }
   )
 
-  Tadresse.textContent = result.address.Match_addr;
+  var resultat = result.address.Match_addr;
+  var index = resultat.indexOf(",");
+  Tville.textContent = "62100 Calais"; // Si Calais
+  if (index !== -1) {
+    var texte = resultat.split(",");
+    Tadresse.textContent = texte[0];
+    texte = texte[0];
+  } else {
+    var texte = resultat;
+    Tadresse.textContent = resultat;
+  }
 
   //marqueur.addTo(mymap);
   /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button" id="adresse-note">' + result.address.Match_addr + '</br>').openPopup();
+  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button" id="adresse-note">' + texte + '</br>').openPopup();
 
   Bnotation = document.getElementById("adresse-note");
 
@@ -265,6 +275,7 @@ function test(e) {
   if (Bnotation != null) {
     if (e.target.id == Bnotation.id) {
       Snotation.style.transition = "0.3s";
+      Bcheckbox.style.display = "none";
       Snotation.style.transform = "translate(0px,0px)";
     }
   }
@@ -276,7 +287,6 @@ var geocodeService = L.esri.Geocoding.geocodeService();
 var message;
 
 mymap.on('click', function(e) {
-  console.log(e.originalEvent.path);
   if(e.originalEvent.path.length < 12){
     Snotation.style.transition = "0s";
     Snotation.style.transform = "translate(-100%,0px)";
@@ -300,14 +310,14 @@ Bloupe.onclick = function() {
   let regex = "[Cc][Aa][Ll][Aa][Ii][Ss]"
   if(adresse.search(regex) == -1){
     adresse = adresse + " Calais";
-    console.log("modification");
+    //console.log("modification");
   }
   adresse.replace(" ", "%20");
   let url = new URL("http://nominatim.openstreetmap.org/search?q=" + adresse + "&format=json&limit=1");
   $.getJSON(url, function(data) {
     let pos = [data[0].lat,data[0].lon];
     if(data[0].display_name.search(" Calais,") != -1){
-      console.log('coucou');
+      //console.log('coucou');
       geocodeService.reverse().latlng(pos).run(function(error, result) {
         if (error) {
           return;
@@ -320,3 +330,39 @@ Bloupe.onclick = function() {
   });
   
 }
+
+let Savi = document.getElementById("section-avis");
+
+let Bup = document.querySelectorAll(".up");
+let Bdown = document.querySelectorAll(".down");
+let Breport = document.querySelectorAll(".report");
+
+function action_avis(e) {
+  for(var i = 0; i < Bup.length; i++) {
+    if(e.target == Bup[i]) {
+      if(Bup[i].style.color == "green"){
+        Bup[i].style.color = "black";
+      }else{
+        Bup[i].style.color = "green";
+      }
+      Bdown[i].style.color = "black";
+    }
+    if(e.target == Bdown[i]) {
+      if(Bdown[i].style.color == "red"){
+        Bdown[i].style.color = "black";
+      }else{
+        Bdown[i].style.color = "red";
+      }
+      Bup[i].style.color = "black";
+    }
+    if(e.target == Breport[i]) {
+      if(Breport[i].style.color == "orange"){
+        Breport[i].style.color = "black";
+      }else{
+        Breport[i].style.color = "orange";
+      }
+    }
+  }
+}
+
+Savi.addEventListener('click', action_avis, false);
