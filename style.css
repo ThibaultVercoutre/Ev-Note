@@ -985,9 +985,37 @@ div#pages{
   font-size: 100%;
 }
 
-.avi .compte-note .material-symbols-outlined{
-  color: green 
+.avi .compte-note span.verified{
+  color: green;
 }
+
+.stars-notations{
+  display: flex;
+  position: relative;
+  text-align: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.stars-notations div{
+  margin-left: 50px;
+  position: absolute;
+  display: flex;
+  width: 150px;
+}
+
+.stars-1 .material-symbols-outlined{
+  transform: scale(1.5);
+  color: grey;
+  width: 100%;
+}
+
+.stars-2 .material-symbols-outlined{
+  transform: scale(1.5);
+  color: rgb(236, 13, 217);
+  width: 100%;
+}
+
 /*
 .avi:nth-child(2n){
   background-color: blue;
@@ -1018,7 +1046,7 @@ div#pages{
 
 #closeCreerArticle{
   position: absolute;
-  left: 15px;
+  right: 15px;
   top: 15px;
 }
 
