@@ -128,6 +128,46 @@ Bscroll.onclick = function() {
 
 // =======================================================================
 
+const NotBarres = document.querySelectorAll(".compte-note .barres-notations .barres-2");
+const NotBarresImg = document.querySelector(".img .barres-notations .barres-2");
+const Noms = document.querySelectorAll(".compte-note .nom");
+var noteTotale = 0;
+
+function chargementNotesAvis(){
+  for(barres of NotBarres) {
+    console.log(barres);
+    var nom = barres.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
+    var note = nom.length%5;
+    noteTotale += note;
+    //  note = le note de l'avis du nom courant
+    for(var i = 1; i <= Math.floor(note/1)*2-1; i += 2){
+      barres.childNodes[i].style.width = "50px";
+    }
+    barres.childNodes[i].style.width = note%1*50 + "px";
+    barres.childNodes[i].style.borderRadius = "10px " + (note%1)*10 + "px " + (note%1)*10 + "px 10px";
+    for(i += 2; i <= 9; i += 2){
+      barres.childNodes[i].style.width = "0px";
+    }
+    //}
+  }
+
+  var noteFinale = noteTotale/NotBarres.length;
+  console.log(noteFinale);
+
+  for(var i = 1; i <= Math.floor(noteFinale/1)*2-1; i += 2){
+    NotBarresImg.childNodes[i].style.width = "50px";
+  }
+  NotBarresImg.childNodes[i].style.width = noteFinale%1*50 + "px";
+  NotBarresImg.childNodes[i].style.borderRadius = "10px " + (noteFinale%1)*10 + "px " + (noteFinale%1)*10 + "px 10px";
+  for(i += 2; i <= 9; i += 2){
+    NotBarresImg.childNodes[i].style.width = "0px";
+  }
+}
+
+chargementNotesAvis();
+
+// =======================================================================
+
 function resetStyle(S, S2) {
   /*
   var rectBmap = Bmap.getBoundingClientRect();
