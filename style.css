@@ -164,6 +164,100 @@ div:has(> .command){
 #connect{
   flex: 3;
   transform-origin: right;
+  padding: 0px 5% 0px 5%; 
+}
+
+#compte > ul {
+  display: flex;
+  text-align: center;
+  padding : 0p 5% 0px 5%;
+}
+
+#compte > ul > li {
+  background: linear-gradient(#5FAEBE, #5FAEBE);
+  position: relative;
+  height: 100%;
+  flex: 1;
+}
+
+#compte > ul > li > a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#compte .menu-deroulant > a:after{
+  content: '❯';
+  font-size: 15px;
+  margin-left: 7px;
+  display: inline-block;
+}
+
+.sous-menu {
+  margin-top: var(--hauteur-menu);
+  width: 100%;
+  text-align: left;
+  background-color: white;
+  border-radius: 2px;
+  overflow: hidden;
+  max-height: 0;
+}
+
+.sous-menu > li > a {
+  height: 50px;
+  padding-left: -20px;
+  width: 200%;
+  align-items: center;
+  display: flex;
+}
+
+.menu-deroulant:hover > .sous-menu {
+  animation: apparitionSousMenu 1s forwards;
+}
+
+.sous-menu > li:hover {
+  background: linear-gradient(#5FAEBE, #5FAEBE);
+}
+
+@keyframes apparitionSousMenu {
+  0% {
+    box-shadow: 0px 3px 3px 1px rgba(0,0,0,0);
+    border-top: 3px solid #2169EC;
+  }
+  30% {
+    box-shadow: 0px 3px 3px 1px rgba(0,0,0,0.3);
+  }
+  100% {
+    max-height: 50em;
+    border-top: 3px solid #2169EC;
+    box-shadow: 0px 3px 3px 1px rgba(0,0,0,0.3);
+  }
+}
+
+#menu-demo2, li{
+  list-style-type: none;
+  background: linear-gradient(#5FAEBE, #5FAEBE);
+}
+
+#compte #menu-demo2 #menu a{
+  font-size: 30px;
+  background: linear-gradient(#5FAEBE, #5FAEBE);
+
+}
+
+#compte #menu-demo2{
+  flex: auto;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Alkalami', 'Alkalami', Arial, sans-serif;
+  padding: 0px 5px 0px 5px;
+  transition: 0.3s;
+  box-shadow: -1px 2px 2px grey;
+  border-radius: 16px;
+  background: linear-gradient(#5FAEBE, #5FAEBE);
 }
 
 /*************** LOGO *******************************************/
@@ -362,6 +456,7 @@ div:has(> .command){
   top: 15%;
   left: 15%;
 }
+
 /* Stylos Note */
 
 #manche{
@@ -548,6 +643,7 @@ div:has(> .command){
 }
   
 :root{
+  --largeur-menu : 200px;
   --marquee-width: 100vw;
   --marquee-height: 8vh;
   --marquee-elements: 10;
@@ -634,7 +730,6 @@ div:has(> .command){
   margin: 0px;
   color: whitesmoke;
 }
-
   
 /*scroll bar*/
 
@@ -753,7 +848,7 @@ nav .drop, #interact .drop{
 
 body form{
   height: 92vh;
-}C
+}
   
 div#pages{
   width:100%;
