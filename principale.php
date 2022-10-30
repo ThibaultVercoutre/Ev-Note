@@ -1,5 +1,15 @@
-<!DOCTYPE html>
 <html>
+
+<?php
+require_once 'pages/php/login.php';
+session_start();
+if(($_SESSION['email']) !== ""){
+  $email = $_SESSION['email'];
+  $reponse = $bdd->query('SELECT Nom, Prenom FROM user WHERE Mail="'.$email.'"');
+  $donnees = $reponse->fetch();
+
+}
+?>
 
 <head>
   <meta charset="utf-8">
@@ -41,22 +51,31 @@
         <div id="barre"></div>
       </div>
     </div>
-    <div id="compte"><a href="pages/php/user_connexion.php">
-        <h2 id="connect">Connexion</h2>
-        <div id="logo-connexion">
+    <div id="compte"><ul id="menu-demo2"> 
+        
+          <li class="menu-deroulant">
+            <div id="menu"><h2 id="connect"><a href="#"><?php echo $donnees['Prenom']." ".$donnees['Nom'] ; ?>
+            <div id="logo-connexion">
           <span class="material-symbols-outlined">account_circle</span>
           <!--<div id="rond-connexion">
             <div id="rond-corps"></div>
             <div id="rond-tete"></div>-->
-          </div>
-        </div>
-      </a></div>
+          </div></a></div>
+            <ul class="sous-menu">
+            
+              <li><a  href="pages/php/user_deconnexion.php">Déconnexion</a></li></h2>
+            </ul>
+          </li>
+        </ul>
+      
+  
+
     </div>
   </header>
 
   <form action="#" method="post">
     <div id="phrase-presentation">
-      <p>Vos lieux et événements sur Calais disponibles sur un seul endroit !</p>
+      <p>Vos lieux et événements sur Calais disponibles sur un seul endroit</p>
     </div>
     </div>
     <div class="marquee">
@@ -218,67 +237,44 @@
         <div class="parent" id="pages-map">
           <div class="page child1" id="section-notation">
             <div id="details-notations">
-              <div id="first-line">
-                <div id="title-batiment">
-                  <h1 id="batiment-name">Nom de l'établissement</h1>
-                  <h1 id="ville-name-notation">Ville</h1>
-                </div>
-                <div class="button drop" id="creer-avis">
-                  <div class="carre">
-                    <span class="material-symbols-outlined">checklist</span>
-                  </div>
-                </div>
+              <div id="title-batiment">
+                <h1 id="batiment-name">Nom de l'établissement</h1>
+                <h1 id="ville-name-notation">Ville</h1>
               </div>
               <div id="elements-notations">
-                <div class="img">
-                  
-                  <img src="img/TheatreCalais.jpg" alt="Image">
-                  <div class="barres-notations">
-                    <div class="barres-1">
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                    </div>
-                    <div class="barres-2">
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                    </div>
-                  </div>
-                </div>
+                <div class="img"></div>
                 <div id="section-avis">
                   <div class="avi">
                     <div class="compte-note">
                       <div class="img-profil-note"><img src="pages/img/alexis.webp"></div>
                       <div class="nom">Alexis</div>
                       <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
+                      <div class="stars-notations">
+                        <div class="stars-1">
+                          <span class="material-symbols-outlined">star</span>
+                          <span class="material-symbols-outlined">star</span>
+                          <span class="material-symbols-outlined">star</span>
+                          <span class="material-symbols-outlined">star</span>
+                          <span class="material-symbols-outlined">star</span>
                         </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
+                        <div class="stars-2">
+                          <span class="material-symbols-outlined">star</span>
+                          <span class="material-symbols-outlined">star</span>
+                          <span class="material-symbols-outlined">star</span>
+                          <span class="material-symbols-outlined">star</span>
+                          <span class="material-symbols-outlined">star</span>
                         </div>
                       </div>
                     </div>
                     <div class="text-avi">
-                      J'adore m'y rendre. J'y vais quasiment tout les soirs. Je vais commencer à parler latin car j'aurais plus d'inspi.
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam debitis nam similique dolores vero quae dolorum, optio eligendi asperiores sunt quam consectetur necessitatibus! Dicta, rerum illum! Pariatur iste officia ratione!
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam sunt provident debitis, repellat velit voluptatum quidem consequatur, nostrum aliquid nisi iste ut? Molestias odit placeat eius deleniti? Rem, rerum delectus?
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis error iusto maiores molestiae, dicta magni ab laborum nulla accusantium iure nihil vitae quia saepe eum nostrum dolores commodi debitis vel.
-                      
+                      J'y vais tout les soirs avec mon père. Nous aimons beaucoup y aller car
+                      ça montre de nous que nous sommes des personnes riches et civilisés. J'ai
+                      beaucoup d'argent et j'aime le montrer. Savez vous que les 26 plus riches milliardaires detiennent
+                      plus d'argent que 60% de la population mondial ? Mon père fait partit de ces 26,
+                      et vous des 60%. J'ai 7 PS5 ok ? J'ai un écran 4K ? Et pourtant, j'ai trouvé la
+                      bombine pour être boursier echelon II, et oui, à I echelon près, j'avais 100 repas gratuit, payé
+                      par vos impôt, qu'évidemment mon père ne paies pas.
+                      Bonne journée ! 
                     </div>
                     <div class="actions">
                       <span class="material-symbols-outlined up">thumb_up</span>
@@ -291,25 +287,9 @@
                       <div class="img-profil-note"><img src="pages/img/julien.png"></div>
                       <div class="nom">Julien</div>
                       <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
                     </div>
                     <div class="text-avi">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam rerum labore sit, vitae mollitia tenetur unde vero voluptatibus tempore. Quas consequuntur excepturi laboriosam quod temporibus, magni reiciendis. Voluptate, reprehenderit ipsam.
+                       J'y ai été une fois, j'ai vu des étrangers sur scène donc je suis sorti car je me suis dit que dans une société où les noirs ne sont pas vraiment les mêmes que les blancs, il ne faut pas faire de discrimination et laisser les clowns amuser la galerie.
                     </div>
                     <div class="actions">
                       <span class="material-symbols-outlined up">thumb_up</span>
@@ -322,57 +302,10 @@
                       <div class="img-profil-note"><img src="pages/img/florian.webp"></div>
                       <div class="nom">Florian</div>
                       <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
                     </div>
                     <div class="text-avi">
                       Alors oui bonjour, C'est pour dire que l'endroit est superbe, je prend beaucoup de plaisir à y être.
                       Cela me permet de me recentrer sur moi même et mes chakras, surtout le 3eme chakras.
-                    </div>
-                    <div class="actions">
-                      <span class="material-symbols-outlined up">thumb_up</span>
-                      <span class="material-symbols-outlined down">thumb_down</span>
-                      <span class="material-symbols-outlined report">priority_high</span>
-                    </div>
-                  </div>
-                  <div class="avi">
-                    <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/thibault.jpg"></div>
-                      <div class="nom">Thibault</div>
-                      <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-avi">
-                      C'était pas mal en vrai
                     </div>
                     <div class="actions">
                       <span class="material-symbols-outlined up">thumb_up</span>
@@ -404,81 +337,82 @@
             <article>
               <p>Soon...</p>
             </article>
-          </div>
+          </main>
+        </div>
           <div class="page child1 child2" id="section-creer-article">
-            
-            <div class="scrollbar"></div>
-            <div class="clickScrollbar"></div>
-            
-            <div id="champ-remplit-art">
-            <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
-            
-            <form method="post" action="#">
+
+          <div class="scrollbar"></div>
+          <div class="clickScrollbar"></div>
+          
+          <div id="champ-remplit-art">
+          <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
+          
+          <form method="post" action="#">
 
 
-              <fieldset>
-                <legend id="Legend">Vos coordonnées</legend><br />
+            <fieldset>
+              <legend id="Legend">Vos coordonnées</legend><br />
 
-                <label for="Nom">Nom</label><br />
-                <input type="text" name="Nom" id="Nom" placeholder="Exemple : Vercoutre" size="50" required /></br></br>
+              <label for="Nom">Nom</label><br />
+              <input type="text" name="Nom" id="Nom" placeholder="Exemple : Vercoutre" size="50" required /></br></br>
 
-                <label for="Prenom">Prénom</label><br />
-                <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50"
-                  required /></br></br>
+              <label for="Prenom">Prénom</label><br />
+              <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50"
+                required /></br></br>
 
-                <label for="Mail">E-Mail</label><br />
-                <input type="email" name="Mail" id="Mail" placeholder="Exemple : xyz@leraciste.noob" size="50"
-                  required /></br></br>
+              <label for="Mail">E-Mail</label><br />
+              <input type="email" name="Mail" id="Mail" placeholder="Exemple : nom@gmail.com" size="50"
+                required /></br></br>
 
-              </fieldset><br />
-
-
-              <fieldset>
-                <legend id="Legend">Informations sur l'événement</legend><br />
-
-                <label for="NomEvent">Nom de l'événement</label><br />
-                <input type="text" name="NomEvent" id="NomEvent"
-                  placeholder="Exemple : Compet OW2, qui aura un meilleur shoot que tibo ??" size="50"
-                  required /></br></br>
-
-                <label for="Lieu">Adresse de l'événement</label><br />
-                <input type="text" name="Lieu" id="Lieu" placeholder="Exemple : 666 rue des ames damnées" size="50"
-                  required /></br></br>
-
-                <label for="Ville">Ville</label><br />
-                <input type="text" name="Ville" id="Ville" placeholder="Exemple : Blendecques" size="50"
-                  required /></br></br>
-
-                <label for="CP">Code postal</label><br />
-                <input type="number" name="CP" id="CP" placeholder="Exemple : 62575" required /></br></br>
-
-              </fieldset><br />
+            </fieldset><br />
 
 
-              <fieldset>
-                <legend id="Legend">Image (optionnel)</legend>
+            <fieldset>
+              <legend id="Legend">Informations sur l'événement</legend><br />
 
-                <label for="IMG">Inserez une image</label></br>
-                <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" />
+              <label for="NomEvent">Nom de l'événement</label><br />
+              <input type="text" name="NomEvent" id="NomEvent"
+                placeholder="Exemple : Soirée mousse" size="50"
+                required /></br></br>
 
-              </fieldset>
+              <label for="Lieu">Adresse de l'événement</label><br />
+              <input type="text" name="Lieu" id="Lieu" placeholder="Exemple : 667 rue des tulipes" size="50"
+                required /></br></br>
 
-              <br />
+              <label for="Ville">Ville</label><br />
+              <input type="text" name="Ville" id="Ville" placeholder="Exemple : Blendecques" size="50"
+                required /></br></br>
 
-              <fieldset>
-                <legend id="Legend">Description de l'événement</legend>
+              <label for="CP">Code postal</label><br />
+              <input type="number" name="CP" id="CP" placeholder="Exemple : 62575" required /></br></br>
 
-                <label for="Description">Décrivez l'événement en quelques lignes :</label></br></br>
-                <textarea name="Description" id="Description" rows="20" cols="100" required></textarea>
+            </fieldset><br />
 
-              </fieldset>
 
-              </br>
+            <fieldset>
+              <legend id="Legend">Image (optionnel)</legend>
 
-              <input type="submit" value="Envoyer" id="BoutonEnvoie" />
+              <label for="IMG">Inserez une image</label></br>
+              <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" />
 
-            </form>
-            <div id="closeCreerArticle">
+            </fieldset>
+
+            <br />
+
+            <fieldset>
+              <legend id="Legend">Description de l'événement</legend>
+
+              <label for="Description">Décrivez l'événement en quelques lignes :</label></br></br>
+              <textarea name="Description" id="Description" rows="20" cols="100" required></textarea>
+
+            </fieldset>
+
+            </br>
+
+            <input type="submit" value="Envoyer" id="BoutonEnvoie" />
+
+          </form>
+          <div id="closeCreerArticle">
               <div class="logo-close button">
                   <div class="croix1"></div>
                   <div class="croix2"></div>
@@ -489,7 +423,8 @@
         </div>
         </div>
         
-        <nav id="bouton-scroll"></nav>
+        <nav id="bouton-scroll">
+        </nav>
       </div>
     </div>
   </form>
@@ -507,7 +442,7 @@
 <footer id="le-footer">
   <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
   <div id="foot-gauche">
-    <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
+    <a class="lien-footer" href="conditions.html">Conditions d'utilisation</a>
     <a class="lien-footer"
       href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact - Ev'Note&body=Bonjour M. Vercoutre, ">Nous
       contacter</a>
@@ -523,23 +458,5 @@
   <script src="script.js"></script>
 </foot>
 
-</html>
-
-<!--
-  <div class="stars-notations">
-                        <div class="stars-1">
-                          <span class="material-symbols-outlined">star</span>
-                          <span class="material-symbols-outlined">star</span>
-                          <span class="material-symbols-outlined">star</span>
-                          <span class="material-symbols-outlined">star</span>
-                          <span class="material-symbols-outlined">star</span>
-                        </div>
-                        <div class="stars-2">
-                          <span class="material-symbols-outlined">star</span>
-                          <span class="material-symbols-outlined">star</span>
-                          <span class="material-symbols-outlined">star</span>
-                          <span class="material-symbols-outlined">star</span>
-                          <span class="material-symbols-outlined">star</span>
-                        </div>
-                      </div>
--->
+</body>
+</html>    

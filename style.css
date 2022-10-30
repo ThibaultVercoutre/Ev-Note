@@ -164,6 +164,100 @@ div:has(> .command){
 #connect{
   flex: 3;
   transform-origin: right;
+  padding: 0px 5% 0px 5%; 
+}
+
+#compte > ul {
+  display: flex;
+  text-align: center;
+  padding : 0p 5% 0px 5%;
+}
+
+#compte > ul > li {
+  background: linear-gradient(#5FAEBE, #5FAEBE);
+  position: relative;
+  height: 100%;
+  flex: 1;
+}
+
+#compte > ul > li > a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#compte .menu-deroulant > a:after{
+  content: '❯';
+  font-size: 15px;
+  margin-left: 7px;
+  display: inline-block;
+}
+
+.sous-menu {
+  margin-top: var(--hauteur-menu);
+  width: 100%;
+  text-align: left;
+  background-color: white;
+  border-radius: 2px;
+  overflow: hidden;
+  max-height: 0;
+}
+
+.sous-menu > li > a {
+  height: 50px;
+  padding-left: -20px;
+  width: 200%;
+  align-items: center;
+  display: flex;
+}
+
+.menu-deroulant:hover > .sous-menu {
+  animation: apparitionSousMenu 1s forwards;
+}
+
+.sous-menu > li:hover {
+  background: linear-gradient(#5FAEBE, #5FAEBE);
+}
+
+@keyframes apparitionSousMenu {
+  0% {
+    box-shadow: 0px 3px 3px 1px rgba(0,0,0,0);
+    border-top: 3px solid #2169EC;
+  }
+  30% {
+    box-shadow: 0px 3px 3px 1px rgba(0,0,0,0.3);
+  }
+  100% {
+    max-height: 50em;
+    border-top: 3px solid #2169EC;
+    box-shadow: 0px 3px 3px 1px rgba(0,0,0,0.3);
+  }
+}
+
+#menu-demo2, li{
+  list-style-type: none;
+  background: linear-gradient(#5FAEBE, #5FAEBE);
+}
+
+#compte #menu-demo2 #menu a{
+  font-size: 30px;
+  background: linear-gradient(#5FAEBE, #5FAEBE);
+
+}
+
+#compte #menu-demo2{
+  flex: auto;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Alkalami', 'Alkalami', Arial, sans-serif;
+  padding: 0px 5px 0px 5px;
+  transition: 0.3s;
+  box-shadow: -1px 2px 2px grey;
+  border-radius: 16px;
+  background: linear-gradient(#5FAEBE, #5FAEBE);
 }
 
 /*************** LOGO *******************************************/
@@ -174,11 +268,13 @@ div:has(> .command){
   transform: translate(-2px, -2px);
 }
 
-#note .carre .material-symbols-outlined, #checkbox .carre .material-symbols-outlined{
+#note .carre .material-symbols-outlined, 
+#checkbox .carre .material-symbols-outlined, 
+#creer-avis .carre .material-symbols-outlined{
   transform: scale(1.2,1.2);
 }
 
-#checkbox .carre .material-symbols-outlined{
+#checkbox .carre .material-symbols-outlined, #creer-avis .carre .material-symbols-outlined{
   transform: translate(0px, 3px);
 }
 
@@ -269,7 +365,7 @@ div:has(> .command){
   width: 20px;
 }
 
-#interact .carre{
+#interact .carre, #creer-avis .carre{
   height: 30px;
   width: 30px;
 }
@@ -362,6 +458,7 @@ div:has(> .command){
   top: 15%;
   left: 15%;
 }
+
 /* Stylos Note */
 
 #manche{
@@ -548,6 +645,7 @@ div:has(> .command){
 }
   
 :root{
+  --largeur-menu : 200px;
   --marquee-width: 100vw;
   --marquee-height: 8vh;
   --marquee-elements: 10;
@@ -634,7 +732,6 @@ div:has(> .command){
   margin: 0px;
   color: whitesmoke;
 }
-
   
 /*scroll bar*/
 
@@ -691,10 +788,9 @@ nav, #interact{
   justify-content: end;
 }
   
-nav .drop, #interact .drop{
+nav .drop, #interact .drop, #creer-avis{
   height: 24px;
   width: 24px;
-	flex: 0;
 	text-align: center;
 	padding: 8px 8px;
 	transition: 0.3s;
@@ -704,7 +800,7 @@ nav .drop, #interact .drop{
   box-shadow: 0 4px 30px rgba(67,119,178, 0.6);
 }
 
-#interact .drop{
+#interact .drop, #creer-avis{
   height: 36px;
   width: 36px;
 }
@@ -753,7 +849,7 @@ nav .drop, #interact .drop{
 
 body form{
   height: 92vh;
-}C
+}
   
 div#pages{
   width:100%;
@@ -795,7 +891,14 @@ div#pages{
   font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
 }
 
+#first-line{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 #title-batiment {
+  flex: auto;
   display: flex;
   flex-direction: row;
   border: 2px solid #4377B2;
@@ -804,6 +907,10 @@ div#pages{
   margin-right: 20px;
   margin-left: 20px;
   vertical-align: middle;
+}
+
+#creer-avis{
+  margin-right: 40px;
 }
 
 .parent {
@@ -866,27 +973,37 @@ div#pages{
   margin: 10px;
 }
 
-#details-notations #h1{
+#details-notations h1{
   margin-right: 20px;
   margin-left: 20px;
 }
 
 #elements-notations{
-  padding: 10px;
   display: flex;
+  padding: 10px;
+  flex-direction: row;
 }
 
 #elements-notations .img{
   border: 2px solid #082374;
-  min-width: 30%;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 #elements-notations .img img{
+  flex: 1;
   width: 100%;
 }
 
-#elements-notations #section-avis{
+#elements-notations .img .barres-notations{
+  width: 100%;
   flex: auto;
+}
+
+#elements-notations #section-avis{
+  flex: 2;
   height: 100%;
   overflow: auto;
   scroll-snap-type: y mandatory;
@@ -949,7 +1066,7 @@ div#pages{
 
 .avi .text-avi{
   flex: 6;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   text-align: left;
   padding: 20px;
@@ -960,7 +1077,7 @@ div#pages{
   display: flex;
   height: 50px;
   width: 50%;
-  padding-bottom: 2px;
+  padding: 2px;
   margin-left: 20px;
   border-bottom: 2px solid #082374;
 }
@@ -1124,12 +1241,15 @@ div#pages{
   
 /* button hover */
 
-.button:hover, #adresse-note:hover, #compte:hover, #loupe:hover, #interact .drop:hover, .leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover{
+.button:hover, 
+#adresse-note:hover, 
+#compte:hover, #loupe:hover, #interact .drop:hover, #creer-avis:hover,
+.leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover{
   box-shadow: -2px 4px 4px grey;
   background: linear-gradient(#5FAEBE, #81C3C3);
 }
 
-.button:active, #adresse-note:active, #compte:active, #loupe:active, #interact .drop:active, .leaflet-control-zoom-out:active, .leaflet-control-zoom-in:active{
+.button:active, #adresse-note:active, #compte:active, #creer-avis:active, #loupe:active, #interact .drop:active, .leaflet-control-zoom-out:active, .leaflet-control-zoom-in:active{
   background: linear-gradient(#4D98BF, #4D98BF);
   background-color: #4D98BF;
   box-shadow: 0px 0px;
@@ -1213,7 +1333,7 @@ fieldset{
 }
 
 fieldset input{
-  height:20px;
+  height: 20px;
   border-radius: 16px;
   width: 95%;
   padding: 15px;
@@ -1242,7 +1362,20 @@ fieldset input{
 
   
 /* ============================================== */
-  
+
+@media screen and (max-width: 925px)
+{
+    #elements-notations{
+      flex-direction: column;
+    }
+    #elements-notations .img{
+      flex-direction: row;
+    }
+    #elements-notations .img img{
+      width: 25%;
+    }
+}
+
 @media screen and (max-width: 680px)
 {
     #connect{

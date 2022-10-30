@@ -135,7 +135,7 @@ var noteTotale = 0;
 
 function chargementNotesAvis(){
   for(barres of NotBarres) {
-    console.log(barres);
+    //console.log(barres);
     var nom = barres.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
     var note = nom.length%5;
     noteTotale += note;
@@ -152,7 +152,7 @@ function chargementNotesAvis(){
   }
 
   var noteFinale = noteTotale/NotBarres.length;
-  console.log(noteFinale);
+  //console.log(noteFinale);
 
   for(var i = 1; i <= Math.floor(noteFinale/1)*2-1; i += 2){
     NotBarresImg.childNodes[i].style.width = "50px";
@@ -277,7 +277,7 @@ Bnote.onclick = function() {
   affiche(Snotation, Smap);
 };*/
 
-function addMarker(pos, result) {
+function addMarker(pos, nom) {
   // On vérifie si le marqueur existe déjà
   if (marqueur != undefined) {
     // Si oui, on le retire
@@ -290,17 +290,17 @@ function addMarker(pos, result) {
     draggable: true
   }
   )
-
-  var resultat = result.address.Match_addr;
-  var index = resultat.indexOf(",");
+  console.log(nom);
+  //var resultat = result.address.Match_addr;
+  var index = nom.indexOf(",");
   Tville.textContent = "62100 Calais"; // Si Calais
   if (index !== -1) {
-    var texte = resultat.split(",");
+    var texte = nom.split(",");
     Tadresse.textContent = texte[0];
     texte = texte[0];
   } else {
-    var texte = resultat;
-    Tadresse.textContent = resultat;
+    var texte = nom;
+    Tadresse.textContent = nom;
   }
 
   //marqueur.addTo(mymap);
@@ -323,25 +323,24 @@ function test(e) {
 
 Smap.addEventListener('click', test, false);
 
-var geocodeService = L.esri.Geocoding.geocodeService();
-var message;
-
 mymap.on('click', function(e) {
   if(e.originalEvent.path.length < 12){
     Snotation.style.transition = "0s";
     Snotation.style.transform = "translate(-100%,0px)";
     // On récupère les coordonnées du clic
     pos = e.latlng;
-
-    //console.log(pos.lat, pos.lng);
-
-    geocodeService.reverse().latlng(e.latlng).run(function(error, result) {
-      if (error) {
-        return;
+    //console.log(pos);
+    let url = new URL("http://nominatim.openstreetmap.org/search?q=" + pos.lat + "%20" + pos.lng + "&format=json&limit=1");
+    
+    //console.log(url);
+    $.getJSON(url, function(data) {
+      console.log(data[0]);
+      if(data[0].display_name.search(" Calais,") != -1){
+          addMarker(pos, data[0].display_name);
+      }else{
+        console.log('dommage clique');
       }
-      // On crée un marqueur
-      addMarker(pos, result);
-    })
+    });
   }
 });
 
@@ -353,17 +352,15 @@ Bloupe.onclick = function() {
     //console.log("modification");
   }
   adresse.replace(" ", "%20");
+  //console.log(adresse);
   let url = new URL("http://nominatim.openstreetmap.org/search?q=" + adresse + "&format=json&limit=1");
   $.getJSON(url, function(data) {
-    let pos = [data[0].lat,data[0].lon];
-    if(data[0].display_name.search(" Calais,") != -1){
+    //console.log(data[0]);
+    let pos = {lat : data[0].lat, lng : data[0].lon};
+    //console.log(pos);
+    if(data[0].display_name.search(" Calais") != -1){
       //console.log('coucou');
-      geocodeService.reverse().latlng(pos).run(function(error, result) {
-        if (error) {
-          return;
-        }
-        addMarker(pos, result);
-      })
+        addMarker(pos, data[0].display_name);
     }else{
       console.log('dommage');
     }
