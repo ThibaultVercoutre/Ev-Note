@@ -179,7 +179,7 @@ div:has(> .command){
 #compte > ul {
   display: flex;
   text-align: center;
-  padding : 0p 5% 0px 5%;
+  padding : 0px 5% 0px 5%;
 }
 
 #compte > ul > li {
@@ -612,7 +612,6 @@ div:has(> .command){
   margin-top: 1vh;
   width: 100vw;
   position: relative;
-  padding: auto;
   border: 0px solid var(--couleur-principale-1);
   border-width: 2px 0px 2px 0px;
   min-height: 3vh;
@@ -789,7 +788,6 @@ nav, #interact{
 	position: sticky;
 	top: 50px;
 	left: 0;
-  padding: auto;
   z-index: 2;
 }
 
@@ -947,7 +945,7 @@ div#pages{
 #section-fil-actu{
   opacity: 1; /*attention changer à 0 après tests*/
   transform-origin: right;
-  transform: "scale(0,1)";
+  transform: scale(0,1);
 }
 
 #section-notation {
@@ -960,7 +958,6 @@ div#pages{
   /*background-color: whitesmoke;*/
   height: 75vh;
   width: 100%;
-  background: 0.8;
   backdrop-filter: blur(10px);
 }
 
@@ -1012,7 +1009,7 @@ div#pages{
 }
 
 #elements-notations #section-avis{
-  flex: 2;
+  flex: 3;
   height: 100%;
   overflow: auto;
   scroll-snap-type: y mandatory;
@@ -1204,7 +1201,6 @@ div#pages{
   font-size: 50px;
   overflow-y: scroll;
   scrollbar-color: rebeccapurple green;
-  scrollbar-width: 10px;
 }
 
 #closeNotation{
