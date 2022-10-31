@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
@@ -34,7 +34,7 @@
     <div id="titre">
       <h1>Ev'Note</h1>
       <div id="div-search">
-        <input class="button" id="search" placeholder="Rechercher un lieu..."></input>
+        <input class="button" id="search" placeholder="Rechercher un lieu..."/>
       </div>
       <div class="button" id="loupe">
         <div id="cercle"></div>
@@ -48,10 +48,8 @@
           <!--<div id="rond-connexion">
             <div id="rond-corps"></div>
             <div id="rond-tete"></div>-->
-          </div>
         </div>
-      </a></div>
-    </div>
+    </a></div>
   </header>
 
   <form action="#" method="post">
@@ -224,7 +222,7 @@
                 </div>
                 <div class="button drop" id="creer-avis">
                   <div class="carre">
-                    <span class="material-symbols-outlined">checklist</span>
+                    <span class="material-symbols-outlined">drive_file_rename_outline</span>
                   </div>
                 </div>
               </div>
@@ -252,7 +250,7 @@
                 <div id="section-avis">
                   <div class="avi">
                     <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/alexis.webp"></div>
+                      <div class="img-profil-note"><img src="pages/img/alexis.webp" alt="image-profil"></div>
                       <div class="nom">Alexis</div>
                       <span class="material-symbols-outlined verified">verified</span>
                       <div class="barres-notations">
@@ -287,7 +285,7 @@
                   </div>
                   <div class="avi">
                     <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/julien.png"></div>
+                      <div class="img-profil-note"><img src="pages/img/julien.png" alt="image-profil"></div>
                       <div class="nom">Julien</div>
                       <span class="material-symbols-outlined verified">verified</span>
                       <div class="barres-notations">
@@ -318,7 +316,7 @@
                   </div>
                   <div class="avi">
                     <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/florian.webp"></div>
+                      <div class="img-profil-note"><img src="pages/img/florian.webp" alt="image-profil"></div>
                       <div class="nom">Florian</div>
                       <span class="material-symbols-outlined verified">verified</span>
                       <div class="barres-notations">
@@ -350,7 +348,7 @@
                   </div>
                   <div class="avi">
                     <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/thibault.jpg"></div>
+                      <div class="img-profil-note"><img src="pages/img/thibault.jpg" alt="image-profil"></div>
                       <div class="nom">Thibault</div>
                       <span class="material-symbols-outlined verified">verified</span>
                       <div class="barres-notations">
@@ -409,43 +407,43 @@
             <div class="scrollbar"></div>
             <div class="clickScrollbar"></div>
             <div id="champ-remplit-art">
-            <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
-            <form method="post" action="#">
-              <fieldset>
-                <legend id="Legend">Vos coordonnées</legend><br />
-                <label for="Nom">Nom</label><br />
-                <input type="text" name="Nom" id="Nom" placeholder="Exemple : Vercoutre" size="50" required /></br></br>
-                <label for="Prenom">Prénom</label><br />
-                <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50"
-                  required /></br></br>
-                <label for="Mail">E-Mail</label><br />
-                <input type="email" name="Mail" id="Mail" placeholder="Exemple : xyz@leraciste.noob" size="50" required /></br></br>
-              </fieldset><br />
-              <fieldset>
-                <legend id="Legend">Informations sur l'événement</legend><br />
-                <label for="NomEvent">Nom de l'événement</label><br />
-                <input type="text" name="NomEvent" id="NomEvent" placeholder="Exemple : Compet OW2, qui aura un meilleur shoot que tibo ??" size="50" required /></br></br>
-                <label for="Lieu">Adresse de l'événement</label><br />
-                <input type="text" name="Lieu" id="Lieu" placeholder="Exemple : 666 rue des ames damnées" size="50" required /></br></br>
-                <label for="Ville">Ville</label><br />
-                <input type="text" name="Ville" id="Ville" placeholder="Exemple : Blendecques" size="50" required /></br></br>
-                <label for="CP">Code postal</label><br />
-                <input type="number" name="CP" id="CP" placeholder="Exemple : 62575" required /></br></br>
-              </fieldset><br />
-              <fieldset>
-                <legend id="Legend">Image (optionnel)</legend>
-                <label for="IMG">Inserez une image</label></br>
-                <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" />
-              </fieldset>
-              <br />
-              <fieldset>
-                <legend id="Legend">Description de l'événement</legend>
-                <label for="Description">Décrivez l'événement en quelques lignes :</label></br></br>
-                <textarea name="Description" id="Description" placeholder="Quel est votre évènement ?" rows="20" cols="100" required></textarea>
-              </fieldset>
-              </br>
-              <input type="submit" value="Envoyer" id="BoutonEnvoie" />
-            </form>
+              <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
+              <form method="post" action="#">
+               <fieldset>
+                  <legend>Vos coordonnées</legend><br />
+                  <label for="Nom">Nom</label><br />
+                  <input type="text" name="Nom" id="Nom" placeholder="Exemple : Vercoutre" size="50" required /><br /><br />
+                  <label for="Prenom">Prénom</label><br />
+                  <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50" required /><br /><br />
+                  <label for="Mail">E-Mail</label><br />
+                  <input type="email" name="Mail" id="Mail" placeholder="Exemple : xyz@leraciste.noob" size="50" required /><br /><br />
+                </fieldset><br />
+                <fieldset>
+                  <legend>Informations sur l'événement</legend><br />
+                  <label for="NomEvent">Nom de l'événement</label><br />
+                  <input type="text" name="NomEvent" id="NomEvent" placeholder="Exemple : Compet OW2, qui aura un meilleur shoot que tibo ??" size="50" required /><br /><br />
+                  <label for="Lieu">Adresse de l'événement</label><br />
+                  <input type="text" name="Lieu" id="Lieu" placeholder="Exemple : 666 rue des ames damnées" size="50" required /><br /><br />
+                  <label for="Ville">Ville</label><br />
+                  <input type="text" name="Ville" id="Ville" placeholder="Exemple : Blendecques" size="50" required /><br /><br />
+                  <label for="CP">Code postal</label><br />
+                  <input type="number" name="CP" id="CP" placeholder="Exemple : 62575" required /><br /><br />
+                </fieldset><br />
+                <fieldset>
+                  <legend>Image (optionnel)</legend>
+                  <label for="IMG">Inserez une image</label><br />
+                  <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" />
+                </fieldset>
+                <br />
+                <fieldset>
+                  <legend>Description de l'événement</legend>
+                  <label for="Description">Décrivez l'événement en quelques lignes :</label><br /><br />
+                  <textarea name="Description" id="Description" placeholder="Quel est votre évènement ?" rows="20" cols="100" required></textarea>
+                </fieldset>
+                <br />
+                <input type="submit" value="Envoyer" id="BoutonEnvoie" />
+              </form>
+            </div>
             <div id="closeCreerArticle">
               <div class="logo-close button">
                 <div class="croix1"></div>
@@ -472,10 +470,9 @@
   <div id="foot-gauche">
     <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
     <a class="lien-footer"
-      href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact - Ev'Note&body=Bonjour M. Vercoutre, ">Nous
-      contacter</a>
+      href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
   </div>
-  <h2>Site réalisé dans le cadre d'un projet</br>École d'Ingénieurs du Littoral Côte d'Opale</h2>
+  <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
   <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
   <script src="script.js"></script>
 </footer>

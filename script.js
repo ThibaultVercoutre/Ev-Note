@@ -232,6 +232,7 @@ Bmap.onclick = function() {
     behavior: 'smooth'
   })
   Snotation.style.transform = "translate(-100%,0px)";
+  ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
   afficheBarre(Smap);
   affiche(Smap, Sactu);
 };

@@ -156,7 +156,6 @@ body{
 
 .profile-card-social p{
   margin: auto;
-  padding: auto;
   font-size: 80%;
 }
 
@@ -185,11 +184,19 @@ body{
 }
 
 .profile-card-social a.bouton-tiktok{
-  background-color: rgba(143, 111, 228, 0.4);;
+  background-color: rgba(143, 111, 228, 0.4);
 }
 
 .profile-card-social a.bouton-tiktok:hover{
-  background-color: rgba(143, 111, 228, 0.8);;
+  background-color: rgba(143, 111, 228, 0.8);
+}
+
+.profile-card-social a.bouton-github{
+  background-color: rgba(63, 65, 67, 0.4);
+}
+
+.profile-card-social a.bouton-github:hover{
+  background-color: rgba(63, 65, 67, 0.8);
 }
 
 .profile-card-social div.facebook{
@@ -210,6 +217,11 @@ body{
 .profile-card-social div.tiktok{
   background: linear-gradient(135deg, #F65DA7, #CA5FF9, #9665F3, #5C8BE6, #029BCA);
   box-shadow: 0 4px 30px rgba(143, 111, 228, 0.6);
+}
+
+.profile-card-social div.github{
+  background: linear-gradient(45deg, #333333,#626b73);
+  box-shadow: 0 4px 30px rgba(63, 65, 67, 0.6);
 }
 
 @media screen and (max-width: 1150px){
