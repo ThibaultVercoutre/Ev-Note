@@ -20,21 +20,16 @@ body{
   overflow-x: hidden; 
   
 }
-/* HEADER */
 
-header{
-  z-index: 5;
-  height: 7vh;
-  display: flex;
-	position: sticky;
-	top: 0;
-	left: 0;
+body #general{
+  height: 92vh;
 }
 
-header div{
-  background-color: var(--couleur-principale-1);
-  margin: 0px 0px 0px 0px;
-  border-radius: 0rem 0rem .5rem .5rem;
+/* Scroll bare général */
+
+::-webkit-scrollbar{
+  width:0;
+  background: transparent;
 }
 
 /* FOOTER */C
@@ -269,7 +264,68 @@ div:has(> .command){
   background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-3));
 }
 
-/*************** LOGO *******************************************/
+/*=======================================================================================================*/
+/*================================================== BOUTON SCROLL ======================================*/
+
+nav#nav-fin{
+  height: 0px;
+}
+  
+nav#nav-fin #scroll{
+  transform: translateY(-100px);
+  animation: upLaunch ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+/*
+nav#nav-fin #scroll .carre{
+  transition: 0.3s;
+}*/
+
+@keyframes upLaunch {
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.05,0.95) translateY(-120px);
+  }
+  60% { transform: scale(0.975,1.025) translateY(-90px); }
+  100% { transform: scale(1,1) translateY(-100px); }
+}
+
+/*=======================================================================================================*/
+/*==================================================== BOUTONS CLOSE ====================================*/
+
+#closeNotation{
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+#closeCreerArticle{
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+/*=======================================================================================================*/
+/*==================================================== BOUTONS HOVER / ACTIVE ===========================*/
+
+.button:hover, #compte:hover, #loupe:hover, #interact .drop:hover, #creer-avis:hover, .leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover{
+  box-shadow: -2px 4px 4px grey;
+  background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-4));
+}
+
+.button:active, #compte:active, #creer-avis:active, #loupe:active, #interact .drop:active, .leaflet-control-zoom-out:active, .leaflet-control-zoom-in:active{
+  background: linear-gradient(var(--couleur-principale-2), var(--couleur-principale-2));
+  background-color: var(--couleur-principale-2);
+  box-shadow: 0px 0px;
+}
+
+/*=======================================================================================================*/
+/*======================================================== LOGO =========================================*/
 
 /* Google Fonts */
 
@@ -289,6 +345,25 @@ div:has(> .command){
 
 #logo-connexion .material-symbols-outlined{
   transform: scale(1.2,1.2);
+}
+
+/* flèche */
+
+#barre-arrow{
+  background-color: black;
+  width: 2px;
+  height: 15px;
+  margin: auto;
+  transform: translateY(2px);
+}
+  
+#pointe-arrow{
+  margin: auto;
+  width: 10px;
+  height: 10px;
+  border: 0px solid black;
+  border-width: 0px 2px 2px 0px;
+  transform: translate(-42%,2px) rotate(45deg);
 }
 
 /* Loupe */
@@ -325,42 +400,10 @@ div:has(> .command){
 /* Connexion */
 
 #logo-connexion{
-  background:transparent;
+  background: transparent;
   position: relative; 
   flex: 1;
   margin: auto;
-}
-
-#rond-connexion{
-  margin: auto;
-  background:transparent;
-  border-radius:50%;
-  width:30px;
-  height:30px;
-  border:2px solid black;
-  
-}
-
-#rond-corps{
-  background:transparent;
-  border-radius:50%;
-  width:20px;
-  height:20px;
-  border:5px solid black;
-  border-bottom: none;
-  border-left: none;
-  border-right: none;
-  transform: translate(5px,17px);
-}
-
-#rond-tete{
-  position: relative;
-  background:transparent;
-  border-radius:50%;
-  width:8px;
-  height:8px;
-  border:2px solid black;
-  transform: translate(9px,-20px);
 }
 
 /* Pages */
@@ -370,6 +413,10 @@ div:has(> .command){
   background:transparent;
   border:2px solid black;
   border-radius:25%;
+  transition: 0.3s;
+}
+
+#map .carre, #actu .carre, #nav-fin .carre{
   height: 20px;
   width: 20px;
 }
@@ -390,114 +437,6 @@ div:has(> .command){
   transform: translateY(2px);
 }
   
-#carte-page-1{
-  flex: 1;
-  background-color: transparent;
-  border: 2px solid black;
-  height: auto;
-  width: auto;
-  transform: skewY(-25deg);
-}
-
-#carte-page-2{
-  flex: 1;
-  background-color: transparent;
-  border: 2px solid black;
-  height: auto;
-  width: auto; 
-  transform: skewY(25deg);
-}
-
-#carte-page-3{
-  flex: 1;
-  background-color: transparent;
-  border: 2px solid black;
-  height: auto;
-  width: auto;
-  transform: skewY(-25deg);
-}
-  
-#ping-cercle{
-  background-color: black;
-  position: relative;
-  top: 1px;
-  left: 4px;
-  height: 8px;
-  width: 8px;
-  border: 2px solid black;
-  border-radius: 10px;
-  display: flex;
-}
-
-#ping-pied{
-  background-color: black;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  transform: translate(0%,50%) rotate(45deg) scaleY(0.8);
-}
-
-#map .carre #rond{
-  background:black;
-  border-radius:50%;
-  width:10px;
-  height:10px;
-  border:2px solid black;
-  transform: translate(25%, 0px);
-}
-
-#map .carre #barre1{
-  background:black;
-  width:5px;
-  height:10px;
-  transform: translate(11px, -8px) rotateZ(45deg);
-}
-
-#map .carre #barre2{
-  background:black;
-  width:5px;
-  height:10px;
-  transform: translate(6px, -18px) rotateZ(-45deg);
-}
-
-.barre{
-  background: black;
-  height: 2px;
-  position: absolute;
-  top: 15%;
-  left: 15%;
-}
-
-/* Stylos Note */
-
-#manche{
-  margin: auto;
-  background-color: black;
-  height: 20px;
-  width: 1px;
-  border: 1px solid black;
-  border-radius: 50%;
-  transform: translate(5px, 0px) rotate(45deg);
-}
-
-#pointe-stylo{
-  background-color: black;
-  height: 5px;
-  width: 1px;
-  border: 1px solid black;
-  border-radius: 50%;
-  transform: translate(6px, -3px) rotate(45deg);
-}
-
-#ecriture{
-  background-color: black;
-  height: 1px;
-  width: 25px;
-  border: 1px solid black;
-  border-radius: 50%;
-  transform: translate(3px, -2px)
-}
-  
 /* Fil actu */
 
 #carre-photo{
@@ -507,6 +446,14 @@ div:has(> .command){
   width:2px;
   height:2px;
   transform: translate(3px, 2px);
+}
+
+.barre{
+  background: black;
+  height: 2px;
+  position: absolute;
+  top: 15%;
+  left: 15%;
 }
 
 #barre1{
@@ -550,7 +497,25 @@ div:has(> .command){
   margin: auto;
 }
 
-/********************************************************/
+/*=======================================================================================================*/
+/*==================================================== HEADER ===========================================*/
+
+/* HEADER */
+
+header{
+  z-index: 5;
+  height: 7vh;
+  display: flex;
+	position: sticky;
+	top: 0;
+	left: 0;
+}
+
+header div{
+  background-color: var(--couleur-principale-1);
+  margin: 0px 0px 0px 0px;
+  border-radius: 0rem 0rem .5rem .5rem;
+}
 
 /* Recherche */
 
@@ -604,7 +569,8 @@ div:has(> .command){
   text-align: center;
 }
 
-/*  Marquee ========================================*/
+/*=======================================================================================================*/
+/*=================================================== MARQUEE ===========================================*/
 
 /* Phrase présentation */
 
@@ -651,7 +617,9 @@ div:has(> .command){
   0% {transform: translateX(100vw);}
   100% {transform: translateX(-100vw);}
 }
-  
+
+/* Maquee bar */
+
 :root{
   --largeur-menu : 200px;
   --marquee-width: 100vw;
@@ -677,7 +645,7 @@ div:has(> .command){
   content : "";
   z-index: 1;
 }
-/*
+
 .marquee:before{
   left: 0;
   background: linear-gradient(to right, #082374 0%, transparent 100%);
@@ -686,7 +654,7 @@ div:has(> .command){
 .marquee:after{
   right: 0;
   background: linear-gradient(to left, #082374 0%, transparent 100%);
-}*/
+}
 
 .elements-marquee{
   position: sticky;
@@ -741,12 +709,7 @@ div:has(> .command){
   color: whitesmoke;
 }
   
-/*scroll bar*/
-
-::-webkit-scrollbar{
-  width:0;
-  background: transparent;
-}
+/*scroll bar design (probablement à retirer) */
 
 .scrollbar{
   z-index: 4;
@@ -771,24 +734,22 @@ div:has(> .command){
   transition: 0.3s;
 }
 
-/* =========================================== */
-
-.fit-picture{
-  width : 60%;
-  height : 60%;
-  object-fit: contain;
-}
+/*=======================================================================================================*/
+/*================================================ NAV PRINCIPALE =======================================*/
 
 /* NAV */
 
 nav, #interact{
   height: 1vh;
 	display: flex;
-	justify-content: center;
 	position: sticky;
 	top: 50px;
 	left: 0;
   z-index: 2;
+}
+
+nav{
+	justify-content: center;
 }
 
 #interact{
@@ -796,8 +757,6 @@ nav, #interact{
 }
   
 nav .drop, #interact .drop, #creer-avis{
-  height: 24px;
-  width: 24px;
 	text-align: center;
 	padding: 8px 8px;
 	transition: 0.3s;
@@ -805,6 +764,11 @@ nav .drop, #interact .drop, #creer-avis{
 	margin-left: 2px;
   background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-5), var(--couleur-principale-6));
   box-shadow: 0 4px 30px rgba(67,119,178, 0.6);
+}
+
+nav .drop{
+  height: 24px;
+  width: 24px;
 }
 
 #interact .drop, #creer-avis{
@@ -854,11 +818,10 @@ nav .drop, #interact .drop, #creer-avis{
   100% { transform: scale(1,1) translate(-20px, 35px); }
 }
 
-body form{
-  height: 92vh;
-}
-  
-div#pages{
+/*=======================================================================================================*/
+/*======================================================= PAGES =========================================*/
+
+#pages{
   width:100%;
   min-height: 75vh;
 }
@@ -876,13 +839,33 @@ div#pages{
 }
 
 #pages-map{
-  z-index: 1;
   transform-origin: left;
 }
 
 #pages-actu{
   z-index: 0;
   transform-origin: right;
+}
+
+/*=======================================================================================================*/
+/*========================================================= SECTION NOTATION ============================*/
+
+#first-line{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#title-batiment{
+  flex: auto;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid var(--couleur-principale-1);
+  border-radius: 16px;
+  box-shadow: -2px 2px 2px 2px black;
+  margin-right: 20px;
+  margin-left: 20px;
+  vertical-align: middle;
 }
 
 #batiment-name {
@@ -898,27 +881,11 @@ div#pages{
   font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
 }
 
-#first-line{
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-#title-batiment {
-  flex: auto;
-  display: flex;
-  flex-direction: row;
-  border: 2px solid var(--couleur-principale-1);
-  border-radius: 16px;
-  box-shadow: -2px 2px 2px 2px black;
-  margin-right: 20px;
-  margin-left: 20px;
-  vertical-align: middle;
-}
-
 #creer-avis{
   margin-right: 40px;
 }
+
+/* Sections */
 
 .parent {
   position: relative;
@@ -940,12 +907,21 @@ div#pages{
   position: absolute;
 }
 
-/* Sections */
+/*=======================================================================================================*/
+/*======================================================== SECTION PARAMETRES ===========================*/
+
+
+#section-map, #section-fil-actu, #section-notation, #section-creer-article{
+  transition: 1s;
+  border-radius: 20px;
+  flex: 1;
+  border-top:4px solid var(--couleur-principale-1);
+  border-bottom:4px solid var(--couleur-principale-1);
+}
 
 #section-fil-actu{
-  opacity: 1; /*attention changer à 0 après tests*/
+  opacity: 0;
   transform-origin: right;
-  transform: scale(0,1);
 }
 
 #section-notation {
@@ -955,7 +931,6 @@ div#pages{
   display: flex;
   border-width: 4px;
   z-index: 4;
-  /*background-color: whitesmoke;*/
   height: 75vh;
   width: 100%;
   backdrop-filter: blur(10px);
@@ -971,6 +946,13 @@ div#pages{
   backdrop-filter: blur(10px);
   width: 100%;
 }
+
+#section-map{
+  min-height: 75vh;
+}
+
+/*=======================================================================================================*/
+/*========================================================= SECTION NOTATION ============================*/
 
 #details-notations{
   width: 100%;
@@ -988,6 +970,15 @@ div#pages{
   display: flex;
   padding: 10px;
   flex-direction: row;
+  border-radius: 16px;
+  box-shadow: -2px 2px 2px 2px black;
+  margin: 20px;
+  border: 2px solid var(--couleur-principale-1);
+  height: 40vh;
+  width: auto;
+  font-size: 50px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
 }
 
 #elements-notations .img{
@@ -1015,11 +1006,11 @@ div#pages{
   scroll-snap-type: y mandatory;
 }
 
+/* Avis */
 #section-avis::-webkit-scrollbar{
   width: 5px;
   background: transparent;
 }
-
 
 #section-avis::-webkit-scrollbar-thumb{
   width:10px;
@@ -1112,6 +1103,8 @@ div#pages{
   color: green;
 }
 
+/* Barres de notatin / etoiles / note */
+
 .barres-notations{
   display: flex;
   position: relative;
@@ -1182,42 +1175,9 @@ div#pages{
   width: 100%;
 }
 */
-/*
-.avi:nth-child(2n){
-  background-color: blue;
-}
 
-.avi:nth-child(2n+1){
-  background-color: red;
-}*/
-
-#elements-notations{
-  border-radius: 16px;
-  box-shadow: -2px 2px 2px 2px black;
-  margin: 20px;
-  border: 2px solid var(--couleur-principale-1);
-  height: 40vh;
-  width: auto;
-  font-size: 50px;
-  overflow-y: scroll;
-  scrollbar-color: rebeccapurple green;
-}
-
-#closeNotation{
-  position: absolute;
-  right: 15px;
-  top: 15px;
-}
-
-#closeCreerArticle{
-  position: absolute;
-  right: 15px;
-  top: 15px;
-}
-
-#section-map{
-  min-height: 75vh;
-}
+/*=======================================================================================================*/
+/*================================================== SECTION MAP ========================================*/
 
 #adresse-note{
 	flex: 0;
@@ -1231,81 +1191,14 @@ div#pages{
   font-size: 20px;
 }
 
-#section-map, #section-fil-actu, #section-notation, #section-creer-article{
-  width: 100%;
-  transition: 1s;
-  border-radius: 20px;
-  flex: 1;
-  border-top:4px solid var(--couleur-principale-1);
-  border-bottom:4px solid var(--couleur-principale-1);
-}
+/*=======================================================================================================*/
+/*================================================== SECTION FIL ACTU ===================================*/
 
-#section-map, #section-fil-actu, #section-notation, #section-creer-article{
-  height: 100%;
-}
-  
-/* button hover */
 
-.button:hover, 
-#adresse-note:hover, 
-#compte:hover, #loupe:hover, #interact .drop:hover, #creer-avis:hover,
-.leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover{
-  box-shadow: -2px 4px 4px grey;
-  background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-4));
-}
 
-.button:active, #adresse-note:active, #compte:active, #creer-avis:active, #loupe:active, #interact .drop:active, .leaflet-control-zoom-out:active, .leaflet-control-zoom-in:active{
-  background: linear-gradient(var(--couleur-principale-2), var(--couleur-principale-2));
-  background-color: var(--couleur-principale-2);
-  box-shadow: 0px 0px;
-}
 
-nav#nav-fin{
-  height: 0px;
-}
-  
-nav#nav-fin #scroll{
-  transform: translateY(-100px);
-  animation: upLaunch ease 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-
-@keyframes upLaunch {
-  0% {
-    opacity: 0;
-    transform: translateY(0px);
-  }
-  30% {
-    opacity: 1;
-    transform: scale(1.05,0.95) translateY(-120px);
-  }
-  60% { transform: scale(0.975,1.025) translateY(-90px); }
-  100% { transform: scale(1,1) translateY(-100px); }
-}
-
-nav#nav-fin #scroll .carre{
-  transition: 0.3s;
-}
-  
-#barre-arrow{
-  background-color: black;
-  width: 2px;
-  height: 15px;
-  margin: auto;
-  transform: translateY(2px);
-}
-  
-#pointe-arrow{
-  margin: auto;
-  width: 10px;
-  height: 10px;
-  border: 0px solid black;
-  border-width: 0px 2px 2px 0px;
-  transform: translate(-42%,2px) rotate(45deg);
-}
-
-/* Creation Article ============================= */
+/*=======================================================================================================*/
+/*================================================== SECTION CREER ARTICLE ==============================*/
 
 #section-creer-article p{
   text-align: center;
@@ -1369,9 +1262,8 @@ fieldset input{
   display: inline-block;
 }
 
-
-  
-/* ============================================== */
+/*=======================================================================================================*/
+/*================================================== RESPONSIVE =========================================*/
 
 @media screen and (max-width: 925px)
 {
