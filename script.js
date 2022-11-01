@@ -22,6 +22,7 @@ let Snotation = document.getElementById("section-notation");
 let ScreerArt = document.getElementById("section-creer-article");
 
 let SpartieMap = document.getElementById("section-map");
+let SpartieActu = document.getElementById("section-fil-actu");
 
 let Spages = document.getElementById("pages");
 
@@ -190,6 +191,8 @@ function resetStyle(S, S2) {
 
 function affiche(S, S2) {
   if (S == Smap) {
+    SpartieActu.style.opacity = 0;
+    SpartieMap.style.opacity = 1;
     S.style.transform = "scaleX(1)";
     S2.style.transform = "scaleX(0)";
     progressBar.style.width = "0px";
@@ -198,6 +201,8 @@ function affiche(S, S2) {
     Bcheckbox.style.display = "block";
   }
   if (S == Sactu) {
+    SpartieActu.style.opacity = 1;
+    SpartieMap.style.opacity = 0;
     ScreerArt.style.display = "block";
     S.style.transform = "scaleX(1)";
     S2.style.transform = "scaleX(0)";
@@ -210,7 +215,6 @@ function affiche(S, S2) {
 
 function afficheBarre(S) {
   if (S == Sactu) {
-    S.style.opacity = 1;
     Bsearch.style.transform = "scale(0,0.5)";
     Bloupe.style.borderRadius = "40%";
   }
@@ -306,7 +310,7 @@ function addMarker(pos, nom) {
 
   //marqueur.addTo(mymap);
   /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button" id="adresse-note">' + texte + '</br>').openPopup();
+  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</br>').openPopup();
 
   Bnotation = document.getElementById("adresse-note");
 
