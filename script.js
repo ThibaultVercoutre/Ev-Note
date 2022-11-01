@@ -22,6 +22,7 @@ let Snotation = document.getElementById("section-notation");
 let ScreerArt = document.getElementById("section-creer-article");
 
 let SpartieMap = document.getElementById("section-map");
+let SpartieActu = document.getElementById("section-fil-actu");
 
 let Spages = document.getElementById("pages");
 
@@ -93,8 +94,6 @@ window.addEventListener("scroll", () => {
   }
 })
 
-
-
 progressBarClick.addEventListener("click", (e) => {
   let totalHeight = SremplirArt.scrollHeight - SremplirArt.clientHeight;
   let newPageScroll = e.layerY / progressBarClick.offsetHeight * totalHeight;
@@ -130,6 +129,46 @@ Bscroll.onclick = function() {
 
 // =======================================================================
 
+const NotBarres = document.querySelectorAll(".compte-note .barres-notations .barres-2");
+const NotBarresImg = document.querySelector(".img .barres-notations .barres-2");
+const Noms = document.querySelectorAll(".compte-note .nom");
+var noteTotale = 0;
+
+function chargementNotesAvis(){
+  for(barres of NotBarres) {
+    //console.log(barres);
+    var nom = barres.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
+    var note = nom.length%5;
+    noteTotale += note;
+    //  note = le note de l'avis du nom courant
+    for(var i = 1; i <= Math.floor(note/1)*2-1; i += 2){
+      barres.childNodes[i].style.width = "50px";
+    }
+    barres.childNodes[i].style.width = note%1*50 + "px";
+    barres.childNodes[i].style.borderRadius = "10px " + (note%1)*10 + "px " + (note%1)*10 + "px 10px";
+    for(i += 2; i <= 9; i += 2){
+      barres.childNodes[i].style.width = "0px";
+    }
+    //}
+  }
+
+  var noteFinale = noteTotale/NotBarres.length;
+  //console.log(noteFinale);
+
+  for(var i = 1; i <= Math.floor(noteFinale/1)*2-1; i += 2){
+    NotBarresImg.childNodes[i].style.width = "50px";
+  }
+  NotBarresImg.childNodes[i].style.width = noteFinale%1*50 + "px";
+  NotBarresImg.childNodes[i].style.borderRadius = "10px " + (noteFinale%1)*10 + "px " + (noteFinale%1)*10 + "px 10px";
+  for(i += 2; i <= 9; i += 2){
+    NotBarresImg.childNodes[i].style.width = "0px";
+  }
+}
+
+chargementNotesAvis();
+
+// =======================================================================
+
 function resetStyle(S, S2) {
   /*
   var rectBmap = Bmap.getBoundingClientRect();
@@ -152,6 +191,8 @@ function resetStyle(S, S2) {
 
 function affiche(S, S2) {
   if (S == Smap) {
+    SpartieActu.style.opacity = 0;
+    SpartieMap.style.opacity = 1;
     S.style.transform = "scaleX(1)";
     S2.style.transform = "scaleX(0)";
     progressBar.style.width = "0px";
@@ -160,6 +201,8 @@ function affiche(S, S2) {
     Bcheckbox.style.display = "block";
   }
   if (S == Sactu) {
+    SpartieActu.style.opacity = 1;
+    SpartieMap.style.opacity = 0;
     ScreerArt.style.display = "block";
     S.style.transform = "scaleX(1)";
     S2.style.transform = "scaleX(0)";
@@ -172,7 +215,6 @@ function affiche(S, S2) {
 
 function afficheBarre(S) {
   if (S == Sactu) {
-    S.style.opacity = 1;
     Bsearch.style.transform = "scale(0,0.5)";
     Bloupe.style.borderRadius = "40%";
   }
@@ -194,6 +236,7 @@ Bmap.onclick = function() {
     behavior: 'smooth'
   })
   Snotation.style.transform = "translate(-100%,0px)";
+  ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
   afficheBarre(Smap);
   affiche(Smap, Sactu);
 };
@@ -207,6 +250,7 @@ Bactu.onclick = function() {
 BcreerArt.onclick = function() {
   ScreerArt.style.transition = "0.3s";
   ScreerArt.style.transform = "translate(0px,0px) scaleY(1)";
+  BcreerArt.style.display = "none";
 }
 
 let Scheckbox = document.querySelector("div:has(> .command)");
@@ -229,6 +273,7 @@ BcloseNotation.onclick = function() {
 
 BcloseCreerArticle.onclick = function() {
   ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
+  BcreerArt.style.display = "block";
 }
 
 /*
@@ -237,7 +282,7 @@ Bnote.onclick = function() {
   affiche(Snotation, Smap);
 };*/
 
-function addMarker(pos, result) {
+function addMarker(pos, nom) {
   // On vérifie si le marqueur existe déjà
   if (marqueur != undefined) {
     // Si oui, on le retire
@@ -250,22 +295,22 @@ function addMarker(pos, result) {
     draggable: true
   }
   )
-
-  var resultat = result.address.Match_addr;
-  var index = resultat.indexOf(",");
+  console.log(nom);
+  //var resultat = result.address.Match_addr;
+  var index = nom.indexOf(",");
   Tville.textContent = "62100 Calais"; // Si Calais
   if (index !== -1) {
-    var texte = resultat.split(",");
+    var texte = nom.split(",");
     Tadresse.textContent = texte[0];
     texte = texte[0];
   } else {
-    var texte = resultat;
-    Tadresse.textContent = resultat;
+    var texte = nom;
+    Tadresse.textContent = nom;
   }
 
   //marqueur.addTo(mymap);
   /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button" id="adresse-note">' + texte + '</br>').openPopup();
+  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</br>').openPopup();
 
   Bnotation = document.getElementById("adresse-note");
 
@@ -283,25 +328,24 @@ function test(e) {
 
 Smap.addEventListener('click', test, false);
 
-var geocodeService = L.esri.Geocoding.geocodeService();
-var message;
-
 mymap.on('click', function(e) {
   if(e.originalEvent.path.length < 12){
     Snotation.style.transition = "0s";
     Snotation.style.transform = "translate(-100%,0px)";
     // On récupère les coordonnées du clic
     pos = e.latlng;
-
-    //console.log(pos.lat, pos.lng);
-
-    geocodeService.reverse().latlng(e.latlng).run(function(error, result) {
-      if (error) {
-        return;
+    //console.log(pos);
+    let url = new URL("http://nominatim.openstreetmap.org/search?q=" + pos.lat + "%20" + pos.lng + "&format=json&limit=1");
+    
+    //console.log(url);
+    $.getJSON(url, function(data) {
+      console.log(data[0]);
+      if(data[0].display_name.search(" Calais,") != -1){
+          addMarker(pos, data[0].display_name);
+      }else{
+        console.log('dommage clique');
       }
-      // On crée un marqueur
-      addMarker(pos, result);
-    })
+    });
   }
 });
 
@@ -313,17 +357,15 @@ Bloupe.onclick = function() {
     //console.log("modification");
   }
   adresse.replace(" ", "%20");
+  //console.log(adresse);
   let url = new URL("http://nominatim.openstreetmap.org/search?q=" + adresse + "&format=json&limit=1");
   $.getJSON(url, function(data) {
-    let pos = [data[0].lat,data[0].lon];
-    if(data[0].display_name.search(" Calais,") != -1){
+    //console.log(data[0]);
+    let pos = {lat : data[0].lat, lng : data[0].lon};
+    //console.log(pos);
+    if(data[0].display_name.search(" Calais") != -1){
       //console.log('coucou');
-      geocodeService.reverse().latlng(pos).run(function(error, result) {
-        if (error) {
-          return;
-        }
-        addMarker(pos, result);
-      })
+        addMarker(pos, data[0].display_name);
     }else{
       console.log('dommage');
     }
