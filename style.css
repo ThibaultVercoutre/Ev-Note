@@ -40,7 +40,7 @@ footer{
   display: flex;
   background-color: #4377B2;
   margin: 0px 0px 0px 0px;
-  border-radius: .5rem .5rem 0rem 0rem ;
+  border-radius: .5rem .5rem 0rem 0rem;
   align-items: center;
   justify-content: space-between;
 }
@@ -753,7 +753,7 @@ nav .drop, #interact .drop{
 
 body form{
   height: 92vh;
-}C
+}
   
 div#pages{
   width:100%;
