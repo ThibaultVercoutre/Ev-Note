@@ -1,3 +1,11 @@
+<?php
+  if(isset($_POST["valider"])){
+    include("login.php"); // On inclut la connexion à la bdd
+    $req=$bdd->prepare("insert into images(nom, taille, type, bin) values(?,?,?,?)");
+    $req->execute(array($_FILES["Picture"]["name"], $_FILES["Picture"]["size"], $_FILES["Picture"]["type"], file_get_contents($_FILES["Picture"]["tmp_name"])));
+  }
+?>
+
 <html>
 <!--peut etre un fichier html, pas besoin php-->
 <head>
@@ -91,7 +99,7 @@
       <!--demander numero etudiant seulement si compte de type etudiant -->
     
       <hr>
-      <button type="submit" class="inscription">S'inscrire</button> 
+      <button type="submit" name="valider" class="inscription">S'inscrire</button> 
   </form>
 </div>
 
