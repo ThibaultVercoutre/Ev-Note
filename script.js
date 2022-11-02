@@ -44,7 +44,21 @@ window.onload = () => {
 };
 
 
-var cats = ["Bars", "Parcs", "Macdos", "Lycées"];
+var cats = ["Bars", "Parcs", "Macdos", "Lycees"];
+/*for (var i = 0; i < geojson.length; i++) {
+  var cat = getCat(cats, geojson[i].properties.categorie2);
+  if (cat === undefined) {
+      cat = {
+          "interestPoints" : createInterestPoints(),
+          "id" : "cat" + i,
+          "label" : geojson[i].properties.categorie2
+      }
+      cats.push(cat);
+  }
+  cat["interestPoints"].addData(geojson[i]);
+}*/
+console.log(cats);
+
 var stamen = new L.StamenTileLayer("toner-lite");
 
 var command = L.control({position: 'topright'});
@@ -57,6 +71,69 @@ command.onAdd = function (mymap) {
     return div;
 };
 command.addTo(mymap);
+
+// checkbox command
+
+let CcheckBox = document.querySelectorAll("div form input[type=checkbox]");
+let Scommand = document.querySelector(".command");
+
+function add_Marker_lieu(e){
+  console.log("coucou", e.checked);
+  // On vérifie si le marqueur existe déjà
+  if (marqueur != undefined) {
+    // Si oui, on le retire
+    mymap.removeLayer(marqueur);
+  }
+  // On crée le marqueur aux coordonnées "pos"
+  marqueur = L.marker(
+    pos, {
+    // On rend le marqueur déplaçable
+    draggable: true
+  }
+  )
+  console.log(nom);
+  //var resultat = result.address.Match_addr;
+  var index = nom.indexOf(",");
+  Tville.textContent = "62100 Calais"; // Si Calais
+  if (index !== -1) {
+    var texte = nom.split(",");
+    Tadresse.textContent = texte[0];
+    texte = texte[0];
+  } else {
+    var texte = nom;
+    Tadresse.textContent = nom;
+  }
+
+  //marqueur.addTo(mymap);
+  /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
+  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</br>').openPopup();
+
+  Bnotation = document.getElementById("adresse-note");
+}
+
+function remove_Marker_lieu(e){
+  console.log("coucou", e.checked);
+
+}
+
+function add_Marker_Command(e){
+  for(var i = 0; i < CcheckBox.length; i++) {
+    if(e.target == CcheckBox[i]){
+      console.log(i);
+      if(CcheckBox[i].checked == true){
+        CcheckBox[i].addEventListener('change', add_Marker_lieu(CcheckBox[i]), false);
+      }else{
+        CcheckBox[i].addEventListener('change', remove_Marker_lieu(CcheckBox[i]), false);
+      }
+    }
+  }
+}
+
+
+
+console.log(Scommand);
+
+Scommand.addEventListener('click', add_Marker_Command, false);
 
 //Boutons zoom
 
@@ -295,7 +372,6 @@ function addMarker(pos, nom) {
     draggable: true
   }
   )
-  console.log(nom);
   //var resultat = result.address.Match_addr;
   var index = nom.indexOf(",");
   Tville.textContent = "62100 Calais"; // Si Calais
@@ -313,6 +389,7 @@ function addMarker(pos, nom) {
   marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</br>').openPopup();
 
   Bnotation = document.getElementById("adresse-note");
+  mymap.setView([pos.lat, pos.lng], 13);
 
 };
 
@@ -339,7 +416,6 @@ mymap.on('click', function(e) {
     
     //console.log(url);
     $.getJSON(url, function(data) {
-      console.log(data[0]);
       if(data[0].display_name.search(" Calais,") != -1){
           addMarker(pos, data[0].display_name);
       }else{
