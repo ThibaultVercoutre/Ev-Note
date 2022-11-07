@@ -1,35 +1,11 @@
-let Bmap = document.getElementById("map");
-let Bactu = document.getElementById("actu");
-let Bnotation = document.getElementById("notation");
-let BcloseNotation = document.getElementById("closeNotation");
-let BcloseCreerArticle = document.getElementById("closeCreerArticle");
-let BcreerArt = document.getElementById("note");
-let Bcheckbox = document.getElementById("checkbox");
+/*=======================================================================================================*/
+/*==================================== Creation map chargement de la page ===============================*/
 
-let Tadresse = document.getElementById("batiment-name");
-let Tville = document.getElementById("ville-name-notation");
-let Sfooter = document.getElementById("le-footer");
+/* Map ===================================*/
+var mymap = L.map('section-map').setView([50.95129, 1.858686], 11);
 
-let Badressenote = null;
-
-let Bsearch = document.getElementById("div-search");
-let Isearch = document.getElementById("search");
-let Bloupe = document.getElementById("loupe");
-
-let Smap = document.getElementById("pages-map");
-let Sactu = document.getElementById("pages-actu");
-let Snotation = document.getElementById("section-notation");
-let ScreerArt = document.getElementById("section-creer-article");
-
-let SpartieMap = document.getElementById("section-map");
-let SpartieActu = document.getElementById("section-fil-actu");
-
-let Spages = document.getElementById("pages");
-
-var mymap = L.map('section-map').setView([50.95129, 1.858686], 11);  // Variable qui permettra de stocker la carte
-
-var marqueur = L.marker([50.95129, 1.858686]).addTo(mymap);//.bindPopup('<h1>Adresse du lieu : </h1><div class="button drop" id="adresse-note">Calais</br>').openPopup();
-// On attend que le DOM soit chargé
+/* marqueur ==============================*/
+var marqueur = L.marker([50.95129, 1.858686]).addTo(mymap);
 
 window.onload = () => {
   // Nous initialisons la carte et nous la centrons sur Paris
@@ -43,6 +19,8 @@ window.onload = () => {
   
 };
 
+/*=======================================================================================================*/
+/*============================= Ajout section filtre map (bars, lycées ...) =============================*/
 
 var cats = ["Bars", "Parcs", "Macdos", "Lycees"];
 /*for (var i = 0; i < geojson.length; i++) {
@@ -57,7 +35,7 @@ var cats = ["Bars", "Parcs", "Macdos", "Lycees"];
   }
   cat["interestPoints"].addData(geojson[i]);
 }*/
-console.log(cats);
+//console.log(cats);
 
 var stamen = new L.StamenTileLayer("toner-lite");
 
@@ -72,13 +50,53 @@ command.onAdd = function (mymap) {
 };
 command.addTo(mymap);
 
+/*=======================================================================================================*/
+/*========================================= Var section / boutons ... ===================================*/
+
+/* boutons ===============================*/
+let Bmap = document.getElementById("map");
+let Bactu = document.getElementById("actu");
+let Bnotation = document.getElementById("notation");
+let BcloseNotation = document.getElementById("closeNotation");
+let BcloseCreerArticle = document.getElementById("closeCreerArticle");
+let BcreerArt = document.getElementById("note");
+let Bcheckbox = document.getElementById("checkbox");
+let Badressenote = null;
+let Bsearch = document.getElementById("div-search");
+let Bloupe = document.getElementById("loupe");
+// like dislike report
+let Bup = document.querySelectorAll(".up");
+let Bdown = document.querySelectorAll(".down");
+let Breport = document.querySelectorAll(".report");
+
+/* Test ==================================*/
+let Tadresse = document.getElementById("batiment-name");
+let Tville = document.getElementById("ville-name-notation");
+
+/* Input =================================*/
+let Isearch = document.getElementById("search");
+
+/* Sections ==============================*/
+let Sfooter = document.getElementById("le-footer");
+let Smap = document.getElementById("pages-map");
+let Sactu = document.getElementById("pages-actu");
+let Snotation = document.getElementById("section-notation");
+let ScreerArt = document.getElementById("section-creer-article");
+let SpartieMap = document.getElementById("section-map");
+let SpartieActu = document.getElementById("section-fil-actu");
+let Spages = document.getElementById("pages");
+let Savi = document.getElementById("section-avis");
+let Scheckbox = document.querySelector("div:has(> .command)");
+
+/*=======================================================================================================*/
+/*========================================= detection section filtre ====================================*/
+
 // checkbox command
 
 let CcheckBox = document.querySelectorAll("div form input[type=checkbox]");
 let Scommand = document.querySelector(".command");
 
 function add_Marker_lieu(e){
-  console.log("coucou", e.checked);
   // On vérifie si le marqueur existe déjà
   if (marqueur != undefined) {
     // Si oui, on le retire
@@ -91,7 +109,6 @@ function add_Marker_lieu(e){
     draggable: true
   }
   )
-  console.log(nom);
   //var resultat = result.address.Match_addr;
   var index = nom.indexOf(",");
   Tville.textContent = "62100 Calais"; // Si Calais
@@ -112,16 +129,13 @@ function add_Marker_lieu(e){
 }
 
 function remove_Marker_lieu(e){
-  console.log("coucou", e.checked);
-
 }
 
 function add_Marker_Command(e){
   for(var i = 0; i < CcheckBox.length; i++) {
     if(e.target == CcheckBox[i]){
-      console.log(i);
       if(CcheckBox[i].checked == true){
-        CcheckBox[i].addEventListener('change', add_Marker_lieu(CcheckBox[i]), false);
+        /*CcheckBox[i].addEventListener('change', add_Marker_lieu(CcheckBox[i]), false);*/
       }else{
         CcheckBox[i].addEventListener('change', remove_Marker_lieu(CcheckBox[i]), false);
       }
@@ -129,11 +143,10 @@ function add_Marker_Command(e){
   }
 }
 
-
-
-console.log(Scommand);
-
 Scommand.addEventListener('click', add_Marker_Command, false);
+
+/*=======================================================================================================*/
+/*========================================= Style bouton zoom ===========================================*/
 
 //Boutons zoom
 
@@ -145,17 +158,17 @@ let Dzoomout = document.querySelector(".leaflet-control-zoom-out");
 Dzoomin.style.borderRadius = "8px 8px 0px 0px";
 Dzoomout.style.borderRadius = "0px 0px 8px 8px";
 
-//========================================================================
+/*=======================================================================================================*/
+/*========================================= ScrollBar ===================================================*/
 
-
-// ScrollBar =============================================================
-
+/* var ScrollBar */
 let SremplirArt = document.getElementById("champ-remplit-art");
 const progressBar = document.querySelector('.scrollbar');
 const progressBarClick = document.querySelector(".clickScrollbar");
 const Bscroll = document.getElementById("scroll");
 const Cscroll = document.querySelector("#scroll > .carre");
 
+/* Detection du scroll sur la page */
 SremplirArt.addEventListener("scroll", () => {
   let totalHeight = SremplirArt.scrollHeight - SremplirArt.clientHeight;
   let progress = (SremplirArt.scrollTop / totalHeight) * 100;
@@ -163,6 +176,7 @@ SremplirArt.addEventListener("scroll", () => {
   progressBar.style.opacity = `${progress}%`;
 })
 
+/* detection du scroll sur la page principale */
 window.addEventListener("scroll", () => {
   if (document.documentElement.scrollTop != 0) {
     Cscroll.style.transform = "rotate(180deg)";
@@ -171,6 +185,7 @@ window.addEventListener("scroll", () => {
   }
 })
 
+/* detection click sur la barre */
 progressBarClick.addEventListener("click", (e) => {
   let totalHeight = SremplirArt.scrollHeight - SremplirArt.clientHeight;
   let newPageScroll = e.layerY / progressBarClick.offsetHeight * totalHeight;
@@ -180,6 +195,7 @@ progressBarClick.addEventListener("click", (e) => {
   })
 })
 
+/* cacher / montrer la barre de progression */
 progressBarClick.addEventListener("mouseenter", () => {
   progressBar.style.width = "15px";
   progressBarClick.style.width = "15px";
@@ -190,6 +206,7 @@ progressBarClick.addEventListener("mouseleave", () => {
   progressBarClick.style.width = "8px";
 })
 
+/* */
 Bscroll.onclick = function() {
   if (document.documentElement.scrollTop == 0) {
     window.scrollTo({
@@ -204,7 +221,8 @@ Bscroll.onclick = function() {
   }
 }
 
-// =======================================================================
+/*=======================================================================================================*/
+/*===================================== Chargement des notes des avis ===================================*/
 
 const NotBarres = document.querySelectorAll(".compte-note .barres-notations .barres-2");
 const NotBarresImg = document.querySelector(".img .barres-notations .barres-2");
@@ -244,8 +262,10 @@ function chargementNotesAvis(){
 
 chargementNotesAvis();
 
-// =======================================================================
+/*=======================================================================================================*/
+/*========================================= Passage de pages en page ===================================*/
 
+/* reserStyle non utilisé */
 function resetStyle(S, S2) {
   /*
   var rectBmap = Bmap.getBoundingClientRect();
@@ -266,6 +286,7 @@ function resetStyle(S, S2) {
   Smap.style.opacity = 0;*/
 };
 
+/* Afficher la section S et cacher la section S2 */
 function affiche(S, S2) {
   if (S == Smap) {
     SpartieActu.style.opacity = 0;
@@ -290,6 +311,8 @@ function affiche(S, S2) {
   }
 }
 
+/* Afficher / cacher la barre de recherche */
+
 function afficheBarre(S) {
   if (S == Sactu) {
     Bsearch.style.transform = "scale(0,0.5)";
@@ -302,11 +325,11 @@ function afficheBarre(S) {
   }
 }
 
-//resetStyle(Smap, Sactu);
 
 affiche(Smap, Sactu);
 //ScreerArt.style.transform = "scaleY(0)";
 
+/* Si on clique sur le bouton map */
 Bmap.onclick = function() {
   window.scrollTo({
     top: 0,
@@ -318,21 +341,23 @@ Bmap.onclick = function() {
   affiche(Smap, Sactu);
 };
 
+/* Si on clique sur le bouton actu */
 Bactu.onclick = function() {
   Snotation.style.transform = "translate(-100%,0px)";
   afficheBarre(Sactu);
   affiche(Sactu, Smap);
 };
 
+/* Si on clique sur le bouton creer article */
 BcreerArt.onclick = function() {
   ScreerArt.style.transition = "0.3s";
   ScreerArt.style.transform = "translate(0px,0px) scaleY(1)";
   BcreerArt.style.display = "none";
 }
 
-let Scheckbox = document.querySelector("div:has(> .command)");
+/* Si on clique sur la section checkbox */
 Scheckbox.style.display = "none";
-let ScheckboxPosition = 0;
+var ScheckboxPosition = 0;
 Bcheckbox.onclick = function() {
   if(ScheckboxPosition == 0){
     Scheckbox.style.display = "block";
@@ -342,6 +367,9 @@ Bcheckbox.onclick = function() {
     ScheckboxPosition = 0;
   }
 }
+
+/*=======================================================================================================*/
+/*===================================================== boutons close ===================================*/
 
 BcloseNotation.onclick = function() {
   Snotation.style.transform = "translate(-100%,0px)";
@@ -359,6 +387,10 @@ Bnote.onclick = function() {
   affiche(Snotation, Smap);
 };*/
 
+/*=======================================================================================================*/
+/*========================================= Recherche d'une adresse== ===================================*/
+
+/* ajouter un marqueur et supprimer le précédent */
 function addMarker(pos, nom) {
   // On vérifie si le marqueur existe déjà
   if (marqueur != undefined) {
@@ -377,8 +409,9 @@ function addMarker(pos, nom) {
   Tville.textContent = "62100 Calais"; // Si Calais
   if (index !== -1) {
     var texte = nom.split(",");
-    Tadresse.textContent = texte[0];
-    texte = texte[0];
+    console.log(texte);
+    Tadresse.textContent = texte[0] + texte[1];
+    texte = texte[0] + texte[1];
   } else {
     var texte = nom;
     Tadresse.textContent = nom;
@@ -386,14 +419,19 @@ function addMarker(pos, nom) {
 
   //marqueur.addTo(mymap);
   /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</br>').openPopup();
-
+  if(nom.search(" 62100,") != -1){
+    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
+  }else{
+    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
+  }
   Bnotation = document.getElementById("adresse-note");
-  mymap.setView([pos.lat, pos.lng], 13);
+  mymap.setView([pos.lat, pos.lng]);
 
 };
 
-function test(e) {
+
+/* Activation bouton pour acceder au avis de l'adresse */
+function boutonavis(e) {
   if (Bnotation != null) {
     if (e.target.id == Bnotation.id) {
       Snotation.style.transition = "0.3s";
@@ -402,58 +440,50 @@ function test(e) {
     }
   }
 }
+Smap.addEventListener('click', boutonavis, false);
 
-Smap.addEventListener('click', test, false);
-
+/* Si on clique sur la map */
 mymap.on('click', function(e) {
   if(e.originalEvent.path.length < 12){
     Snotation.style.transition = "0s";
     Snotation.style.transform = "translate(-100%,0px)";
     // On récupère les coordonnées du clic
     pos = e.latlng;
-    //console.log(pos);
     let url = new URL("http://nominatim.openstreetmap.org/search?q=" + pos.lat + "%20" + pos.lng + "&format=json&limit=1");
     
-    //console.log(url);
     $.getJSON(url, function(data) {
-      if(data[0].display_name.search(" Calais,") != -1){
-          addMarker(pos, data[0].display_name);
+      if(data[0].display_name.search(" 62100,") != -1){
+        addMarker(pos, data[0].display_name);
       }else{
-        console.log('dommage clique');
+        pos = {lat : 50.95129, lng : 1.858686};
+        addMarker(pos, "Destination impossible");
       }
     });
   }
 });
 
+/* Si on clique sur la loupe */
 Bloupe.onclick = function() {
   let adresse = Isearch.value;
   let regex = "[Cc][Aa][Ll][Aa][Ii][Ss]"
   if(adresse.search(regex) == -1){
     adresse = adresse + " Calais";
-    //console.log("modification");
   }
   adresse.replace(" ", "%20");
-  //console.log(adresse);
   let url = new URL("http://nominatim.openstreetmap.org/search?q=" + adresse + "&format=json&limit=1");
   $.getJSON(url, function(data) {
-    //console.log(data[0]);
     let pos = {lat : data[0].lat, lng : data[0].lon};
-    //console.log(pos);
     if(data[0].display_name.search(" Calais") != -1){
-      //console.log('coucou');
         addMarker(pos, data[0].display_name);
     }else{
-      console.log('dommage');
+      pos = {lat : 50.95129, lng : 1.858686};
+      addMarker(pos, "Destination impossible");
     }
   });
-  
 }
 
-let Savi = document.getElementById("section-avis");
-
-let Bup = document.querySelectorAll(".up");
-let Bdown = document.querySelectorAll(".down");
-let Breport = document.querySelectorAll(".report");
+/*=======================================================================================================*/
+/*================================== Changement couleur like / dislike / report =========================*/
 
 function action_avis(e) {
   for(var i = 0; i < Bup.length; i++) {
@@ -484,3 +514,16 @@ function action_avis(e) {
 }
 
 Savi.addEventListener('click', action_avis, false);
+
+
+
+/*=======================================================================================================*/
+/*========================================= Test ========================================================*/
+
+
+let url = new URL("http://nominatim.openstreetmap.org/search?q=Pas-de-Calais%20Calais,&format=json&limit=1000");
+    
+//console.log(url);
+$.getJSON(url, function(data) {
+  console.log(data.length);
+});
