@@ -389,7 +389,7 @@ header div{
   padding: 0px 5px 0px 5px;
   transition: 0.3s;
   box-shadow: -1px 2px 2px grey;
-  background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-3));
+  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-5), var(--couleur-principale-6));
 }
 
 #compte a{
@@ -1212,7 +1212,6 @@ footer{
 }
 
 #le-footer {
-  z-index: 5;
   height: 60px;
   display: flex;
   background-color: var(--couleur-principale-1);
@@ -1247,6 +1246,14 @@ footer{
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   font-size: 100%;
   flex: auto;
+}
+
+#le-footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .lien-footer {
