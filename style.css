@@ -120,7 +120,7 @@ div:has(> .command){
 /*==================================================== BOUTONS HOVER / ACTIVE ===========================*/
 
 .button:hover, #compte:hover, #loupe:hover, #interact .drop:hover, #creer-avis:hover, .leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover{
-  box-shadow: -2px 4px 4px grey;
+  /*box-shadow: -1px 2px 2px grey;*/
   background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-4));
 }
 

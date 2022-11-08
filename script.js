@@ -22,7 +22,7 @@ window.onload = () => {
 /*=======================================================================================================*/
 /*============================= Ajout section filtre map (bars, lycées ...) =============================*/
 
-var cats = ["Bars", "Parcs", "Macdos", "Lycees"];
+var cats = ["Bars", "Parcs", "FastFood", "Lycees"];
 /*for (var i = 0; i < geojson.length; i++) {
   var cat = getCat(cats, geojson[i].properties.categorie2);
   if (cat === undefined) {
@@ -49,6 +49,32 @@ command.onAdd = function (mymap) {
     return div;
 };
 command.addTo(mymap);
+
+/*=======================================================================================================*/
+/*============================== Icon Leaflet pour bar / parcs ... ======================================*/
+
+var greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+/*=======================================================================================================*/
+/*============================= Liste bar / restaurant / parcs ... ======================================*/
+
+
+var bars = L.layerGroup([
+  L.marker([50.9600393, 1.8506475], {icon : greenIcon}).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Pop Rock</div></br>'), 
+  L.marker([50.9603772,1.8484158], {icon : greenIcon}).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Purple Cafe</div></br>')]);
+
+var parcs = L.layerGroup([
+  L.marker([50.9559974,1.8519496921045282]).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Parc Richelieu</div></br>'), 
+  L.marker([50.96344995,1.8797239818798321]).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Bois Dubrulle</div></br>')]);
+
+var filtre = [bars, parcs];
 
 /*=======================================================================================================*/
 /*========================================= Var section / boutons ... ===================================*/
@@ -102,40 +128,24 @@ function add_Marker_lieu(e){
     // Si oui, on le retire
     mymap.removeLayer(marqueur);
   }
-  // On crée le marqueur aux coordonnées "pos"
-  marqueur = L.marker(
-    pos, {
-    // On rend le marqueur déplaçable
-    draggable: true
+  switch (e.id) {
+    case 'Bars': filtre[0].addTo(mymap); break;
+    case 'Parcs': filtre[1].addTo(mymap); break;
   }
-  )
-  //var resultat = result.address.Match_addr;
-  var index = nom.indexOf(",");
-  Tville.textContent = "62100 Calais"; // Si Calais
-  if (index !== -1) {
-    var texte = nom.split(",");
-    Tadresse.textContent = texte[0];
-    texte = texte[0];
-  } else {
-    var texte = nom;
-    Tadresse.textContent = nom;
-  }
-
-  //marqueur.addTo(mymap);
-  /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</br>').openPopup();
-
-  Bnotation = document.getElementById("adresse-note");
 }
 
 function remove_Marker_lieu(e){
+  switch (e.id) {
+    case 'Bars': mymap.removeLayer(filtre[0]); break;
+    case 'Parcs': mymap.removeLayer(filtre[1]); break;
+  }
 }
 
 function add_Marker_Command(e){
   for(var i = 0; i < CcheckBox.length; i++) {
     if(e.target == CcheckBox[i]){
       if(CcheckBox[i].checked == true){
-        /*CcheckBox[i].addEventListener('change', add_Marker_lieu(CcheckBox[i]), false);*/
+        CcheckBox[i].addEventListener('change', add_Marker_lieu(CcheckBox[i]), false);
       }else{
         CcheckBox[i].addEventListener('change', remove_Marker_lieu(CcheckBox[i]), false);
       }
@@ -388,11 +398,14 @@ Bnote.onclick = function() {
 };*/
 
 /*=======================================================================================================*/
-/*========================================= Recherche d'une adresse== ===================================*/
+/*========================================= Recherche d'une adresse =====================================*/
 
 /* ajouter un marqueur et supprimer le précédent */
 function addMarker(pos, nom) {
-  // On vérifie si le marqueur existe déjà
+  for(var i = 0; i < filtre.length; i++) {
+    mymap.removeLayer(filtre[i]);
+  }
+// On vérifie si le marqueur existe déjà
   if (marqueur != undefined) {
     // Si oui, on le retire
     mymap.removeLayer(marqueur);
@@ -525,5 +538,5 @@ let url = new URL("http://nominatim.openstreetmap.org/search?q=Pas-de-Calais%20C
     
 //console.log(url);
 $.getJSON(url, function(data) {
-  console.log(data.length);
+  //console.log(data.length);
 });
