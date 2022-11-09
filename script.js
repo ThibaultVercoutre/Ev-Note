@@ -22,7 +22,7 @@ window.onload = () => {
 /*=======================================================================================================*/
 /*============================= Ajout section filtre map (bars, lycées ...) =============================*/
 
-var cats = ["Bars", "Parcs", "FastFood", "Lycees"];
+var cats = ["Bars", "Parcs","Culture", "FastFood", "Lycees"];
 /*for (var i = 0; i < geojson.length; i++) {
   var cat = getCat(cats, geojson[i].properties.categorie2);
   if (cat === undefined) {
@@ -74,7 +74,12 @@ var parcs = L.layerGroup([
   L.marker([50.9559974,1.8519496921045282]).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Parc Richelieu</div></br>'), 
   L.marker([50.96344995,1.8797239818798321]).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Bois Dubrulle</div></br>')]);
 
-var filtre = [bars, parcs];
+var culture = L.layerGroup([
+  L.marker([50.95210063553772,1.8505847454071047]).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Musée de mémoire 1939 - 1945</div></br>'), 
+  L.marker([50.9569106930028,1.8516576290130617]).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Musée des Beaux-Arts</div></br>')]);
+
+
+var filtre = [bars, parcs, culture];
 
 /*=======================================================================================================*/
 /*========================================= Var section / boutons ... ===================================*/
@@ -131,6 +136,7 @@ function add_Marker_lieu(e){
   switch (e.id) {
     case 'Bars': filtre[0].addTo(mymap); break;
     case 'Parcs': filtre[1].addTo(mymap); break;
+    case 'Culture': filtre[2].addTo(mymap); break;
   }
 }
 
@@ -138,6 +144,7 @@ function remove_Marker_lieu(e){
   switch (e.id) {
     case 'Bars': mymap.removeLayer(filtre[0]); break;
     case 'Parcs': mymap.removeLayer(filtre[1]); break;
+    case 'Culture': mymap.removeLayer(filtre[2]); break;
   }
 }
 
@@ -402,6 +409,7 @@ Bnote.onclick = function() {
 
 /* ajouter un marqueur et supprimer le précédent */
 function addMarker(pos, nom) {
+  console.log(pos);
   for(var i = 0; i < filtre.length; i++) {
     mymap.removeLayer(filtre[i]);
   }
@@ -423,8 +431,13 @@ function addMarker(pos, nom) {
   if (index !== -1) {
     var texte = nom.split(",");
     console.log(texte);
-    Tadresse.textContent = texte[0] + texte[1];
-    texte = texte[0] + texte[1];
+    if(parseInt(texte[0][0]) >= 0 || parseInt(texte[0][0] <= 9)){
+      Tadresse.textContent = texte[0] + texte[1];
+      texte = texte[0] + texte[1];
+    }else{
+      Tadresse.textContent = texte[0];
+      texte = texte[0];
+    }
   } else {
     var texte = nom;
     Tadresse.textContent = nom;
