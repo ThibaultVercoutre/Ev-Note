@@ -2,7 +2,8 @@
 /*==================================== Creation map chargement de la page ===============================*/
 
 /* Map ===================================*/
-var mymap = L.map('section-map').setView([50.95129, 1.858686], 11);
+var mymap = L.map('section-map', {
+    zoomSnap: 0.01}).setView([50.95129, 1.858686], 11);
 
 console.log(mymap);
 /* marqueur ==============================*/
@@ -14,7 +15,7 @@ window.onload = () => {
   L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
     attribution: '',
     minZoom: 13,
-    maxZoom: 20
+    maxZoom: 18
   }).addTo(mymap);
   //var command = L.control({position: 'topright'});
   
@@ -90,6 +91,15 @@ var fastFoodIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
+var schoolIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
 /*=======================================================================================================*/
 /*============================= Liste bar / restaurant / parcs ... ======================================*/
 
@@ -105,27 +115,59 @@ var filtre = {
 var debutBouton = '<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">';
 var finBouton = '</div></br>';
 
+/* Bars ===========================================================================================*/
+
 var tableBars = [
   L.marker([50.9600393, 1.8506475], {icon : barIcon}).bindPopup(debutBouton + 'Pop Rock' + finBouton), 
-  L.marker([50.9603772,1.8484158], {icon : barIcon}).bindPopup(debutBouton + 'Purple Cafe' + finBouton)];
+  L.marker([50.9603772,1.8484158], {icon : barIcon}).bindPopup(debutBouton + 'Purple Cafe' + finBouton),
+  L.marker([50.957105, 1.8482429], {icon : barIcon}).bindPopup(debutBouton + 'La Betterave' + finBouton)];
 var bars = L.layerGroup(tableBars);
 filtre.Bars = bars;
 
+/* Parcs ==========================================================================================*/
 
-var tableParcs = [
-  L.marker([50.9559974,1.8519496921045282], {icon : parcIcon}).bindPopup(debutBouton + 'Parc Richelieu' + finBouton), 
-  L.marker([50.96344995,1.8797239818798321], {icon : parcIcon}).bindPopup(debutBouton + 'Bois Dubrulle' + finBouton)];
-var parcs = L.layerGroup(tableParcs);
-filtre.Parcs = parcs;
+var urls = [
+  new URL("https://nominatim.openstreetmap.org/search?q=Parc%20Calais%2062100&format=json&limit=100"),
+  new URL("https://nominatim.openstreetmap.org/search?q=Bois%20Calais%2062100&format=json&limit=100")];
+var tableParcs = [];
 
+for(var i_url = 0; i_url < urls.length; i_url++) {
+  $.getJSON(urls[i_url], function(data) {
+    for(var i = 0; i < data.length; i++){
+      let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
+      if((data[i].type == "park" || data[i].type == "wood") && data[i].display_name.search(regex1) != -1){
+        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : parcIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
+        tableParcs.push(marqueur);
+     }
+    }
+    parcs = L.layerGroup(tableParcs);
+    filtre.Parcs = parcs;
+  });
+};
 
-var tableCulture = [
-  L.marker([50.95210063553772,1.8505847454071047], {icon : cultureIcon}).bindPopup(debutBouton + 'Musée de mémoire 1939 - 1945' + finBouton),  
-  L.marker([50.9569106930028,1.8516576290130617], {icon : cultureIcon}).bindPopup(debutBouton + 'Musée des Beaux-Arts' + finBouton)];
-var culture = L.layerGroup(tableCulture);
-filtre.Culture = culture;
+/* Culture ========================================================================================*/
 
-/* FastFood */
+var urls = [
+  new URL("https://nominatim.openstreetmap.org/search?q=Musee%20Calais%2062100&format=json&limit=100"),
+  new URL("https://nominatim.openstreetmap.org/search?q=Grand%20Calais%2062100&format=json&limit=100"),
+  new URL("https://nominatim.openstreetmap.org/search?q=Th%C3%A9atre%20plein%20Calais%2062100&format=json&limit=100")];
+var tableCulture = [];
+
+for(var i_url = 0; i_url < urls.length; i_url++) {
+  $.getJSON(urls[i_url], function(data) {
+    for(var i = 0; i < data.length; i++){
+      let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
+      if((data[i].type == "museum" || data[i].type == "theatre") && data[i].display_name.search(regex1) != -1){
+        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : cultureIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
+        tableCulture.push(marqueur);
+     }
+    }
+    culture = L.layerGroup(tableCulture);
+    filtre.Culture = culture;
+  });
+};
+
+/* FastFood =======================================================================================*/
 
 var urls = [
   new URL("http://nominatim.openstreetmap.org/search?q=Burger%20King%20Calais%2062100&format=json&limit=100"), 
@@ -143,7 +185,7 @@ for(var i_url = 0; i_url < urls.length; i_url++) {
   });
 };
 
-/* Lycées */
+/* Lycées =========================================================================================*/
 
 var url = new URL("https://nominatim.openstreetmap.org/search?q=Lyc%C3%A9e%20Calais%2062100&format=json&limit=100");
 var tableLycees = [];
@@ -151,9 +193,8 @@ var tableLycees = [];
 $.getJSON(url, function(data) {
   for(var i = 0; i < data.length; i++){
     let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
-    let regex2 = "[Ll][Yy][Cc][Eée][Ee]"
     if(data[i].type == "school" && data[i].display_name.search(regex1) != -1){
-      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : cultureIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
+      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : schoolIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
       tableLycees.push(marqueur);
     }
   }
@@ -217,22 +258,32 @@ let Lcheckbox = document.querySelectorAll(".command form input");
 let CcheckBox = document.querySelectorAll("div form input[type=checkbox]");
 let Scommand = document.querySelector(".command");
 
-function calcul_center(elts){
-  console.log(elts[0]);
-  console.log(elts[0]._latlng.lat);
-  max_distance = 0;
+function center_adresse(elts){
+  var dist_max_V = 0;
+  var dist_max_H = 0;
+  var Point = [0,0];
+
   for(var i = 0; i < elts.length; i++){
     for(var j = i; j < elts.length; j++){
       if(i != j){
-        var dist = Math.sqrt(Math.pow(Number(elts[i]._latlng.lat) - Number(elts[j]._latlng.lat), 2)
-                          + Math.pow(Number(elts[i]._latlng.lng) - Number(elts[j]._latlng.lng), 2));
-        if(dist > max_distance){
-          max_distance = dist;
+        var distV = Math.abs(Number(elts[i]._latlng.lat) - Number(elts[j]._latlng.lat));
+        var distH = Math.abs(Number(elts[i]._latlng.lng) - Number(elts[j]._latlng.lng));
+        if(distH > dist_max_H){
+          dist_max_H = distH;
+          Point[0] = (elts[i]._latlng.lat + elts[j]._latlng.lat) / 2;
+        }
+        if(distV > dist_max_V){
+          dist_max_V = distV;
+          Point[1] = (elts[i]._latlng.lng + elts[j]._latlng.lng) / 2;
         }
       }
     }
   }
-  return max_distance;
+  return [Point, dist_max_H, dist_max_V];
+}
+
+function taille_max_map(p){
+  return 180 / Math.pow(2, p);
 }
 
 function add_Marker_lieu(e){
@@ -258,10 +309,19 @@ function add_Marker_lieu(e){
                 var type_filtre = tableLycees;
                 break;
   }
-  console.log(calcul_center(type_filtre));
-  var view = 20 / (calcul_center(type_filtre) * 15 * 15);
-  console.log(view);
-  mymap.setView([50.95129, 1.858686], view);
+
+  var center = center_adresse(type_filtre)[0];
+  var dist_max_H = center_adresse(type_filtre)[1];
+  var dist_max_V = center_adresse(type_filtre)[2];
+  if(dist_max_H > dist_max_V){
+    var view = 18 - (dist_max_H) / taille_max_map(12) * (18 - 13);
+  }else{
+    var view = 18 - (dist_max_V) / taille_max_map(14) * (18 - 13);
+  }
+  
+  console.log("Niveau de zoom = ",Math.ceil(view));
+  //console.log(center, dist_max);
+  mymap.setView(center, 14); //
 }
 
 function remove_Marker_lieu(e){
@@ -538,9 +598,12 @@ function addMarker(pos, nom) {
   for(var i = 0; i < Lcheckbox.length; i++) {
     Lcheckbox[i].checked = false;
   }
-  for(var i = 0; i < filtre.length; i++) {
-    mymap.removeLayer(filtre[i]);
-  }
+  
+  mymap.removeLayer(filtre.Bars);
+  mymap.removeLayer(filtre.Culture);
+  mymap.removeLayer(filtre.Parcs);
+  mymap.removeLayer(filtre.FastFood);
+  mymap.removeLayer(filtre.Lycees);
 // On vérifie si le marqueur existe déjà
   if (marqueur != undefined) {
     // Si oui, on le retire
