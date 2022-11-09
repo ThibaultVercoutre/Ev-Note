@@ -47,7 +47,7 @@ nav#nav-fin{
 }
   
 nav#nav-fin #scroll{
-  transform: translateY(-100px);
+  transform: translateY(-75px);
   animation: upLaunch ease 3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
@@ -64,10 +64,10 @@ nav#nav-fin #scroll .carre{
   }
   30% {
     opacity: 1;
-    transform: scale(1.05,0.95) translateY(-120px);
+    transform: scale(1.05,0.95) translateY(-100px);
   }
-  60% { transform: scale(0.975,1.025) translateY(-90px); }
-  100% { transform: scale(1,1) translateY(-100px); }
+  60% { transform: scale(0.975,1.025) translateY(-65px); }
+  100% { transform: scale(1,1) translateY(-75x); }
 }
 
 /*=======================================================================================================*/

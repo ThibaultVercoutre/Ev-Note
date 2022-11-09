@@ -4,6 +4,7 @@
 /* Map ===================================*/
 var mymap = L.map('section-map').setView([50.95129, 1.858686], 11);
 
+console.log(mymap);
 /* marqueur ==============================*/
 var marqueur = L.marker([50.95129, 1.858686]).addTo(mymap);
 
@@ -13,7 +14,7 @@ window.onload = () => {
   L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
     attribution: '',
     minZoom: 13,
-    maxZoom: 18
+    maxZoom: 20
   }).addTo(mymap);
   //var command = L.control({position: 'topright'});
   
@@ -22,7 +23,7 @@ window.onload = () => {
 /*=======================================================================================================*/
 /*============================= Ajout section filtre map (bars, lycées ...) =============================*/
 
-var cats = ["Bars", "Parcs", "FastFood", "Lycees"];
+var cats = ["Bars", "Parcs","Culture", "FastFood", "Lycees"];
 /*for (var i = 0; i < geojson.length; i++) {
   var cat = getCat(cats, geojson[i].properties.categorie2);
   if (cat === undefined) {
@@ -53,7 +54,34 @@ command.addTo(mymap);
 /*=======================================================================================================*/
 /*============================== Icon Leaflet pour bar / parcs ... ======================================*/
 
-var greenIcon = new L.Icon({
+var barIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+var parcIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+var cultureIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+var fastFoodIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
@@ -65,16 +93,80 @@ var greenIcon = new L.Icon({
 /*=======================================================================================================*/
 /*============================= Liste bar / restaurant / parcs ... ======================================*/
 
+var bars, parcs, culture, fastfood, lycees;
 
-var bars = L.layerGroup([
-  L.marker([50.9600393, 1.8506475], {icon : greenIcon}).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Pop Rock</div></br>'), 
-  L.marker([50.9603772,1.8484158], {icon : greenIcon}).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Purple Cafe</div></br>')]);
+var filtre = {
+  "Bars" : bars, 
+  "Parcs" : parcs, 
+  "Culture" : culture, 
+  "FastFood" : fastfood,
+  "Lycees" : lycees};
 
-var parcs = L.layerGroup([
-  L.marker([50.9559974,1.8519496921045282]).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Parc Richelieu</div></br>'), 
-  L.marker([50.96344995,1.8797239818798321]).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">Bois Dubrulle</div></br>')]);
+var debutBouton = '<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">';
+var finBouton = '</div></br>';
 
-var filtre = [bars, parcs];
+var tableBars = [
+  L.marker([50.9600393, 1.8506475], {icon : barIcon}).bindPopup(debutBouton + 'Pop Rock' + finBouton), 
+  L.marker([50.9603772,1.8484158], {icon : barIcon}).bindPopup(debutBouton + 'Purple Cafe' + finBouton)];
+var bars = L.layerGroup(tableBars);
+filtre.Bars = bars;
+
+
+var tableParcs = [
+  L.marker([50.9559974,1.8519496921045282], {icon : parcIcon}).bindPopup(debutBouton + 'Parc Richelieu' + finBouton), 
+  L.marker([50.96344995,1.8797239818798321], {icon : parcIcon}).bindPopup(debutBouton + 'Bois Dubrulle' + finBouton)];
+var parcs = L.layerGroup(tableParcs);
+filtre.Parcs = parcs;
+
+
+var tableCulture = [
+  L.marker([50.95210063553772,1.8505847454071047], {icon : cultureIcon}).bindPopup(debutBouton + 'Musée de mémoire 1939 - 1945' + finBouton),  
+  L.marker([50.9569106930028,1.8516576290130617], {icon : cultureIcon}).bindPopup(debutBouton + 'Musée des Beaux-Arts' + finBouton)];
+var culture = L.layerGroup(tableCulture);
+filtre.Culture = culture;
+
+/* FastFood */
+
+var urls = [
+  new URL("http://nominatim.openstreetmap.org/search?q=Burger%20King%20Calais%2062100&format=json&limit=100"), 
+  new URL("http://nominatim.openstreetmap.org/search?q=KFC%20Calais%2062100&format=json&limit=100")];
+var tableFastFood = [];
+
+for(var i_url = 0; i_url < urls.length; i_url++) {
+  $.getJSON(urls[i_url], function(data) {
+    for(var i = 0; i < data.length; i++){
+      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : fastFoodIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
+      tableFastFood.push(marqueur);
+    }
+    fastfood = L.layerGroup(tableFastFood);
+    filtre.FastFood = fastfood;
+  });
+};
+
+/* Lycées */
+
+var url = new URL("https://nominatim.openstreetmap.org/search?q=Lyc%C3%A9e%20Calais%2062100&format=json&limit=100");
+var tableLycees = [];
+
+$.getJSON(url, function(data) {
+  for(var i = 0; i < data.length; i++){
+    let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
+    let regex2 = "[Ll][Yy][Cc][Eée][Ee]"
+    if(data[i].type == "school" && data[i].display_name.search(regex1) != -1){
+      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : cultureIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
+      tableLycees.push(marqueur);
+    }
+  }
+  lycees = L.layerGroup(tableLycees);
+  filtre.Lycees = lycees;
+});
+
+/*
+var fastfood = L.layerGroup([
+  L.marker([50.94165615,1.8374475499711844], {icon : fastFoodIcon}).bindPopup(debutBouton + 'Burger King' + finBouton), 
+  L.marker([50.952654597608564,1.8900346755981448], {icon : fastFoodIcon}).bindPopup(debutBouton + "McDonald's" + finBouton)]);
+*/
+
 
 /*=======================================================================================================*/
 /*========================================= Var section / boutons ... ===================================*/
@@ -114,6 +206,9 @@ let Spages = document.getElementById("pages");
 let Savi = document.getElementById("section-avis");
 let Scheckbox = document.querySelector("div:has(> .command)");
 
+/* Checkbox ==============================*/
+let Lcheckbox = document.querySelectorAll(".command form input");
+
 /*=======================================================================================================*/
 /*========================================= detection section filtre ====================================*/
 
@@ -122,6 +217,24 @@ let Scheckbox = document.querySelector("div:has(> .command)");
 let CcheckBox = document.querySelectorAll("div form input[type=checkbox]");
 let Scommand = document.querySelector(".command");
 
+function calcul_center(elts){
+  console.log(elts[0]);
+  console.log(elts[0]._latlng.lat);
+  max_distance = 0;
+  for(var i = 0; i < elts.length; i++){
+    for(var j = i; j < elts.length; j++){
+      if(i != j){
+        var dist = Math.sqrt(Math.pow(Number(elts[i]._latlng.lat) - Number(elts[j]._latlng.lat), 2)
+                          + Math.pow(Number(elts[i]._latlng.lng) - Number(elts[j]._latlng.lng), 2));
+        if(dist > max_distance){
+          max_distance = dist;
+        }
+      }
+    }
+  }
+  return max_distance;
+}
+
 function add_Marker_lieu(e){
   // On vérifie si le marqueur existe déjà
   if (marqueur != undefined) {
@@ -129,15 +242,35 @@ function add_Marker_lieu(e){
     mymap.removeLayer(marqueur);
   }
   switch (e.id) {
-    case 'Bars': filtre[0].addTo(mymap); break;
-    case 'Parcs': filtre[1].addTo(mymap); break;
+    case 'Bars': filtre.Bars.addTo(mymap); 
+                var type_filtre = tableBars;
+                break;
+    case 'Parcs': filtre.Parcs.addTo(mymap);
+                var type_filtre = tableParcs;
+                break;
+    case 'Culture': filtre.Culture.addTo(mymap);
+                var type_filtre = tableCulture;
+                break;
+    case 'FastFood': filtre.FastFood.addTo(mymap);
+                var type_filtre = tableFastFood;
+                break;
+    case 'Lycees': filtre.Lycees.addTo(mymap);
+                var type_filtre = tableLycees;
+                break;
   }
+  console.log(calcul_center(type_filtre));
+  var view = 20 / (calcul_center(type_filtre) * 15 * 15);
+  console.log(view);
+  mymap.setView([50.95129, 1.858686], view);
 }
 
 function remove_Marker_lieu(e){
   switch (e.id) {
-    case 'Bars': mymap.removeLayer(filtre[0]); break;
-    case 'Parcs': mymap.removeLayer(filtre[1]); break;
+    case 'Bars': mymap.removeLayer(filtre.Bars); break;
+    case 'Parcs': mymap.removeLayer(filtre.Parcs); break;
+    case 'Culture': mymap.removeLayer(filtre.Culture); break;
+    case 'FastFood': mymap.removeLayer(filtre.FastFood); break;
+    case 'Lycees': mymap.removeLayer(filtre.Lycees); break;
   }
 }
 
@@ -402,6 +535,9 @@ Bnote.onclick = function() {
 
 /* ajouter un marqueur et supprimer le précédent */
 function addMarker(pos, nom) {
+  for(var i = 0; i < Lcheckbox.length; i++) {
+    Lcheckbox[i].checked = false;
+  }
   for(var i = 0; i < filtre.length; i++) {
     mymap.removeLayer(filtre[i]);
   }
@@ -422,9 +558,13 @@ function addMarker(pos, nom) {
   Tville.textContent = "62100 Calais"; // Si Calais
   if (index !== -1) {
     var texte = nom.split(",");
-    console.log(texte);
-    Tadresse.textContent = texte[0] + texte[1];
-    texte = texte[0] + texte[1];
+    if(parseInt(texte[0][0]) >= 0 || parseInt(texte[0][0] <= 9)){
+      Tadresse.textContent = texte[0] + texte[1];
+      texte = texte[0] + texte[1];
+    }else{
+      Tadresse.textContent = texte[0];
+      texte = texte[0];
+    }
   } else {
     var texte = nom;
     Tadresse.textContent = nom;
@@ -465,6 +605,7 @@ mymap.on('click', function(e) {
     let url = new URL("http://nominatim.openstreetmap.org/search?q=" + pos.lat + "%20" + pos.lng + "&format=json&limit=1");
     
     $.getJSON(url, function(data) {
+      console.log(data);
       if(data[0].display_name.search(" 62100,") != -1){
         addMarker(pos, data[0].display_name);
       }else{
@@ -534,9 +675,9 @@ Savi.addEventListener('click', action_avis, false);
 /*========================================= Test ========================================================*/
 
 
-let url = new URL("http://nominatim.openstreetmap.org/search?q=Pas-de-Calais%20Calais,&format=json&limit=1000");
+/*let url = new URL("http://nominatim.openstreetmap.org/search?q=Pas-de-Calais%20Calais,&format=json&limit=1000");
     
 //console.log(url);
 $.getJSON(url, function(data) {
   //console.log(data.length);
-});
+});*/
