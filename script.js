@@ -3,9 +3,8 @@
 
 /* Map ===================================*/
 var mymap = L.map('section-map', {
-    zoomSnap: 0.01}).setView([50.95129, 1.858686], 11);
+    zoomSnap: 1}).setView([50.95129, 1.858686], 11);
 
-console.log(mymap);
 /* marqueur ==============================*/
 var marqueur = L.marker([50.95129, 1.858686]).addTo(mymap);
 
@@ -24,20 +23,13 @@ window.onload = () => {
 /*=======================================================================================================*/
 /*============================= Ajout section filtre map (bars, lycées ...) =============================*/
 
-var cats = ["Bars", "Parcs","Culture", "FastFood", "Lycees"];
-/*for (var i = 0; i < geojson.length; i++) {
-  var cat = getCat(cats, geojson[i].properties.categorie2);
-  if (cat === undefined) {
-      cat = {
-          "interestPoints" : createInterestPoints(),
-          "id" : "cat" + i,
-          "label" : geojson[i].properties.categorie2
-      }
-      cats.push(cat);
-  }
-  cat["interestPoints"].addData(geojson[i]);
-}*/
-//console.log(cats);
+var cat1 = ["Bars", "FastFood", "Lycees"];
+var cat2 = ["Parcs","Culture"];
+var cat3 = ["Lycees", "Ecoles"];
+var rubriques = [
+  ["Restauration","Bars", "FastFood"],
+  ["Detente","Parcs","Culture"],
+  ["Etudes","Lycees", "Universites"]];
 
 var stamen = new L.StamenTileLayer("toner-lite");
 
@@ -45,8 +37,14 @@ var command = L.control({position: 'topright'});
 command.onAdd = function (mymap) {
     var div = L.DomUtil.create('div', 'command');
     div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Points d\'intérêt</span><br /><span style="color:grey;font-size:14px;">(ville d\'Issy-Les-Moulineaux)</span></div>';
-    for (var i = 0; i < cats.length; i++) {
-        div.innerHTML += '<form><input id="' + cats[i] + '" type="checkbox"/>' + cats[i] + '</form>';
+    for (var i = 0; i < rubriques.length; i++) {
+      var txt = '';
+      txt += '<div class="category"><form class="category_title"><span data-value="' + 1 + '" class="material-symbols-outlined">chevron_right</span><div id="' + rubriques[i][0] + '" class="type_rubrique">' + rubriques[i][0] + '</div></form>';
+      for(var j = 1; j < rubriques[i].length; j++) {
+        txt += '<form data-value="' + 1 + '" class="' + rubriques[i][0] + '"><input id="' + rubriques[i][j] + '" type="checkbox"/>' + rubriques[i][j] + '</form>';
+      }
+      txt += '</div>';
+      div.innerHTML += txt;
     }
     return div;
 };
@@ -55,6 +53,12 @@ command.addTo(mymap);
 /*=======================================================================================================*/
 /*============================== Icon Leaflet pour bar / parcs ... ======================================*/
 
+var couleur_rubrique = {
+  "Restauration" : "#f0667d",
+  "Detente" : "#45ed88",
+  "Etudes" : "#eee44f"
+};
+/*
 var barIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -62,9 +66,9 @@ var barIcon = new L.Icon({
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
-});
+});*/
 
-var parcIcon = new L.Icon({
+var detenteIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
@@ -73,7 +77,8 @@ var parcIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-var cultureIcon = new L.Icon({
+
+var schoolIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
@@ -82,7 +87,7 @@ var cultureIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-var fastFoodIcon = new L.Icon({
+var restaurationIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
   iconSize: [25, 41],
@@ -90,7 +95,7 @@ var fastFoodIcon = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
-
+/*
 var schoolIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -98,29 +103,44 @@ var schoolIcon = new L.Icon({
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
-});
+});*/
 
 /*=======================================================================================================*/
 /*============================= Liste bar / restaurant / parcs ... ======================================*/
 
-var bars, parcs, culture, fastfood, lycees;
+var bars, parcs, culture, fastfood, lycees, universites;
 
 var filtre = {
   "Bars" : bars, 
   "Parcs" : parcs, 
   "Culture" : culture, 
   "FastFood" : fastfood,
-  "Lycees" : lycees};
+  "Lycees" : lycees,
+  "Universites" : universites};
 
 var debutBouton = '<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">';
 var finBouton = '</div></br>';
 
+/* Fonction qui simplifie les adresse */
+
+function limit_adresse(nom){
+  var texte = nom.split(",");
+  if(parseInt(texte[0][0]) >= 0 || parseInt(texte[0][0] <= 9)){
+    Tadresse.textContent = texte[0] + texte[1];
+    texte = texte[0] + texte[1];
+  }else{
+    Tadresse.textContent = texte[0];
+    texte = texte[0];
+  }
+  return texte;
+}
+
 /* Bars ===========================================================================================*/
 
 var tableBars = [
-  L.marker([50.9600393, 1.8506475], {icon : barIcon}).bindPopup(debutBouton + 'Pop Rock' + finBouton), 
-  L.marker([50.9603772,1.8484158], {icon : barIcon}).bindPopup(debutBouton + 'Purple Cafe' + finBouton),
-  L.marker([50.957105, 1.8482429], {icon : barIcon}).bindPopup(debutBouton + 'La Betterave' + finBouton)];
+  L.marker([50.9600393, 1.8506475], {icon : restaurationIcon}).bindPopup(debutBouton + 'Pop Rock' + finBouton), 
+  L.marker([50.9603772,1.8484158], {icon : restaurationIcon}).bindPopup(debutBouton + 'Purple Cafe' + finBouton),
+  L.marker([50.957105, 1.8482429], {icon : restaurationIcon}).bindPopup(debutBouton + 'La Betterave' + finBouton)];
 var bars = L.layerGroup(tableBars);
 filtre.Bars = bars;
 
@@ -136,7 +156,8 @@ for(var i_url = 0; i_url < urls.length; i_url++) {
     for(var i = 0; i < data.length; i++){
       let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
       if((data[i].type == "park" || data[i].type == "wood") && data[i].display_name.search(regex1) != -1){
-        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : parcIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
+        var nom = limit_adresse(data[i].display_name);
+        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : detenteIcon}).bindPopup(debutBouton + nom + finBouton);
         tableParcs.push(marqueur);
      }
     }
@@ -158,7 +179,8 @@ for(var i_url = 0; i_url < urls.length; i_url++) {
     for(var i = 0; i < data.length; i++){
       let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
       if((data[i].type == "museum" || data[i].type == "theatre") && data[i].display_name.search(regex1) != -1){
-        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : cultureIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
+        var nom = limit_adresse(data[i].display_name);
+        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : detenteIcon}).bindPopup(debutBouton + nom + finBouton);
         tableCulture.push(marqueur);
      }
     }
@@ -177,7 +199,8 @@ var tableFastFood = [];
 for(var i_url = 0; i_url < urls.length; i_url++) {
   $.getJSON(urls[i_url], function(data) {
     for(var i = 0; i < data.length; i++){
-      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : fastFoodIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
+      var nom = limit_adresse(data[i].display_name);
+      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : restaurationIcon}).bindPopup(debutBouton + nom + finBouton);
       tableFastFood.push(marqueur);
     }
     fastfood = L.layerGroup(tableFastFood);
@@ -194,7 +217,8 @@ $.getJSON(url, function(data) {
   for(var i = 0; i < data.length; i++){
     let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
     if(data[i].type == "school" && data[i].display_name.search(regex1) != -1){
-      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : schoolIcon}).bindPopup(debutBouton + data[i].display_name + finBouton);
+      var nom = limit_adresse(data[i].display_name);
+      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : schoolIcon}).bindPopup(debutBouton + nom + finBouton);
       tableLycees.push(marqueur);
     }
   }
@@ -202,12 +226,23 @@ $.getJSON(url, function(data) {
   filtre.Lycees = lycees;
 });
 
-/*
-var fastfood = L.layerGroup([
-  L.marker([50.94165615,1.8374475499711844], {icon : fastFoodIcon}).bindPopup(debutBouton + 'Burger King' + finBouton), 
-  L.marker([50.952654597608564,1.8900346755981448], {icon : fastFoodIcon}).bindPopup(debutBouton + "McDonald's" + finBouton)]);
-*/
+/* Université =====================================================================================*/
 
+var url = new URL("https://nominatim.openstreetmap.org/search?q=Universit%C3%A9%20Calais%2062100&format=json&limit=100");
+var tableUniversites = [];
+
+$.getJSON(url, function(data) {
+  for(var i = 0; i < data.length; i++){
+    let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]";
+    if(data[i].type == "college" && data[i].display_name.search(regex1) != -1 && data[i].display_name.search("62100") != -1){
+      var nom = limit_adresse(data[i].display_name);
+      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : schoolIcon}).bindPopup(debutBouton + nom + finBouton);
+      tableUniversites.push(marqueur);
+    }
+  }
+  universites = L.layerGroup(tableUniversites);
+  filtre.Universites = universites;
+});
 
 /*=======================================================================================================*/
 /*========================================= Var section / boutons ... ===================================*/
@@ -261,8 +296,8 @@ let Scommand = document.querySelector(".command");
 function center_adresse(elts){
   var dist_max_V = 0;
   var dist_max_H = 0;
-  var Point = [0,0];
-
+  var Point = [elts[0]._latlng.lat,elts[0]._latlng.lng];
+  
   for(var i = 0; i < elts.length; i++){
     for(var j = i; j < elts.length; j++){
       if(i != j){
@@ -308,6 +343,9 @@ function add_Marker_lieu(e){
     case 'Lycees': filtre.Lycees.addTo(mymap);
                 var type_filtre = tableLycees;
                 break;
+    case 'Universites': filtre.Universites.addTo(mymap);
+                var type_filtre = tableUniversites;
+                break;
   }
 
   var center = center_adresse(type_filtre)[0];
@@ -331,6 +369,7 @@ function remove_Marker_lieu(e){
     case 'Culture': mymap.removeLayer(filtre.Culture); break;
     case 'FastFood': mymap.removeLayer(filtre.FastFood); break;
     case 'Lycees': mymap.removeLayer(filtre.Lycees); break;
+    case 'Universites': mymap.removeLayer(filtre.Universites); break;
   }
 }
 
@@ -347,6 +386,51 @@ function add_Marker_Command(e){
 }
 
 Scommand.addEventListener('click', add_Marker_Command, false);
+
+/*=======================================================================================================*/
+/*============================== Menu déroulant clique ==================================================*/
+
+/* Init style menu déroulant */
+
+function init_couleur_menu_deroulant(){
+  for(var i = 0; i < rubriques.length; i++) {
+    //console.log(document.getElementById(rubriques[i][0]));
+    document.getElementById(rubriques[i][0]).style.backgroundColor = couleur_rubrique[rubriques[i][0]];
+  }
+}
+
+init_couleur_menu_deroulant();
+
+/* clique */
+
+let Bderoulant = document.querySelectorAll(".command div form.category_title");
+console.log(Bderoulant);
+
+function deroulant_filtre(e) {
+  var new_e = e.target.parentElement;
+  console.log(new_e.parentElement);
+  for(var i = 0; i < Bderoulant.length; i++) {
+    if(new_e.firstChild == Bderoulant[i]){
+      Bderoulant[i].setAttribute("data-value", (Number(Bderoulant[i].getAttribute("data-value"))+1)%2);
+      Bderoulant[i].style.transform = "rotate(" + Number(Bderoulant[i].getAttribute("data-value"))*90 + "deg)";
+    }
+    var filtreCache = document.querySelectorAll("form + ." + new_e.lastChild.id);
+    for(var filtre_i of filtreCache){
+      filtre_i.setAttribute("data-value", (Number(filtre_i.getAttribute("data-value"))+1)%2);
+      if(Number(filtre_i.getAttribute("data-value") == 0)){
+        filtre_i.style.height = "0px";
+        filtre_i.style.transform = "scaleY(0)";
+      }else{
+        filtre_i.style.height = "100%";
+        filtre_i.style.transform = "scaleY(1)";
+      }
+    }
+  }
+}
+
+for(var i = 0; i < Bderoulant.length; i++){
+  Bderoulant[i].addEventListener('click', deroulant_filtre, false);
+}
 
 /*=======================================================================================================*/
 /*========================================= Style bouton zoom ===========================================*/
