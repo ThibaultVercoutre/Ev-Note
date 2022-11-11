@@ -36,7 +36,7 @@ var stamen = new L.StamenTileLayer("toner-lite");
 var command = L.control({position: 'topright'});
 command.onAdd = function (mymap) {
     var div = L.DomUtil.create('div', 'command');
-    div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Points d\'intérêt</span><br /><span style="color:grey;font-size:14px;">(ville d\'Issy-Les-Moulineaux)</span></div>';
+    div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Points d\'intérêt</span><br /><span style="color:grey;font-size:14px;">(ville de Calais)</span></div>';
     for (var i = 0; i < rubriques.length; i++) {
       var txt = '';
       txt += '<div class="category"><form class="category_title"><span data-value="' + 1 + '" class="material-symbols-outlined">chevron_right</span><div id="' + rubriques[i][0] + '" class="type_rubrique">' + rubriques[i][0] + '</div></form>';
@@ -643,14 +643,14 @@ BcreerArt.onclick = function() {
 }
 
 /* Si on clique sur la section checkbox */
-Scheckbox.style.display = "none";
+Scheckbox.style.display = "block";
 var ScheckboxPosition = 0;
 Bcheckbox.onclick = function() {
   if(ScheckboxPosition == 0){
-    Scheckbox.style.display = "block";
+    Scheckbox.style.transform = "scaleY(0)";
     ScheckboxPosition = 1;
   }else{
-    Scheckbox.style.display = "none";
+    Scheckbox.style.transform = "scaleY(1)";
     ScheckboxPosition = 0;
   }
 }
