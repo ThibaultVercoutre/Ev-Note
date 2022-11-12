@@ -192,8 +192,8 @@
             <div class="barre" id="barre2"></div>
             <div class="barre" id="barre3"></div>
           </div>
-        </div>
-      </nav>
+          </div>
+        </nav>
 
 <!-- ========================================================================================================== Boutons interaction -->
       <div id="interact">
@@ -411,7 +411,7 @@
             <div class="clickScrollbar"></div>
             <div id="champ-remplit-art">
               <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
-              <form method="post" action="#">
+              <form method="post" action="./pages/php/donnees_formulaire.php">
                <fieldset>
                   <legend>Vos coordonnées</legend><br />
                   <label for="Nom">Nom</label><br />
@@ -426,7 +426,7 @@
                   <label for="NomEvent">Nom de l'événement</label><br />
                   <input type="text" name="NomEvent" id="NomEvent" placeholder="Exemple : Compet OW2, qui aura un meilleur shoot que tibo ??" size="50" required /><br /><br />
                   <label for="Lieu">Adresse de l'événement</label><br />
-                  <input type="text" name="Lieu" id="Lieu" placeholder="Exemple : 666 rue des ames damnées" size="50" required /><br /><br />
+                  <input type="text" name="Adresse" id="Adresse" placeholder="Exemple : 666 rue des ames damnées" size="50" required /><br /><br />
                   <label for="Ville">Ville</label><br />
                   <input type="text" name="Ville" id="Ville" placeholder="Exemple : Blendecques" size="50" required /><br /><br />
                   <label for="CP">Code postal</label><br />
@@ -435,13 +435,13 @@
                 <fieldset>
                   <legend>Image (optionnel)</legend>
                   <label for="IMG">Inserez une image</label><br />
-                  <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" />
+                  <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" required/>
                 </fieldset>
                 <br />
                 <fieldset>
                   <legend>Description de l'événement</legend>
-                  <label for="Description">Décrivez l'événement en quelques lignes :</label><br /><br />
-                  <textarea name="Description" id="Description" placeholder="Quel est votre évènement ?" rows="20" cols="100" required></textarea>
+                  <label for="Annonce">Décrivez l'événement en quelques lignes :</label><br /><br />
+                  <textarea name="Annonce" id="Description" placeholder="Quel est votre évènement ?" rows="20" cols="100" required></textarea>
                 </fieldset>
                 <br />
                 <input type="submit" value="Envoyer" id="BoutonEnvoie" />
