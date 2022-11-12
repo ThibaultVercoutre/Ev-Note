@@ -20,7 +20,7 @@ if((isset($_POST['email'])) && isset($_POST['password']))
       if($data['Mdp'] === $password)
       {
         $_SESSION['email'] = $email;
-        header('Location:principale.php');
+        header('Location:../../principale.php');
       }else header('Location:user_connexion.php?login_err=password');
     }else header('Location:user_connexion.php?login_err=email');
   }else header('Location:user_connexion.php?login_err=already');
