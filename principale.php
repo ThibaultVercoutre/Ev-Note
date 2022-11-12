@@ -439,7 +439,7 @@ if(($_SESSION['email']) !== ""){
                   <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50" required /><br /><br />
                   <label for="Mail">E-Mail</label><br />
                   <input type="email" name="Mail" id="Mail" placeholder="Exemple : xyz@leraciste.noob" size="50" required /><br /><br />
-                </fieldset><br />
+                </fieldset><br /> 
                 <fieldset>
                   <legend>Informations sur l'événement</legend><br />
                   <label for="NomEvent">Nom de l'événement</label><br />
