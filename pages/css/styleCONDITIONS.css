@@ -7,7 +7,6 @@ html{
 body{
   margin:0px;
   min-height: 100vh;
-  overflow-x: hidden; 
 }
 
 header{
@@ -37,6 +36,52 @@ header div{
   /*margin-left: 150px;*/
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+/*=======================================================================================================*/
+/*================================================== DEVELOPPEMENT ======================================*/
+
+#CGU{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#developpement{
+  flex: 4;
+}
+
+#menu{
+  flex: 1;
+}
+
+#menu nav{
+  position: sticky;
+  top: 10vh;
+}
+
+#menu nav p{
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 14px;
+  margin: 20px 5px;
+  cursor: pointer;
+  animation: MenuAppear ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  transition: 0.1s;
+}
+
+#menu nav p:hover{
+  background-color: #5FAEBE;
+}
+
+@keyframes MenuAppear {
+
+  0% { transform: translate(100px, 0px);}
+  100% { transform: translate(0px, 0px); }
+}
+
+/*=======================================================================================================*/
+/*================================================== FOOTER =============================================*/
 
 footer{
   z-index: 0;
@@ -81,9 +126,19 @@ footer{
   flex: auto;
 }
 
+#le-footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
 .lien-footer {
   text-decoration: none;
   font-size: 100%;
+  height: 100%;
+  padding: auto;
 }
 
 .lien-footer:link {
@@ -122,9 +177,13 @@ footer{
 }
 
 .categories {
-  padding: 0 0 0 30px;
+  background-color: #F3FBF8;
+  padding: 20px 0 20px 30px;
+  margin: 0px;
   font-size: 26px;
   color: #1439a9;
+  position: sticky;
+  top: 7vh;
 }
 
 h3 {
@@ -133,7 +192,7 @@ h3 {
 }
 
 p {
-  padding: 0 0 0 70px;
+  padding: 0 70px 0 70px;
   font-size: 18px;
 }
 
@@ -188,4 +247,23 @@ p {
 ::-webkit-scrollbar{
   width:0;
   background: transparent;
+}
+
+/*=======================================================================================================*/
+/*================================================== RESPONSIVE =========================================*/
+
+@media screen and (max-width: 680px)
+{
+    h2{
+      font-size: 22px;
+    }
+    h3{
+      font-size: 20px;
+    }
+    p{
+      font-size: 14px;
+    }
+    #menu{
+      display: none;
+    }
 }
