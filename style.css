@@ -31,6 +31,18 @@ body{
 
 div#page-principale{
   z-index: 0;
+  animation: PagesAppear ease 5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes PagesAppear{
+
+  0% {
+    transform: translate(0px, -100%);
+  }
+  60% { transform: translate(0px, -100%); }
+  80% { transform: translate(0px, 0%); }
 }
 
 /*=======================================================================================================*/
@@ -863,7 +875,7 @@ nav .drop{
 
 #pages{
   width:100%;
-  min-height: 75vh;
+  height: 75vh;
 }
 
 #map-actu{
