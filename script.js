@@ -54,9 +54,9 @@ command.addTo(mymap);
 /*============================== Icon Leaflet pour bar / parcs ... ======================================*/
 
 var couleur_rubrique = {
-  "Restauration" : "#f0667d",
-  "Detente" : "#45ed88",
-  "Etudes" : "#eee44f"
+  "Restauration" : "#CA283B",
+  "Detente" : "#25AC22",
+  "Etudes" : "#CAC427"
 };
 /*
 var barIcon = new L.Icon({
