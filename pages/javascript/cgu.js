@@ -1,6 +1,9 @@
 let ElementsNav = document.querySelectorAll("#menu nav p");
+//let ElementsNavUnderline = document.querySelectorAll("#menu nav div");
 let TitresCGU = document.querySelectorAll(".categories");
 var PositionTitreCGU = [];
+
+//console.log(ElementsNavUnderline[0].nextElementSibling);
 
 window.onload = () => {
 
@@ -17,6 +20,7 @@ function resetMenu(elts){
     elts = elts.childNodes;
     for(var i = 1; i < elts.length; i += 2){
         elts[i].style.backgroundColor = "";
+        elts[i].setAttribute("value", "0");
     }
 }
 
@@ -24,13 +28,22 @@ for(var i = 0; i < ElementsNav.length; i++){
     ElementsNav[i].onclick = function(e){
         console.log(e.target.className, PositionTitreCGU[parseInt(e.target.className-1)]);
         window.scrollTo({
-            top: PositionTitreCGU[parseInt(e.target.className-1)] - 75,
+            top: PositionTitreCGU[parseInt(e.target.className-1)] - 52,
             behavior: 'smooth'
           })
         resetMenu(e.target.parentElement);
+        e.target.setAttribute("value", "1");
         e.target.style.backgroundColor = "#4D98BF";
+        e.target.nextElementSibling.style.transform = "scaleX(0)";
     };
-    //ElementsNav[i].addEventListener('click', scrollPage(ElementsNav, i), false);
+    ElementsNav[i].addEventListener("mouseenter", (e) => {
+        if(e.target.getAttribute("value") != "1"){
+            e.target.nextElementSibling.style.transform = "scaleX(1)";
+        }
+    });
+    ElementsNav[i].addEventListener("mouseout", (e) => {
+        e.target.nextElementSibling.style.transform = "scaleX(0)";
+    });
 }
 
 /*
