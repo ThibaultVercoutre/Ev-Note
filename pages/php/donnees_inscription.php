@@ -39,7 +39,7 @@
                               ATTENTION
                             */
                             // On insère dans la base de données
-              $insert = $bdd->prepare('INSERT INTO user(NumEtu, Nom, Prenom, Mail, Mdp, Picture, TypeCompte, Id, Token) VALUES(:NumEtu, :Nom, :Prenom, :Mail, :Mdp, :Picture, :TypeCompte, :Id, :Token)');
+              $insert = $bdd->prepare('INSERT INTO user(NumEtu, Nom, Prenom, Mail, Mdp, Picture, TypeCompte, Id, Token, Datal) VALUES(:NumEtu, :Nom, :Prenom, :Mail, :Mdp, :Picture, :TypeCompte, :Id, :Token, :Datal)');
               $insert->execute(array(
                 'Nom' => $nom,
                 'Prenom' => $prenom,
@@ -49,8 +49,19 @@
                 'Mail' => $email,
                 'Mdp' => $password,
                 'Id' => $ip,
-                'Token' => bin2hex(openssl_random_pseudo_bytes(64))
+                'Token' => bin2hex(openssl_random_pseudo_bytes(64)),
+                'Datal' => file_get_contents($_FILES["Picture"]["tmp_name"])
               ));
+              
+              $name => $_FILES["image"]["name"];
+              $type => $_FILES["image"]["type"];
+              $data => file_get_contents($_FILES["image"]["tmp_name"]);
+              $insert=$bdd->prepare('INSERT INTO myblob VALUES ('',?,?,?)');
+              $insert->bindParam(1, $name);
+              $insert->bindParam(2, $type);
+              $insert->bindParam(3, $data);
+              $insert->execute();
+
                             // On redirige avec le message de succès
               header('Location:user_inscription.php?reg_err=success');
               die();
