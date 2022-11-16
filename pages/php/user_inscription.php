@@ -1,8 +1,14 @@
 <?php
-  if(isset($_POST["valider"])){
-    include("login.php"); // On inclut la connexion à la bdd
-    $req=$bdd->prepare("insert into images(nom, taille, type, bin) values(?,?,?,?)");
-    $req->execute(array($_FILES["Picture"]["name"], $_FILES["Picture"]["size"], $_FILES["Picture"]["type"], file_get_contents($_FILES["Picture"]["tmp_name"])));
+  $bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8','root', '');
+  if(isset($_POST['valider'])){
+    $name => $_FILES["image"]["name"];
+    $type => $_FILES["image"]["type"];
+    $data => file_get_contents($_FILES["image"]["tmp_name"]);
+    $insert=$bdd->prepare('INSERT INTO myblob VALUES ('',?,?,?)');
+    $insert->bindParam(1, $name);
+    $insert->bindParam(2, $type);
+    $insert->bindParam(3, $data);
+    $insert->execute();
   }
 ?>
 
@@ -64,7 +70,7 @@
         }
     }
     ?>
-  <form action="donnees_inscription.php" method="post">
+  <form name="formul" action="donnees_inscription.php" method="post" enctype="multipart/form-data">
     
       <h1>Inscription sur Ev'Note</h1>
       <hr>
@@ -77,7 +83,7 @@
     
       <label for="picture"><b>Photo de profil</b></label>
       <!--file ou image ??-->
-      <input type="file" placeholder="Mettre une photo de profil" name="Picture" id="Picture" accept="image/png, image/jpeg, image/jpg">
+      <input type="file" placeholder="Mettre une photo de profil" name="image" accept="image/png, image/jpeg, image/jpg">
     
       <div class="type_compte"></div>
       <label for="type_compte"><b>Type de compte</b></label>

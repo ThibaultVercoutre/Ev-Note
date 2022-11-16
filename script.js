@@ -34,15 +34,36 @@ var rubriques = [
 var stamen = new L.StamenTileLayer("toner-lite");
 
 var command = L.control({position: 'topright'});
-command.onAdd = function (mymap) {
+command.onAdd = function creerFiltres(mymap) {
     var div = L.DomUtil.create('div', 'command');
-    div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Points d\'intérêt</span><br /><span style="color:grey;font-size:14px;">(ville de Calais)</span></div>';
+    div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Points d\'intérêt</span><br /><span id="ville-des-filtres" style="color:grey;font-size:14px;">(ville de Calais)</span></div>';
     for (var i = 0; i < rubriques.length; i++) {
       var txt = '';
       txt += '<div class="category"><form class="category_title"><span data-value="' + 1 + '" class="material-symbols-outlined">chevron_right</span><div id="' + rubriques[i][0] + '" class="type_rubrique">' + rubriques[i][0] + '</div></form>';
       for(var j = 1; j < rubriques[i].length; j++) {
         txt += '<form data-value="' + 1 + '" class="' + rubriques[i][0] + '"><input id="' + rubriques[i][j] + '" type="checkbox"/>' + rubriques[i][j] + '</form>';
       }
+      txt += '</div>';
+      div.innerHTML += txt;
+    }
+    return div;
+};
+command.addTo(mymap);
+
+/*=======================================================================================================*/
+/*===================================== Ajout section choix villes ======================================*/
+
+var villes = ["Calais", "Dunkerque", "Saint-Omer"];
+
+var stamen = new L.StamenTileLayer("toner-lite");
+
+var command = L.control({position: 'topright'});
+command.onAdd = function (mymap) {
+    var div = L.DomUtil.create('div', 'command');
+    div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Villes</span></div>';
+    for (var i = 0; i < villes.length; i++) {
+      var txt = '';
+      txt += '<div class="button-villes anim-button" id="ville_' + villes[i] + '"><p>' + villes[i] + '</p></div>';
       txt += '</div>';
       div.innerHTML += txt;
     }
@@ -258,6 +279,9 @@ let Bcheckbox = document.getElementById("checkbox");
 let Badressenote = null;
 let Bsearch = document.getElementById("div-search");
 let Bloupe = document.getElementById("loupe");
+let Bcalais = document.getElementById("ville_Calais");
+let Bdunkerque = document.getElementById("ville_Dunkerque");
+let Bsaintomer = document.getElementById("ville_Saint-Omer");
 // like dislike report
 let Bup = document.querySelectorAll(".up");
 let Bdown = document.querySelectorAll(".down");
@@ -284,6 +308,9 @@ let Scheckbox = document.querySelector("div:has(> .command)");
 
 /* Checkbox ==============================*/
 let Lcheckbox = document.querySelectorAll(".command form input");
+
+/* Texte ==============================*/
+var Villedesfiltres = document.getElementById("ville-des-filtres");
 
 /*=======================================================================================================*/
 /*========================================= detection section filtre ====================================*/
@@ -673,6 +700,27 @@ Bnote.onclick = function() {
   resetStyle(Snotation, Smap);
   affiche(Snotation, Smap);
 };*/
+
+/*=======================================================================================================*/
+/*===================================================== boutons villes ===================================*/
+
+Bcalais.onclick = function() {
+  mymap.setView([50.95129, 1.858686], 11);
+  addMarker([50.95129, 1.858686], "");
+  Villedesfiltres.textContent = "(ville de Calais)"; // marche pas : nique ta mère
+}
+
+Bdunkerque.onclick = function() {
+  mymap.setView([51.034368, 2.376776], 11);
+  addMarker([51.034368, 2.376776], "");
+  Villedesfiltres.textContent = "(ville de Dunkerque)"; // marche pas : nique ta mère
+}
+
+Bsaintomer.onclick = function() {
+  mymap.setView([50.750115, 2.252208], 11);
+  addMarker([50.750115, 2.252208], "");
+  Villedesfiltres.textContent = "(ville de Saint-Omer)"; // marche pas : nique ta mère
+}
 
 /*=======================================================================================================*/
 /*========================================= Recherche d'une adresse =====================================*/

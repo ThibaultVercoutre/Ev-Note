@@ -157,6 +157,27 @@ nav#nav-fin #scroll .carre{
   transition: 0.3s;
 }
 
+.button-villes{
+  background: linear-gradient(whitesmoke, #f94c02);
+  border-radius: 16px;
+	box-shadow: -1px 2px 2px grey;
+  cursor: pointer;
+  transition: 0.3s;
+  margin: 10px 0 0 0;
+}
+
+.button-villes p {
+  flex: 0;
+	color: black;
+	text-align: center;
+	padding: 4px 4px;
+	transition: 0.3s;
+	margin-right: 2px;
+	margin-left: 2px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .leaflet-control-zoom-in{
   background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-5), var(--couleur-principale-6));
   transition: 0.3s;
@@ -237,6 +258,16 @@ div:has(> .command){
 .button:active, #compte:active, #creer-avis:active, #loupe:active, #interact .drop:active, .leaflet-control-zoom-out:active, .leaflet-control-zoom-in:active{
   background: linear-gradient(var(--couleur-principale-2), var(--couleur-principale-2));
   background-color: var(--couleur-principale-2);
+  box-shadow: 0px 0px;
+}
+
+.button-villes:hover {
+  background: linear-gradient(#f94c02, whitesmoke);
+}
+
+.button-villes:active {
+  background: linear-gradient(#f94c02, #f94c02);
+  background-color: #f94c02;
   box-shadow: 0px 0px;
 }
 
