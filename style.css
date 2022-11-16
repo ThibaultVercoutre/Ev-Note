@@ -158,12 +158,12 @@ nav#nav-fin #scroll .carre{
 }
 
 .button-villes{
-  background: linear-gradient(whitesmoke, #f94c02);
+  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-5), var(--couleur-principale-6));
   border-radius: 16px;
 	box-shadow: -1px 2px 2px grey;
   cursor: pointer;
   transition: 0.3s;
-  margin: 10px 0 0 0;
+  margin: 0px 0 0 0;
 }
 
 .button-villes p {
@@ -192,7 +192,7 @@ nav#nav-fin #scroll .carre{
 /*=======================================================================================================*/
 /*==================================================== FILTRE STYLE =====================================*/
 
-div:has(> .command){
+div:has(> .command-filtre){
   backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 10px;
@@ -202,14 +202,14 @@ div:has(> .command){
   transform-origin: top right;
 }
 
-.command form{
+.command-filtre form{
   display: flex;
   align-items: center;
   transition: 0.3s;
   transform-origin: top;
 }
 
-.command form div{
+.command-filtre form div{
   cursor: pointer;
   width: 100%;
   border-radius: 5px;
@@ -218,7 +218,7 @@ div:has(> .command){
   background-color: black;
 }
 
-.command form input{
+.command-filtre form input{
   cursor: pointer;
   transform-origin: right;
   margin-left: 25px;
@@ -226,10 +226,20 @@ div:has(> .command){
 }
 
 
-.command form span{
+.command-filtre form span{
   cursor: pointer;
   transition: 0.3s;
   transform: rotate(90deg);
+}
+
+/*=======================================================================================================*/
+/*==================================================== SELECT VILLE STYLE ===============================*/
+
+div:has(> .command-villes){
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 10px;
+  transform: translateY(-200px);
 }
 
 /*=======================================================================================================*/
