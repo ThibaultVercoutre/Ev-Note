@@ -164,6 +164,7 @@ nav#nav-fin #scroll .carre{
   cursor: pointer;
   transition: 0.3s;
   margin: 0px 0 0 0;
+  display: none;
 }
 
 .button-villes p {
