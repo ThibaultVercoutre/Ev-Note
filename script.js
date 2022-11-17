@@ -35,7 +35,7 @@ var stamen = new L.StamenTileLayer("toner-lite");
 
 var command = L.control({position: 'topright'});
 command.onAdd = function creerFiltres(mymap) {
-    var div = L.DomUtil.create('div', 'command');
+    var div = L.DomUtil.create('div', 'command command-filtre');
     div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Points d\'intérêt</span><br /><span id="ville-des-filtres" style="color:grey;font-size:14px;">(ville de Calais)</span></div>';
     for (var i = 0; i < rubriques.length; i++) {
       var txt = '';
@@ -57,9 +57,9 @@ var villes = ["Calais", "Dunkerque", "Saint-Omer"];
 
 var stamen = new L.StamenTileLayer("toner-lite");
 
-var command = L.control({position: 'topright'});
+var command = L.control({position: 'bottomleft',});
 command.onAdd = function (mymap) {
-    var div = L.DomUtil.create('div', 'command');
+    var div = L.DomUtil.create('div', 'command command-villes');
     div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Villes</span></div>';
     for (var i = 0; i < villes.length; i++) {
       var txt = '';
@@ -312,6 +312,16 @@ let Lcheckbox = document.querySelectorAll(".command form input");
 /* Texte ==============================*/
 var Villedesfiltres = document.getElementById("ville-des-filtres");
 
+/* Ville active =========================*/
+
+var ville_active = "Calais";
+let VillesPositions = {
+  "Calais": {lat : 50.95129, lng : 1.858686},
+  "Dunkerque" : {lat : 51.034368, lng : 2.376776},
+  "Saint-Omer" : {lat : 50.750115, lng : 2.252208}
+};
+
+
 /*=======================================================================================================*/
 /*========================================= detection section filtre ====================================*/
 
@@ -431,7 +441,6 @@ init_couleur_menu_deroulant();
 /* clique */
 
 let Bderoulant = document.querySelectorAll(".command div form.category_title");
-console.log(Bderoulant);
 
 function deroulant_filtre(e) {
   var new_e = e.target.parentElement;
@@ -701,32 +710,12 @@ Bnote.onclick = function() {
   affiche(Snotation, Smap);
 };*/
 
-/*=======================================================================================================*/
-/*===================================================== boutons villes ===================================*/
-
-Bcalais.onclick = function() {
-  mymap.setView([50.95129, 1.858686], 11);
-  addMarker([50.95129, 1.858686], "");
-  Villedesfiltres.textContent = "(ville de Calais)"; // marche pas : nique ta mère
-}
-
-Bdunkerque.onclick = function() {
-  mymap.setView([51.034368, 2.376776], 11);
-  addMarker([51.034368, 2.376776], "");
-  Villedesfiltres.textContent = "(ville de Dunkerque)"; // marche pas : nique ta mère
-}
-
-Bsaintomer.onclick = function() {
-  mymap.setView([50.750115, 2.252208], 11);
-  addMarker([50.750115, 2.252208], "");
-  Villedesfiltres.textContent = "(ville de Saint-Omer)"; // marche pas : nique ta mère
-}
 
 /*=======================================================================================================*/
 /*========================================= Recherche d'une adresse =====================================*/
 
 /* ajouter un marqueur et supprimer le précédent */
-function addMarker(pos, nom) {
+function addMarker(pos, nom, code) {
   for(var i = 0; i < Lcheckbox.length; i++) {
     Lcheckbox[i].checked = false;
   }
@@ -750,7 +739,7 @@ function addMarker(pos, nom) {
   )
   //var resultat = result.address.Match_addr;
   var index = nom.indexOf(",");
-  Tville.textContent = "62100 Calais"; // Si Calais
+  Tville.textContent = ville_active; // Si Calais
   if (index !== -1) {
     var texte = nom.split(",");
     if(parseInt(texte[0][0]) >= 0 || parseInt(texte[0][0] <= 9)){
@@ -767,11 +756,15 @@ function addMarker(pos, nom) {
 
   //marqueur.addTo(mymap);
   /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-  if(nom.search(" 62100,") != -1){
+  let url = new URL("https://vicopo.selfbuild.fr/cherche/" + ville_active);
+  
+  if(nom.search(" " + code + ",") != -1){  
+    console.log(" " + code + ",");
     marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
   }else{
-    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
+      marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
   }
+    
   Bnotation = document.getElementById("adresse-note");
   mymap.setView([pos.lat, pos.lng]);
 
@@ -800,13 +793,22 @@ mymap.on('click', function(e) {
     let url = new URL("http://nominatim.openstreetmap.org/search?q=" + pos.lat + "%20" + pos.lng + "&format=json&limit=1");
     
     $.getJSON(url, function(data) {
-      console.log(data);
-      if(data[0].display_name.search(" 62100,") != -1){
-        addMarker(pos, data[0].display_name);
-      }else{
-        pos = {lat : 50.95129, lng : 1.858686};
-        addMarker(pos, "Destination impossible");
-      }
+      let url2 = new URL("https://vicopo.selfbuild.fr/cherche/" + ville_active);
+      console.log(data[0].display_name)
+      $.getJSON(url2, function(data2) {
+        var i = 0;
+        for(i; i < data2.cities.length; i++) {
+          if(data[0].display_name.search(" " + data2.cities[i].code + ",") != -1/* || data[0].display_name.search(" " + ville_active + ",") != -1*/){
+            addMarker(pos, data[0].display_name, data2.cities[i].code);
+            i = data2.cities.length*data2.cities.length;
+          }else{
+          }
+        }
+        if(i == data2.cities.length){
+          pos = VillesPositions[ville_active];
+          addMarker(pos, "Destination impossible");
+        }
+      });
     });
   }
 });
@@ -822,14 +824,68 @@ Bloupe.onclick = function() {
   let url = new URL("http://nominatim.openstreetmap.org/search?q=" + adresse + "&format=json&limit=1");
   $.getJSON(url, function(data) {
     let pos = {lat : data[0].lat, lng : data[0].lon};
-    if(data[0].display_name.search(" Calais") != -1){
+    if(data[0].display_name.search(" " + ville_active) != -1){
         addMarker(pos, data[0].display_name);
     }else{
-      pos = {lat : 50.95129, lng : 1.858686};
+      pos = VillesPositions[ville_active];
       addMarker(pos, "Destination impossible");
     }
   });
 }
+
+/*=======================================================================================================*/
+/*===================================================== boutons villes ===================================*/
+
+let Bvilles = document.querySelectorAll(".button-villes");
+
+/* Liste des codes pour chaque villes (à faire plus tard) */
+let CodesVilles = {};
+
+for(var i = 0; i < Bvilles.length; i++){
+  let url = new URL("https://vicopo.selfbuild.fr/cherche/"  + Bvilles[i].firstChild.textContent);
+  $.getJSON(url, function(data) {
+  });
+}
+
+for(var i = 0; i < Bvilles.length; i++){
+  Bvilles[i].onclick = function(e) {
+    console.log(e);    
+    ville_active = e.target.firstChild.textContent;
+    let url = new URL("http://nominatim.openstreetmap.org/search?q=" + ville_active + "&format=json&limit=1");
+    $.getJSON(url, function(data) {
+      let pos = {lat : data[0].lat, lng : data[0].lon};
+      mymap.setView(pos, 11);
+      addMarker(pos, ville_active);
+      Villedesfiltres.textContent = ville_active;
+    });
+  }
+}
+
+/*
+Bcalais.onclick = function() {
+  mymap.setView([50.95129, 1.858686], 11);
+  pos = {lat : 50.95129, lng : 1.858686};
+  console.log(VillesPositions[Bcalais.firstChild.textContent]);
+  addMarker(VillesPositions[Bcalais.firstChild.textContent], "");
+  Villedesfiltres.textContent = "(ville de Calais)"; // marche pas : nique ta mère
+}
+
+Bdunkerque.onclick = function() {
+  mymap.setView([51.034368, 2.376776], 11);
+  pos = {lat : 51.034368, lng : 2.376776};
+  console.log(VillesPositions[Bdunkerque.firstChild.textContent]);
+  addMarker(VillesPositions[Bdunkerque.firstChild.textContent], "");
+  Villedesfiltres.textContent = "(ville de Dunkerque)"; // marche pas : nique ta mère
+}
+
+Bsaintomer.onclick = function() {
+  mymap.setView([50.750115, 2.252208], 11);
+  pos = {lat : 50.750115, lng : 2.252208};
+  console.log(VillesPositions[Bsaintomer.firstChild.textContent]);
+  addMarker(VillesPositions[Bsaintomer.firstChild.textContent], "");
+  Villedesfiltres.textContent = "(ville de Saint-Omer)"; // marche pas : nique ta mère
+}*/
+
 
 /*=======================================================================================================*/
 /*================================== Changement couleur like / dislike / report =========================*/
