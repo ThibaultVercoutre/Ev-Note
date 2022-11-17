@@ -53,7 +53,7 @@ command.addTo(mymap);
 /*=======================================================================================================*/
 /*===================================== Ajout section choix villes ======================================*/
 
-var villes = ["Calais", "Dunkerque", "Saint-Omer"];
+var villes = ["Calais", "Dunkerque", "Saint-Omer", "Blendecques"];
 
 var stamen = new L.StamenTileLayer("toner-lite");
 
@@ -67,6 +67,7 @@ command.onAdd = function (mymap) {
       txt += '</div>';
       div.innerHTML += txt;
     }
+    div.innerHTML += '<input type="search" id="input-villes"/>';
     return div;
 };
 command.addTo(mymap);
@@ -321,6 +322,45 @@ let VillesPositions = {
   "Saint-Omer" : {lat : 50.750115, lng : 2.252208}
 };
 
+/* Enregistrement des villes */
+
+let Bvilles = document.querySelectorAll(".button-villes");
+
+/* Liste des codes pour chaque villes (à faire plus tard) */
+let CodesVilles = new Object();
+
+for(var i = 0; i < Bvilles.length; i++){
+  switch(Bvilles[i].firstChild.textContent){
+    case "Calais" : CodesVilles[Bvilles[i].firstChild.textContent] = [62100]; break;
+    case "Dunkerque" : CodesVilles[Bvilles[i].firstChild.textContent] = [59140, 59240, 59279, 59430, 59640, 59210,59495]; break;
+    case "Calais" : CodesVilles[Bvilles[i].firstChild.textContent] = [14220, 60860, 62162, 62500]; break;
+    case "Blendecques" : CodesVilles[Bvilles[i].firstChild.textContent] = [62575]; break
+  }
+}
+
+/*=======================================================================================================*/
+/*========================================= detection input change villes ===============================*/
+
+let inputVilles = document.getElementById("input-villes");
+
+inputVilles.onkeyup = function(){
+  for(var i = 0; i < Bvilles.length; i++){
+    if(inputVilles.value.length != 0){
+      var ville = inputVilles.value;
+      ville = ville.replace(ville[0], ville[0].toUpperCase());
+      for(var k = 1; k < ville.length; k++){
+        ville = ville.replace(ville[k], ville[k].toLowerCase());
+      }
+      if(Bvilles[i].firstChild.textContent.search(ville) == -1){
+        Bvilles[i].style.display = "none";
+      }else{
+        Bvilles[i].style.display = "block";
+      }
+    }else{
+      Bvilles[i].style.display = "none";
+    }
+  }
+}
 
 /*=======================================================================================================*/
 /*========================================= detection section filtre ====================================*/
@@ -756,7 +796,6 @@ function addMarker(pos, nom, code) {
 
   //marqueur.addTo(mymap);
   /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-  let url = new URL("https://vicopo.selfbuild.fr/cherche/" + ville_active);
   
   if(nom.search(" " + code + ",") != -1){  
     console.log(" " + code + ",");
@@ -793,28 +832,26 @@ mymap.on('click', function(e) {
     let url = new URL("http://nominatim.openstreetmap.org/search?q=" + pos.lat + "%20" + pos.lng + "&format=json&limit=1");
     
     $.getJSON(url, function(data) {
-      let url2 = new URL("https://vicopo.selfbuild.fr/cherche/" + ville_active);
-      console.log(data[0].display_name)
-      $.getJSON(url2, function(data2) {
-        var i = 0;
-        for(i; i < data2.cities.length; i++) {
-          if(data[0].display_name.search(" " + data2.cities[i].code + ",") != -1/* || data[0].display_name.search(" " + ville_active + ",") != -1*/){
-            addMarker(pos, data[0].display_name, data2.cities[i].code);
-            i = data2.cities.length*data2.cities.length;
-          }else{
-          }
+      console.log(data[0].display_name);
+      var i = 0;
+      for(i; i < CodesVilles[ville_active].length; i++) {
+        console.log(CodesVilles[ville_active][i], ville_active);
+        if(data[0].display_name.search(" " + CodesVilles[ville_active][i] + ",") != -1/* || data[0].display_name.search(" " + ville_active + ",") != -1*/){
+          addMarker(pos, data[0].display_name, CodesVilles[ville_active][i]);
+          i =CodesVilles[ville_active].length*CodesVilles[ville_active].length;
+        }else{
         }
-        if(i == data2.cities.length){
-          pos = VillesPositions[ville_active];
-          addMarker(pos, "Destination impossible");
-        }
-      });
+      }
+      if(i == CodesVilles[ville_active].length){
+        pos = VillesPositions[ville_active];
+        addMarker(pos, "Destination impossible");
+      }
     });
   }
 });
 
 /* Si on clique sur la loupe */
-Bloupe.onclick = function() {
+function searchAdresse() {
   let adresse = Isearch.value;
   let regex = "[Cc][Aa][Ll][Aa][Ii][Ss]"
   if(adresse.search(regex) == -1){
@@ -823,29 +860,25 @@ Bloupe.onclick = function() {
   adresse.replace(" ", "%20");
   let url = new URL("http://nominatim.openstreetmap.org/search?q=" + adresse + "&format=json&limit=1");
   $.getJSON(url, function(data) {
-    let pos = {lat : data[0].lat, lng : data[0].lon};
-    if(data[0].display_name.search(" " + ville_active) != -1){
+    if(data.length != 0){
+      if(data[0].display_name.search(" " + ville_active) != -1){
+        let pos = {lat : data[0].lat, lng : data[0].lon};
         addMarker(pos, data[0].display_name);
-    }else{
-      pos = VillesPositions[ville_active];
-      addMarker(pos, "Destination impossible");
+      }else{
+        pos = VillesPositions[ville_active];
+        addMarker(pos, "Destination impossible");
+      }
     }
   });
 }
 
+
+Bloupe.addEventListener('click', searchAdresse, false);
+
+Bsearch.addEventListener('change', searchAdresse, false);
+
 /*=======================================================================================================*/
 /*===================================================== boutons villes ===================================*/
-
-let Bvilles = document.querySelectorAll(".button-villes");
-
-/* Liste des codes pour chaque villes (à faire plus tard) */
-let CodesVilles = {};
-
-for(var i = 0; i < Bvilles.length; i++){
-  let url = new URL("https://vicopo.selfbuild.fr/cherche/"  + Bvilles[i].firstChild.textContent);
-  $.getJSON(url, function(data) {
-  });
-}
 
 for(var i = 0; i < Bvilles.length; i++){
   Bvilles[i].onclick = function(e) {
