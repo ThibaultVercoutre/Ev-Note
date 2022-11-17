@@ -332,7 +332,7 @@ let CodesVilles = new Object();
 for(var i = 0; i < Bvilles.length; i++){
   switch(Bvilles[i].firstChild.textContent){
     case "Calais" : CodesVilles[Bvilles[i].firstChild.textContent] = [62100]; break;
-    case "Dunkerque" : CodesVilles[Bvilles[i].firstChild.textContent] = [59140, 59240, 59279, 59430, 59640, 59210,59495]; break;
+    case "Dunkerque" : CodesVilles[Bvilles[i].firstChild.textContent] = [59140, 59240, 59760, 59430, 59640, 59210, 59495]; break;
     case "Calais" : CodesVilles[Bvilles[i].firstChild.textContent] = [14220, 60860, 62162, 62500]; break;
     case "Blendecques" : CodesVilles[Bvilles[i].firstChild.textContent] = [62575]; break
   }
@@ -357,7 +357,7 @@ inputVilles.onkeyup = function(){
         Bvilles[i].style.display = "block";
       }
     }else{
-      Bvilles[i].style.display = "none";
+      Bvilles[i].style.display = "block";
     }
   }
 }
