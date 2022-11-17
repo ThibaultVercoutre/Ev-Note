@@ -441,7 +441,6 @@ init_couleur_menu_deroulant();
 /* clique */
 
 let Bderoulant = document.querySelectorAll(".command div form.category_title");
-console.log(Bderoulant);
 
 function deroulant_filtre(e) {
   var new_e = e.target.parentElement;
@@ -839,10 +838,16 @@ Bloupe.onclick = function() {
 
 let Bvilles = document.querySelectorAll(".button-villes");
 
-console.log(Bvilles);
+/* Liste des codes pour chaque villes (à faire plus tard) */
+let CodesVilles = {};
 
 for(var i = 0; i < Bvilles.length; i++){
-  console.log(Bvilles[i]);
+  let url = new URL("https://vicopo.selfbuild.fr/cherche/"  + Bvilles[i].firstChild.textContent);
+  $.getJSON(url, function(data) {
+  });
+}
+
+for(var i = 0; i < Bvilles.length; i++){
   Bvilles[i].onclick = function(e) {
     console.log(e);    
     ville_active = e.target.firstChild.textContent;
