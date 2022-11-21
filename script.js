@@ -60,14 +60,14 @@ var stamen = new L.StamenTileLayer("toner-lite");
 var command = L.control({position: 'bottomleft',});
 command.onAdd = function (mymap) {
     var div = L.DomUtil.create('div', 'command command-villes');
-    div.innerHTML += '<div style="text-align:center;"><span style="font-size:18px;">Villes</span></div>';
+    var txt ='';
+    var txt1 = '<div style="text-align:center;"><span style="font-size:18px;">Villes</span></div><div id="liste-villes">';
+    var txt = '';
     for (var i = 0; i < villes.length; i++) {
-      var txt = '';
       txt += '<div class="button-villes anim-button" id="ville_' + villes[i] + '"><p>' + villes[i] + '</p></div>';
-      txt += '</div>';
-      div.innerHTML += txt;
     }
-    div.innerHTML += '<input type="search" id="input-villes"/>';
+    var txt2 = '</div><input type="search" id="input-villes"/>';
+    div.innerHTML += txt1 + txt + txt2;
     return div;
 };
 command.addTo(mymap);
@@ -131,6 +131,15 @@ var schoolIcon = new L.Icon({
 /*============================= Liste bar / restaurant / parcs ... ======================================*/
 
 var bars, parcs, culture, fastfood, lycees, universites;
+var tableBars, tableParcs, tableCulture, tableFastFood, tableLycees, tableUniversites;
+/* Ville active =========================*/
+
+var ville_active = "Calais";
+let VillesPositions = {
+  "Calais": {lat : 50.95129, lng : 1.858686},
+  "Dunkerque" : {lat : 51.034368, lng : 2.376776},
+  "Saint-Omer" : {lat : 50.750115, lng : 2.252208}
+};
 
 var filtre = {
   "Bars" : bars, 
@@ -157,114 +166,121 @@ function limit_adresse(nom){
   return texte;
 }
 
-/* Bars ===========================================================================================*/
+function trouverAdresseFiltres(){
+  /* Bars ===========================================================================================*/
 
-var tableBars = [
-  L.marker([50.9600393, 1.8506475], {icon : restaurationIcon}).bindPopup(debutBouton + 'Pop Rock' + finBouton), 
-  L.marker([50.9603772,1.8484158], {icon : restaurationIcon}).bindPopup(debutBouton + 'Purple Cafe' + finBouton),
-  L.marker([50.957105, 1.8482429], {icon : restaurationIcon}).bindPopup(debutBouton + 'La Betterave' + finBouton)];
-var bars = L.layerGroup(tableBars);
-filtre.Bars = bars;
+  tableBars = [
+    L.marker([50.9600393, 1.8506475], {icon : restaurationIcon}).bindPopup(debutBouton + 'Pop Rock' + finBouton), 
+    L.marker([50.9603772,1.8484158], {icon : restaurationIcon}).bindPopup(debutBouton + 'Purple Cafe' + finBouton),
+    L.marker([50.957105, 1.8482429], {icon : restaurationIcon}).bindPopup(debutBouton + 'La Betterave' + finBouton)];
+  var bars = L.layerGroup(tableBars);
+  filtre.Bars = bars;
 
-/* Parcs ==========================================================================================*/
+  /* Parcs ==========================================================================================*/
 
-var urls = [
-  new URL("https://nominatim.openstreetmap.org/search?q=Parc%20Calais%2062100&format=json&limit=100"),
-  new URL("https://nominatim.openstreetmap.org/search?q=Bois%20Calais%2062100&format=json&limit=100")];
-var tableParcs = [];
+  var urls = [
+    new URL("https://nominatim.openstreetmap.org/search?q=Parc%20Calais%2062100&format=json&limit=100"),
+    new URL("https://nominatim.openstreetmap.org/search?q=Bois%20Calais%2062100&format=json&limit=100")];
+  tableParcs = [];
 
-for(var i_url = 0; i_url < urls.length; i_url++) {
-  $.getJSON(urls[i_url], function(data) {
-    for(var i = 0; i < data.length; i++){
-      let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
-      if((data[i].type == "park" || data[i].type == "wood") && data[i].display_name.search(regex1) != -1){
+  for(var i_url = 0; i_url < urls.length; i_url++) {
+    $.getJSON(urls[i_url], function(data) {
+      for(var i = 0; i < data.length; i++){
+        let regex1 = "Calais"
+        if((data[i].type == "park" || data[i].type == "wood") && data[i].display_name.search(regex1) != -1){
+          var nom = limit_adresse(data[i].display_name);
+          var marqueur = L.marker([data[i].lat,data[i].lon], {icon : detenteIcon}).bindPopup(debutBouton + nom + finBouton);
+          tableParcs.push(marqueur);
+      }
+      }
+      parcs = L.layerGroup(tableParcs);
+      filtre.Parcs = parcs;
+    });
+  };
+
+  /* Culture ========================================================================================*/
+
+  var urls = [
+    new URL("https://nominatim.openstreetmap.org/search?q=Musee%20Calais%2062100&format=json&limit=100"),
+    new URL("https://nominatim.openstreetmap.org/search?q=Grand%20Calais%2062100&format=json&limit=100"),
+    new URL("https://nominatim.openstreetmap.org/search?q=Th%C3%A9atre%20plein%20Calais%2062100&format=json&limit=100")];
+  tableCulture = [];
+
+  for(var i_url = 0; i_url < urls.length; i_url++) {
+    $.getJSON(urls[i_url], function(data) {
+      for(var i = 0; i < data.length; i++){
+        let regex1 = "Calais"
+        if((data[i].type == "museum" || data[i].type == "theatre") && data[i].display_name.search(regex1) != -1){
+          var nom = limit_adresse(data[i].display_name);
+          var marqueur = L.marker([data[i].lat,data[i].lon], {icon : detenteIcon}).bindPopup(debutBouton + nom + finBouton);
+          tableCulture.push(marqueur);
+      }
+      }
+      culture = L.layerGroup(tableCulture);
+      filtre.Culture = culture;
+    });
+  };
+
+  /* FastFood =======================================================================================*/
+
+  var urls = [
+    new URL("http://nominatim.openstreetmap.org/search?q=Burger%20King%20Calais%2062100&format=json&limit=100"), 
+    new URL("http://nominatim.openstreetmap.org/search?q=KFC%20Calais%2062100&format=json&limit=100")];
+  tableFastFood = [];
+
+  for(var i_url = 0; i_url < urls.length; i_url++) {
+    $.getJSON(urls[i_url], function(data) {
+      for(var i = 0; i < data.length; i++){
         var nom = limit_adresse(data[i].display_name);
-        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : detenteIcon}).bindPopup(debutBouton + nom + finBouton);
-        tableParcs.push(marqueur);
-     }
-    }
-    parcs = L.layerGroup(tableParcs);
-    filtre.Parcs = parcs;
-  });
-};
+        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : restaurationIcon}).bindPopup(debutBouton + nom + finBouton);
+        tableFastFood.push(marqueur);
+      }
+      fastfood = L.layerGroup(tableFastFood);
+      filtre.FastFood = fastfood;
+    });
+  };
 
-/* Culture ========================================================================================*/
+  /* Lycées =========================================================================================*/
 
-var urls = [
-  new URL("https://nominatim.openstreetmap.org/search?q=Musee%20Calais%2062100&format=json&limit=100"),
-  new URL("https://nominatim.openstreetmap.org/search?q=Grand%20Calais%2062100&format=json&limit=100"),
-  new URL("https://nominatim.openstreetmap.org/search?q=Th%C3%A9atre%20plein%20Calais%2062100&format=json&limit=100")];
-var tableCulture = [];
+  var url = new URL("https://nominatim.openstreetmap.org/search?q=Lyc%C3%A9e%20Calais%2062100&format=json&limit=100");
+  tableLycees = [];
 
-for(var i_url = 0; i_url < urls.length; i_url++) {
-  $.getJSON(urls[i_url], function(data) {
+  $.getJSON(url, function(data) {
     for(var i = 0; i < data.length; i++){
-      let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
-      if((data[i].type == "museum" || data[i].type == "theatre") && data[i].display_name.search(regex1) != -1){
+      let regex1 = "Calais"
+      if(data[i].type == "school" && data[i].display_name.search(regex1) != -1){
         var nom = limit_adresse(data[i].display_name);
-        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : detenteIcon}).bindPopup(debutBouton + nom + finBouton);
-        tableCulture.push(marqueur);
-     }
+        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : schoolIcon}).bindPopup(debutBouton + nom + finBouton);
+        tableLycees.push(marqueur);
+      }
     }
-    culture = L.layerGroup(tableCulture);
-    filtre.Culture = culture;
+    lycees = L.layerGroup(tableLycees);
+    filtre.Lycees = lycees;
   });
-};
 
-/* FastFood =======================================================================================*/
+  /* Université =====================================================================================*/
 
-var urls = [
-  new URL("http://nominatim.openstreetmap.org/search?q=Burger%20King%20Calais%2062100&format=json&limit=100"), 
-  new URL("http://nominatim.openstreetmap.org/search?q=KFC%20Calais%2062100&format=json&limit=100")];
-var tableFastFood = [];
+  var url = new URL("https://nominatim.openstreetmap.org/search?q=Universit%C3%A9%20Calais%2062100&format=json&limit=100");
+  tableUniversites = [];
 
-for(var i_url = 0; i_url < urls.length; i_url++) {
-  $.getJSON(urls[i_url], function(data) {
+  $.getJSON(url, function(data) {
     for(var i = 0; i < data.length; i++){
-      var nom = limit_adresse(data[i].display_name);
-      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : restaurationIcon}).bindPopup(debutBouton + nom + finBouton);
-      tableFastFood.push(marqueur);
+      let regex1 = "Calais";
+      if(data[i].type == "college" && data[i].display_name.search(regex1) != -1 && data[i].display_name.search("62100") != -1){
+        var nom = limit_adresse(data[i].display_name);
+        var marqueur = L.marker([data[i].lat,data[i].lon], {icon : schoolIcon}).bindPopup(debutBouton + nom + finBouton);
+        tableUniversites.push(marqueur);
+      }
     }
-    fastfood = L.layerGroup(tableFastFood);
-    filtre.FastFood = fastfood;
+    universites = L.layerGroup(tableUniversites);
+    filtre.Universites = universites;
   });
-};
+  setTimeout(() => {
+    console.log(filtre, ville_active);
+  }, "4000")
+}
 
-/* Lycées =========================================================================================*/
-
-var url = new URL("https://nominatim.openstreetmap.org/search?q=Lyc%C3%A9e%20Calais%2062100&format=json&limit=100");
-var tableLycees = [];
-
-$.getJSON(url, function(data) {
-  for(var i = 0; i < data.length; i++){
-    let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]"
-    if(data[i].type == "school" && data[i].display_name.search(regex1) != -1){
-      var nom = limit_adresse(data[i].display_name);
-      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : schoolIcon}).bindPopup(debutBouton + nom + finBouton);
-      tableLycees.push(marqueur);
-    }
-  }
-  lycees = L.layerGroup(tableLycees);
-  filtre.Lycees = lycees;
-});
-
-/* Université =====================================================================================*/
-
-var url = new URL("https://nominatim.openstreetmap.org/search?q=Universit%C3%A9%20Calais%2062100&format=json&limit=100");
-var tableUniversites = [];
-
-$.getJSON(url, function(data) {
-  for(var i = 0; i < data.length; i++){
-    let regex1 = "[Cc][Aa][Ll][Aa][Ii][Ss]";
-    if(data[i].type == "college" && data[i].display_name.search(regex1) != -1 && data[i].display_name.search("62100") != -1){
-      var nom = limit_adresse(data[i].display_name);
-      var marqueur = L.marker([data[i].lat,data[i].lon], {icon : schoolIcon}).bindPopup(debutBouton + nom + finBouton);
-      tableUniversites.push(marqueur);
-    }
-  }
-  universites = L.layerGroup(tableUniversites);
-  filtre.Universites = universites;
-});
+trouverAdresseFiltres();
 
 /*=======================================================================================================*/
 /*========================================= Var section / boutons ... ===================================*/
@@ -313,15 +329,6 @@ let Lcheckbox = document.querySelectorAll(".command form input");
 /* Texte ==============================*/
 var Villedesfiltres = document.getElementById("ville-des-filtres");
 
-/* Ville active =========================*/
-
-var ville_active = "Calais";
-let VillesPositions = {
-  "Calais": {lat : 50.95129, lng : 1.858686},
-  "Dunkerque" : {lat : 51.034368, lng : 2.376776},
-  "Saint-Omer" : {lat : 50.750115, lng : 2.252208}
-};
-
 /* Enregistrement des villes */
 
 let Bvilles = document.querySelectorAll(".button-villes");
@@ -369,6 +376,12 @@ inputVilles.onkeyup = function(){
 
 let CcheckBox = document.querySelectorAll("div form input[type=checkbox]");
 let Scommand = document.querySelector(".command");
+
+function resetFiltresBox(){
+  for(var i = 0; i < CcheckBox.length; i++){
+    CcheckBox[i].checked == false;
+  }
+}
 
 function center_adresse(elts){
   var dist_max_V = 0;
@@ -881,44 +894,19 @@ Bsearch.addEventListener('change', searchAdresse, false);
 /*===================================================== boutons villes ===================================*/
 
 for(var i = 0; i < Bvilles.length; i++){
-  Bvilles[i].onclick = function(e) {
-    console.log(e);    
+  Bvilles[i].onclick = function(e) {  
+    resetFiltresBox();
     ville_active = e.target.firstChild.textContent;
     let url = new URL("http://nominatim.openstreetmap.org/search?q=" + ville_active + "&format=json&limit=1");
     $.getJSON(url, function(data) {
       let pos = {lat : data[0].lat, lng : data[0].lon};
-      mymap.setView(pos, 11);
+      trouverAdresseFiltres();
+      mymap.setView(pos, 11, {animate: true, duration: 2000});
       addMarker(pos, ville_active);
       Villedesfiltres.textContent = ville_active;
     });
   }
 }
-
-/*
-Bcalais.onclick = function() {
-  mymap.setView([50.95129, 1.858686], 11);
-  pos = {lat : 50.95129, lng : 1.858686};
-  console.log(VillesPositions[Bcalais.firstChild.textContent]);
-  addMarker(VillesPositions[Bcalais.firstChild.textContent], "");
-  Villedesfiltres.textContent = "(ville de Calais)"; // marche pas : nique ta mère
-}
-
-Bdunkerque.onclick = function() {
-  mymap.setView([51.034368, 2.376776], 11);
-  pos = {lat : 51.034368, lng : 2.376776};
-  console.log(VillesPositions[Bdunkerque.firstChild.textContent]);
-  addMarker(VillesPositions[Bdunkerque.firstChild.textContent], "");
-  Villedesfiltres.textContent = "(ville de Dunkerque)"; // marche pas : nique ta mère
-}
-
-Bsaintomer.onclick = function() {
-  mymap.setView([50.750115, 2.252208], 11);
-  pos = {lat : 50.750115, lng : 2.252208};
-  console.log(VillesPositions[Bsaintomer.firstChild.textContent]);
-  addMarker(VillesPositions[Bsaintomer.firstChild.textContent], "");
-  Villedesfiltres.textContent = "(ville de Saint-Omer)"; // marche pas : nique ta mère
-}*/
-
 
 /*=======================================================================================================*/
 /*================================== Changement couleur like / dislike / report =========================*/
