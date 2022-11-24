@@ -415,15 +415,93 @@ if(($_SESSION['email']) !== ""){
 <!-- ==================================================================================================================== Page actu -->
         <div class="parent" id="pages-actu">
 <!-- -------------------------------------------------------------------------------------------------------------------- Page actu -->
-          <div class="page child1" id="section-fil-actu">
-            <aside>
-              <p><u>Fonctionnalités :</u><br /></p>
-              <p><a href="formulaire.html">Créer un article</a></p>
-            </aside>
-            <article>
-              <p>Soon...</p>
-            </article>
-          </div>
+<div class="page child1" id="section-fil-actu">
+
+<section class="carousel" aria-label="Gallery">
+  <ol class="carousel__viewport">
+    <li id="carousel__slide1"
+        tabindex="0"
+        class="carousel__slide">
+      <div class="carousel__snapper">
+          <a href="#carousel__slide4"
+          class="carousel__prev">Go to last slide</a>
+        <a href="#carousel__slide2"
+          class="carousel__next">Go to next slide</a>
+      </div>
+
+      <div id="Article">
+        <div class="container" id="ArticleSansDesc">
+
+            <div id="TitreArticle">
+              <p><u><?php echo $donnees['NomEvent']; ?></u></p>
+            </div>
+
+            <?php 
+            echo '<img src="uploads/' . $donnees["IMG"] . '">';?>
+            <div id="DescriptionArticle">
+              <h3><u>Description de l'événement </u> :</h3>
+              <p><?php echo $donnees['Annonce']; ?></p>  
+            </div>
+        </div>
+    </li>
+
+    <li id="carousel__slide2"
+        tabindex="0"
+        class="carousel__slide">
+      <div class="carousel__snapper"></div>
+      <a href="#carousel__slide1"
+        class="carousel__prev">Go to previous slide</a>
+      <a href="#carousel__slide3"
+        class="carousel__next">Go to next slide</a>
+    </li>
+
+    <li id="carousel__slide3"
+        tabindex="0"
+        class="carousel__slide">
+      <div class="carousel__snapper"></div>
+      <a href="#carousel__slide2"
+        class="carousel__prev">Go to previous slide</a>
+      <a href="#carousel__slide4"
+        class="carousel__next">Go to next slide</a>
+    </li>
+
+    <li id="carousel__slide4"
+        tabindex="0"
+        class="carousel__slide">
+      <div class="carousel__snapper"></div>
+      <a href="#carousel__slide3"
+        class="carousel__prev">Go to previous slide</a>
+      <a href="#carousel__slide1"
+        class="carousel__next">Go to first slide</a>
+    </li>
+  </ol>
+
+<aside class="carousel__navigation">
+  <ol class="carousel__navigation-list">
+    <li class="carousel__navigation-item">
+      <a href="#carousel__slide1"
+        class="carousel__navigation-button">Go to slide 1</a>
+    </li>
+
+    <li class="carousel__navigation-item">
+      <a href="#carousel__slide2"
+        class="carousel__navigation-button">Go to slide 2</a>
+    </li>
+
+    <li class="carousel__navigation-item">
+      <a href="#carousel__slide3"
+        class="carousel__navigation-button">Go to slide 3</a>
+    </li>
+
+    <li class="carousel__navigation-item">
+      <a href="#carousel__slide4"
+        class="carousel__navigation-button">Go to slide 4</a>
+    </li>
+  </ol>
+</aside>
+</section>
+
+</div>
 <!-- -------------------------------------------------------------------------------------------------------------- Page creer actu -->
           <div class="page child1 child2" id="section-creer-article">   
             <div class="scrollbar"></div>
@@ -431,7 +509,7 @@ if(($_SESSION['email']) !== ""){
             <div id="champ-remplit-art">
               <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
               <form method="post" action="./pages/php/donnees_formulaire.php">
-               <fieldset>
+               <!--<fieldset>
                   <legend>Vos coordonnées</legend><br />
                   <label for="Nom">Nom</label><br />
                   <input type="text" name="Nom" id="Nom" placeholder="Exemple : Vercoutre" size="50" required /><br /><br />
@@ -439,13 +517,14 @@ if(($_SESSION['email']) !== ""){
                   <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50" required /><br /><br />
                   <label for="Mail">E-Mail</label><br />
                   <input type="email" name="Mail" id="Mail" placeholder="Exemple : xyz@leraciste.noob" size="50" required /><br /><br />
-                </fieldset><br /> 
+                </fieldset><br />
+              -->
                 <fieldset>
                   <legend>Informations sur l'événement</legend><br />
                   <label for="NomEvent">Nom de l'événement</label><br />
                   <input type="text" name="NomEvent" id="NomEvent" placeholder="Exemple : Compet OW2, qui aura un meilleur shoot que tibo ??" size="50" required /><br /><br />
                   <label for="Lieu">Adresse de l'événement</label><br />
-                  <input type="text" name="Lieu" id="Lieu" placeholder="Exemple : 666 rue des ames damnées" size="50" required /><br /><br />
+                  <input type="text" name="Adresse" id="Adresse" placeholder="Exemple : 666 rue des ames damnées" size="50" required /><br /><br />
                   <label for="Ville">Ville</label><br />
                   <input type="text" name="Ville" id="Ville" placeholder="Exemple : Blendecques" size="50" required /><br /><br />
                   <label for="CP">Code postal</label><br />
