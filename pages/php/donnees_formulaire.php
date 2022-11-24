@@ -3,7 +3,7 @@
     session_start();
     if(($_SESSION['email']) !== ""){
         $email = $_SESSION['email'];
-        $reponse = $bdd->query('SELECT NumEtu, Nom, Prenom, Mail, Picture FROM user WHERE Mail="'.$email.'"');
+        $reponse = $bdd->query('SELECT NumEtu, Nom, Prenom, Mail, image FROM user WHERE Mail="'.$email.'"');
         $donnees = $reponse->fetch();
       
     }

@@ -1,9 +1,83 @@
 <!DOCTYPE html>
 <html lang="fr">
 
+<?php
+    require_once 'pages/php/login.php'; // On inclut la connexion à la bdd
+    session_start();
+    $reponse = $bdd->query('SELECT NumEtu, NomEvent, Adresse, Ville, CP, IMG, Annonce, DateCreation FROM testpost');
+    $donnees = $reponse->fetch();
+    if ($reponse = 0){
+        echo "Aucun post";
+    }
+
+//function make_query($bdd)
+//{
+//    $query = " SELECT * FROM testpost ORDER BY DateCreation DESC";
+//    $resultat = mysql_query($bdd, $query);
+//    return $resultat;
+//}
+  
+//function make_slide_indicators($conn)
+//{
+//   $output = '';
+//    $count = 0;
+//   $result = make_query($conn);
+//    while($row = mysqli_fetch_array($result))
+//    {
+//        if($count == 0)
+//        {
+//            $output .= '<li data-target="#dynamic_slide_show" data-slide-to="'.$count.'" class="active"></li>
+//            ';
+//        } else {
+//            $output .= '<li data-target="#dynamic_slide_show" data-slide-to="'.$count.'"></li>';
+//        }
+//        $count = $count + 1 ;
+//    }
+//    return $output;
+//}
+
+//function make_slides($conn)
+//{
+//    $output = '';
+//    $count = 0;
+//    $result = make_query($conn);
+//    while($row = mysqli_fetch_array($result))
+//    {
+//        if($count == 0)
+//        {
+//            $output .= '<div class="item active">';
+//        } else {
+//            $output .= '<div class="item">';
+//        }
+//        $output .= '<img src="images/notes/'.$row["image"]
+//                .'" alt="'.$row["denomination"].'" style=" width: 100%;height: 300px;" /> 
+//                <div class="carousel-caption"> 
+//                <h3>' .$row['price'].'</h3>
+//                </div>';
+//        $count = $count +1;
+//    }
+//    return $output;
+//}
+//    <?php
+//    function SlideShow($slide){
+//        $conn = mysqli_connect("localhost", "root", "", "tsl_tv_system");
+//        $image_details  = mysqli_query($conn, "SELECT * FROM slides limit $slide, 1");
+//        $row = mysqli_fetch_array($image_details);
+//        echo "<img src='upload/upload/".$row['attachment_loc']."'>";
+//    }
+    
+//    $n = isset($_POST['n']) ? intval($_POST['n']) : -1;
+//    fin php
+//<?php
+//    SlideShow($n + 1);
+//  fin php
+
+?>
+
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Ev'Note</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
@@ -396,7 +470,9 @@
 <!-- ==================================================================================================================== Page actu -->
         <div class="parent" id="pages-actu">
 <!-- -------------------------------------------------------------------------------------------------------------------- Page actu -->
+
         <div class="page child1" id="section-fil-actu">
+
           <section class="carousel" aria-label="Gallery">
             <ol class="carousel__viewport">
               <li id="carousel__slide1"
@@ -413,14 +489,14 @@
                   <div class="container" id="ArticleSansDesc">
 
                       <div id="TitreArticle">
-                        <p><u>Tournoi Mario Kart</u></p>
+                        <p><u><?php echo $donnees['NomEvent']; ?></u></p>
                       </div>
 
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Montpellier_in_Game_-_2010_-_Ambiance_-_P1420987.jpg/500px-Montpellier_in_Game_-_2010_-_Ambiance_-_P1420987.jpg"></img>
-
+                      <?php 
+                      echo '<img src="uploads/' . $donnees["IMG"] . '">';?>
                       <div id="DescriptionArticle">
                         <h3><u>Description de l'événement </u> :</h3>
-                        <p>Vous aimez les courses effrénées, les véhicules en tout genre et les jeux vidéos ? Si c'est le cas cet événement est parfait pour vous ! En effet, dans celui-ci, organiser par Mr Vandenbroucke le détenant du titre, vous pourrez affronter les plus grands pilotes Calesiens dans un tournois rocambolesque mélant conduites et stratégies.</p>  
+                        <p><?php echo $donnees['Annonce']; ?></p>  
                       </div>
                   </div>
               </li>
@@ -480,6 +556,7 @@
             </ol>
           </aside>
         </section>
+        
       </div>
 <!-- -------------------------------------------------------------------------------------------------------------- Page creer actu -->
           <div class="page child1 child2" id="section-creer-article">   
@@ -487,7 +564,7 @@
             <div class="clickScrollbar"></div>
             <div id="champ-remplit-art">
               <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
-              <form method="post" action="./pages/php/donnees_formulaire.php">
+              <form method="post" action="./pages/php/donnees_formulaire.php" enctype="multipart/form-data">
                <fieldset>
                   <legend>Vos coordonnées</legend><br />
                   <label for="Nom">Nom</label><br />
