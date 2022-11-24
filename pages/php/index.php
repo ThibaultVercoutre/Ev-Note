@@ -1,9 +1,84 @@
 <!DOCTYPE html>
 <html lang="fr">
 
+<?php
+    require_once 'pages/php/login.php'; // On inclut la connexion à la bdd
+    session_start();
+    $reponse = $bdd->query('SELECT NumEtu, NomEvent, Adresse, Ville, CP, IMG, Annonce, DateCreation FROM testpost');
+    $donnees = $reponse->fetch();
+    if ($reponse = 0){
+        echo "Aucun post";
+    }
+
+//function make_query($bdd)
+//{
+//    $query = " SELECT * FROM testpost ORDER BY DateCreation DESC";
+//    $resultat = mysql_query($bdd, $query);
+//    return $resultat;
+//}
+  
+//function make_slide_indicators($conn)
+//{
+//   $output = '';
+//    $count = 0;
+//   $result = make_query($conn);
+//    while($row = mysqli_fetch_array($result))
+//    {
+//        if($count == 0)
+//        {
+//            $output .= '<li data-target="#dynamic_slide_show" data-slide-to="'.$count.'" class="active"></li>
+//            ';
+//        } else {
+//            $output .= '<li data-target="#dynamic_slide_show" data-slide-to="'.$count.'"></li>';
+//        }
+//        $count = $count + 1 ;
+//    }
+//    return $output;
+//}
+
+//function make_slides($conn)
+//{
+//    $output = '';
+//    $count = 0;
+//    $result = make_query($conn);
+//    while($row = mysqli_fetch_array($result))
+//    {
+//        if($count == 0)
+//        {
+//            $output .= '<div class="item active">';
+//        } else {
+//            $output .= '<div class="item">';
+//        }
+//        $output .= '<img src="images/notes/'.$row["image"]
+//                .'" alt="'.$row["denomination"].'" style=" width: 100%;height: 300px;" /> 
+//                <div class="carousel-caption"> 
+//                <h3>' .$row['price'].'</h3>
+//                </div>';
+//        $count = $count +1;
+//    }
+//    return $output;
+//}
+//    <?php
+//    function SlideShow($slide){
+//        $conn = mysqli_connect("localhost", "root", "", "tsl_tv_system");
+//        $image_details  = mysqli_query($conn, "SELECT * FROM slides limit $slide, 1");
+//        $row = mysqli_fetch_array($image_details);
+//        echo "<img src='upload/upload/".$row['attachment_loc']."'>";
+//    }
+    
+//    $n = isset($_POST['n']) ? intval($_POST['n']) : -1;
+//    fin php
+//<?php
+//    SlideShow($n + 1);
+//  fin php
+
+?>
+
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Ev'Note</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
@@ -30,7 +105,6 @@
 </head>
 
 <body>
-<div id="page-principale">
   <header>
     <div id="titre">
       <h1>Ev'Note</h1>
@@ -57,7 +131,7 @@
 
   <div id="general">
     <div id="phrase-presentation">
-      <p>Vos lieux et événements disponibles sur un seul endroit !</p>
+      <p>Vos lieux et événements sur Calais disponibles sur un seul endroit !</p>
     </div>
 <!-- ================================================================================================================================ -->
 <!-- ======================================================================================================================== MARQUEE -->
@@ -396,100 +470,101 @@
 <!-- ==================================================================================================================== Page actu -->
         <div class="parent" id="pages-actu">
 <!-- -------------------------------------------------------------------------------------------------------------------- Page actu -->
-          <div class="page child1" id="section-fil-actu">
-            <div if="#actu-fil">
-              <section class="carousel" aria-label="Gallery">
-                <ol class="carousel__viewport">
-                  <li id="carousel__slide1"
-                      tabindex="0"
-                      class="carousel__slide">
-                    <div class="carousel__snapper">
-                        <a href="#carousel__slide4"
-                        class="carousel__prev">Go to last slide</a>
-                      <a href="#carousel__slide2"
-                        class="carousel__next">Go to next slide</a>
-                    </div>
-          
-                    <div id="Article">
-                      <div class="container" id="ArticleSansDesc">
-          
-                          <div id="TitreArticle">
-                            <p><u>Tournoi Mario Kart</u></p>
-                          </div>
-          
-                          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Montpellier_in_Game_-_2010_-_Ambiance_-_P1420987.jpg/500px-Montpellier_in_Game_-_2010_-_Ambiance_-_P1420987.jpg"></img>
-          
-                          <div id="DescriptionArticle">
-                            <h3><u>Description de l'événement </u> :</h3>
-                            <p>Vous aimez les courses effrénées, les véhicules en tout genre et les jeux vidéos ? Si c'est le cas cet événement est parfait pour vous ! En effet, dans celui-ci, organiser par Mr Vandenbroucke le détenant du titre, vous pourrez affronter les plus grands pilotes Calesiens dans un tournois rocambolesque mélant conduites et stratégies.</p>  
-                          </div>
-                        </div>
-                  </li>
-            
-                  <li id="carousel__slide2"
-                      tabindex="0"
-                      class="carousel__slide">
-                    <div class="carousel__snapper"></div>
-                    <a href="#carousel__slide1"
-                      class="carousel__prev">Go to previous slide</a>
-                    <a href="#carousel__slide3"
-                      class="carousel__next">Go to next slide</a>
-                  </li>
-                  
-                  <li id="carousel__slide3"
-                      tabindex="0"
-                      class="carousel__slide">
-                    <div class="carousel__snapper"></div>
-                    <a href="#carousel__slide2"
-                      class="carousel__prev">Go to previous slide</a>
+
+        <div class="page child1" id="section-fil-actu">
+
+          <section class="carousel" aria-label="Gallery">
+            <ol class="carousel__viewport">
+              <li id="carousel__slide1"
+                  tabindex="0"
+                  class="carousel__slide">
+                <div class="carousel__snapper">
                     <a href="#carousel__slide4"
-                      class="carousel__next">Go to next slide</a>
-                    </li>
-                  
-                    <li id="carousel__slide4"
-                      tabindex="0"
-                      class="carousel__slide">
-                      <div class="carousel__snapper"></div>
-                      <a href="#carousel__slide3"
-                        class="carousel__prev">Go to previous slide</a>
-                      <a href="#carousel__slide1"
-                        class="carousel__next">Go to first slide</a>
-                    </li>
-                  </ol>
-                
-                <aside class="carousel__navigation">
-                  <ol class="carousel__navigation-list">
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide1"
-                        class="carousel__navigation-button">Go to slide 1</a>
-                    </li>
-                    
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide2"
-                        class="carousel__navigation-button">Go to slide 2</a>
-                    </li>
-                    
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide3"
-                        class="carousel__navigation-button">Go to slide 3</a>
-                    </li>
-                    
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide4"
-                        class="carousel__navigation-button">Go to slide 4</a>
-                    </li>
-                  </ol>
-                </aside>
-              </section>
-            </div>
-          </div>
+                    class="carousel__prev">Go to last slide</a>
+                  <a href="#carousel__slide2"
+                    class="carousel__next">Go to next slide</a>
+                </div>
+
+                <div id="Article">
+                  <div class="container" id="ArticleSansDesc">
+
+                      <div id="TitreArticle">
+                        <p><u><?php echo $donnees['NomEvent']; ?></u></p>
+                      </div>
+
+                      <?php 
+                      echo '<img src="uploads/' . $donnees["IMG"] . '">';?>
+                      <div id="DescriptionArticle">
+                        <h3><u>Description de l'événement </u> :</h3>
+                        <p><?php echo $donnees['Annonce']; ?></p>  
+                      </div>
+                  </div>
+              </li>
+
+              <li id="carousel__slide2"
+                  tabindex="0"
+                  class="carousel__slide">
+                <div class="carousel__snapper"></div>
+                <a href="#carousel__slide1"
+                  class="carousel__prev">Go to previous slide</a>
+                <a href="#carousel__slide3"
+                  class="carousel__next">Go to next slide</a>
+              </li>
+      
+              <li id="carousel__slide3"
+                  tabindex="0"
+                  class="carousel__slide">
+                <div class="carousel__snapper"></div>
+                <a href="#carousel__slide2"
+                  class="carousel__prev">Go to previous slide</a>
+                <a href="#carousel__slide4"
+                  class="carousel__next">Go to next slide</a>
+              </li>
+      
+              <li id="carousel__slide4"
+                  tabindex="0"
+                  class="carousel__slide">
+                <div class="carousel__snapper"></div>
+                <a href="#carousel__slide3"
+                  class="carousel__prev">Go to previous slide</a>
+                <a href="#carousel__slide1"
+                  class="carousel__next">Go to first slide</a>
+              </li>
+            </ol>
+    
+          <aside class="carousel__navigation">
+            <ol class="carousel__navigation-list">
+              <li class="carousel__navigation-item">
+                <a href="#carousel__slide1"
+                  class="carousel__navigation-button">Go to slide 1</a>
+              </li>
+        
+              <li class="carousel__navigation-item">
+                <a href="#carousel__slide2"
+                  class="carousel__navigation-button">Go to slide 2</a>
+              </li>
+        
+              <li class="carousel__navigation-item">
+                <a href="#carousel__slide3"
+                  class="carousel__navigation-button">Go to slide 3</a>
+              </li>
+        
+              <li class="carousel__navigation-item">
+                <a href="#carousel__slide4"
+                  class="carousel__navigation-button">Go to slide 4</a>
+              </li>
+            </ol>
+          </aside>
+        </section>
+        
+      </div>
 <!-- -------------------------------------------------------------------------------------------------------------- Page creer actu -->
           <div class="page child1 child2" id="section-creer-article">   
             <div class="scrollbar"></div>
             <div class="clickScrollbar"></div>
             <div id="champ-remplit-art">
               <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
-              <form method="post" action="./pages/php/donnees_formulaire.php">
+              <form method="post" action="./pages/php/donnees_formulaire.php" enctype="multipart/form-data">
                <fieldset>
                   <legend>Vos coordonnées</legend><br />
                   <label for="Nom">Nom</label><br />
@@ -534,7 +609,8 @@
           </div>
         </div>
         <nav id="bouton-scroll"></nav>
-    </div> <!-- ==================================================== FIN Corps de la page -->
+      </div> <!-- ==================================================== FIN Corps de la page -->
+    </div>
   </div>
   <nav id="nav-fin">
     <div class="button drop" id="scroll">
@@ -545,27 +621,18 @@
       </div>
     </div>
   </nav>
-  <footer id="le-footer">
-    <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
-    <div id="foot-gauche">
-      <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
-      <a class="lien-footer"
-        href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
-    </div>
-    <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
-    <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
-    <script src="script.js"></script>
-  </footer>
-</div>
-
-<div id="page-chargement">
-  <img src="img/EvNote_1.png" alt="Logo-Site">
-  <div id="font-progress-chargement">
-    <div id="progress-chargement"></div>
+<footer id="le-footer">
+  <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
+  <div id="foot-gauche">
+    <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
+    <a class="lien-footer"
+      href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
   </div>
-</div>
+  <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
+  <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
+  <script src="script.js"></script>
+</footer>
 </body>
-
 
 </html>
 
