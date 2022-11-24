@@ -20,6 +20,87 @@ window.onload = () => {
   
 };
 
+// Temps
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var njour = today.getDate();
+  var mois = today.getMonth();
+  var jour = today.getDay();
+  jour = convertJ(jour);
+  mois = convertM(mois+1);
+  h = checkTime(h);
+  m = checkTime(m);
+  document.getElementById('time').innerHTML =
+  jour + " " + njour + " " + mois + "  -  " + h + ":" + m;
+  document.getElementById('time').dataset.datatext = 
+  jour + " " + njour + " " + mois + "  -  " + h + ":" + m;
+  var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};
+  return i;
+}
+function convertJ(jour) {
+  var lejour;
+  switch (jour) {
+    case 1: lejour = "Lundi"; break;
+    case 2: lejour = "Mardi"; break;
+    case 3: lejour = "Mercredi"; break;
+    case 4: lejour = "Jeudi"; break;
+    case 5: lejour = "Vendredi"; break;
+    case 6: lejour = "Samedi"; break;
+    case 7: lejour = "Dimanche"; break;
+  }
+  return lejour;
+}
+function convertM(mois) {
+  var lemois;
+  switch (mois) {
+    case 1: lemois = "Janvier"; break;
+    case 2: lemois = "Février"; break;
+    case 3: lemois = "Mars"; break;
+    case 4: lemois = "Avril"; break;
+    case 5: lemois = "Mai"; break;
+    case 6: lemois = "Juin"; break;
+    case 7: lemois = "Juillet"; break;
+    case 8: lemois = "Août"; break;
+    case 9: lemois = "Septembre"; break;
+    case 10: lemois = "Octobre"; break;
+    case 11: lemois = "Novembre"; break;
+    case 12: lemois = "Décembre"; break;
+  }
+  return lemois;
+}
+ 
+startTime();
+
+// Temps et Search
+
+let Isearch = document.getElementById("search");
+
+/*
+
+Isearch.addEventListener("mouseenter", function(event) {
+  document.getElementById("time").style.fontSize = "0px";
+});
+
+Isearch.addEventListener("mouseleave", function(event) {
+  document.getElementById("time").style.fontSize = "26px";
+});
+
+*/
+
 /*=======================================================================================================*/
 /*============================= Ajout section filtre map (bars, lycées ...) =============================*/
 
@@ -49,6 +130,8 @@ command.onAdd = function creerFiltres(mymap) {
     return div;
 };
 command.addTo(mymap);
+
+let texte = "";
 
 /*=======================================================================================================*/
 /*===================================== Ajout section choix villes ======================================*/
@@ -146,7 +229,7 @@ var finBouton = '</div></br>';
 /* Fonction qui simplifie les adresse */
 
 function limit_adresse(nom){
-  var texte = nom.split(",");
+  texte = nom.split(",");
   if(parseInt(texte[0][0]) >= 0 || parseInt(texte[0][0] <= 9)){
     Tadresse.textContent = texte[0] + texte[1];
     texte = texte[0] + texte[1];
@@ -279,7 +362,7 @@ let BcreerArt = document.getElementById("note");
 let Bcheckbox = document.getElementById("checkbox");
 let Badressenote = null;
 let Bsearch = document.getElementById("div-search");
-let Bloupe = document.getElementById("loupe");
+let Bloupe = document.getElementById("la-loupe");
 let Bcalais = document.getElementById("ville_Calais");
 let Bdunkerque = document.getElementById("ville_Dunkerque");
 let Bsaintomer = document.getElementById("ville_Saint-Omer");
@@ -293,13 +376,20 @@ let Tadresse = document.getElementById("batiment-name");
 let Tville = document.getElementById("ville-name-notation");
 
 /* Input =================================*/
-let Isearch = document.getElementById("search");
+
+/* GPS ===================================*/
+let Bgps = document.getElementById("itineraire");
+let Bouigps = document.getElementById("oui-gps");
+let Bnongps = document.getElementById("non-gps");
+let Stitlegps = document.getElementById("title-gps");
+let Sitineraire = document.getElementById("itineraire-gps");
 
 /* Sections ==============================*/
 let Sfooter = document.getElementById("le-footer");
 let Smap = document.getElementById("pages-map");
 let Sactu = document.getElementById("pages-actu");
 let Snotation = document.getElementById("section-notation");
+let Sgps = document.getElementById("section-gps");
 let ScreerArt = document.getElementById("section-creer-article");
 let SpartieMap = document.getElementById("section-map");
 let SpartieActu = document.getElementById("section-fil-actu");
@@ -585,6 +675,27 @@ Bscroll.onclick = function() {
 }
 
 /*=======================================================================================================*/
+/*============================================ GPS ======================================================*/
+
+Bouigps.onclick = function() {
+  Stitlegps.style.transition = "0.3s";
+  Stitlegps.style.transform = "translate(-100%,0px)";
+  Sitineraire.style.transition = "0.3s";
+  Sitineraire.style.transform = "translate(0px,0px)";
+  var localisation = "Pas d'accès encore";
+  document.getElementById("input-depart-gps").value = localisation;
+  document.getElementById("input-arrivee-gps").value = texte;
+}
+
+Bnongps.onclick = function() {
+  Stitlegps.style.transition = "0.3s";
+  Stitlegps.style.transform = "translate(-100%,0px)";
+  Sitineraire.style.transition = "0.3s";
+  Sitineraire.style.transform = "translate(0px,0px)";
+  document.getElementById("input-arrivee-gps").value = texte;
+}
+
+/*=======================================================================================================*/
 /*===================================== Chargement des notes des avis ===================================*/
 
 const NotBarres = document.querySelectorAll(".compte-note .barres-notations .barres-2");
@@ -781,7 +892,7 @@ function addMarker(pos, nom, code) {
   var index = nom.indexOf(",");
   Tville.textContent = ville_active; // Si Calais
   if (index !== -1) {
-    var texte = nom.split(",");
+    texte = nom.split(",");
     if(parseInt(texte[0][0]) >= 0 || parseInt(texte[0][0] <= 9)){
       Tadresse.textContent = texte[0] + texte[1];
       texte = texte[0] + texte[1];
@@ -790,7 +901,7 @@ function addMarker(pos, nom, code) {
       texte = texte[0];
     }
   } else {
-    var texte = nom;
+    texte = nom;
     Tadresse.textContent = nom;
   }
 
@@ -799,12 +910,13 @@ function addMarker(pos, nom, code) {
   
   if(nom.search(" " + code + ",") != -1){  
     console.log(" " + code + ",");
-    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
+    marqueur.addTo(mymap).bindPopup('<div id="element-popup"><h1>Adresse du lieu : </h1><div id="boutons-popup"><div class="button anim-button" id="adresse-note">' + texte + '</div><div class="button anim-button" id="itineraire"><span class="material-symbols-outlined">google_plus_reshare</span></div></div></br></div>').openPopup();
   }else{
       marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
   }
     
   Bnotation = document.getElementById("adresse-note");
+  Bgps = document.getElementById("itineraire");
   mymap.setView([pos.lat, pos.lng]);
 
 };
@@ -814,6 +926,8 @@ function addMarker(pos, nom, code) {
 function boutonavis(e) {
   if (Bnotation != null) {
     if (e.target.id == Bnotation.id) {
+      Sgps.style.transition = "0.3s";
+      Sgps.style.transform = "translate(-100%,0px)";
       Snotation.style.transition = "0.3s";
       Bcheckbox.style.display = "none";
       Snotation.style.transform = "translate(0px,0px)";
@@ -822,11 +936,33 @@ function boutonavis(e) {
 }
 Smap.addEventListener('click', boutonavis, false);
 
+function boutongps(e) {
+  if (Bgps != null) {
+    if (e.target.parentElement.id == Bgps.id || e.target.id == Bgps.id) {
+      /*let ContentPopup = document.getElementById("element-popup");
+      ContentPopup.innerHTML = '<h3>Voulez-vous autoriser Ev\'Note à accéder à votre localisation ?</h3><div id="boutons-popup"><div class="button anim-button" id="oui-gps">Oui</div><div class="button anim-button" id="non-gps">Non</div></div></br>';*/
+      Sgps.style.transition = "0.3s";
+      Sgps.style.transform = "translate(0px,0px)";
+      Stitlegps.style.transition = "0.3s";
+      Stitlegps.style.transform = "translate(0,0px)";
+      Sitineraire.style.transition = "0.3s";
+      Sitineraire.style.transform = "translate(-100%,0px)";
+    }
+  }
+}
+Smap.addEventListener('click', boutongps, false);
+
 /* Si on clique sur la map */
 mymap.on('click', function(e) {
   if(e.originalEvent.path.length < 12){
     Snotation.style.transition = "0s";
     Snotation.style.transform = "translate(-100%,0px)";
+    Sgps.style.transition = "0.3s";
+    Sgps.style.transform = "translate(-100%,0px)";
+    Stitlegps.style.transition = "0.3s";
+    Stitlegps.style.transform = "translate(-100%,0px)";
+    Sitineraire.style.transition = "0.3s";
+    Sitineraire.style.transform = "translate(-100%,0px)";
     // On récupère les coordonnées du clic
     pos = e.latlng;
     let url = new URL("http://nominatim.openstreetmap.org/search?q=" + pos.lat + "%20" + pos.lng + "&format=json&limit=1");
@@ -852,6 +988,8 @@ mymap.on('click', function(e) {
 
 /* Si on clique sur la loupe */
 function searchAdresse() {
+  Sgps.style.transition = "0.3s";
+  Sgps.style.transform = "translate(-100%,0px)";
   let adresse = Isearch.value;
   let regex = "[Cc][Aa][Ll][Aa][Ii][Ss]"
   if(adresse.search(regex) == -1){
