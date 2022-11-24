@@ -933,10 +933,6 @@ mymap.removeLayer(filtre.Lycees);
     texte = nom;
     Tadresse.textContent = nom;
   }
-} else {
-  var texte = nom;
-  Tadresse.textContent = nom;
-}
 
 //marqueur.addTo(mymap);
 /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
@@ -973,7 +969,7 @@ function boutonavis(e) {
     }
   }
 }
-}
+
 Smap.addEventListener('click', boutonavis, false);
 
 function boutongps(e) {
@@ -1022,13 +1018,12 @@ mymap.on('click', function(e) {
         pos = VillesPositions[ville_active];
         addMarker(pos, "Destination impossible");
       }
-    }
+    });
     if(i == CodesVilles[ville_active].length){
       pos = VillesPositions[ville_active];
       addMarker(pos, "Destination impossible");
     }
-  });
-}
+  }
 });
 
 /* Si on clique sur la loupe */
@@ -1052,8 +1047,7 @@ function searchAdresse() {
         addMarker(pos, "Destination impossible");
       }
     }
-  }
-});
+  });
 }
 
 
@@ -1115,11 +1109,3 @@ Savi.addEventListener('click', action_avis, false);
 
 /*=======================================================================================================*/
 /*========================================= Test ========================================================*/
-
-
-/*let url = new URL("http://nominatim.openstreetmap.org/search?q=Pas-de-Calais%20Calais,&format=json&limit=1000");
-  
-//console.log(url);
-$.getJSON(url, function(data) {
-//console.log(data.length);
-});*/
