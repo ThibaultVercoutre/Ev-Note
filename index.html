@@ -33,14 +33,19 @@
 <div id="page-principale">
   <header>
     <div id="titre">
-      <h1>Ev'Note</h1>
+      <div id="effecten">
+        <h1 data-text="Ev'Note" id="evnote">Ev'Note</h1>
+        <div class="gradient"></div>
+        <div class="spotlight"></div>
+      </div>
+      <div id="time"></div>
       <div id="div-search">
-        <input class="button" id="search" placeholder="Rechercher un lieu..."/>
+        <input type="text" id="search" placeholder="Rechercher un lieu..."/>
+        <ion-icon id="la-loupe" name="search-outline"></ion-icon>
       </div>
-      <div class="button" id="loupe">
-        <div id="cercle"></div>
-        <div id="barre"></div>
-      </div>
+      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+      <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     </div>
     <div id="compte"><a href="pages/php/user_connexion.php">
         <h2 id="connect">Connexion</h2>
@@ -57,7 +62,7 @@
 
   <div id="general">
     <div id="phrase-presentation">
-      <p>Vos lieux et événements disponibles sur un seul endroit !</p>
+      <p><span>V</span>os <span>l</span>ieux et <span>é</span>vénements disponibles sur un seul <span>e</span>ndroit !</p>
     </div>
 <!-- ================================================================================================================================ -->
 <!-- ======================================================================================================================== MARQUEE -->
@@ -390,6 +395,37 @@
               </div>
             </div>
           </div>
+
+<!-- --------------------------------------------------------------------------------------------------------------------- Page GPS -->
+
+          <div class="page child1" id="section-gps">
+            <div id="title-gps">
+              <h3>Voulez-vous autoriser Ev'Note à accéder à votre localisation ?</h3>
+              <div id="boutons-popup">
+                <div class="button anim-button" id="oui-gps">Oui</div>
+                <div class="button anim-button" id="non-gps">Non</div>
+              </div>
+            </div>
+          </div>
+          <div class="page child1" id="itineraire-gps">
+            <div>
+              <h1 id="titre-text-gps" data-text="Itinéraire">Itinéraire</h1>
+              <div id="les-inputs-gps">
+                <div class="inputBox">
+                  <input type="text" required="required" id="input-depart-gps" value=""></input>
+                  <span>Départ</span>
+                </div>
+                <div class="inputBox">
+                  <input type="text" required="required" id="input-arrivee-gps" value=""></input>
+                  <span>Arrivée</span>
+                </div>
+              </div>
+              <div class="button anim-button" id="go-itineraire">
+                <span class="material-symbols-outlined">roundabout_right</span>
+              </div>
+            </div>
+          </div>
+
 <!-- --------------------------------------------------------------------------------------------------------------------- Page map -->
           <div class="page child1 child2" id="section-map"></div>
         </div>
