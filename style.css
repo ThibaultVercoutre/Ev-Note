@@ -577,7 +577,6 @@ header div{
 }
 
 .gradient {
-  background: linear-gradient(45deg, red, yellow);
   mix-blend-mode: multiply;
 }
 
