@@ -80,7 +80,7 @@ div#page-chargement{
     transform: translateY(-100%);
   }
 }
-
+/*
 #font-progress-chargement{
   margin: 10px;
   height: 30px;
@@ -105,6 +105,61 @@ div#page-chargement{
   }
   100%{
     width: 100%;
+  }
+}*/
+
+#logo-site-chargement {
+  position: absolute;
+  top: 10%;
+}
+
+#progress-chargement{
+  position: absolute;
+  top: calc(75% - 50px);
+  left: calc(50% - 50px);
+  width: 100px;
+  height: 100px;
+  border: 2px solid rgba(170, 170,170,0.356);
+  box-shadow: 0 -2px 2px rgba(0,0,0,0.2);
+  border-bottom: 5px solid var(--couleur-principale-2);
+  border-radius: 50%;
+  animation: rotate-chargement 5s linear infinite;
+}
+
+#progress-chargement::before{
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  bottom: 10px;
+  right: 10px;
+  border: 2px solid rgba(170, 170,170,0.356);
+  box-shadow: 0 -2px 2px rgba(0,0,0,0.2);
+  border-bottom: 5px solid var(--couleur-principale-3);
+  border-radius: 50%;
+  animation: rotate-chargement 4s linear infinite;
+}
+
+#progress-chargement::after{
+  content: '';
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  bottom: 22px;
+  right: 22px;
+  border: 2px solid rgba(170, 170,170,0.356);
+  box-shadow: 0 -2px 2px rgba(0,0,0,0.2);
+  border-bottom: 5px solid var(--couleur-principale-4);
+  border-radius: 50%;
+  animation: rotate-chargement 2s linear infinite;
+}
+
+@keyframes rotate-chargement {
+  0% {
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
   }
 }
 
@@ -154,15 +209,67 @@ nav#nav-fin #scroll .carre{
 /*=======================================================================================================*/
 /*==================================================== BOUTONS GENERAUX =================================*/
 
-.button{
-  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-5), var(--couleur-principale-6));
+/*Bouton switch*/
+
+.switch{
+  margin: 5px;
+  width: 38px;
+  height: 16px;
+  position: relative;
+  transform: rotate(-90deg);
+}
+
+.switch input{
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider{
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 15px;
+  background-color: rgb(193, 193, 193);
+  transition: 0.6s;
+  transform: translateY(60px);
+}
+
+.slider:before{
+  position: absolute;
+  content: "";
+  height: 23px;
+  width: 23px;
+  left: -3px;
+  bottom: -4px;
+  border-radius: 50%;
+  background-color: grey;
+  transition: 0.6s;
+}
+
+input:checked + .slider{
+  background-color: #082374;
+}
+
+input:checked + .slider:before{
+  background-color: #1439a9;
+  transform: translateX(20px);
+}
+
+/*Bouton 1 clic*/
+
+.button, .leaflet-control-zoom-in, .leaflet-control-zoom-out{
+  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-6), var(--couleur-principale-5));
   border-radius: 16px;
 	box-shadow: -1px 2px 2px grey;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.drop::before{
+.drop::before, .leaflet-control-zoom-in::before, .leaflet-control-zoom-out::before{
   content:'';
   position: absolute;
   border-radius: 16px;
@@ -177,15 +284,16 @@ nav#nav-fin #scroll .carre{
 }
 
 .button-villes{
-  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-5), var(--couleur-principale-6));
+  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-6), var(--couleur-principale-5));
   border-radius: 16px;
 	box-shadow: -1px 2px 2px grey;
   cursor: pointer;
   transition: 0.3s;
   margin: 0px 0 0 0;
-  display: none;
 }
 
+/*.leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover*/
+/*
 .button-villes::before{
   content:'';
   position: absolute;
@@ -198,7 +306,7 @@ nav#nav-fin #scroll .carre{
   background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-3));
   transform: scale(0);
   transition: 0.3s;
-}
+}*/
 
 .button-villes p {
   flex: 0;
@@ -212,17 +320,6 @@ nav#nav-fin #scroll .carre{
   font-weight: bold;
 }
 
-.leaflet-control-zoom-in{
-  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-5), var(--couleur-principale-6));
-  transition: 0.3s;
-  /*border-radius: 16px;*/
-}
-
-.leaflet-control-zoom-out{
-  background: linear-gradient(225deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-5), var(--couleur-principale-6));
-  transition: 0.3s;
-}
-
 /*=======================================================================================================*/
 /*==================================================== COMMAND STYLE =====================================*/
 
@@ -230,10 +327,35 @@ div:has(> .command){
   border: 2px solid whitesmoke;
   backdrop-filter: blur(10px);
   border-radius: 16px;
+  transition: 0.3s;
 }
 
 #liste-villes{
-  height: 250px;
+  transition: 0.3s;
+  height: 0;
+  transform: scaleY(0);
+}
+
+.command-villes input{
+  transition: 0.3s;
+  height: 0;
+  transform: scaleY(0);
+}
+
+.command-villes div span{
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.command-villes div span div{
+  flex: 4;
+}
+
+.command-villes div span span{
+  flex: 1;
+  transition: 0.3s;
+  transform: rotate(90deg);
 }
 
 /*=======================================================================================================*/
@@ -277,12 +399,15 @@ div:has(> .command-filtre){
   transform: rotate(90deg);
 }
 
+.checkfiltre{
+  padding: 5px;
+}
+
 /*=======================================================================================================*/
 /*==================================================== SELECT VILLE STYLE ===============================*/
 
 div:has(> .command-villes){
   padding: 10px;
-  transform: translateY(-200px);
 }
 
 /*=======================================================================================================*/
@@ -303,11 +428,11 @@ div:has(> .command-villes){
 /*=======================================================================================================*/
 /*==================================================== BOUTONS HOVER / ACTIVE ===========================*/
 
-.drop:hover::before{
+.drop:hover::before, .leaflet-control-zoom-out:hover::before, .leaflet-control-zoom-in:hover::before{
   transform: scale(1);
 }
 
-#compte:hover, #loupe:hover, #creer-avis:hover, .leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover{
+#compte:hover, #loupe:hover, #creer-avis:hover{
   /*box-shadow: -1px 2px 2px grey;*/
   background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-4));
 }
@@ -317,7 +442,7 @@ div:has(> .command-villes){
   background-color: var(--couleur-principale-2);
   box-shadow: 0px 0px;
 }
-
+/*
 .button-villes:hover {
   background: linear-gradient(#f94c02, whitesmoke);
 }
@@ -326,7 +451,7 @@ div:has(> .command-villes){
   background: linear-gradient(#f94c02, #f94c02);
   background-color: #f94c02;
   box-shadow: 0px 0px;
-}
+}*/
 
 /*=======================================================================================================*/
 /*======================================================== LOGO =========================================*/
@@ -594,10 +719,30 @@ header div{
   }
 }
 
-#time {
+#time-animation{
+  background: no-repeat url("img/img-meteo/sun.png");
+  background-size: 100%;
+  height: 100%;
+  width: 50px;
+  margin: 0 10px;
+  animation: sun-animation linear 10s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+}
+
+@keyframes sun-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+#time {  
   position: relative;
   font-size: 23px;
-  margin: 0 0 0 20px;
+  margin: 0 0 0 0;
   color: #222;
   border-radius: 0;
   border-bottom: 2px solid #222;
@@ -643,6 +788,8 @@ header div{
 }
 
 #div-search input {
+  
+  border-radius: 16px;
   position: relative;
   width: 100%;
   height: 100%;
@@ -717,7 +864,7 @@ ion-icon {
   padding: 0px 5px 0px 5px;
   transition: 0.3s;
   box-shadow: -1px 2px 2px grey;
-  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-5), var(--couleur-principale-6));
+  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-6), var(--couleur-principale-5));
 }
 
 #compte a{
@@ -956,6 +1103,7 @@ ion-icon {
   flex-shrink: 0;
   white-space: nowrap;
   backdrop-filter: blur(10px);
+  transition: 0.3s; 
 }
 
 .element:hover{

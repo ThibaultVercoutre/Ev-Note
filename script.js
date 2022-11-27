@@ -142,7 +142,7 @@ command.onAdd = function creerFiltres(mymap) {
     var txt = '';
     txt += '<div class="category"><form class="category_title"><span data-value="' + 1 + '" class="material-symbols-outlined">chevron_right</span><div id="' + rubriques[i][0] + '" class="type_rubrique">' + rubriques[i][0] + '</div></form>';
     for(var j = 1; j < rubriques[i].length; j++) {
-      txt += '<form data-value="' + 1 + '" class="' + rubriques[i][0] + '"><input id="' + rubriques[i][j] + '" type="checkbox"/>' + rubriques[i][j] + '</form>';
+      txt += '<form data-value="' + 1 + '" class="checkfiltre ' + rubriques[i][0] + '"><label class="switch"><input id="' + rubriques[i][j] + '" type="checkbox"><span class="slider"></label>' + rubriques[i][j] + '</form>';
     }
     txt += '</div>';
     div.innerHTML += txt;
@@ -164,10 +164,10 @@ var command = L.control({position: 'bottomleft',});
 command.onAdd = function (mymap) {
   var div = L.DomUtil.create('div', 'command command-villes');
   var txt ='';
-  var txt1 = '<div style="text-align:center;"><span style="font-size:18px;">Villes</span></div><div id="liste-villes">';
+  var txt1 = '<div style="text-align:center;"><span data-value="' + 0 + '" id="ville_selector_menu" style="font-size:18px;"><div>Villes</div><span class="material-symbols-outlined">chevron_right</span></span></div><div id="liste-villes">';
   var txt = '';
   for (var i = 0; i < villes.length; i++) {
-    txt += '<div class="button-villes anim-button" id="ville_' + villes[i] + '"><p>' + villes[i] + '</p></div>';
+    txt += '<div class="button-villes .drop anim-button" id="ville_' + villes[i] + '"><p>' + villes[i] + '</p></div>';
   }
   var txt2 = '</div><input type="search" id="input-villes"/>';
   div.innerHTML += txt1 + txt + txt2;
@@ -361,7 +361,6 @@ var url = new URL("https://nominatim.openstreetmap.org/search?q=Lyc%C3%A9e%20" +
 tableLycees = [];
 
 $.getJSON(url, function(data) {
-  console.log(data);
   for(var i = 0; i < data.length; i++){
     let regex1 = "Calais"
     if(data[i].type == "school" && data[i].display_name.search(regex1) != -1){
@@ -396,6 +395,17 @@ $.getJSON(url, function(data) {
   filtre.Universites[1] = tableUniversites;
 });
 }
+
+function trouverAdresseFiltre(){
+  trouverAdresseBar();
+  trouverAdresseCulture();
+  trouverAdresseFastFood();
+  trouverAdresseLycee();
+  trouverAdresseParcs();
+  trouverAdresseUniversite();
+}
+
+trouverAdresseFiltre();
 
 /*=======================================================================================================*/
 /*========================================= Var section / boutons ... ===================================*/
@@ -541,22 +551,22 @@ if (marqueur != undefined) {
   mymap.removeLayer(marqueur);
 }
 switch (e.id) {
-  case 'Bars': trouverAdresseBar();
+  case 'Bars': //trouverAdresseBar();
               var type_filtre = 'Bars';
               break;
-  case 'Parcs': trouverAdresseParcs();
+  case 'Parcs': //trouverAdresseParcs();
               var type_filtre = 'Parcs';
               break;
-  case 'Culture': trouverAdresseCulture();
+  case 'Culture': //trouverAdresseCulture();
               var type_filtre = 'Culture';
               break;
-  case 'FastFood': trouverAdresseFastFood();
+  case 'FastFood': //trouverAdresseFastFood();
               var type_filtre = 'FastFood';
               break;
-  case 'Lycees': trouverAdresseLycee();
+  case 'Lycees': //trouverAdresseLycee();
               var type_filtre = 'Lycees';
               break;
-  case 'Universites': trouverAdresseUniversite();
+  case 'Universites': //trouverAdresseUniversite();
               var type_filtre = 'Universites';
               break;
 }
@@ -571,22 +581,25 @@ setTimeout(() => {
   }else{
     var view = 18 - (dist_max_V) / taille_max_map(14) * (18 - 13);
   }
-  
-  console.log("Niveau de zoom = ",Math.ceil(view));
-  //console.log(center, dist_max);
   mymap.setView(center, 14); //
-}, "1000")
+}, "50")
 }
 
 function remove_Marker_lieu(e){
-switch (e.id) {
-  case 'Bars': mymap.removeLayer(filtre.Bars); break;
-  case 'Parcs': mymap.removeLayer(filtre.Parcs); break;
-  case 'Culture': mymap.removeLayer(filtre.Culture); break;
-  case 'FastFood': mymap.removeLayer(filtre.FastFood); break;
-  case 'Lycees': mymap.removeLayer(filtre.Lycees); break;
-  case 'Universites': mymap.removeLayer(filtre.Universites); break;
-}
+  mymap.removeLayer(filtre[e.id][0]);
+  switch (e.id) {
+    case 'Bars': mymap.removeLayer(filtre.Bars); break;
+    case 'Parcs': mymap.removeLayer(filtre.Parcs); break;
+    case 'Culture': mymap.removeLayer(filtre.Culture); break;
+    case 'FastFood': mymap.removeLayer(filtre.FastFood); break;
+    case 'Lycees': mymap.removeLayer(filtre.Lycees); break;
+    case 'Universites': mymap.removeLayer(filtre.Universites); break;
+  }
+  let url = new URL("http://nominatim.openstreetmap.org/search?q=" + ville_active + "&format=json&limit=1");
+  $.getJSON(url, function(data) {
+    let pos = {lat : data[0].lat, lng : data[0].lon};
+    mymap.setView(pos, 13);
+  });
 }
 
 function add_Marker_Command(e){
@@ -604,15 +617,51 @@ for(var i = 0; i < CcheckBox.length; i++) {
 Scommand.addEventListener('click', add_Marker_Command, false);
 
 /*=======================================================================================================*/
-/*============================== Menu déroulant clique ==================================================*/
+/*============================== Menu déroulant VILLE clique ============================================*/
 
 /* Init style menu déroulant */
 
 function init_couleur_menu_deroulant(){
-for(var i = 0; i < rubriques.length; i++) {
-  //console.log(document.getElementById(rubriques[i][0]));
-  document.getElementById(rubriques[i][0]).style.backgroundColor = couleur_rubrique[rubriques[i][0]];
+  for(var i = 0; i < rubriques.length; i++) {
+    
+  }
 }
+
+init_couleur_menu_deroulant();
+
+/* clique */
+
+let BderoulantVille = document.querySelector(".command div span#ville_selector_menu");
+
+function deroulant_ville(e) {
+  var new_e = e.target.parentElement.parentElement.parentElement.childNodes;
+  console.log(e.target.parentElement.getAttribute("data-value"));
+  if(Number(e.target.parentElement.getAttribute("data-value")) == 1){
+    for(var i = 1; i < new_e.length; i++) {
+      new_e[i].style.height = "0";
+      new_e[i].style.transform = "scaleY(0)";
+    }
+  }else{
+    for(var i = 1; i < new_e.length; i++) {
+      new_e[i].style.height = "100%";
+      new_e[i].style.transform = "scaleY(1)";
+    }
+  }
+  e.target.parentElement.setAttribute("data-value", (Number(e.target.parentElement.getAttribute("data-value"))+1)%2);
+  console.log(new_e.childNodes);
+}
+
+BderoulantVille.addEventListener('click', deroulant_ville, false);
+
+/*=======================================================================================================*/
+/*============================== Menu déroulant FILTRE clique ===========================================*/
+
+/* Init style menu déroulant */
+
+function init_couleur_menu_deroulant(){
+  for(var i = 0; i < rubriques.length; i++) {
+    document.getElementById(rubriques[i][0]).style.backgroundColor = couleur_rubrique[rubriques[i][0]];
+  }
 }
 
 init_couleur_menu_deroulant();
@@ -622,29 +671,28 @@ init_couleur_menu_deroulant();
 let Bderoulant = document.querySelectorAll(".command div form.category_title");
 
 function deroulant_filtre(e) {
-var new_e = e.target.parentElement;
-console.log(new_e.parentElement);
-for(var i = 0; i < Bderoulant.length; i++) {
-  if(new_e.firstChild == Bderoulant[i]){
-    Bderoulant[i].setAttribute("data-value", (Number(Bderoulant[i].getAttribute("data-value"))+1)%2);
-    Bderoulant[i].style.transform = "rotate(" + Number(Bderoulant[i].getAttribute("data-value"))*90 + "deg)";
-  }
-  var filtreCache = document.querySelectorAll("form + ." + new_e.lastChild.id);
-  for(var filtre_i of filtreCache){
-    filtre_i.setAttribute("data-value", (Number(filtre_i.getAttribute("data-value"))+1)%2);
-    if(Number(filtre_i.getAttribute("data-value") == 0)){
-      filtre_i.style.height = "0px";
-      filtre_i.style.transform = "scaleY(0)";
-    }else{
-      filtre_i.style.height = "100%";
-      filtre_i.style.transform = "scaleY(1)";
+  var new_e = e.target.parentElement;
+  for(var i = 0; i < Bderoulant.length; i++) {
+    if(new_e.firstChild == Bderoulant[i]){
+      Bderoulant[i].setAttribute("data-value", (Number(Bderoulant[i].getAttribute("data-value"))+1)%2);
+      Bderoulant[i].style.transform = "rotate(" + Number(Bderoulant[i].getAttribute("data-value"))*90 + "deg)";
+    }
+    var filtreCache = document.querySelectorAll("form + ." + new_e.lastChild.id);
+    for(var filtre_i of filtreCache){
+      filtre_i.setAttribute("data-value", (Number(filtre_i.getAttribute("data-value"))+1)%2);
+      if(Number(filtre_i.getAttribute("data-value") == 0)){
+        filtre_i.style.height = "0px";
+        filtre_i.style.transform = "scaleY(0)";
+      }else{
+        filtre_i.style.height = "100%";
+        filtre_i.style.transform = "scaleY(1)";
+      }
     }
   }
 }
-}
 
 for(var i = 0; i < Bderoulant.length; i++){
-Bderoulant[i].addEventListener('click', deroulant_filtre, false);
+  Bderoulant[i].addEventListener('click', deroulant_filtre, false);
 }
 
 /*=======================================================================================================*/
@@ -838,12 +886,11 @@ if (S == Sactu) {
 
 function afficheBarre(S) {
 if (S == Sactu) {
-  Bsearch.style.transform = "scale(0,0.5)";
+  Bsearch.style.transform = "scale(0,0)";
   Bloupe.style.borderRadius = "40%";
 }
 else {
   Bsearch.style.transform = "scale(1,1)";
-  Isearch.style.borderRadius = ".9rem 0% 0% .9rem";
   Bloupe.style.borderRadius = "0% 40% 40% 0%";
 }
 }
@@ -854,21 +901,21 @@ affiche(Smap, Sactu);
 
 /* Si on clique sur le bouton map */
 Bmap.onclick = function() {
-window.scrollTo({
-  top: 0,
-  behavior: 'smooth'
-})
-Snotation.style.transform = "translate(-100%,0px)";
-ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
-afficheBarre(Smap);
-affiche(Smap, Sactu);
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+  Snotation.style.transform = "translate(-100%,0px)";
+  ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
+  afficheBarre(Smap);
+  affiche(Smap, Sactu);
 };
 
 /* Si on clique sur le bouton actu */
 Bactu.onclick = function() {
-Snotation.style.transform = "translate(-100%,0px)";
-afficheBarre(Sactu);
-affiche(Sactu, Smap);
+  Snotation.style.transform = "translate(-100%,0px)";
+  afficheBarre(Sactu);
+  affiche(Sactu, Smap);
 };
 
 /* Si on clique sur le bouton creer article */
