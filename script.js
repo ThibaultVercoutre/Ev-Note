@@ -20,91 +20,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
 
 };
 
-// Temps
-
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
-
-function startTime() {
-  var today = new Date();
-  var h = today.getHours();
-  var m = today.getMinutes();
-  var njour = today.getDate();
-  var mois = today.getMonth();
-  var jour = today.getDay();
-  var start = new Date(today.getFullYear(), 0, 0);
-  var diff = today - start;
-  var oneDay = 1000 * 60 * 60 * 24;
-  var day = Math.floor(diff / oneDay);
-  var couleur = convertColor(day);
-  jour = convertJ(jour);
-  mois = convertM(mois+1);
-  h = checkTime(h);
-  m = checkTime(m);
-  document.getElementById('time').innerHTML =
-  jour + " " + njour + " " + mois + "  -  " + h + ":" + m;
-  document.getElementById("gradient").style.background = couleur;
-  var t = setTimeout(startTime, 500);
-}
-function convertColor(jour) {
-  var couleur;
-  if (jour >= 79 && jour < 171) {
-    couleur = "linear-gradient(45deg, rgb(51, 144, 2), rgb(133, 255, 108))";
-  }
-  else if (jour >= 171 && jour < 265) {
-    couleur = "linear-gradient(45deg, yellow, rgb(3, 208, 254))";
-  }
-  else if (jour >= 265 && jour < 355) {
-    couleur = "linear-gradient(45deg, red, yellow)";
-  }
-  else {
-    couleur = "linear-gradient(45deg, rgb(57, 229, 255), rgb(234, 255, 254))";
-  }
-  return couleur;
-}
-function checkTime(i) {
-  if (i < 10) {i = "0" + i};
-  return i;
-}
-function convertJ(jour) {
-  var lejour;
-  switch (jour) {
-    case 1: lejour = "Lundi"; break;
-    case 2: lejour = "Mardi"; break;
-    case 3: lejour = "Mercredi"; break;
-    case 4: lejour = "Jeudi"; break;
-    case 5: lejour = "Vendredi"; break;
-    case 6: lejour = "Samedi"; break;
-    default: lejour = "Dimanche"; break;
-  }
-  return lejour;
-}
-function convertM(mois) {
-  var lemois;
-  switch (mois) {
-    case 1: lemois = "Janvier"; break;
-    case 2: lemois = "Février"; break;
-    case 3: lemois = "Mars"; break;
-    case 4: lemois = "Avril"; break;
-    case 5: lemois = "Mai"; break;
-    case 6: lemois = "Juin"; break;
-    case 7: lemois = "Juillet"; break;
-    case 8: lemois = "Août"; break;
-    case 9: lemois = "Septembre"; break;
-    case 10: lemois = "Octobre"; break;
-    case 11: lemois = "Novembre"; break;
-    case 12: lemois = "Décembre"; break;
-  }
-  return lemois;
-}
- 
-startTime();
-
 // Temps et Search
 
 let Isearch = document.getElementById("search");
@@ -476,6 +391,116 @@ switch(Bvilles[i].firstChild.textContent){
   case "Blendecques" : CodesVilles[Bvilles[i].firstChild.textContent] = [62575]; break
 }
 }
+
+/*=======================================================================================================*/
+/*============================= Meteo ===================================================================*/
+
+function weather(){
+  let url = new URL("https://api.openweathermap.org/data/2.5/weather?q=Calais&appid=c21a75b667d6f7abb81f118dcf8d4611&units=metric");
+  $.getJSON(url, function(data) {
+    switch (data.weather[0].main){
+      case "Rain": document.getElementById("meteo").innerHTML = "rainy";; break;
+      case "Clouds": document.getElementById("meteo").innerHTML = "partly_cloudy_day";; break;
+    }
+  });
+}
+
+/*=======================================================================================================*/
+/*============================= Heure ===================================================================*/
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
+function setTimeAnimation(h){
+  if(h > 7 && h < 21){
+    document.getElementById("time-animation").innerHTML = "sunny";
+  }else{
+    document.getElementById("time-animation").innerHTML = "nightlight";
+  }
+}
+
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var njour = today.getDate();
+  var mois = today.getMonth();
+  var jour = today.getDay();
+  var start = new Date(today.getFullYear(), 0, 0);
+  var diff = today - start;
+  var oneDay = 1000 * 60 * 60 * 24;
+  var day = Math.floor(diff / oneDay);
+  var couleur = convertColor(day);
+  jour = convertJ(jour);
+  mois = convertM(mois+1);
+  h = checkTime(h);
+  m = checkTime(m);
+  document.getElementById('time').innerHTML =
+  jour + " " + njour + " " + mois + "  -  " + h + ":" + m;
+  document.getElementById("gradient").style.background = couleur;
+  weather();
+  setTimeAnimation(h);
+
+  var t = setTimeout(startTime, 1000);
+}
+function convertColor(jour) {
+  var couleur;
+  if (jour >= 79 && jour < 171) {
+    couleur = "linear-gradient(45deg, rgb(51, 144, 2), rgb(133, 255, 108))";
+  }
+  else if (jour >= 171 && jour < 265) {
+    couleur = "linear-gradient(45deg, yellow, rgb(3, 208, 254))";
+  }
+  else if (jour >= 265 && jour < 355) {
+    couleur = "linear-gradient(45deg, red, yellow)";
+  }
+  else {
+    couleur = "linear-gradient(45deg, rgb(57, 229, 255), rgb(234, 255, 254))";
+  }
+  return couleur;
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};
+  return i;
+}
+function convertJ(jour) {
+  var lejour;
+  switch (jour) {
+    case 1: lejour = "Lundi"; break;
+    case 2: lejour = "Mardi"; break;
+    case 3: lejour = "Mercredi"; break;
+    case 4: lejour = "Jeudi"; break;
+    case 5: lejour = "Vendredi"; break;
+    case 6: lejour = "Samedi"; break;
+    default: lejour = "Dimanche"; break;
+  }
+  return lejour;
+}
+function convertM(mois) {
+  var lemois;
+  switch (mois) {
+    case 1: lemois = "Janvier"; break;
+    case 2: lemois = "Février"; break;
+    case 3: lemois = "Mars"; break;
+    case 4: lemois = "Avril"; break;
+    case 5: lemois = "Mai"; break;
+    case 6: lemois = "Juin"; break;
+    case 7: lemois = "Juillet"; break;
+    case 8: lemois = "Août"; break;
+    case 9: lemois = "Septembre"; break;
+    case 10: lemois = "Octobre"; break;
+    case 11: lemois = "Novembre"; break;
+    case 12: lemois = "Décembre"; break;
+  }
+  return lemois;
+}
+ 
+startTime();
 
 /*=======================================================================================================*/
 /*========================================= detection input change villes ===============================*/

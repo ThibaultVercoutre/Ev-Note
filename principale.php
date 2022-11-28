@@ -11,6 +11,9 @@ if(($_SESSION['email']) !== ""){
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="fr">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -40,19 +43,25 @@ if(($_SESSION['email']) !== ""){
 </head>
 
 <body>
+<div id="page-principale">
   <header>
     <div id="titre">
-      <h1>Ev'Note</h1>
+      <div id="effecten">
+        <h1 data-text="Ev'Note" id="evnote">Ev'Note</h1>
+        <div id = "gradient" class="gradient"></div>
+        <div class="spotlight"></div>
+      </div>
+      <div id="time-animation"></div>
+      <div id="time"></div>
       <div id="div-search">
-        <input class="button" id="search" placeholder="Rechercher un lieu..."></input>
+        <input type="text" id="search" placeholder="Rechercher un lieu..."/>
+        <ion-icon id="la-loupe" name="search-outline"></ion-icon>
       </div>
-      <div class="button" id="loupe">
-        <div id="cercle"></div>
-        <div id="barre"></div>
-      </div>
+      <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+      <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     </div>
     <div id="compte"><ul id="menu-demo2"> 
-        
           <li class="menu-deroulant">
             <div id="menu"><h2 id="connect"><a href="#"><?php echo $donnees['Prenom']." ".$donnees['Nom'] ; ?>
             <div id="logo-connexion">
@@ -61,21 +70,17 @@ if(($_SESSION['email']) !== ""){
             <div id="rond-corps"></div>
             <div id="rond-tete"></div>-->
           </div></a></div>
-            <ul class="sous-menu">
-            
+            <ul class="sous-menu"> 
               <li><a  href="pages/php/user_deconnexion.php">Déconnexion</a></li></h2>
             </ul>
           </li>
         </ul>
-      
-  
-
     </div>
   </header>
 
   <div id="general">
     <div id="phrase-presentation">
-      <p>Vos lieux et événements sur Calais disponibles sur un seul endroit !</p>
+      <p><span>V</span>os <span>l</span>ieux et <span>é</span>vénements disponibles sur un seul <span>e</span>ndroit !</p>
     </div>
 <!-- ================================================================================================================================ -->
 <!-- ======================================================================================================================== MARQUEE -->
@@ -409,99 +414,131 @@ if(($_SESSION['email']) !== ""){
               </div>
             </div>
           </div>
+
+<!-- --------------------------------------------------------------------------------------------------------------------- Page GPS -->
+
+          <div class="page child1" id="section-gps">
+            <div id="title-gps">
+              <h3>Voulez-vous autoriser Ev'Note à accéder à votre localisation ?</h3>
+              <div id="boutons-popup">
+                <div class="button anim-button" id="oui-gps">Oui</div>
+                <div class="button anim-button" id="non-gps">Non</div>
+              </div>
+            </div>
+          </div>
+          <div class="page child1" id="itineraire-gps">
+            <div>
+              <h1 id="titre-text-gps" data-text="Itinéraire">Itinéraire</h1>
+              <div id="les-inputs-gps">
+                <div class="inputBox">
+                  <input type="text" required="required" id="input-depart-gps" value=""></input>
+                  <span>Départ</span>
+                </div>
+                <div class="inputBox">
+                  <input type="text" required="required" id="input-arrivee-gps" value=""></input>
+                  <span>Arrivée</span>
+                </div>
+              </div>
+              <div class="button anim-button" id="go-itineraire">
+                <span class="material-symbols-outlined">roundabout_right</span>
+              </div>
+            </div>
+          </div>
+
 <!-- --------------------------------------------------------------------------------------------------------------------- Page map -->
           <div class="page child1 child2" id="section-map"></div>
         </div>
 <!-- ==================================================================================================================== Page actu -->
         <div class="parent" id="pages-actu">
-<!-- -------------------------------------------------------------------------------------------------------------------- Page actu -->
-<div class="page child1" id="section-fil-actu">
 
-<section class="carousel" aria-label="Gallery">
-  <ol class="carousel__viewport">
-    <li id="carousel__slide1"
-        tabindex="0"
-        class="carousel__slide">
-      <div class="carousel__snapper">
-          <a href="#carousel__slide4"
-          class="carousel__prev">Go to last slide</a>
-        <a href="#carousel__slide2"
-          class="carousel__next">Go to next slide</a>
-      </div>
+        <div class="page child1" id="section-fil-actu">
+            <div id="#actu-fil">
+              <section class="carousel" aria-label="Gallery">
+                <ol class="carousel__viewport">
+                  <li id="carousel__slide1"
+                      tabindex="0"
+                      class="carousel__slide">
+                    <div class="carousel__snapper">
+                        <a href="#carousel__slide4"
+                        class="carousel__prev">Go to last slide</a>
+                      <a href="#carousel__slide2"
+                        class="carousel__next">Go to next slide</a>
+                    </div>
+          
+                    <div id="Article">
+                      <div class="container" id="ArticleSansDesc">
 
-      <div id="Article">
-        <div class="container" id="ArticleSansDesc">
+                      <div id="TitreArticle">
+                        <p><u><?php echo $donnees['NomEvent']; ?></u></p>
+                      </div>
 
-            <div id="TitreArticle">
-              <p><u><?php echo $donnees['NomEvent']; ?></u></p>
+                      <?php 
+                      echo '<img src="uploads/' . $donnees["IMG"] . '">';?>
+                      <div id="DescriptionArticle">
+                        <h3><u>Description de l'événement </u> :</h3>
+                        <p><?php echo $donnees['Annonce']; ?></p>  
+                      </div>
+                    </div>
+                  </li>
+            
+                  <li id="carousel__slide2"
+                      tabindex="0"
+                      class="carousel__slide">
+                    <div class="carousel__snapper"></div>
+                    <a href="#carousel__slide1"
+                      class="carousel__prev">Go to previous slide</a>
+                    <a href="#carousel__slide3"
+                      class="carousel__next">Go to next slide</a>
+                  </li>
+                  
+                  <li id="carousel__slide3"
+                      tabindex="0"
+                      class="carousel__slide">
+                    <div class="carousel__snapper"></div>
+                    <a href="#carousel__slide2"
+                      class="carousel__prev">Go to previous slide</a>
+                    <a href="#carousel__slide4"
+                      class="carousel__next">Go to next slide</a>
+                    </li>
+                  
+                    <li id="carousel__slide4"
+                      tabindex="0"
+                      class="carousel__slide">
+                      <div class="carousel__snapper"></div>
+                      <a href="#carousel__slide3"
+                        class="carousel__prev">Go to previous slide</a>
+                      <a href="#carousel__slide1"
+                        class="carousel__next">Go to first slide</a>
+                    </li>
+                  </ol>
+                
+                <aside class="carousel__navigation">
+                  <ol class="carousel__navigation-list">
+                    <li class="carousel__navigation-item">
+                      <a href="#carousel__slide1"
+                        class="carousel__navigation-button">Go to slide 1</a>
+                    </li>
+                    
+                    <li class="carousel__navigation-item">
+                      <a href="#carousel__slide2"
+                        class="carousel__navigation-button">Go to slide 2</a>
+                    </li>
+                    
+                    <li class="carousel__navigation-item">
+                      <a href="#carousel__slide3"
+                        class="carousel__navigation-button">Go to slide 3</a>
+                    </li>
+                    
+                    <li class="carousel__navigation-item">
+                      <a href="#carousel__slide4"
+                        class="carousel__navigation-button">Go to slide 4</a>
+                    </li>
+                  </ol>
+                </aside>
+              </section>
             </div>
-
-            <?php 
-            echo '<img src="uploads/' . $donnees["IMG"] . '">';?>
-            <div id="DescriptionArticle">
-              <h3><u>Description de l'événement </u> :</h3>
-              <p><?php echo $donnees['Annonce']; ?></p>  
-            </div>
+          </div>
         </div>
-    </li>
-
-    <li id="carousel__slide2"
-        tabindex="0"
-        class="carousel__slide">
-      <div class="carousel__snapper"></div>
-      <a href="#carousel__slide1"
-        class="carousel__prev">Go to previous slide</a>
-      <a href="#carousel__slide3"
-        class="carousel__next">Go to next slide</a>
-    </li>
-
-    <li id="carousel__slide3"
-        tabindex="0"
-        class="carousel__slide">
-      <div class="carousel__snapper"></div>
-      <a href="#carousel__slide2"
-        class="carousel__prev">Go to previous slide</a>
-      <a href="#carousel__slide4"
-        class="carousel__next">Go to next slide</a>
-    </li>
-
-    <li id="carousel__slide4"
-        tabindex="0"
-        class="carousel__slide">
-      <div class="carousel__snapper"></div>
-      <a href="#carousel__slide3"
-        class="carousel__prev">Go to previous slide</a>
-      <a href="#carousel__slide1"
-        class="carousel__next">Go to first slide</a>
-    </li>
-  </ol>
-
-<aside class="carousel__navigation">
-  <ol class="carousel__navigation-list">
-    <li class="carousel__navigation-item">
-      <a href="#carousel__slide1"
-        class="carousel__navigation-button">Go to slide 1</a>
-    </li>
-
-    <li class="carousel__navigation-item">
-      <a href="#carousel__slide2"
-        class="carousel__navigation-button">Go to slide 2</a>
-    </li>
-
-    <li class="carousel__navigation-item">
-      <a href="#carousel__slide3"
-        class="carousel__navigation-button">Go to slide 3</a>
-    </li>
-
-    <li class="carousel__navigation-item">
-      <a href="#carousel__slide4"
-        class="carousel__navigation-button">Go to slide 4</a>
-    </li>
-  </ol>
-</aside>
-</section>
-
-</div>
 <!-- -------------------------------------------------------------------------------------------------------------- Page creer actu -->
           <div class="page child1 child2" id="section-creer-article">   
             <div class="scrollbar"></div>
@@ -509,16 +546,6 @@ if(($_SESSION['email']) !== ""){
             <div id="champ-remplit-art">
               <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
               <form method="post" action="./pages/php/donnees_formulaire.php">
-               <!--<fieldset>
-                  <legend>Vos coordonnées</legend><br />
-                  <label for="Nom">Nom</label><br />
-                  <input type="text" name="Nom" id="Nom" placeholder="Exemple : Vercoutre" size="50" required /><br /><br />
-                  <label for="Prenom">Prénom</label><br />
-                  <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50" required /><br /><br />
-                  <label for="Mail">E-Mail</label><br />
-                  <input type="email" name="Mail" id="Mail" placeholder="Exemple : xyz@leraciste.noob" size="50" required /><br /><br />
-                </fieldset><br />
-              -->
                 <fieldset>
                   <legend>Informations sur l'événement</legend><br />
                   <label for="NomEvent">Nom de l'événement</label><br />
@@ -554,8 +581,7 @@ if(($_SESSION['email']) !== ""){
           </div>
         </div>
         <nav id="bouton-scroll"></nav>
-      </div> <!-- ==================================================== FIN Corps de la page -->
-    </div>
+    </div> <!-- ==================================================== FIN Corps de la page -->
   </div>
   <nav id="nav-fin">
     <div class="button drop" id="scroll">
@@ -566,36 +592,24 @@ if(($_SESSION['email']) !== ""){
       </div>
     </div>
   </nav>
-<footer id="le-footer">
-  <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
-  <div id="foot-gauche">
-    <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
-    <a class="lien-footer"
-      href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
-  </div>
-  <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
-  <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
-  <script src="script.js"></script>
-</footer>
+  <footer id="le-footer">
+    <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
+    <div id="foot-gauche">
+      <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
+      <a class="lien-footer"
+        href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
+    </div>
+    <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
+    <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
+    <script src="script.js"></script>
+  </footer>
+</div>
+
+<div id="page-chargement">
+  <img id="logo-site-chargement" src="img/EvNote_1.png" alt="Logo-Site">
+  <div id="progress-chargement"></div>
+</div>
 </body>
 
-</html>
 
-<!--
-  <div class="stars-notations">
-    <div class="stars-1">
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-  </div>
-  <div class="stars-2">
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-  </div>
-</div>
--->
+</html>
