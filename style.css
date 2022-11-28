@@ -646,6 +646,40 @@ header div{
   border-radius: 0rem 0rem .5rem .5rem;
 }
 
+/* Meteo */
+
+#rain{
+  position: absolute;
+  height: 7vh;
+  width: 80%;
+  background: url(img/img-meteo/rain.png);
+  animation: rain 5s linear infinite;
+}
+
+#rain::before{
+  content:'';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  animation: lighting 10s linear infinite;
+  opacity: 0;
+}
+
+@keyframes rain{
+  0%{
+    background-position: 0% 100%;
+  }
+  100%{
+    background-position: 20% 0%;
+  }
+}
+
+/*
+<span id="time-animation" class="material-symbols-outlined"></span>
+<div id="rain"></div>
+*/
+
 /* Titre */
 
 #titre {
