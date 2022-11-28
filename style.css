@@ -721,23 +721,7 @@ header div{
 }
 
 #time-animation{
-  background: no-repeat url("img/img-meteo/sun.png");
-  background-size: 100%;
-  height: 100%;
-  width: 50px;
   margin: 0 10px;
-  animation: sun-animation linear 10s;
-  animation-iteration-count: infinite;
-  animation-fill-mode: none;
-}
-
-@keyframes sun-animation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100%{
-    transform: rotate(360deg);
-  }
 }
 
 #time {  

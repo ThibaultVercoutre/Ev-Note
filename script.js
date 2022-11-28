@@ -30,6 +30,14 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
+function setTimeLogo(h) {
+  if(h > 7 && h < 21){
+    document.getElementById('time-animation').innerHTML = "sunny";
+  }else{
+    document.getElementById('time-animation').innerHTML = "nightlight";
+  }
+}
+
 function startTime() {
   var today = new Date();
   var h = today.getHours();
@@ -45,6 +53,9 @@ function startTime() {
   jour + " " + njour + " " + mois + "  -  " + h + ":" + m;
   document.getElementById('time').dataset.datatext = 
   jour + " " + njour + " " + mois + "  -  " + h + ":" + m;
+
+  setTimeLogo(h);
+
   var t = setTimeout(startTime, 500);
 }
 function checkTime(i) {
