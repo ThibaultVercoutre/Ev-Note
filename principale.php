@@ -62,7 +62,6 @@ if(($_SESSION['email']) !== ""){
       <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     </div>
     <div id="compte"><ul id="menu-demo2"> 
-        
           <li class="menu-deroulant">
             <div id="menu"><h2 id="connect"><a href="#"><?php echo $donnees['Prenom']." ".$donnees['Nom'] ; ?>
             <div id="logo-connexion">
@@ -71,15 +70,11 @@ if(($_SESSION['email']) !== ""){
             <div id="rond-corps"></div>
             <div id="rond-tete"></div>-->
           </div></a></div>
-            <ul class="sous-menu">
-            
+            <ul class="sous-menu"> 
               <li><a  href="pages/php/user_deconnexion.php">Déconnexion</a></li></h2>
             </ul>
           </li>
         </ul>
-      
-  
-
     </div>
   </header>
 
