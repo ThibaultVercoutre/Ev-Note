@@ -112,8 +112,9 @@
         <div id = "gradient" class="gradient"></div>
         <div class="spotlight"></div>
       </div>
-      <div id="time-animation"></div>
+      <span id="time-animation" class="material-symbols-outlined"></span>
       <div id="time"></div>
+      <span id="meteo" class="material-symbols-outlined"></span>
       <div id="div-search">
         <input type="text" id="search" placeholder="Rechercher un lieu..."/>
         <ion-icon id="la-loupe" name="search-outline"></ion-icon>

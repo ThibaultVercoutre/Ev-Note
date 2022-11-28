@@ -1,5 +1,5 @@
 <?php 
-    $bdd = mysqli_connect("localhost", "utilisateur", "projetweb2022", "projet");// On inclut la connexion à la bdd
+    $bdd = mysqli_connect("localhost", "root", "", "projet");// On inclut la connexion à la bdd
     // Si les variables existent et qu'elles ne sont pas vides
     if(isset($_POST['upload'])){
       $image = $_FILES['image']['name'];

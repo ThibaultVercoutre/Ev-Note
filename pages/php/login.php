@@ -3,9 +3,9 @@
     {
         $host = "localhost";
         $dbname = "projet";
-        $username = "utilisateur";
-        $passw = "projetweb2022";
-        $bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8','utilisateur', 'projetweb2022');
+        $username = "root";
+        $passw = "";
+        $bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8','root');
     }
     catch(Exception $e)
     {

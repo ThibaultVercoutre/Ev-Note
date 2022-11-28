@@ -646,10 +646,40 @@ header div{
   border-radius: 0rem 0rem .5rem .5rem;
 }
 
+/* Meteo */
+
+#weatherbackground {
+  position: absolute;
+  left: 0px;
+  height: 7vh;
+  width: 80%;
+  animation: rain 5s linear infinite;
+}
+
+#weatherbackground::before {
+  content:'';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  animation: lighting 10s linear infinite;
+  opacity: 0;
+}
+
+@keyframes rain{
+  0%{background-position: 0% 100%;}
+  100%{background-position: 28% 0%;}
+}
+
+@keyframes clouds{
+  0%{background-position: 0% 0%;}
+  100%{background-position: 100% 0%;}
+}
+
 /* Titre */
 
 #titre {
-  flex: 80%;
+  flex: 8;
   display: flex;
   align-items: center;
 }
@@ -702,6 +732,7 @@ header div{
 }
 
 .gradient {
+  background: linear-gradient(45deg, red, yellow);
   mix-blend-mode: multiply;
 }
 
@@ -719,27 +750,12 @@ header div{
   }
 }
 
-#time-animation{
-  background: no-repeat url("img/img-meteo/sun.png");
-  background-size: 100%;
-  height: 100%;
-  width: 50px;
+#time-animation, #meteo{
   margin: 0 10px;
-  animation: sun-animation linear 10s;
-  animation-iteration-count: infinite;
-  animation-fill-mode: none;
-}
-
-@keyframes sun-animation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100%{
-    transform: rotate(360deg);
-  }
 }
 
 #time {  
+  background: transparent;
   position: relative;
   font-size: 23px;
   margin: 0 0 0 0;
@@ -749,7 +765,7 @@ header div{
 }
 
 #div-search{
-  margin: 0 0 0 20px;
+  margin: 0 0 0 0px;
   position: relative;
   width: 65px;
   height: 26px;
@@ -855,7 +871,7 @@ ion-icon {
 /* Connexion */
 
 #compte{
-  flex: auto;
+  flex: 2;
   max-width: 170px;
   display: flex;
   justify-content: center;
