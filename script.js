@@ -477,7 +477,7 @@ function convertJ(jour) {
     case 4: lejour = "Jeudi"; break;
     case 5: lejour = "Vendredi"; break;
     case 6: lejour = "Samedi"; break;
-    case 7: lejour = "Dimanche"; break;
+    default: lejour = "Dimanche"; break;
   }
   return lejour;
 }
