@@ -396,11 +396,12 @@ switch(Bvilles[i].firstChild.textContent){
 /*============================= Meteo ===================================================================*/
 
 function weather(){
-  let url = new URL("https://api.openweathermap.org/data/2.5/weather?q=Calais&appid=c21a75b667d6f7abb81f118dcf8d4611&units=metric");
+  let url = new URL("https://api.openweathermap.org/data/2.5/weather?q=" + ville_active + "&appid=c21a75b667d6f7abb81f118dcf8d4611&units=metric");
   $.getJSON(url, function(data) {
     switch (data.weather[0].main){
-      case "Rain": document.getElementById("meteo").innerHTML = "rainy";; break;
-      case "Clouds": document.getElementById("meteo").innerHTML = "partly_cloudy_day";; break;
+      case "Rain": document.getElementById("meteo").innerHTML = "rainy"; break;
+      case "Clouds": document.getElementById("meteo").innerHTML = "partly_cloudy_day"; break;
+      case "Clear": document.getElementById("meteo").innerHTML = "clear_day"; break;
     }
   });
 }
@@ -445,9 +446,9 @@ function startTime() {
   document.getElementById("gradient").style.background = couleur;
   weather();
   setTimeAnimation(h);
-
   var t = setTimeout(startTime, 1000);
 }
+
 function convertColor(jour) {
   var couleur;
   if (jour >= 79 && jour < 171) {
@@ -541,73 +542,72 @@ for(var i = 0; i < CcheckBox.length; i++){
 }
 
 function center_adresse(elts){
-console.log(elts);
-var dist_max_V = 0;
-var dist_max_H = 0;
-var Point = [elts[0]._latlng.lat,elts[0]._latlng.lng];
+  var dist_max_V = 0;
+  var dist_max_H = 0;
+  var Point = [elts[0]._latlng.lat,elts[0]._latlng.lng];
 
-for(var i = 0; i < elts.length; i++){
-  for(var j = i; j < elts.length; j++){
-    if(i != j){
-      var distV = Math.abs(Number(elts[i]._latlng.lat) - Number(elts[j]._latlng.lat));
-      var distH = Math.abs(Number(elts[i]._latlng.lng) - Number(elts[j]._latlng.lng));
-      if(distH > dist_max_H){
-        dist_max_H = distH;
-        Point[0] = (elts[i]._latlng.lat + elts[j]._latlng.lat) / 2;
-      }
-      if(distV > dist_max_V){
-        dist_max_V = distV;
-        Point[1] = (elts[i]._latlng.lng + elts[j]._latlng.lng) / 2;
+  for(var i = 0; i < elts.length; i++){
+    for(var j = i; j < elts.length; j++){
+      if(i != j){
+        var distV = Math.abs(Number(elts[i]._latlng.lat) - Number(elts[j]._latlng.lat));
+        var distH = Math.abs(Number(elts[i]._latlng.lng) - Number(elts[j]._latlng.lng));
+        if(distH > dist_max_H){
+          dist_max_H = distH;
+          Point[0] = (elts[i]._latlng.lat + elts[j]._latlng.lat) / 2;
+        }
+        if(distV > dist_max_V){
+          dist_max_V = distV;
+          Point[1] = (elts[i]._latlng.lng + elts[j]._latlng.lng) / 2;
+        }
       }
     }
   }
-}
-return [Point, dist_max_H, dist_max_V];
+  return [Point, dist_max_H, dist_max_V];
 }
 
 function taille_max_map(p){
-return 180 / Math.pow(2, p);
+  return 180 / Math.pow(2, p);
 }
 
 function add_Marker_lieu(e){
-// On vérifie si le marqueur existe déjà
-if (marqueur != undefined) {
-  // Si oui, on le retire
-  mymap.removeLayer(marqueur);
-}
-switch (e.id) {
-  case 'Bars': //trouverAdresseBar();
-              var type_filtre = 'Bars';
-              break;
-  case 'Parcs': //trouverAdresseParcs();
-              var type_filtre = 'Parcs';
-              break;
-  case 'Culture': //trouverAdresseCulture();
-              var type_filtre = 'Culture';
-              break;
-  case 'FastFood': //trouverAdresseFastFood();
-              var type_filtre = 'FastFood';
-              break;
-  case 'Lycees': //trouverAdresseLycee();
-              var type_filtre = 'Lycees';
-              break;
-  case 'Universites': //trouverAdresseUniversite();
-              var type_filtre = 'Universites';
-              break;
-}
-
-setTimeout(() => {
-  filtre[type_filtre][0].addTo(mymap);
-  var center = center_adresse(filtre[type_filtre][1])[0];
-  var dist_max_H = center_adresse(filtre[type_filtre][1])[1];
-  var dist_max_V = center_adresse(filtre[type_filtre][1])[2];
-  if(dist_max_H > dist_max_V){
-    var view = 18 - (dist_max_H) / taille_max_map(12) * (18 - 13);
-  }else{
-    var view = 18 - (dist_max_V) / taille_max_map(14) * (18 - 13);
+  // On vérifie si le marqueur existe déjà
+  if (marqueur != undefined) {
+    // Si oui, on le retire
+    mymap.removeLayer(marqueur);
   }
-  mymap.setView(center, 14); //
-}, "50")
+  switch (e.id) {
+    case 'Bars': //trouverAdresseBar();
+                var type_filtre = 'Bars';
+                break;
+    case 'Parcs': //trouverAdresseParcs();
+                var type_filtre = 'Parcs';
+                break;
+    case 'Culture': //trouverAdresseCulture();
+                var type_filtre = 'Culture';
+                break;
+    case 'FastFood': //trouverAdresseFastFood();
+                var type_filtre = 'FastFood';
+                break;
+    case 'Lycees': //trouverAdresseLycee();
+                var type_filtre = 'Lycees';
+                break;
+    case 'Universites': //trouverAdresseUniversite();
+                var type_filtre = 'Universites';
+                break;
+  }
+
+  setTimeout(() => {
+    filtre[type_filtre][0].addTo(mymap);
+    var center = center_adresse(filtre[type_filtre][1])[0];
+    var dist_max_H = center_adresse(filtre[type_filtre][1])[1];
+    var dist_max_V = center_adresse(filtre[type_filtre][1])[2];
+    if(dist_max_H > dist_max_V){
+      var view = 18 - (dist_max_H) / taille_max_map(12) * (18 - 13);
+    }else{
+      var view = 18 - (dist_max_V) / taille_max_map(14) * (18 - 13);
+    }
+    mymap.setView(center, 14); //
+  }, "50")
 }
 
 function remove_Marker_lieu(e){
@@ -628,15 +628,15 @@ function remove_Marker_lieu(e){
 }
 
 function add_Marker_Command(e){
-for(var i = 0; i < CcheckBox.length; i++) {
-  if(e.target == CcheckBox[i]){
-    if(CcheckBox[i].checked == true){
-      CcheckBox[i].addEventListener('change', add_Marker_lieu(CcheckBox[i]), false);
-    }else{
-      CcheckBox[i].addEventListener('change', remove_Marker_lieu(CcheckBox[i]), false);
+  for(var i = 0; i < CcheckBox.length; i++) {
+    if(e.target == CcheckBox[i]){
+      if(CcheckBox[i].checked == true){
+        CcheckBox[i].addEventListener('change', add_Marker_lieu(CcheckBox[i]), false);
+      }else{
+        CcheckBox[i].addEventListener('change', remove_Marker_lieu(CcheckBox[i]), false);
+      }
     }
   }
-}
 }
 
 Scommand.addEventListener('click', add_Marker_Command, false);
@@ -698,9 +698,9 @@ let Bderoulant = document.querySelectorAll(".command div form.category_title");
 function deroulant_filtre(e) {
   var new_e = e.target.parentElement;
   for(var i = 0; i < Bderoulant.length; i++) {
-    if(new_e.firstChild == Bderoulant[i]){
-      Bderoulant[i].setAttribute("data-value", (Number(Bderoulant[i].getAttribute("data-value"))+1)%2);
-      Bderoulant[i].style.transform = "rotate(" + Number(Bderoulant[i].getAttribute("data-value"))*90 + "deg)";
+    if(new_e.firstChild == Bderoulant[i].firstChild){
+      Bderoulant[i].firstChild.setAttribute("data-value", (Number(Bderoulant[i].firstChild.getAttribute("data-value"))+1)%2);
+      Bderoulant[i].firstChild.style.transform = "rotate(" + Number(Bderoulant[i].firstChild.getAttribute("data-value"))*90 + "deg)";
     }
     var filtreCache = document.querySelectorAll("form + ." + new_e.lastChild.id);
     for(var filtre_i of filtreCache){
@@ -745,55 +745,55 @@ const Cscroll = document.querySelector("#scroll > .carre");
 
 /* Detection du scroll sur la page */
 SremplirArt.addEventListener("scroll", () => {
-let totalHeight = SremplirArt.scrollHeight - SremplirArt.clientHeight;
-let progress = (SremplirArt.scrollTop / totalHeight) * 100;
-progressBar.style.height = `${progress}%`;
-progressBar.style.opacity = `${progress}%`;
+  let totalHeight = SremplirArt.scrollHeight - SremplirArt.clientHeight;
+  let progress = (SremplirArt.scrollTop / totalHeight) * 100;
+  progressBar.style.height = `${progress}%`;
+  progressBar.style.opacity = `${progress}%`;
 })
 
 /* detection du scroll sur la page principale */
 window.addEventListener("scroll", () => {
-if (document.documentElement.scrollTop != 0) {
-  Cscroll.style.transform = "rotate(180deg)";
-} else {
-  Cscroll.style.transform = "rotate(0deg)";
-}
+  if (document.documentElement.scrollTop != 0) {
+    Cscroll.style.transform = "rotate(180deg)";
+  } else {
+    Cscroll.style.transform = "rotate(0deg)";
+  }
 })
 
 /* detection click sur la barre */
 progressBarClick.addEventListener("click", (e) => {
-let totalHeight = SremplirArt.scrollHeight - SremplirArt.clientHeight;
-let newPageScroll = e.layerY / progressBarClick.offsetHeight * totalHeight;
-SremplirArt.scrollTo({
-  top: newPageScroll,
-  behavior: 'smooth'
-})
+  let totalHeight = SremplirArt.scrollHeight - SremplirArt.clientHeight;
+  let newPageScroll = e.layerY / progressBarClick.offsetHeight * totalHeight;
+  SremplirArt.scrollTo({
+    top: newPageScroll,
+    behavior: 'smooth'
+  })
 })
 
 /* cacher / montrer la barre de progression */
 progressBarClick.addEventListener("mouseenter", () => {
-progressBar.style.width = "15px";
-progressBarClick.style.width = "15px";
+  progressBar.style.width = "15px";
+  progressBarClick.style.width = "15px";
 })
 
 progressBarClick.addEventListener("mouseleave", () => {
-progressBar.style.width = "8px";
-progressBarClick.style.width = "8px";
+  progressBar.style.width = "8px";
+  progressBarClick.style.width = "8px";
 })
 
 /* */
 Bscroll.onclick = function() {
-if (document.documentElement.scrollTop == 0) {
-  window.scrollTo({
-    top: 100,
-    behavior: 'smooth'
-  })
-} else {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  })
-}
+  if (document.documentElement.scrollTop == 0) {
+    window.scrollTo({
+      top: 100,
+      behavior: 'smooth'
+    })
+  } else {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
 }
 
 /*=======================================================================================================*/
@@ -826,34 +826,34 @@ const Noms = document.querySelectorAll(".compte-note .nom");
 var noteTotale = 0;
 
 function chargementNotesAvis(){
-for(barres of NotBarres) {
-  //console.log(barres);
-  var nom = barres.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
-  var note = nom.length%5;
-  noteTotale += note;
-  //  note = le note de l'avis du nom courant
-  for(var i = 1; i <= Math.floor(note/1)*2-1; i += 2){
-    barres.childNodes[i].style.width = "50px";
+  for(barres of NotBarres) {
+    //console.log(barres);
+    var nom = barres.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
+    var note = nom.length%5;
+    noteTotale += note;
+    //  note = le note de l'avis du nom courant
+    for(var i = 1; i <= Math.floor(note/1)*2-1; i += 2){
+      barres.childNodes[i].style.width = "50px";
+    }
+    barres.childNodes[i].style.width = note%1*50 + "px";
+    barres.childNodes[i].style.borderRadius = "10px " + (note%1)*10 + "px " + (note%1)*10 + "px 10px";
+    for(i += 2; i <= 9; i += 2){
+      barres.childNodes[i].style.width = "0px";
+    }
+    //}
   }
-  barres.childNodes[i].style.width = note%1*50 + "px";
-  barres.childNodes[i].style.borderRadius = "10px " + (note%1)*10 + "px " + (note%1)*10 + "px 10px";
+
+  var noteFinale = noteTotale/NotBarres.length;
+  //console.log(noteFinale);
+
+  for(var i = 1; i <= Math.floor(noteFinale/1)*2-1; i += 2){
+    NotBarresImg.childNodes[i].style.width = "50px";
+  }
+  NotBarresImg.childNodes[i].style.width = noteFinale%1*50 + "px";
+  NotBarresImg.childNodes[i].style.borderRadius = "10px " + (noteFinale%1)*10 + "px " + (noteFinale%1)*10 + "px 10px";
   for(i += 2; i <= 9; i += 2){
-    barres.childNodes[i].style.width = "0px";
+    NotBarresImg.childNodes[i].style.width = "0px";
   }
-  //}
-}
-
-var noteFinale = noteTotale/NotBarres.length;
-//console.log(noteFinale);
-
-for(var i = 1; i <= Math.floor(noteFinale/1)*2-1; i += 2){
-  NotBarresImg.childNodes[i].style.width = "50px";
-}
-NotBarresImg.childNodes[i].style.width = noteFinale%1*50 + "px";
-NotBarresImg.childNodes[i].style.borderRadius = "10px " + (noteFinale%1)*10 + "px " + (noteFinale%1)*10 + "px 10px";
-for(i += 2; i <= 9; i += 2){
-  NotBarresImg.childNodes[i].style.width = "0px";
-}
 }
 
 chargementNotesAvis();
@@ -884,40 +884,40 @@ Smap.style.opacity = 0;*/
 
 /* Afficher la section S et cacher la section S2 */
 function affiche(S, S2) {
-if (S == Smap) {
-  SpartieActu.style.opacity = 0;
-  SpartieMap.style.opacity = 1;
-  S.style.transform = "scaleX(1)";
-  S2.style.transform = "scaleX(0)";
-  progressBar.style.width = "0px";
-  progressBarClick.style.width = "0px";
-  BcreerArt.style.display = "none";
-  Bcheckbox.style.display = "block";
-}
-if (S == Sactu) {
-  SpartieActu.style.opacity = 1;
-  SpartieMap.style.opacity = 0;
-  ScreerArt.style.display = "block";
-  S.style.transform = "scaleX(1)";
-  S2.style.transform = "scaleX(0)";
-  progressBar.style.width = "8px";
-  progressBarClick.style.width = "8px";
-  BcreerArt.style.display = "block";
-  Bcheckbox.style.display = "none";
-}
+  if (S == Smap) {
+    SpartieActu.style.opacity = 0;
+    SpartieMap.style.opacity = 1;
+    S.style.transform = "scaleX(1)";
+    S2.style.transform = "scaleX(0)";
+    progressBar.style.width = "0px";
+    progressBarClick.style.width = "0px";
+    BcreerArt.style.display = "none";
+    Bcheckbox.style.display = "block";
+  }
+  if (S == Sactu) {
+    SpartieActu.style.opacity = 1;
+    SpartieMap.style.opacity = 0;
+    ScreerArt.style.display = "block";
+    S.style.transform = "scaleX(1)";
+    S2.style.transform = "scaleX(0)";
+    progressBar.style.width = "8px";
+    progressBarClick.style.width = "8px";
+    BcreerArt.style.display = "block";
+    Bcheckbox.style.display = "none";
+  }
 }
 
 /* Afficher / cacher la barre de recherche */
 
 function afficheBarre(S) {
-if (S == Sactu) {
-  Bsearch.style.transform = "scale(0,0)";
-  Bloupe.style.borderRadius = "40%";
-}
-else {
-  Bsearch.style.transform = "scale(1,1)";
-  Bloupe.style.borderRadius = "0% 40% 40% 0%";
-}
+  if (S == Sactu) {
+    Bsearch.style.transform = "scale(0,0)";
+    Bloupe.style.borderRadius = "40%";
+  }
+  else {
+    Bsearch.style.transform = "scale(1,1)";
+    Bloupe.style.borderRadius = "0% 40% 40% 0%";
+  }
 }
 
 
@@ -945,35 +945,35 @@ Bactu.onclick = function() {
 
 /* Si on clique sur le bouton creer article */
 BcreerArt.onclick = function() {
-ScreerArt.style.transition = "0.3s";
-ScreerArt.style.transform = "translate(0px,0px) scaleY(1)";
-BcreerArt.style.display = "none";
+  ScreerArt.style.transition = "0.3s";
+  ScreerArt.style.transform = "translate(0px,0px) scaleY(1)";
+  BcreerArt.style.display = "none";
 }
 
 /* Si on clique sur la section checkbox */
 Scheckbox.style.display = "block";
-var ScheckboxPosition = 0;
-Bcheckbox.onclick = function() {
-if(ScheckboxPosition == 0){
-  Scheckbox.style.transform = "scaleY(0)";
-  ScheckboxPosition = 1;
-}else{
-  Scheckbox.style.transform = "scaleY(1)";
-  ScheckboxPosition = 0;
-}
+  var ScheckboxPosition = 0;
+  Bcheckbox.onclick = function() {
+  if(ScheckboxPosition == 0){
+    Scheckbox.style.transform = "scaleY(0)";
+    ScheckboxPosition = 1;
+  }else{
+    Scheckbox.style.transform = "scaleY(1)";
+    ScheckboxPosition = 0;
+  }
 }
 
 /*=======================================================================================================*/
 /*===================================================== boutons close ===================================*/
 
 BcloseNotation.onclick = function() {
-Snotation.style.transform = "translate(-100%,0px)";
-Bcheckbox.style.display = "block";
+  Snotation.style.transform = "translate(-100%,0px)";
+  Bcheckbox.style.display = "block";
 }
 
 BcloseCreerArticle.onclick = function() {
-ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
-BcreerArt.style.display = "block";
+  ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
+  BcreerArt.style.display = "block";
 }
 
 /*
@@ -988,16 +988,16 @@ affiche(Snotation, Smap);
 
 /* ajouter un marqueur et supprimer le précédent */
 function addMarker(pos, nom, code) {
-for(var i = 0; i < Lcheckbox.length; i++) {
-  Lcheckbox[i].checked = false;
-}
+  for(var i = 0; i < Lcheckbox.length; i++) {
+    Lcheckbox[i].checked = false;
+  }
 
-mymap.removeLayer(filtre.Bars);
-mymap.removeLayer(filtre.Culture);
-mymap.removeLayer(filtre.Parcs);
-mymap.removeLayer(filtre.FastFood);
-mymap.removeLayer(filtre.Lycees);
-// On vérifie si le marqueur existe déjà
+  mymap.removeLayer(filtre.Bars);
+  mymap.removeLayer(filtre.Culture);
+  mymap.removeLayer(filtre.Parcs);
+  mymap.removeLayer(filtre.FastFood);
+  mymap.removeLayer(filtre.Lycees);
+  // On vérifie si le marqueur existe déjà
   if (marqueur != undefined) {
     // Si oui, on le retire
     mymap.removeLayer(marqueur);
@@ -1026,15 +1026,15 @@ mymap.removeLayer(filtre.Lycees);
     Tadresse.textContent = nom;
   }
 
-//marqueur.addTo(mymap);
-/*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
+  //marqueur.addTo(mymap);
+  /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
 
-if(nom.search(" " + code + ",") != -1){  
-  console.log(" " + code + ",");
-  marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
-}else{
-    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
-}
+  if(nom.search(" " + code + ",") != -1){  
+    console.log(" " + code + ",");
+    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
+  }else{
+      marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
+  }
   
   if(nom.search(" " + code + ",") != -1){  
     console.log(" " + code + ",");
@@ -1150,49 +1150,56 @@ Bsearch.addEventListener('change', searchAdresse, false);
 /*=======================================================================================================*/
 /*===================================================== boutons villes ===================================*/
 
+
+
 for(var i = 0; i < Bvilles.length; i++){
-Bvilles[i].onclick = function(e) {  
-  resetFiltresBox();
-  ville_active = e.target.firstChild.textContent;
-  let url = new URL("http://nominatim.openstreetmap.org/search?q=" + ville_active + "&format=json&limit=1");
-  $.getJSON(url, function(data) {
-    let pos = {lat : data[0].lat, lng : data[0].lon};
-    mymap.setView(pos, 11, {animate: true, duration: 2000});
-    addMarker(pos, ville_active);
-    Villedesfiltres.textContent = ville_active;
-  });
-}
+  Bvilles[i].onclick = function(e) {  
+    resetFiltresBox();
+    let Chargement = document.getElementById("page-chargement");
+    Chargement.style.transform = "translateY(0px)";
+    
+      trouverAdresseFiltre();
+
+      ville_active = e.target.firstChild.textContent;
+      let url = new URL("http://nominatim.openstreetmap.org/search?q=" + ville_active + "&format=json&limit=1");
+      $.getJSON(url, function(data) {
+        let pos = {lat : data[0].lat, lng : data[0].lon};
+        mymap.setView(pos, 11, {animate: true, duration: 2000});
+        addMarker(pos, ville_active);
+        Villedesfiltres.textContent = ville_active;
+      });
+  }
 }
 
 /*=======================================================================================================*/
 /*================================== Changement couleur like / dislike / report =========================*/
 
 function action_avis(e) {
-for(var i = 0; i < Bup.length; i++) {
-  if(e.target == Bup[i]) {
-    if(Bup[i].style.color == "green"){
-      Bup[i].style.color = "black";
-    }else{
-      Bup[i].style.color = "green";
-    }
-    Bdown[i].style.color = "black";
-  }
-  if(e.target == Bdown[i]) {
-    if(Bdown[i].style.color == "red"){
+  for(var i = 0; i < Bup.length; i++) {
+    if(e.target == Bup[i]) {
+      if(Bup[i].style.color == "green"){
+        Bup[i].style.color = "black";
+      }else{
+        Bup[i].style.color = "green";
+      }
       Bdown[i].style.color = "black";
-    }else{
-      Bdown[i].style.color = "red";
     }
-    Bup[i].style.color = "black";
-  }
-  if(e.target == Breport[i]) {
-    if(Breport[i].style.color == "orange"){
-      Breport[i].style.color = "black";
-    }else{
-      Breport[i].style.color = "orange";
+    if(e.target == Bdown[i]) {
+      if(Bdown[i].style.color == "red"){
+        Bdown[i].style.color = "black";
+      }else{
+        Bdown[i].style.color = "red";
+      }
+      Bup[i].style.color = "black";
+    }
+    if(e.target == Breport[i]) {
+      if(Breport[i].style.color == "orange"){
+        Breport[i].style.color = "black";
+      }else{
+        Breport[i].style.color = "orange";
+      }
     }
   }
-}
 }
 
 Savi.addEventListener('click', action_avis, false);
@@ -1200,4 +1207,33 @@ Savi.addEventListener('click', action_avis, false);
 
 
 /*=======================================================================================================*/
-/*========================================= Test ========================================================*/
+/*========================================= Slider actu =================================================*/
+
+let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+// Thumbnail image controls
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}

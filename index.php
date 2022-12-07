@@ -509,91 +509,74 @@
         <div class="parent" id="pages-actu">
 <!-- -------------------------------------------------------------------------------------------------------------------- Page actu -->
           <div class="page child1" id="section-fil-actu">
-            <div id="#actu-fil">
-              <section class="carousel" aria-label="Gallery">
-                <ol class="carousel__viewport">
-                  <li id="carousel__slide1"
-                      tabindex="0"
-                      class="carousel__slide">
-                    <div class="carousel__snapper">
-                        <a href="#carousel__slide4"
-                        class="carousel__prev">Go to last slide</a>
-                      <a href="#carousel__slide2"
-                        class="carousel__next">Go to next slide</a>
-                    </div>
-          
-                    <div id="Article">
-                      <div class="container" id="ArticleSansDesc">
+            <main>
+              <div class="slideshow-container">
 
-                      <div id="TitreArticle">
-                        <p><u><?php echo $donnees['NomEvent']; ?></u></p>
-                      </div>
-
-                      <?php 
-                      echo '<img src="uploads/' . $donnees["IMG"] . '">';?>
-                      <div id="DescriptionArticle">
-                        <h3><u>Description de l'événement </u> :</h3>
-                        <p><?php echo $donnees['Annonce']; ?></p>  
+                <!-- Full-width images with number and caption text -->
+                <div class="mySlides fade">
+                  <div class="numbertext">1 / 3</div>
+                  
+                  <div id="Article">
+                    <div class ="article-header">
+                      <img src="https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/portals_3/2x1_SuperMarioHub.jpg" class="avator">
+                        <!--<div class="container" id="ArticleSansDesc">-->
+                      <div class="article-header-info">
+                        Thierry Henry
+                    <span> Test </span>
+                        
+                        <p class="TitreArticle"><br/><b><u>Tournoi Mario Kart</u></b></p>
+                        <p>Vous aimez les courses effrénées, les véhicules en tout genre et les jeux vidéos ? Si c'est le cas cet événement est parfait pour vous ! En effet, dans celui-ci, organiser par Mr Vandenbroucke le détenant du titre, vous pourrez affronter les plus grands pilotes Calesiens dans un tournois rocambolesque mélant conduites et stratégies</p>
                       </div>
                     </div>
-                  </li>
-            
-                  <li id="carousel__slide2"
-                      tabindex="0"
-                      class="carousel__slide">
-                    <div class="carousel__snapper"></div>
-                    <a href="#carousel__slide1"
-                      class="carousel__prev">Go to previous slide</a>
-                    <a href="#carousel__slide3"
-                      class="carousel__next">Go to next slide</a>
-                  </li>
+                    
+                    <div class="article-img-wrap">
+                        <img src="https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/portals_3/2x1_SuperMarioHub.jpg" class="article-img">
+                    </div>
+                    
+                    <div class="article-info-counts">
+                      <div class="comments">
+                        <svg class="feather feather-message-circle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <div class="comment-count">33</div>
+                      </div>
+              
+                      <div class="retweets">
+                        <svg class="feather feather-repeat sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                        <div class="retweet-count">397</div>
+                      </div>
+              
+                      <div class="likes">
+                        <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        <div class="likes-count">2.6k</div>
+                      </div>
+                    </div>
+                  </div>
                   
-                  <li id="carousel__slide3"
-                      tabindex="0"
-                      class="carousel__slide">
-                    <div class="carousel__snapper"></div>
-                    <a href="#carousel__slide2"
-                      class="carousel__prev">Go to previous slide</a>
-                    <a href="#carousel__slide4"
-                      class="carousel__next">Go to next slide</a>
-                    </li>
-                  
-                    <li id="carousel__slide4"
-                      tabindex="0"
-                      class="carousel__slide">
-                      <div class="carousel__snapper"></div>
-                      <a href="#carousel__slide3"
-                        class="carousel__prev">Go to previous slide</a>
-                      <a href="#carousel__slide1"
-                        class="carousel__next">Go to first slide</a>
-                    </li>
-                  </ol>
-                
-                <aside class="carousel__navigation">
-                  <ol class="carousel__navigation-list">
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide1"
-                        class="carousel__navigation-button">Go to slide 1</a>
-                    </li>
-                    
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide2"
-                        class="carousel__navigation-button">Go to slide 2</a>
-                    </li>
-                    
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide3"
-                        class="carousel__navigation-button">Go to slide 3</a>
-                    </li>
-                    
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide4"
-                        class="carousel__navigation-button">Go to slide 4</a>
-                    </li>
-                  </ol>
-                </aside>
-              </section>
-            </div>
+                </div>
+
+                <div class="mySlides fade">
+                  <div class="numbertext">2 / 3</div>
+                  <img src="img2.jpg" style="width:100%">
+                </div>
+
+                <div class="mySlides fade">
+                  <div class="numbertext">3 / 3</div>
+                  <img src="img3.jpg" style="width:100%">
+                </div>
+
+                <!-- Next and previous buttons -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+              </div>
+              
+            <br>
+
+              <!-- The dots/circles -->
+              <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+              </div>
+            </main>
           </div>
 <!-- -------------------------------------------------------------------------------------------------------------- Page creer actu -->
           <div class="page child1 child2" id="section-creer-article">   

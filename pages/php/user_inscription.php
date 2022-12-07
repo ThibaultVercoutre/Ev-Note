@@ -1,5 +1,5 @@
 <?php 
-    $bdd = mysqli_connect("localhost", "root", "", "projet");// On inclut la connexion à la bdd
+    $bdd = mysqli_connect("localhost", "utilisateur", "projetweb2022", "projet");// On inclut la connexion à la bdd
     // Si les variables existent et qu'elles ne sont pas vides
     if(isset($_POST['upload'])){
       $image = $_FILES['image']['name'];
@@ -30,8 +30,11 @@
       if(filter_var($email, FILTER_VALIDATE_EMAIL))  
       { // Si l'email est de la bonne forme
             // On hash le mot de passe
-        $password = hash('sha256', $password);
-        $sql = $bdd->query("INSERT INTO user(NumEtu, Nom, Prenom, Mail, Mdp, image, TypeCompte) VALUES ('$num_etud','$nom','$prenom','$email','$password','$path','$type_compte')");
+        $password = hash('sha256', $password); 
+        $sql2 = $bdd->query("INSERT INTO photo_user(chemin) VALUES ('$path')");
+        $reponse = mysqli_query($bdd, "SELECT * FROM photo_user");
+        $test = mysqli_num_rows($reponse);
+        $sql = $bdd->query("INSERT INTO user(Nom, Prenom, NumEtudiant, Mail, MotDePasse, TypeCompte, id_image_user) VALUES ('$nom','$prenom','$num_etud','$email','$password','$type_compte', '$test')");
         move_uploaded_file($_FILES['image']['tmp_name'], $path);
         header('Location:user_inscription.php?reg_err=success');
         die();

@@ -1,14 +1,58 @@
 <html>
 
+<html>
+
 <?php
 require_once 'pages/php/login.php';
+//$bdd = mysqli_connect("localhost", "utilisateur", "projetweb2022", "projet");// On inclut la connexion à la bdd
 session_start();
 if(($_SESSION['email']) !== ""){
   $email = $_SESSION['email'];
-  $reponse = $bdd->query('SELECT Nom, Prenom FROM user WHERE Mail="'.$email.'"');
+  $reponse = $bdd->query('SELECT id_user, Nom, Prenom FROM user WHERE Mail="'.$email.'"');
+  $post = $bdd->query('SELECT id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport FROM form_fil'); 
+  $img = $bdd->query('SELECT id_image_event, Chemin FROM image_event, form_fil WHERE image_event.id_image_event = form_fil.id_image_event');
   $donnees = $reponse->fetch();
+  $data = $post->fetch();
+  $test = $img->fetch();
 
 }
+  date_default_timezone_set('Europe/Paris');
+    // Si les variables existent et qu'elles ne sont pas vides
+    //if(isset($_POST['NomEvent']) && isset($_POST['Adresse']) && isset($_POST['Ville']) && isset($_POST['CP']) && isset($_POST['image']) && isset($_POST['Annonce']))
+    if(isset($_POST['upload']))
+    {
+        $image = $_FILES['image']['name'];
+        $path = 'img_event/'.$image;
+        // Patch XSS
+        //$nom = htmlspecialchars($_POST['Nom']);
+        //$prenom = htmlspecialchars($_POST['Prenom']);
+        //$mail = htmlspecialchars($_POST['Mail']);
+        $id_user = $donnees['id_user'];
+        $nomevent = htmlspecialchars($_POST['NomEvent']);
+        $lieu = htmlspecialchars($_POST['Adresse']);
+        $ville = htmlspecialchars($_POST['Ville']);
+        $cp = htmlspecialchars($_POST['CP']);
+        $annonce = htmlspecialchars($_POST['Annonce']);
+        $date = date("y-m-d H:i:s"); 
+        //$bdd->prepare("SELECT * FROM image_event");
+        //$bdd->execute();
+        //$row = $bdd->fetchAll();
+        //$id_image = count($row);
+        //$photo = mysqli_query($bdd, "SELECT * FROM image_event");
+        //$id_image = mysqli_num_rows($reponse);
+        $sql2 = $bdd->query("INSERT INTO image_event(Chemin) VALUES ('$path')");
+        $sql = $bdd->prepare('SELECT * FROM image_event');
+        $sql->execute();
+        $nb_ligne = $sql->rowCount();
+        $sql3 = $bdd->query("INSERT INTO testpost(id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '1', '$annonce','$date', '0', '0', '0')");
+        //$sql3 = $bdd->query("INSERT INTO testpost(id_user, NomEvent, Adresse, Ville, CP, IMG, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport, id_commentaire_fil, id_image_event) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$path','$annonce','$date', '0', '0', '0', '1', '$nb_ligne')");
+        // On insère dans la base de données
+        $sql4 = $bdd->query("INSERT INTO form_fil(id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '1', '$annonce','$date','0','0','0')");
+        move_uploaded_file($_FILES['image']['tmp_name'], $path);
+                            // On redirige avec le message de succès
+        header('Location:../../principale.php?reg_err=success');
+        die();
+    }
 ?>
 
 <!DOCTYPE html>
