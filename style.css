@@ -263,7 +263,7 @@ input:checked + .slider:before{
 
 .button, .leaflet-control-zoom-in, .leaflet-control-zoom-out{
   background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-6), var(--couleur-principale-5));
-  border-radius: 16px;
+  border-radius: 8px;
 	box-shadow: -1px 2px 2px grey;
   cursor: pointer;
   transition: 0.3s;
@@ -272,7 +272,7 @@ input:checked + .slider:before{
 .drop::before, .leaflet-control-zoom-in::before, .leaflet-control-zoom-out::before{
   content:'';
   position: absolute;
-  border-radius: 16px;
+  border-radius: 8px;
   top: 0;
   left: 0;
   width: 100%;
@@ -1491,6 +1491,7 @@ nav .drop{
   min-height: 74vh;
   opacity: 0;
   transform-origin: right;
+  backdrop-filter: blur(10px);
 }
 
 #section-notation {

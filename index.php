@@ -1,11 +1,13 @@
 <?php
     require_once 'pages/php/login.php'; // On inclut la connexion à la bdd
     session_start();
-    $reponse = $bdd->query('SELECT NumEtu, NomEvent, Adresse, Ville, CP, IMG, Annonce, DateCreation FROM testpost');
-    $donnees = $reponse->fetch();
+    $reponse = $bdd->query('SELECT NumEtu, NomEvent, Adresse, Ville, CP, IMG, Annonce, DateCreation FROM projet');
+    //$donnees = $reponse->fetch();
     if ($reponse = 0){
         echo "Aucun post";
     }
+
+
 
 //function make_query($bdd)
 //{
@@ -101,6 +103,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <script src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js"></script>
+
+  <script src="fonction_php.php"></script>
 </head>
 
 <body>
@@ -680,6 +684,49 @@
   </div>
 </div>
 -->
+
+<?php 
+    // Récupération du contenu HTML d'une page web
+    $html = file_get_contents('index.php');
+
+    // Création d'un objet DOM
+    $dom = new DOMDocument();
+
+    // Chargement du HTML dans l'objet DOM
+    /*$dom->loadHTML($html);
+
+    // Récupération de la première balise p du document
+    $balise_p = $dom->getElementById('adresse-note');
+
+    // Récupération du contenu texte de la balise p
+    $contenu = $balise_p->nodeValue;
+
+    // Affichage du contenu texte
+    echo "<script>var balise_p = '". $contenu ."';
+    console.log(balise_p);
+
+    </script>";*/
+
+    //Recupération des données pour les avis d'un lieu
+    // Préparation de la requête SQL
+    $sql = "SELECT Chemin FROM photo_eta WHERE id_p_eta = (SELECT id_p_eta FROM lieu WHERE Adresse = 'Grand théâtre de Calais')";
+    $stmt = $bdd->prepare($sql);
+
+    // Exécution de la requête
+    $stmt->execute();
+
+    // Récupération des résultats
+    $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+    // Conversion des résultats en tableau JavaScript
+    $img_lieu = json_encode($resultats);
+
+    // Envoi du tableau JavaScript au client
+    echo "<script>var mes_clients = ". $img_lieu .";
+                  console.log(mes_clients);
+
+                  </script>";
+?>
 
 <!--
 <div id="TitreArticle">

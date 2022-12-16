@@ -328,7 +328,6 @@ trouverAdresseFiltre();
 /* boutons ===============================*/
 let Bmap = document.getElementById("map");
 let Bactu = document.getElementById("actu");
-let Bnotation = document.getElementById("notation");
 let BcloseNotation = document.getElementById("closeNotation");
 let BcloseCreerArticle = document.getElementById("closeCreerArticle");
 let BcreerArt = document.getElementById("note");
@@ -660,7 +659,6 @@ let BderoulantVille = document.querySelector(".command div span#ville_selector_m
 
 function deroulant_ville(e) {
   var new_e = e.target.parentElement.parentElement.parentElement.childNodes;
-  console.log(e.target.parentElement.getAttribute("data-value"));
   if(Number(e.target.parentElement.getAttribute("data-value")) == 1){
     for(var i = 1; i < new_e.length; i++) {
       new_e[i].style.height = "0";
@@ -673,7 +671,6 @@ function deroulant_ville(e) {
     }
   }
   e.target.parentElement.setAttribute("data-value", (Number(e.target.parentElement.getAttribute("data-value"))+1)%2);
-  console.log(new_e.childNodes);
 }
 
 BderoulantVille.addEventListener('click', deroulant_ville, false);
@@ -986,6 +983,8 @@ affiche(Snotation, Smap);
 /*=======================================================================================================*/
 /*========================================= Recherche d'une adresse =====================================*/
 
+var Bnotation = document.getElementById("adresse-note");
+
 /* ajouter un marqueur et supprimer le précédent */
 function addMarker(pos, nom, code) {
   for(var i = 0; i < Lcheckbox.length; i++) {
@@ -1029,15 +1028,13 @@ function addMarker(pos, nom, code) {
   //marqueur.addTo(mymap);
   /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
 
-  if(nom.search(" " + code + ",") != -1){  
-    console.log(" " + code + ",");
+  if(nom.search(" " + code + ",") != -1){ 
     marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
   }else{
       marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
   }
   
   if(nom.search(" " + code + ",") != -1){  
-    console.log(" " + code + ",");
     marqueur.addTo(mymap).bindPopup('<div id="element-popup"><h1>Adresse du lieu : </h1><div id="boutons-popup"><div class="button anim-button" id="adresse-note">' + texte + '</div><div class="button anim-button" id="itineraire"><span class="material-symbols-outlined">google_plus_reshare</span></div></div></br></div>').openPopup();
   }else{
       marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
@@ -1096,10 +1093,8 @@ mymap.on('click', function(e) {
     let url = new URL("http://nominatim.openstreetmap.org/search?q=" + pos.lat + "%20" + pos.lng + "&format=json&limit=1");
     
     $.getJSON(url, function(data) {
-      console.log(data[0].display_name);
       var i = 0;
       for(i; i < CodesVilles[ville_active].length; i++) {
-        console.log(CodesVilles[ville_active][i], ville_active);
         if(data[0].display_name.search(" " + CodesVilles[ville_active][i] + ",") != -1/* || data[0].display_name.search(" " + ville_active + ",") != -1*/){
           addMarker(pos, data[0].display_name, CodesVilles[ville_active][i]);
           i =CodesVilles[ville_active].length*CodesVilles[ville_active].length;
@@ -1205,7 +1200,6 @@ function action_avis(e) {
 Savi.addEventListener('click', action_avis, false);
 
 
-
 /*=======================================================================================================*/
 /*========================================= Slider actu =================================================*/
 
@@ -1237,3 +1231,12 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "block";
   dots[slideIndex-1].className += " active";
 }
+
+
+/*=======================================================================================================*/
+/*========================================= Génération avis =============================================*/
+
+console.log(mes_clients);
+console.log("oucoc");
+
+saluer();
