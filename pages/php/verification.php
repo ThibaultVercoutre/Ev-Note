@@ -7,7 +7,7 @@ if((isset($_POST['email'])) && isset($_POST['password']))
   $email = htmlspecialchars($_POST['email']);
   $password = htmlspecialchars($_POST['password']);
 
-  $check = $bdd->prepare('SELECT Mail, Mdp FROM user WHERE Mail = ?');
+  $check = $bdd->prepare('SELECT Mail, MotDePasse FROM utilisateur WHERE Mail = ?');
   $check->execute(array($email));
   $data = $check->fetch();
   $row = $check->rowCount();
@@ -17,7 +17,7 @@ if((isset($_POST['email'])) && isset($_POST['password']))
     if (filter_var($email, FILTER_VALIDATE_EMAIL))
     {
       $password = hash('sha256', $password);
-      if($data['Mdp'] === $password)
+      if($data['MotDePasse'] === $password)
       {
         $_SESSION['email'] = $email;
         header('Location:../../principale.php');

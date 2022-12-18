@@ -1,19 +1,16 @@
-<html>
-
-<html>
-
 <?php
-require_once 'pages/php/login.php';
-//$bdd = mysqli_connect("localhost", "utilisateur", "projetweb2022", "projet");// On inclut la connexion à la bdd
+//require_once 'pages/php/login.php';
+$bdd = mysqli_connect("localhost", "utilisateur", "projetweb2022", "projet");// On inclut la connexion à la bdd
 session_start();
 if(($_SESSION['email']) !== ""){
   $email = $_SESSION['email'];
-  $reponse = $bdd->query('SELECT id_user, Nom, Prenom FROM user WHERE Mail="'.$email.'"');
-  $post = $bdd->query('SELECT id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport FROM form_fil'); 
-  $img = $bdd->query('SELECT id_image_event, Chemin FROM image_event, form_fil WHERE image_event.id_image_event = form_fil.id_image_event');
-  $donnees = $reponse->fetch();
-  $data = $post->fetch();
-  $test = $img->fetch();
+  $table_inner = $bdd->query("SELECT * FROM form_fil INNER JOIN utilisateur ON form_fil.id_user = utilisateur.id_user INNER JOIN photo_user ON utilisateur.id_image_user = photo_user.id_image_user INNER JOIN image_event ON form_fil.id_image_event = image_event.id_image_event ORDER BY form_fil.DateCreation DESC;");
+  $reponse = $bdd->query('SELECT id_user, Nom, Prenom FROM utilisateur WHERE Mail="'.$email.'"');
+  //$post = $bdd->query('SELECT id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport FROM form_fil'); 
+  //$img = $bdd->query('SELECT id_image_event, Chemin FROM image_event, form_fil WHERE image_event.id_image_event = form_fil.id_image_event');
+  $test = mysqli_fetch_assoc($table_inner);
+  $donnees = mysqli_fetch_assoc($reponse);
+  $cpt_row = mysqli_num_rows($table_inner);
 
 }
   date_default_timezone_set('Europe/Paris');
@@ -24,9 +21,6 @@ if(($_SESSION['email']) !== ""){
         $image = $_FILES['image']['name'];
         $path = 'img_event/'.$image;
         // Patch XSS
-        //$nom = htmlspecialchars($_POST['Nom']);
-        //$prenom = htmlspecialchars($_POST['Prenom']);
-        //$mail = htmlspecialchars($_POST['Mail']);
         $id_user = $donnees['id_user'];
         $nomevent = htmlspecialchars($_POST['NomEvent']);
         $lieu = htmlspecialchars($_POST['Adresse']);
@@ -34,19 +28,8 @@ if(($_SESSION['email']) !== ""){
         $cp = htmlspecialchars($_POST['CP']);
         $annonce = htmlspecialchars($_POST['Annonce']);
         $date = date("y-m-d H:i:s"); 
-        //$bdd->prepare("SELECT * FROM image_event");
-        //$bdd->execute();
-        //$row = $bdd->fetchAll();
-        //$id_image = count($row);
-        //$photo = mysqli_query($bdd, "SELECT * FROM image_event");
-        //$id_image = mysqli_num_rows($reponse);
-        $sql2 = $bdd->query("INSERT INTO image_event(Chemin) VALUES ('$path')");
-        $sql = $bdd->prepare('SELECT * FROM image_event');
-        $sql->execute();
-        $nb_ligne = $sql->rowCount();
-        $sql3 = $bdd->query("INSERT INTO testpost(id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '1', '$annonce','$date', '0', '0', '0')");
-        //$sql3 = $bdd->query("INSERT INTO testpost(id_user, NomEvent, Adresse, Ville, CP, IMG, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport, id_commentaire_fil, id_image_event) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$path','$annonce','$date', '0', '0', '0', '1', '$nb_ligne')");
-        // On insère dans la base de données
+        $reponse = mysqli_query($bdd, "SELECT * FROM image_event");
+        $nb_ligne = mysqli_num_rows($reponse);
         $sql4 = $bdd->query("INSERT INTO form_fil(id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '1', '$annonce','$date','0','0','0')");
         move_uploaded_file($_FILES['image']['tmp_name'], $path);
                             // On redirige avec le message de succès
@@ -115,6 +98,7 @@ if(($_SESSION['email']) !== ""){
             <div id="rond-tete"></div>-->
           </div></a></div>
             <ul class="sous-menu"> 
+              <li><a  href="pages/php/monprofil.php">Voir mon profil</a></li></h2>
               <li><a  href="pages/php/user_deconnexion.php">Déconnexion</a></li></h2>
             </ul>
           </li>
@@ -496,100 +480,77 @@ if(($_SESSION['email']) !== ""){
         <div class="parent" id="pages-actu">
 
         <div class="page child1" id="section-fil-actu">
-            <div id="#actu-fil">
-              <section class="carousel" aria-label="Gallery">
-                <ol class="carousel__viewport">
-                  <li id="carousel__slide1"
-                      tabindex="0"
-                      class="carousel__slide">
-                    <div class="carousel__snapper">
-                        <a href="#carousel__slide4"
-                        class="carousel__prev">Go to last slide</a>
-                      <a href="#carousel__slide2"
-                        class="carousel__next">Go to next slide</a>
-                    </div>
-          
-                    <div id="Article">
-                      <div class="container" id="ArticleSansDesc">
-
-                      <div id="TitreArticle">
-                        <p><u><?php echo $donnees['NomEvent']; ?></u></p>
-                      </div>
-
-                      <?php 
-                      echo '<img src="uploads/' . $donnees["IMG"] . '">';?>
-                      <div id="DescriptionArticle">
-                        <h3><u>Description de l'événement </u> :</h3>
-                        <p><?php echo $donnees['Annonce']; ?></p>  
+            <main>
+              <div class="slideshow-container">
+              <?php 
+                mysqli_data_seek($table_inner, 0);
+                for($i=0; $i<$cpt_row;$i++){
+                  while ($test = mysqli_fetch_assoc($table_inner)){
+                  ?>
+                  <div class="mySlides fade">
+                  <div id="Article">
+                    <div class ="article-header">
+                      <img src="<?php echo $test['chemin'];?>" class="avator">
+                        <!--<div class="container" id="ArticleSansDesc">-->
+                      <div class="article-header-info">
+                        <?php echo $test['Prenom']." ".$test['Nom']?>
+                    <span> <?php echo $test['DateCreation'] ; ?> </span>
+                        
+                        <p class="TitreArticle"><br/><b><u><?php echo $test['NomEvent'];?></u></b></p>
+                        <p> <?php echo $test['Annonce'] ; ?></p>
                       </div>
                     </div>
-                  </li>
-            
-                  <li id="carousel__slide2"
-                      tabindex="0"
-                      class="carousel__slide">
-                    <div class="carousel__snapper"></div>
-                    <a href="#carousel__slide1"
-                      class="carousel__prev">Go to previous slide</a>
-                    <a href="#carousel__slide3"
-                      class="carousel__next">Go to next slide</a>
-                  </li>
-                  
-                  <li id="carousel__slide3"
-                      tabindex="0"
-                      class="carousel__slide">
-                    <div class="carousel__snapper"></div>
-                    <a href="#carousel__slide2"
-                      class="carousel__prev">Go to previous slide</a>
-                    <a href="#carousel__slide4"
-                      class="carousel__next">Go to next slide</a>
-                    </li>
-                  
-                    <li id="carousel__slide4"
-                      tabindex="0"
-                      class="carousel__slide">
-                      <div class="carousel__snapper"></div>
-                      <a href="#carousel__slide3"
-                        class="carousel__prev">Go to previous slide</a>
-                      <a href="#carousel__slide1"
-                        class="carousel__next">Go to first slide</a>
-                    </li>
-                  </ol>
-                
-                <aside class="carousel__navigation">
-                  <ol class="carousel__navigation-list">
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide1"
-                        class="carousel__navigation-button">Go to slide 1</a>
-                    </li>
                     
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide2"
-                        class="carousel__navigation-button">Go to slide 2</a>
-                    </li>
+                    <div class="article-img-wrap">
+                        <img src="<?php echo $test['Chemin'];?>" class="article-img">
+                    </div>
                     
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide3"
-                        class="carousel__navigation-button">Go to slide 3</a>
-                    </li>
-                    
-                    <li class="carousel__navigation-item">
-                      <a href="#carousel__slide4"
-                        class="carousel__navigation-button">Go to slide 4</a>
-                    </li>
-                  </ol>
-                </aside>
-              </section>
-            </div>
+                    <div class="article-info-counts">
+                      <div class="comments">
+                        <svg class="feather feather-message-circle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <div class="comment-count">33</div>
+                      </div>
+                      <div class="likes">
+                        <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        <div class="likes-count"><?php echo $test['CptPouceBleu'] ;?></div>
+                      </div>
+                      <div class="retweets">
+                        <svg class="feather feather-repeat sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                        <div class="retweet-count"><?php echo $test['CptPouceRouge'] ;?></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <?php
+                    }
+                  }
+              ?>
+                <!-- Next and previous buttons -->
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+              </div>
+              
+            <br>
+
+              <!-- The dots/circles -->
+              <div style="text-align:center">
+              <?php 
+              for($i=1; $i<$cpt_row+1;$i++){ 
+                ?>
+                <span class="dot" onclick="currentSlide(<?php echo $i ;?>)"></span>
+                <!--<span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>-->
+                <?php } ?>
+              </div>
+            </main>
           </div>
-        </div>
 <!-- -------------------------------------------------------------------------------------------------------------- Page creer actu -->
           <div class="page child1 child2" id="section-creer-article">   
             <div class="scrollbar"></div>
             <div class="clickScrollbar"></div>
             <div id="champ-remplit-art">
               <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
-              <form method="post" action="./pages/php/donnees_formulaire.php">
+              <form method="post" action="principale.php" enctype="multipart/form-data">
                 <fieldset>
                   <legend>Informations sur l'événement</legend><br />
                   <label for="NomEvent">Nom de l'événement</label><br />
@@ -603,8 +564,8 @@ if(($_SESSION['email']) !== ""){
                 </fieldset><br />
                 <fieldset>
                   <legend>Image (optionnel)</legend>
-                  <label for="IMG">Inserez une image</label><br />
-                  <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" required/>
+                  <label for="image">Inserez une image</label><br />
+                  <input type="file" name="image" id="image" accept="image/png, image/jpeg" required/>
                 </fieldset>
                 <br />
                 <fieldset>
@@ -613,7 +574,7 @@ if(($_SESSION['email']) !== ""){
                   <textarea name="Annonce" id="Description" placeholder="Quel est votre évènement ?" rows="20" cols="100" required></textarea>
                 </fieldset>
                 <br />
-                <input type="submit" value="Envoyer" id="BoutonEnvoie" />
+                <input type="submit" value="Envoyer" name="upload" id="BoutonEnvoie" />
               </form>
             </div>
             <div id="closeCreerArticle">

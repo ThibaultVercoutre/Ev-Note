@@ -1,0 +1,155 @@
+html{
+    background-color: #F3FBF8;
+    font-family: 'ZT Grafton', sans-serif;
+    font-weight: bold;
+  }
+  body{
+    margin:0px;
+    min-height: 75vh;
+  }
+  /* HEADER */
+  
+  header{
+    height: 60px;
+    display: flex;
+  }
+  
+  header div{
+    background-color: #4377B2;
+    margin: 0px 0px 0px 0px;
+    border-radius: 0rem 0rem .5rem .5rem;
+  }
+  
+  #titre {
+    flex: 80%;
+    display: flex;
+    align-items: center;
+  }
+  
+  #titre h1 {
+    padding: 0 0 0 90px;
+    margin-left: 150px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    flex: 1;
+  }
+  
+  #titre a {
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    right: 60px;
+    top: -20px;
+  }
+
+  #titre span {
+    position: absolute;
+    bottom: -45px;
+    display: flex;
+    font-size : 3em;
+  }
+  
+  #titre a:hover{
+    text-decoration: none;
+  }
+  #titre a:visited{
+    text-decoration: none;
+    color: black;
+  }
+
+  h1{
+    border: 0px solid #4377B2;
+    border-width: 0px 0px 2px 0px;
+    border-radius: -16px;
+  }
+  
+  h2{
+    margin-left: 20px;
+  }
+
+  #contenu hr{
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+
+  #contenu p{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+  }
+
+  #contenu .photo_profil{
+    position: relative;
+    width : 20%;
+    margin-left: 50px;
+    margin-right: auto;
+    border-radius: 25px;
+  }
+
+  #button_mdp {
+    border: solid 1px red;
+    background-color: transparent; /* couleur de fond verte */
+    color : red;
+    font-weight: bold;
+    text-decoration: none; /* Supprime la surbrillance */
+    display: inline-block; /* Affiche le bouton sur une ligne */
+    font-size: 16px; /* Taille de police */
+    cursor: pointer; /* Change le curseur en main lorsque la souris passe sur le bouton */
+    border-radius: 4px; /* arrondit les coins du bouton */
+
+    text-align: center;
+    margin: 8px; /* ajoute de la marge autour du bouton */
+    padding: 12px 20px; /* ajoute du padding à l'intérieur du bouton */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: background-color 0.5s; /* transition de 0.5s pour la couleur de fond */
+    
+  }
+
+  #menu_mdp {
+    list-style-type: none; /* Supprimer les marqueurs de liste */
+    margin: 0; /* Mettre à zéro les marges */
+    margin-top: 5px;
+    padding: 0; /* Mettre à zéro les espacements intérieurs */
+    overflow: hidden; /* Cacher les éléments dépassant */
+  }
+  
+  form {
+    width: 50%;
+    margin: 0 auto;
+    text-align: left;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+  }
+
+  #menu_mdp form .change_mdp{
+    width: 100%;
+    background-color: #4ca3af;
+    color: white;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #menu_mdp form .change_mdp:hover{
+    background-color: #456fa0;
+  }
+  
