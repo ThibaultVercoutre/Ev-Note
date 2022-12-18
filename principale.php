@@ -46,6 +46,7 @@ if(($_SESSION['email']) !== ""){
   <meta name="viewport" content="width=device-width">
   <title>Ev'Note</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="shortcut icon" href="img/favicon-32x32.png" type="image/x-icon">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
