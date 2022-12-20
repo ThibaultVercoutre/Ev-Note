@@ -45,8 +45,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <script src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js"></script>
-
-  <script src="fonction_php.php"></script>
 </head>
 
 <body>
@@ -259,7 +257,7 @@
               <div id="elements-notations">
                 <div class="img">
                   
-                  <img src="img/TheatreCalais.jpg" alt="Image">
+                  <img src="" id="image_batiment_section_avis" alt="Image">
                   <div class="barres-notations">
                     <div class="barres-1">
                       <div class="barre-notation"></div>
@@ -278,135 +276,6 @@
                   </div>
                 </div>
                 <div id="section-avis">
-                  <div class="avi">
-                    <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/alexis.webp" alt="image-profil"></div>
-                      <div class="nom">Alexis</div>
-                      <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-avi">
-                      J'adore m'y rendre. J'y vais quasiment tout les soirs. Je vais commencer à parler latin car j'aurais plus d'inspi.
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam debitis nam similique dolores vero quae dolorum, optio eligendi asperiores sunt quam consectetur necessitatibus! Dicta, rerum illum! Pariatur iste officia ratione!
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam sunt provident debitis, repellat velit voluptatum quidem consequatur, nostrum aliquid nisi iste ut? Molestias odit placeat eius deleniti? Rem, rerum delectus?
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis error iusto maiores molestiae, dicta magni ab laborum nulla accusantium iure nihil vitae quia saepe eum nostrum dolores commodi debitis vel.
-                      
-                    </div>
-                    <div class="actions">
-                      <span class="material-symbols-outlined up">thumb_up</span>
-                      <span class="material-symbols-outlined down">thumb_down</span>
-                      <span class="material-symbols-outlined report">priority_high</span>
-                    </div>
-                  </div>
-                  <div class="avi">
-                    <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/julien.png" alt="image-profil"></div>
-                      <div class="nom">Julien</div>
-                      <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-avi">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam rerum labore sit, vitae mollitia tenetur unde vero voluptatibus tempore. Quas consequuntur excepturi laboriosam quod temporibus, magni reiciendis. Voluptate, reprehenderit ipsam.
-                    </div>
-                    <div class="actions">
-                      <span class="material-symbols-outlined up">thumb_up</span>
-                      <span class="material-symbols-outlined down">thumb_down</span>
-                      <span class="material-symbols-outlined report">priority_high</span>
-                    </div>
-                  </div>
-                  <div class="avi">
-                    <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/florian.webp" alt="image-profil"></div>
-                      <div class="nom">Florian</div>
-                      <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-avi">
-                      Alors oui bonjour, C'est pour dire que l'endroit est superbe, je prend beaucoup de plaisir à y être.
-                      Cela me permet de me recentrer sur moi même et mes chakras, surtout le 3eme chakras.
-                    </div>
-                    <div class="actions">
-                      <span class="material-symbols-outlined up">thumb_up</span>
-                      <span class="material-symbols-outlined down">thumb_down</span>
-                      <span class="material-symbols-outlined report">priority_high</span>
-                    </div>
-                  </div>
-                  <div class="avi">
-                    <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/thibault.jpg" alt="image-profil"></div>
-                      <div class="nom">Thibault</div>
-                      <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-avi">
-                      C'était pas mal en vrai
-                    </div>
-                    <div class="actions">
-                      <span class="material-symbols-outlined up">thumb_up</span>
-                      <span class="material-symbols-outlined down">thumb_down</span>
-                      <span class="material-symbols-outlined report">priority_high</span>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -593,7 +462,6 @@
     </div>
     <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
     <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
-    <script src="script.js"></script>
   </footer>
 </div>
 
@@ -625,49 +493,7 @@
 </div>
 -->
 
-<?php 
-    // Récupération du contenu HTML d'une page web
-    $html = file_get_contents('index.php');
-
-    // Création d'un objet DOM
-    $dom = new DOMDocument();
-
-    // Chargement du HTML dans l'objet DOM
-    /*$dom->loadHTML($html);
-
-    // Récupération de la première balise p du document
-    $balise_p = $dom->getElementById('adresse-note');
-
-    // Récupération du contenu texte de la balise p
-    $contenu = $balise_p->nodeValue;
-
-    // Affichage du contenu texte
-    echo "<script>var balise_p = '". $contenu ."';
-    console.log(balise_p);
-
-    </script>";*/
-
-    //Recupération des données pour les avis d'un lieu
-    // Préparation de la requête SQL
-    $sql = "SELECT Chemin FROM photo_eta WHERE id_p_eta = (SELECT id_p_eta FROM lieu WHERE Adresse = 'Grand théâtre de Calais')";
-    $stmt = $bdd->prepare($sql);
-
-    // Exécution de la requête
-    $stmt->execute();
-
-    // Récupération des résultats
-    $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-
-    // Conversion des résultats en tableau JavaScript
-    $img_lieu = json_encode($resultats);
-
-    // Envoi du tableau JavaScript au client
-    echo "<script>var mes_clients = ". $img_lieu .";
-                  console.log(mes_clients);
-
-                  </script>";
-?>
-
 <!--
 <div id="TitreArticle">
- 
+
+<script src="script.js"></script>

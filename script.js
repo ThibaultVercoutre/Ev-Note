@@ -338,10 +338,6 @@ let Bloupe = document.getElementById("la-loupe");
 let Bcalais = document.getElementById("ville_Calais");
 let Bdunkerque = document.getElementById("ville_Dunkerque");
 let Bsaintomer = document.getElementById("ville_Saint-Omer");
-// like dislike report
-let Bup = document.querySelectorAll(".up");
-let Bdown = document.querySelectorAll(".down");
-let Breport = document.querySelectorAll(".report");
 
 /* Test ==================================*/
 let Tadresse = document.getElementById("batiment-name");
@@ -964,6 +960,8 @@ Scheckbox.style.display = "block";
 /*===================================================== boutons close ===================================*/
 
 BcloseNotation.onclick = function() {
+  var imageElement = document.getElementById("image_batiment_section_avis");
+  imageElement.src = "";
   Snotation.style.transform = "translate(-100%,0px)";
   Bcheckbox.style.display = "block";
 }
@@ -1045,10 +1043,153 @@ function addMarker(pos, nom, code) {
   mymap.setView([pos.lat, pos.lng]);
 };
 
+function modifAvis(){
+    
+    var avis = [];
+    var adresse = document.getElementById("adresse-note").textContent;
+    let Savis = document.getElementById('section-avis');
+
+    /* Image Lieu */
+    var params = new URLSearchParams();
+    params.append('clave1', '0');
+    params.append('clave2', adresse);
+    fetch('fonction_php.php', {
+        method: 'POST',
+        body: params
+      })
+      .then(response => response.json())
+      .then(result => {
+        var imageElement = document.getElementById("image_batiment_section_avis");
+        imageElement.src = result;
+    });
+
+    /* creation n avis */
+    var params = new URLSearchParams();
+    params.append('clave1', '6');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Savis.innerHTML = '';
+      for (var i = 0; i < Number(data[0]); i++) {
+        Savis.innerHTML += '<div class="avi">'
+                          + '<div class="compte-note">'
+                            + '<div class="img-profil-note"><img src="" alt="image-profil"></div>'
+                            + '<div class="nom"></div>'
+                            + '<span class="material-symbols-outlined verified"></span>'
+                            + '<div class="barres-notations">'
+                              + '<div class="barres-1">'
+                                + '<div class="barre-notation"></div>'
+                                + '<div class="barre-notation"></div>'
+                                + '<div class="barre-notation"></div>'
+                                + '<div class="barre-notation"></div>'
+                                + '<div class="barre-notation"></div>'
+                              + '</div>'
+                              + '<div class="barres-2">'
+                                + '<div class="barre-notation"></div>'
+                                + '<div class="barre-notation"></div>'
+                                + '<div class="barre-notation"></div>'
+                                + '<div class="barre-notation"></div>'
+                                + '<div class="barre-notation"></div>'
+                              + '</div>'
+                            + '</div>'
+                          + '</div>'
+                          + '<div class="text-avi"></div>'
+                          + '<div class="actions">'
+                            + '<span class="material-symbols-outlined up">thumb_up</span>'
+                            + '<span class="material-symbols-outlined down">thumb_down</span>'
+                            + '<span class="material-symbols-outlined report">priority_high</span>'
+                          + '</div>'
+                        + '</div>';
+      }
+    });
+
+    sleep(100);
+
+    /* PP personnes ayant commenté lieu */
+    var params = new URLSearchParams();
+    params.append('clave1', '5');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      let image_profils = document.getElementsByClassName('img-profil-note');
+      for (var i = 0; i < data.length; i++) {
+        image_profils[i].firstChild.src = data[i].replace('../../', '');
+      }
+    });
+
+    /* Personnes ayant commenté lieu */
+    var params = new URLSearchParams();
+    params.append('clave1', '1');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      let nom_profils = document.getElementsByClassName('nom');
+      for (var i = 0; i < data.length; i++) {
+        nom_profils[i].innerHTML = data[i];
+      }
+    });
+
+    /* Verification du compte dev */
+    var params = new URLSearchParams();
+    params.append('clave1', '2');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      let verification_dev = document.getElementsByClassName("verified");
+      for (var i = 0; i < data.length; i++) {
+        if(data[i] == "Developpeur"){
+          verification_dev[i].innerHTML = 'verified';
+        }
+      }
+      //console.log(avis);
+    });
+
+    /* Commentaires avis lieu */
+    var params = new URLSearchParams();
+    params.append('clave1', '4');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      let commentaires = document.getElementsByClassName('text-avi');
+      for (var i = 0; i < data.length; i++) {
+        commentaires[i].innerHTML = data[i];
+      }
+    });
+    
+    
+}
 
 /* Activation bouton pour acceder au avis de l'adresse */
 function boutonavis(e) {
   if (Bnotation != null) {
+    if(Bcheckbox.style.display != "none"){
+      modifAvis();
+    }
     if (e.target.id == Bnotation.id) {
       Sgps.style.transition = "0.3s";
       Sgps.style.transform = "translate(-100%,0px)";
@@ -1170,8 +1311,15 @@ for(var i = 0; i < Bvilles.length; i++){
 /*================================== Changement couleur like / dislike / report =========================*/
 
 function action_avis(e) {
+
+  // like dislike report
+  let Bup = document.querySelectorAll(".up");
+  let Bdown = document.querySelectorAll(".down");
+  let Breport = document.querySelectorAll(".report");
+
   for(var i = 0; i < Bup.length; i++) {
     if(e.target == Bup[i]) {
+      console.log("bouton up");
       if(Bup[i].style.color == "green"){
         Bup[i].style.color = "black";
       }else{
@@ -1180,6 +1328,7 @@ function action_avis(e) {
       Bdown[i].style.color = "black";
     }
     if(e.target == Bdown[i]) {
+      console.log("bouton down");
       if(Bdown[i].style.color == "red"){
         Bdown[i].style.color = "black";
       }else{
@@ -1188,6 +1337,7 @@ function action_avis(e) {
       Bup[i].style.color = "black";
     }
     if(e.target == Breport[i]) {
+      console.log("bouton report");
       if(Breport[i].style.color == "orange"){
         Breport[i].style.color = "black";
       }else{
@@ -1235,8 +1385,3 @@ function showSlides(n) {
 
 /*=======================================================================================================*/
 /*========================================= Génération avis =============================================*/
-
-console.log(mes_clients);
-console.log("oucoc");
-
-saluer();
