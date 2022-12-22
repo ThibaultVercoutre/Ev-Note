@@ -1,6 +1,6 @@
 <?php   
     //require_once 'pages/php/login.php'; // On inclut la connexion à la bdd
-    $bdd = mysqli_connect("localhost", "utilisateur", "projetweb2022", "projet");
+    $bdd = mysqli_connect("localhost", "root", "", "projet");
     session_start();
     
     $supp_date = $bdd->query("DELETE FROM form_fil WHERE DateCreation < DATEADD(day, -5, GETDATE())");
@@ -13,6 +13,41 @@
     $test = mysqli_fetch_assoc($table_inner);
     $row = mysqli_fetch_assoc($post);
     $cpt_row = mysqli_num_rows($table_inner);
+
+    /*if(($_SESSION['email']) !== ""){
+      $email = $_SESSION['email'];
+      $table_inner = $bdd->query("SELECT * FROM form_fil INNER JOIN utilisateur ON form_fil.id_user = utilisateur.id_user INNER JOIN photo_user ON utilisateur.id_image_user = photo_user.id_image_user INNER JOIN image_event ON form_fil.id_image_event = image_event.id_image_event ORDER BY form_fil.DateCreation DESC;");
+      $reponse = $bdd->query('SELECT id_user, Nom, Prenom FROM utilisateur WHERE Mail="'.$email.'"');
+      //$post = $bdd->query('SELECT id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport FROM form_fil'); 
+      //$img = $bdd->query('SELECT id_image_event, Chemin FROM image_event, form_fil WHERE image_event.id_image_event = form_fil.id_image_event');
+      $test = mysqli_fetch_assoc($table_inner);
+      $donnees = mysqli_fetch_assoc($reponse);
+      $cpt_row = mysqli_num_rows($table_inner);
+    
+    }
+      date_default_timezone_set('Europe/Paris');
+        // Si les variables existent et qu'elles ne sont pas vides
+        //if(isset($_POST['NomEvent']) && isset($_POST['Adresse']) && isset($_POST['Ville']) && isset($_POST['CP']) && isset($_POST['image']) && isset($_POST['Annonce']))
+        if(isset($_POST['upload']))
+        {
+            $image = $_FILES['image']['name'];
+            $path = 'img_event/'.$image;
+            // Patch XSS
+            $id_user = $donnees['id_user'];
+            $nomevent = htmlspecialchars($_POST['NomEvent']);
+            $lieu = htmlspecialchars($_POST['Adresse']);
+            $ville = htmlspecialchars($_POST['Ville']);
+            $cp = htmlspecialchars($_POST['CP']);
+            $annonce = htmlspecialchars($_POST['Annonce']);
+            $date = date("y-m-d H:i:s"); 
+            $reponse = mysqli_query($bdd, "SELECT * FROM image_event");
+            $nb_ligne = mysqli_num_rows($reponse);
+            $sql4 = $bdd->query("INSERT INTO form_fil(id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '1', '$annonce','$date','0','0','0')");
+            move_uploaded_file($_FILES['image']['tmp_name'], $path);
+                                // On redirige avec le message de succès
+            header('Location:../../principale.php?reg_err=success');
+            die();
+        }*/
 ?>
 
 <!DOCTYPE html>
@@ -229,11 +264,12 @@
         </div>
         <div class="button drop" id="checkbox">
           <div class="carre">
-            
             <span class="material-symbols-outlined">checklist</span>
-            <!--<div id="manche"></div>
-            <div id="pointe-stylo"></div>
-            <div id="ecriture"></div>-->
+          </div>
+        </div>
+        <div class="button drop" id="filter_check">
+          <div class="carre">
+            <span class="material-symbols-outlined">filter_alt</span>
           </div>
         </div>
       </div>
@@ -430,7 +466,83 @@
                   <textarea name="Annonce" id="Description" placeholder="Quel est votre évènement ?" rows="20" cols="100" required></textarea>
                 </fieldset>
                 <br />
+                <fieldset>
+                  <legend>Tri par Thème</legend>
+                  <p id="Accroche"><u>Veuillez selectionner un thème</u> :</p>
+                  <div id="ListeTheme">
+                    <div id="Ligne">
+                      <div>
+                        <input type="checkbox" id="filter1" name="filter1" value="1">
+                        <label for="filter1">Jeux vidéos</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter2" name="filter2" value="1">
+                        <label for="filter2">Sport</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter3" name="filter3" value="1">
+                        <label for="filter3">Littérature</label>
+                      </div>
+                    </div>
+                    <div id="Ligne">
+                      <div>
+                        <input type="checkbox" id="filter4" name="filter4" value="1">
+                        <label for="filter4">Culture</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter5" name="filter5" value="1">
+                        <label for="filter5">Peinture</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter6" name="filter6" value="1">
+                        <label for="filter6">Exposition</label>
+                      </div>
+                    </div>
+
+                    <div id="Ligne">
+
+                      <div>
+                        <input type="checkbox" id="filter7" name="filter7" value="1">
+                        <label for="filter7">Soirée</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter8" name="filter8" value="1">
+                        <label for="filter8">Bar</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter9" name="filter9" value="1">
+                        <label for="filter9">Politique</label>
+                      </div>
+
+                    </div>
+
+                    <div id="Ligne">
+
+                      <div>
+                        <input type="checkbox" id="filter10" name="filter10" value="10">
+                        <label for="filter10">Réduction/Offre</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter11" name="filter11" value="1">
+                        <label for="filter11">Cinéma</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter12" name="filter12" value="1">
+                        <label for="filter12">Rencontre</label>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </fieldset>
+                <br /><br />
                 <input type="submit" value="Envoyer" id="BoutonEnvoie" />
+                <br /><br /><br /><br /><br />
               </form>
             </div>
             <div id="closeCreerArticle">
@@ -438,6 +550,144 @@
                 <div class="croix1"></div>
                 <div class="croix2"></div>
               </div>
+            </div>
+          </div>
+<!-- --------------------------------------------------------------------------------------------------------- Page applique filtre -->
+          <div class="page child1 child2" id="filtres_actu">
+            <button id="filtre-button"><span class="material-symbols-outlined">filter_alt</span></button>
+            <div class="carre"></div>
+            <div id="filtre-menu" style="">
+              <p><u>Bienvenue dans l'interface de tri des postes</u></p>
+              <form method="post" action="./pages/php/donnees_formulaire.php">
+                <fieldset>
+                  <legend>Tri par Thème</legend>
+                  <p id="Accroche"><u>Veuillez selectionner les thèmes que vous désirez afficher</u> :</p>
+                  <div id="ListeTheme">
+                    <div id="Ligne">
+                      <div>
+                        <input type="checkbox" id="filter1" name="filter1" value="1">
+                        <label for="filter1">Jeux vidéos</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter2" name="filter2" value="1">
+                        <label for="filter2">Sport</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter3" name="filter3" value="1">
+                        <label for="filter3">Littérature</label>
+                      </div>
+                    </div>
+                    <div id="Ligne">
+                      <div>
+                        <input type="checkbox" id="filter4" name="filter4" value="1">
+                        <label for="filter4">Culture</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter5" name="filter5" value="1">
+                        <label for="filter5">Peinture</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter6" name="filter6" value="1">
+                        <label for="filter6">Exposition</label>
+                      </div>
+                    </div>
+
+                    <div id="Ligne">
+
+                      <div>
+                        <input type="checkbox" id="filter7" name="filter7" value="1">
+                        <label for="filter7">Soirée</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter8" name="filter8" value="1">
+                        <label for="filter8">Bar</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter9" name="filter9" value="1">
+                        <label for="filter9">Politique</label>
+                      </div>
+
+                    </div>
+
+                    <div id="Ligne">
+
+                      <div>
+                        <input type="checkbox" id="filter10" name="filter10" value="10">
+                        <label for="filter10">Réduction/Offre</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter11" name="filter11" value="1">
+                        <label for="filter11">Cinéma</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter12" name="filter12" value="1">
+                        <label for="filter12">Rencontre</label>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </fieldset><br />
+
+                <fieldset class="Filtrage">
+                  <legend>Autres méthodes de filtrage</legend>
+
+                  <p id="Accroche"><u>Voici une liste d'autres fonctionalités de filtrage</u> :</p>
+
+                  <div id="Titre">
+
+                    <div id="TriLike">
+
+                      <p class="SectionTri">Par nombre de Likes :</p>
+                      <br>
+                      <label for="filterlike1">Du plus liké au moins liké</label>
+                      <input type="radio" id="filterlike1" name="filtercommentslikedate" value="1">
+                      <input type="radio" id="filterlike2" name="filtercommentslikedate" value="1">
+                      <label for="filterlike2">Du moins liké au plus liké</label>
+
+                    </div>
+
+                    <br>
+
+                    <div id="TriComments">
+
+                      <p class="SectionTri">Par nombre de commentaires :</p>
+                      <br>
+                      <label for="filtercomments1">Du plus commenté au moins commenté</label>
+                      <input type="radio" id="filtercomments1" name="filtercommentslikedate" value="1">
+                      <input type="radio" id="filtercomments2" name="filtercommentslikedate" value="1">
+                      <label for="filtercomments2">Du moins commenté au plus commenté</label>
+
+                    </div>
+
+                    <br>
+
+                    <div id="TriDate">
+
+                      <p class="SectionTri">Par date de création :</p>
+                      <br>
+                      <label for="filterdate1">Du plus récent au moins récent</label>
+                      <input type="radio" id="filterdate1" name="filtercommentslikedate" value="1">
+                      <input type="radio" id="filterdate2" name="filtercommentslikedate" value="1">
+                      <label for="filterdate2">Du moins récent au plus récent</label>
+
+                    </div>
+
+                    <br>
+
+                  </div>
+
+                </fieldset><br />
+
+                <br />
+                <input type="submit" value="Appliquer" name="uploadfiltre" id="BoutonEnvoie" />
+                <br /><br /><br /><br /><br />
+              </form>
             </div>
           </div>
         </div>
@@ -492,8 +742,4 @@
   </div>
 </div>
 -->
-
-<!--
-<div id="TitreArticle">
-
 <script src="script.js"></script>

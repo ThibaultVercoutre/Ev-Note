@@ -332,6 +332,7 @@ let BcloseNotation = document.getElementById("closeNotation");
 let BcloseCreerArticle = document.getElementById("closeCreerArticle");
 let BcreerArt = document.getElementById("note");
 let Bcheckbox = document.getElementById("checkbox");
+let BfiltreArt = document.getElementById("filter_check");
 let Badressenote = null;
 let Bsearch = document.getElementById("div-search");
 let Bloupe = document.getElementById("la-loupe");
@@ -363,6 +364,7 @@ let SpartieMap = document.getElementById("section-map");
 let SpartieActu = document.getElementById("section-fil-actu");
 let Spages = document.getElementById("pages");
 let Savi = document.getElementById("section-avis");
+let SfiltreActu = document.getElementById("filtres_actu");
 let Scheckbox = document.querySelector("div:has(> .command)");
 
 /* Checkbox ==============================*/
@@ -885,18 +887,22 @@ function affiche(S, S2) {
     progressBar.style.width = "0px";
     progressBarClick.style.width = "0px";
     BcreerArt.style.display = "none";
+    SfiltreActu.style.display = "none";
     Bcheckbox.style.display = "block";
+    BfiltreArt.style.display = "none";
   }
   if (S == Sactu) {
     SpartieActu.style.opacity = 1;
     SpartieMap.style.opacity = 0;
     ScreerArt.style.display = "block";
+    SfiltreActu.style.display = "block";
     S.style.transform = "scaleX(1)";
     S2.style.transform = "scaleX(0)";
     progressBar.style.width = "8px";
     progressBarClick.style.width = "8px";
     BcreerArt.style.display = "block";
     Bcheckbox.style.display = "none";
+    BfiltreArt.style.display = "block";
   }
 }
 
@@ -925,6 +931,7 @@ Bmap.onclick = function() {
   })
   Snotation.style.transform = "translate(-100%,0px)";
   ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
+  SfiltreActu.style.transform = "translate(100%,0px) scaleY(0)";
   afficheBarre(Smap);
   affiche(Smap, Sactu);
 };
@@ -941,6 +948,14 @@ BcreerArt.onclick = function() {
   ScreerArt.style.transition = "0.3s";
   ScreerArt.style.transform = "translate(0px,0px) scaleY(1)";
   BcreerArt.style.display = "none";
+  BfiltreArt.style.display = "none";
+}
+
+BfiltreArt.onclick = function() {
+  SfiltreActu.style.transition = "0.3s";
+  SfiltreActu.style.transform = "translate(0px,0px) scaleY(1)";
+  BcreerArt.style.display = "none";
+  BfiltreArt.style.display = "none";
 }
 
 /* Si on clique sur la section checkbox */
@@ -969,6 +984,7 @@ BcloseNotation.onclick = function() {
 BcloseCreerArticle.onclick = function() {
   ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
   BcreerArt.style.display = "block";
+  BfiltreArt.style.display = "block";
 }
 
 /*
