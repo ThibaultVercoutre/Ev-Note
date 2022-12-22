@@ -464,7 +464,8 @@ div:has(> .command-villes){
 
 #note .carre .material-symbols-outlined, 
 #checkbox .carre .material-symbols-outlined, 
-#creer-avis .carre .material-symbols-outlined{
+#creer-avis .carre .material-symbols-outlined
+#filter_check .carre .material-symbols-outlined{
   transform: scale(1.2,1.2);
 }
 
@@ -1268,7 +1269,7 @@ nav .drop{
   100% { transform: scale(1,1) translateY(50px); }
 }
 
-#note, #checkbox{
+#note, #checkbox, #filter_check{
   transform: translate(0px, 50px);
   animation: fadeInAnimation2 ease 3s;
   animation-iteration-count: 1;
@@ -1482,7 +1483,7 @@ nav .drop{
 /*======================================================== SECTION PARAMETRES ===========================*/
 
 
-#section-map, #section-fil-actu, #section-notation, #section-creer-article{
+#section-map, #section-fil-actu, #section-notation, #section-creer-article, #filtres_actu{
   transition: 1s;
   border-radius: 20px;
   flex: 1;
@@ -1512,11 +1513,17 @@ nav .drop{
 #section-creer-article{
   display: none;
   transform-origin: top left;
-  position: relative;
   transform: translate(100%,0px);
   border-width: 4px;
   z-index: 5;
   backdrop-filter: blur(10px);
+  width: 100%;
+}
+
+#filtres_actu{
+  display: none;
+  transform: translate(100%,0px);
+  transform-origin: top left;
   width: 100%;
 }
 
@@ -2081,7 +2088,7 @@ main {
   border-radius: 16px;
 }
 
-fieldset{
+#section-creer-article fieldset{
   background-color: var(--couleur-principale-2);
   width: 740px;
   margin-left: auto;
@@ -2095,7 +2102,7 @@ fieldset{
   margin : auto;
 }
 
-fieldset input{
+#section-creer-article fieldset input:not([type='checkbox']){
   background-color: var(--couleur-principale-4);
   height: 20px;
   border-radius: 16px;
@@ -2122,6 +2129,76 @@ fieldset input{
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
+}
+
+/*=======================================================================================================*/
+/*========================================== PAGE APPLIQUE FILTRE =======================================*/
+
+#filtres_actu{
+  backdrop-filter: blur(10px);
+  width: 100%;
+  overflow-y: scroll;
+}
+
+#filtre-button {
+  border:none; /* Supprime la bordure */
+  color: black; /* Couleur du texte */
+  text-decoration: none; /* Supprime la surbrillance */
+  display: inline-block; /* Affiche le bouton sur une ligne */
+  font-size: 16px; /* Taille de police */
+  cursor: pointer; /* Change le curseur en main lorsque la souris passe sur le bouton */
+  border-radius: 6px; /* Transforme le bouton en rond en utilisant une bordure arrondie */
+  height: 36px;
+  width: 36px;
+  text-align: center;
+	padding: 8px 8px;
+	transition: 0.3s;
+	margin-right: 2px;
+	margin-left: 2px;
+  box-shadow: -1px 2px 2px grey;
+  
+}
+  
+#filtre-menu {
+  list-style-type: none; /* Supprimer les marqueurs de liste */
+  margin: 0; /* Mettre à zéro les marges */
+  margin-top: 5px;
+  padding: 0; /* Mettre à zéro les espacements intérieurs */
+  overflow: hidden; /* Cacher les éléments dépassant */
+}
+
+/* menu */
+
+#filtres_actu Legend{
+  text-align: center;
+
+}
+
+#BoutonEnvoie{
+  width: 200px;
+  display: block;
+  margin : auto;
+  margin-bottom: 20px;
+  background-color: var(--couleur-principale-2);
+  border-radius: 6px;
+}
+
+#filtres_actu fieldset{
+  background-color: var(--couleur-principale-2);
+  width: 740px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 16px;
+  border: 2px solid var(--couleur-principale-1);
+}
+
+#Ligne{
+  display: flex;
+  justify-content: space-around;
+}
+
+#Ligne div{
+  flex: 1;
 }
 
 /*=======================================================================================================*/

@@ -1,6 +1,6 @@
 <?php
 //require_once 'pages/php/login.php';
-$bdd = mysqli_connect("localhost", "utilisateur", "projetweb2022", "projet");// On inclut la connexion à la bdd
+$bdd = mysqli_connect("localhost", "root", "", "projet");// On inclut la connexion à la bdd
 session_start();
 if(($_SESSION['email']) !== ""){
   $email = $_SESSION['email'];

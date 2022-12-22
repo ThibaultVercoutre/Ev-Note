@@ -45,9 +45,9 @@ $clave2 = $_POST['clave2'];
 /*=======================================================================================================*/
 /*========================================= Recherche des commenteurs ===================================*/
 
-  $sql = "SELECT user.Prenom
-          FROM user
-          JOIN avis ON avis.id_user = user.id_user
+  $sql = "SELECT utilisateur.Prenom
+          FROM utilisateur
+          JOIN avis ON avis.id_user = utilisateur.id_user
           JOIN lieu ON lieu.id_lieu = avis.id_lieu
           WHERE lieu.Adresse = '".$clave2."'";
 
@@ -62,9 +62,9 @@ $clave2 = $_POST['clave2'];
 /*=======================================================================================================*/
 /*========================================= Verification du compte ======================================*/
 
-$sql = "SELECT user.TypeCompte
-        FROM user
-        JOIN avis ON avis.id_user = user.id_user
+$sql = "SELECT utilisateur.TypeCompte
+        FROM utilisateur
+        JOIN avis ON avis.id_user = utilisateur.id_user
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
         WHERE lieu.Adresse = '".$clave2."'";
 
@@ -80,9 +80,9 @@ $type = json_encode($resultats);
 /*========================================= Verification du compte ======================================*/
 
 $sql = "SELECT photo_user.chemin
-        FROM user
-        JOIN photo_user ON photo_user.id_image_user = user.id_image_user
-        JOIN avis ON avis.id_user = user.id_user
+        FROM utilisateur
+        JOIN photo_user ON photo_user.id_image_user = utilisateur.id_image_user
+        JOIN avis ON avis.id_user = utilisateur.id_user
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
         WHERE lieu.Adresse = '".$clave2."'";
 
@@ -98,8 +98,8 @@ $img_user = json_encode($resultats);
 /*========================================= N avis ======================================================*/
 
 $sql = "SELECT count(user.Prenom)
-        FROM user
-        JOIN avis ON avis.id_user = user.id_user
+        FROM utilisateur
+        JOIN avis ON avis.id_user = utilisateur.id_user
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
         WHERE lieu.Adresse = '".$clave2."'";
 
