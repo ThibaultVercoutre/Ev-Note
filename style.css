@@ -1523,7 +1523,7 @@ nav .drop{
 #filtres_actu{
   display: none;
   transform: translate(100%,0px);
-  transform-origin: top left;
+  transform-origin: top right;
   width: 100%;
 }
 
@@ -2012,6 +2012,8 @@ main {
 }
 #section-fil-actu .article-header-info {
   font-weight:bold;
+  flex: 1;
+
 }
 #section-fil-actu .article-header-info span {
   color:#657786;
@@ -2144,7 +2146,7 @@ main {
   border:none; /* Supprime la bordure */
   color: black; /* Couleur du texte */
   text-decoration: none; /* Supprime la surbrillance */
-  display: inline-block; /* Affiche le bouton sur une ligne */
+  display: block; /* Affiche le bouton sur une ligne */
   font-size: 16px; /* Taille de police */
   cursor: pointer; /* Change le curseur en main lorsque la souris passe sur le bouton */
   border-radius: 6px; /* Transforme le bouton en rond en utilisant une bordure arrondie */
@@ -2156,7 +2158,7 @@ main {
 	margin-right: 2px;
 	margin-left: 2px;
   box-shadow: -1px 2px 2px grey;
-  
+  float: right;
 }
   
 #filtre-menu {

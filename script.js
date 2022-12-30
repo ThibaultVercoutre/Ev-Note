@@ -330,6 +330,7 @@ let Bmap = document.getElementById("map");
 let Bactu = document.getElementById("actu");
 let BcloseNotation = document.getElementById("closeNotation");
 let BcloseCreerArticle = document.getElementById("closeCreerArticle");
+let BcloseFiltre = document.getElementById("filtre-button");
 let BcreerArt = document.getElementById("note");
 let Bcheckbox = document.getElementById("checkbox");
 let BfiltreArt = document.getElementById("filter_check");
@@ -949,13 +950,26 @@ BcreerArt.onclick = function() {
   ScreerArt.style.transform = "translate(0px,0px) scaleY(1)";
   BcreerArt.style.display = "none";
   BfiltreArt.style.display = "none";
+  Bmap.style.display = "none";
+  Bactu.style.display = "none";
 }
 
 BfiltreArt.onclick = function() {
   SfiltreActu.style.transition = "0.3s";
-  SfiltreActu.style.transform = "translate(0px,0px) scaleY(1)";
+  SfiltreActu.style.transform = "translate(0px,0px) scale(1)";
   BcreerArt.style.display = "none";
   BfiltreArt.style.display = "none";
+  Bmap.style.display = "none";
+  Bactu.style.display = "none";
+}
+
+BcloseFiltre.onclick = function() {
+  SfiltreActu.style.transition = "0.3s";
+  SfiltreActu.style.transform = "translate(100px,0px) scale(0)";
+  BcreerArt.style.display = "block";
+  BfiltreArt.style.display = "block";
+  Bmap.style.display = "block";
+  Bactu.style.display = "block";
 }
 
 /* Si on clique sur la section checkbox */
@@ -979,12 +993,16 @@ BcloseNotation.onclick = function() {
   imageElement.src = "";
   Snotation.style.transform = "translate(-100%,0px)";
   Bcheckbox.style.display = "block";
+  Bmap.style.display = "block";
+  Bactu.style.display = "block";
 }
 
 BcloseCreerArticle.onclick = function() {
   ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
   BcreerArt.style.display = "block";
   BfiltreArt.style.display = "block";
+  Bmap.style.display = "block";
+  Bactu.style.display = "block";
 }
 
 /*
@@ -1212,6 +1230,8 @@ function boutonavis(e) {
       Snotation.style.transition = "0.3s";
       Bcheckbox.style.display = "none";
       Snotation.style.transform = "translate(0px,0px)";
+      Bmap.style.display = "none";
+      Bactu.style.display = "none";
     }
   }
 }
@@ -1400,4 +1420,364 @@ function showSlides(n) {
 
 
 /*=======================================================================================================*/
-/*========================================= Génération avis =============================================*/
+/*========================================= Génération fil actu =========================================*/
+
+function createFilActu(text){
+  SartActu = document.getElementById("articles");
+  Sdot = document.getElementById("dot_points");
+
+  /* creation n avis */
+  var params = new URLSearchParams();
+  if(text == ''){
+    params.append('clave1', '0');
+  }else{
+    params.append('clave1', '1');
+  }
+  params.append('clave2', text);
+
+  fetch('fonction_php_FA.php', {
+    method: 'POST',
+    body: params
+  })
+  .then(response => response.json())
+  .then(data => {
+    SartActu.innerHTML = '';
+    Sdot.innerHTML = '';
+    for (var i = 0; i < Number(data[0]); i++) {
+      Sdot.innerHTML += '<span class="dot" onclick="currentSlide(' + Number(i + 1) + ')"></span>'
+      SartActu.innerHTML += '<div class="mySlides fade"><div id="Article">'
+                        + '<div class ="article-header">'
+                          + '<img src="" class="avator">'
+                          + '<div class="article-header-info">'
+                            + '<p class="article_auteur">' + i +'</p>'
+                            + '<span class="article_date">date de creation</span>'
+                            + '<p class="TitreArticle"><br/><b><u>Nom Event</u></b></p>'
+                            + '<p class="AnnonceArticle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti sunt dolorem est perspiciatis, odit voluptate sint neque delectus officiis explicabo distinctio? Ex in cumque nihil beatae. In tempore animi nam!</p>'
+                          + '</div>'
+                        + '</div>'
+                        + '<div class="article-img-wrap">'
+                          + '<img src="img_event\\photo 1.png" class="article-img">'
+                        + '</div>'
+                          
+                        + '<div class="article-info-counts">'
+                          + '<div class="comments">'
+                            + '<svg class="feather feather-message-circle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>'
+                            + '<div class="comment-count">33</div>'
+                          + '</div>'
+                          + '<div class="likes">'
+                            + '<svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>'
+                            + '<div class="likes-count">Pouce Bleu</div>'
+                          + '</div>'
+                          + '<div class="retweets">'
+                            + '<svg class="feather feather-repeat sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>'
+                            + '<div class="report-count">Pouce Rouge</div>'
+                          + '</div>'
+                        + '</div>'
+                      + '</div></div>';
+    }
+    SartActu.innerHTML += '<a class="prev" onclick="plusSlides(-1)">&#10094;</a>'
+                        + '<a class="next" onclick="plusSlides(1)">&#10095;</a>';
+  });
+
+  sleep(100);
+
+  
+  
+  /* Nom personnes post */
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '2');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sprenom = document.querySelectorAll(".article_auteur");
+      for(var i = 0; i < data.length; i++){
+        Sprenom[i].textContent = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '3');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sprenom = document.querySelectorAll(".article_auteur");
+      for(var i = 0; i < data.length; i++){
+        Sprenom[i].textContent = data[i];
+      }
+    });
+  }
+
+  /* Date post */
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '4');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sdate = document.querySelectorAll(".article_date");
+      for(var i = 0; i < data.length; i++){
+        Sdate[i].textContent = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '5');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sdate = document.querySelectorAll(".article_date");
+      for(var i = 0; i < data.length; i++){
+        Sdate[i].textContent = data[i];
+      }
+    });
+  }
+
+  /* PP user */
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '6');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Spp = document.querySelectorAll(".avator");
+      for(var i = 0; i < data.length; i++){
+        Spp[i].src = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '7');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Spp = document.querySelectorAll(".avator");
+      for(var i = 0; i < data.length; i++){
+        Spp[i].src = data[i];
+      }
+    });
+  }
+
+  /* Titre post */
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '8');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Stitre = document.querySelectorAll(".TitreArticle");
+      for(var i = 0; i < data.length; i++){
+        Stitre[i].textContent = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '9');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Stitre = document.querySelectorAll(".TitreArticle");
+      for(var i = 0; i < data.length; i++){
+        Stitre[i].textContent = data[i];
+      }
+    });
+  }
+
+  /* Annonce post */
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '10');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sannonce = document.querySelectorAll(".AnnonceArticle");
+      for(var i = 0; i < data.length; i++){
+        Sannonce[i].textContent = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '11');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sannonce = document.querySelectorAll(".AnnonceArticle");
+      for(var i = 0; i < data.length; i++){
+        Sannonce[i].textContent = data[i];
+      }
+    });
+  }
+
+  /* Photo post */
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '12');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sannonce = document.querySelectorAll(".article-img");
+      for(var i = 0; i < data.length; i++){
+        Sannonce[i].src = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '13');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sannonce = document.querySelectorAll(".article-img");
+      for(var i = 0; i < data.length; i++){
+        Sannonce[i].src = data[i];
+      }
+    });
+  }
+
+  /* Pouce Bleu post */
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '14');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sbleu = document.querySelectorAll(".likes-count");
+      for(var i = 0; i < data.length; i++){
+        Sbleu[i].textContent = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '15');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sbleu = document.querySelectorAll(".likes-count");
+      for(var i = 0; i < data.length; i++){
+        Sbleu[i].textContent = data[i];
+      }
+    });
+  }
+
+  /* Report post */
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '16');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sreport = document.querySelectorAll(".report-count");
+      for(var i = 0; i < data.length; i++){
+        Sreport[i].textContent = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '17');
+    params.append('clave2', text);
+
+    fetch('fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Sreport = document.querySelectorAll(".report-count");
+      for(var i = 0; i < data.length; i++){
+        Sreport[i].textContent = data[i];
+      }
+    });
+  }
+}
+
+createFilActu('');
+
+function addFiltres(){
+  var inputs = document.querySelectorAll("input[name='filter']:checked");
+  var text_input = '';
+  if(inputs.length != 0){
+    text_input += "'" + inputs[0].nextSibling.nextSibling.textContent + "'";
+    for(var i = 1; i < inputs.length; i++){
+      text_input += ", '" + inputs[i].nextSibling.nextSibling.textContent + "'";
+    }
+  }
+
+  createFilActu(text_input);
+  showSlides(1);
+}
+
+document.getElementById("BoutonEnvoieFiltres").addEventListener("click", addFiltres, false);
