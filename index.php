@@ -361,31 +361,22 @@
 <!-- -------------------------------------------------------------------------------------------------------------------- Page actu -->
           <div class="page child1" id="section-fil-actu">
             <main>
-              <div class="slideshow-container">
-              <?php 
-                if($cpt_row==0){
-                  echo "AUCUN POST";
-                }
-                mysqli_data_seek($table_inner, 0);
-                for($i=0; $i<$cpt_row;$i++){
-                  while ($test = mysqli_fetch_assoc($table_inner)){
-                  ?>
-                  <div class="mySlides fade">
+              <div class="slideshow-container" id="articles">
+                <div class="mySlides fade">
                   <div id="Article">
                     <div class ="article-header">
-                      <img src="<?php echo $test['chemin'];?>" class="avator">
+                      <img src="" class="avator">
                         <!--<div class="container" id="ArticleSansDesc">-->
                       <div class="article-header-info">
-                        <?php echo $test['Prenom']." ".$test['Nom']?>
-                    <span> <?php echo $test['DateCreation'] ; ?> </span>
-                        
-                        <p class="TitreArticle"><br/><b><u><?php echo $test['NomEvent'];?></u></b></p>
-                        <p> <?php echo $test['Annonce'] ; ?></p>
+                        Prenom
+                        <span>date de creation</span>
+                        <p class="TitreArticle"><br/><b><u>Nom Event</u></b></p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti sunt dolorem est perspiciatis, odit voluptate sint neque delectus officiis explicabo distinctio? Ex in cumque nihil beatae. In tempore animi nam!</p>
                       </div>
                     </div>
                     
                     <div class="article-img-wrap">
-                        <img src="<?php echo $test['Chemin'];?>" class="article-img">
+                        <img src="img_event\photo 1.png" class="article-img">
                     </div>
                     
                     <div class="article-info-counts">
@@ -395,19 +386,15 @@
                       </div>
                       <div class="likes">
                         <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                        <div class="likes-count"><?php echo $test['CptPouceBleu'] ;?></div>
+                        <div class="likes-count">Pouce Bleu</div>
                       </div>
                       <div class="retweets">
                         <svg class="feather feather-repeat sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
-                        <div class="retweet-count"><?php echo $test['CptPouceRouge'] ;?></div>
+                        <div class="retweet-count">Pouce Rouge</div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <?php
-                    }
-                  }
-              ?>
                 <!-- Next and previous buttons -->
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -416,14 +403,10 @@
             <br>
 
               <!-- The dots/circles -->
-              <div style="text-align:center">
-              <?php 
-              for($i=1; $i<$cpt_row+1;$i++){ 
-                ?>
-                <span class="dot" onclick="currentSlide(<?php echo $i ;?>)"></span>
+              <div style="text-align:center" id="dot_points">
+                <span class="dot" onclick="currentSlide(1)"></span>
                 <!--<span class="dot" onclick="currentSlide(2)"></span>
                 <span class="dot" onclick="currentSlide(3)"></span>-->
-                <?php } ?>
               </div>
             </main>
           </div>
@@ -554,40 +537,40 @@
           </div>
 <!-- --------------------------------------------------------------------------------------------------------- Page applique filtre -->
           <div class="page child1 child2" id="filtres_actu">
-            <button id="filtre-button"><span class="material-symbols-outlined">filter_alt</span></button>
+            <button id="filtre-button"><span class="material-symbols-outlined">close</span></button>
             <div class="carre"></div>
             <div id="filtre-menu" style="">
               <p><u>Bienvenue dans l'interface de tri des postes</u></p>
-              <form method="post" action="./pages/php/donnees_formulaire.php">
+              <div method="post" action="./pages/php/donnees_formulaire.php">
                 <fieldset>
                   <legend>Tri par Thème</legend>
                   <p id="Accroche"><u>Veuillez selectionner les thèmes que vous désirez afficher</u> :</p>
                   <div id="ListeTheme">
                     <div id="Ligne">
                       <div>
-                        <input type="checkbox" id="filter1" name="filter1" value="1">
+                        <input type="checkbox" id="filter1" name="filter" value="1">
                         <label for="filter1">Jeux vidéos</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="filter2" name="filter2" value="1">
+                        <input type="checkbox" id="filter2" name="filter" value="1">
                         <label for="filter2">Sport</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="filter3" name="filter3" value="1">
+                        <input type="checkbox" id="filter3" name="filter" value="1">
                         <label for="filter3">Littérature</label>
                       </div>
                     </div>
                     <div id="Ligne">
                       <div>
-                        <input type="checkbox" id="filter4" name="filter4" value="1">
+                        <input type="checkbox" id="filter4" name="filter" value="1">
                         <label for="filter4">Culture</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="filter5" name="filter5" value="1">
+                        <input type="checkbox" id="filter5" name="filter" value="1">
                         <label for="filter5">Peinture</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="filter6" name="filter6" value="1">
+                        <input type="checkbox" id="filter6" name="filter" value="1">
                         <label for="filter6">Exposition</label>
                       </div>
                     </div>
@@ -595,17 +578,17 @@
                     <div id="Ligne">
 
                       <div>
-                        <input type="checkbox" id="filter7" name="filter7" value="1">
+                        <input type="checkbox" id="filter7" name="filter" value="1">
                         <label for="filter7">Soirée</label>
                       </div>
 
                       <div>
-                        <input type="checkbox" id="filter8" name="filter8" value="1">
+                        <input type="checkbox" id="filter8" name="filter" value="1">
                         <label for="filter8">Bar</label>
                       </div>
 
                       <div>
-                        <input type="checkbox" id="filter9" name="filter9" value="1">
+                        <input type="checkbox" id="filter9" name="filter" value="1">
                         <label for="filter9">Politique</label>
                       </div>
 
@@ -685,9 +668,9 @@
                 </fieldset><br />
 
                 <br />
-                <input type="submit" value="Appliquer" name="uploadfiltre" id="BoutonEnvoie" />
+                <button value="Appliquer" name="uploadfiltre" id="BoutonEnvoieFiltres" >Appliquer</button>
                 <br /><br /><br /><br /><br />
-              </form>
+              </div>
             </div>
           </div>
         </div>
