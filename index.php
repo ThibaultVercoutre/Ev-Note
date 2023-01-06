@@ -344,13 +344,6 @@
 <!-- --------------------------------------------------------------------------------------------------------------------- Page GPS -->
 
           <div class="page child1" id="section-gps">
-            <div id="title-gps">
-              <h3>Voulez-vous autoriser Ev'Note à accéder à votre localisation ?</h3>
-              <div id="boutons-popup">
-                <div class="button anim-button" id="oui-gps">Oui</div>
-                <div class="button anim-button" id="non-gps">Non</div>
-              </div>
-            </div>
           </div>
           <div class="page child1" id="itineraire-gps">
             <div>
@@ -414,8 +407,8 @@
                   </div>
                 </div>
                 <!-- Next and previous buttons -->
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                <a id ="bprev" class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a id="bnext" class="next" onclick="plusSlides(1)">&#10095;</a>
               </div>
               
             <br>

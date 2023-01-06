@@ -352,9 +352,7 @@ let Tville = document.getElementById("ville-name-notation");
 
 /* GPS ===================================*/
 let Bgps = document.getElementById("itineraire");
-let Bouigps = document.getElementById("oui-gps");
-let Bnongps = document.getElementById("non-gps");
-let Stitlegps = document.getElementById("title-gps");
+let Bitineraire = document.getElementById("go-itineraire");
 let Sitineraire = document.getElementById("itineraire-gps");
 
 /* Sections ==============================*/
@@ -789,22 +787,8 @@ Bscroll.onclick = function() {
 /*=======================================================================================================*/
 /*============================================ GPS ======================================================*/
 
-Bouigps.onclick = function() {
-  Stitlegps.style.transition = "0.3s";
-  Stitlegps.style.transform = "translate(-100%,0px)";
-  Sitineraire.style.transition = "0.3s";
-  Sitineraire.style.transform = "translate(0px,0px)";
-  var localisation = "Pas d'accès encore";
-  document.getElementById("input-depart-gps").value = localisation;
-  document.getElementById("input-arrivee-gps").value = texte;
-}
-
-Bnongps.onclick = function() {
-  Stitlegps.style.transition = "0.3s";
-  Stitlegps.style.transform = "translate(-100%,0px)";
-  Sitineraire.style.transition = "0.3s";
-  Sitineraire.style.transform = "translate(0px,0px)";
-  document.getElementById("input-arrivee-gps").value = texte;
+Bitineraire.onclick = function() {
+  
 }
 
 /*=======================================================================================================*/
@@ -1466,10 +1450,9 @@ function boutongps(e) {
       ContentPopup.innerHTML = '<h3>Voulez-vous autoriser Ev\'Note à accéder à votre localisation ?</h3><div id="boutons-popup"><div class="button anim-button" id="oui-gps">Oui</div><div class="button anim-button" id="non-gps">Non</div></div></br>';*/
       Sgps.style.transition = "0.3s";
       Sgps.style.transform = "translate(0px,0px)";
-      Stitlegps.style.transition = "0.3s";
-      Stitlegps.style.transform = "translate(0,0px)";
       Sitineraire.style.transition = "0.3s";
-      Sitineraire.style.transform = "translate(-100%,0px)";
+      Sitineraire.style.transform = "translate(0,0px)";
+      document.getElementById("input-arrivee-gps").value = texte;
     }
   }
 }
@@ -1482,8 +1465,6 @@ mymap.on('click', function(e) {
     Snotation.style.transform = "translate(-100%,0px)";
     Sgps.style.transition = "0.3s";
     Sgps.style.transform = "translate(-100%,0px)";
-    Stitlegps.style.transition = "0.3s";
-    Stitlegps.style.transform = "translate(-100%,0px)";
     Sitineraire.style.transition = "0.3s";
     Sitineraire.style.transform = "translate(-100%,0px)";
     // On récupère les coordonnées du clic
@@ -1699,6 +1680,20 @@ showSlides(slideIndex);
 // Next/previous controls
 function plusSlides(n) {
   showSlides(slideIndex += n);
+  var params = new URLSearchParams();
+  params.append('clave1', '18');
+  params.append('clave2', slideIndex);
+  console.log(slideIndex);
+  fetch('fonction_php_FA.php', {
+    method: 'POST',
+    body: params
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data[0]);
+    Fond = document.getElementById("articles");
+    Fond.style.backgroundImage = "url(" + data[0] + ")";
+  });
 }
 
 // Thumbnail image controls

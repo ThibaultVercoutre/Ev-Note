@@ -215,6 +215,21 @@ $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 $Photo = json_encode($resultats);
 
 /*=======================================================================================================*/
+/*========================================= Fond Post ===================================================*/
+
+$sql = "SELECT image_event.Chemin
+        FROM image_event
+        JOIN form_fil ON form_fil.id_image_event = image_event.id_image_event AND image_event.id_image_event = ($clave2)";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$Fond = json_encode($resultats);
+
+/*=======================================================================================================*/
 /*========================================= Like Post Filtre ============================================*/
 
 $sql = "SELECT CptPouceBleu
@@ -327,6 +342,10 @@ switch ($clave1) {
     case '17':
         echo $Report;
         break;
+    case '18':
+        echo $Fond;
+        break;    
 }
+
 
 ?>
