@@ -933,6 +933,7 @@ Bmap.onclick = function() {
 
 /* Si on clique sur le bouton actu */
 Bactu.onclick = function() {
+  currentSlide(1);
   Snotation.style.transform = "translate(-100%,0px)";
   afficheBarre(Sactu);
   affiche(Sactu, Smap);
@@ -987,28 +988,78 @@ Scheckbox.style.display = "block";
   }
 }
 
+function addavis(id){
+  let Savis = document.getElementById('section-avis');
+  Savis.innerHTML += '<div class="avi" id="avis_' + id + '">'
+                          + '<div class="compte-note">'
+                            + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
+                            + '<div class="nom"></div>'
+                            + '<span class="material-symbols-outlined verified"></span>'
+                            + '<div class="barres-notations-user">'
+                            + '</div>'
+                          + '</div>'
+                          + '<div class="text-avi"></div>'
+                          + '<div class="actions">'
+                            + '<span class="material-symbols-outlined up">thumb_up</span><div class="b_up"></div>'
+                            + '<span class="material-symbols-outlined down">thumb_down</span><div class="b_down"></div>'
+                            + '<span class="material-symbols-outlined report">priority_high</span><div class="b_report"></div>'
+                          + '</div>'
+                        + '</div>';
+}
+
 BenvoyerAvis.onclick = function(){
+
+  var user = document.getElementById('user').getAttribute("data");
+
   let element_champs_rep = document.querySelectorAll(".champ_rep");
   let lieu = document.getElementById("batiment-name").textContent;
-  if(element_champs_rep[0].value.length == 0 || element_champs_rep[1].value.length == 0 || element_champs_rep[0].value < 0 || element_champs_rep[0].value > 5){
+  if(element_champs_rep[0].value.length == 0 
+    || element_champs_rep[1].value.length == 0 
+    || element_champs_rep[0].value < 0 
+    || element_champs_rep[0].value > 5){
     document.getElementById("message_envoie_avis").textContent = "Recommencez, valeurs non conformes";
+  }else if(user == '0'){
+    document.getElementById("message_envoie_avis").textContent = "Connectez-vous avant de creer un avis";
   }else{
-    document.getElementById("message_envoie_avis").textContent = "";
+    
+    var deja_poster = '';
 
     var params = new URLSearchParams();
-    params.append('etoile', element_champs_rep[0].value);
-    params.append('avis', element_champs_rep[1].value.replace("'", "\'"));
-    params.append('lieu', lieu);
+    params.append('clave1', '14');
+    params.append('clave2', user);
+    params.append('clave3', lieu);
 
-    element_champs_rep[0].value = '';
-    element_champs_rep[1].value = '';
-
-    fetch('fonctions_envoie_avis.php', {
+    fetch('fonction_php.php', {
       method: 'POST',
       body: params
-    }).then(response => response.json())
+    })
+    .then(response => response.json())
     .then(result => {
-      console.log(lieu, result);
+      deja_poster = result[0];
+
+      if(deja_poster != '0'){
+        document.getElementById("message_envoie_avis").textContent = "Vous-avez déjà posté un avis";
+      }else{
+        document.getElementById("message_envoie_avis").textContent = "";
+
+        var params = new URLSearchParams();
+        params.append('etoile', element_champs_rep[0].value);
+        params.append('avis', element_champs_rep[1].value.replace("'", "\'"));
+        params.append('lieu', lieu);
+
+        element_champs_rep[0].value = '';
+        element_champs_rep[1].value = '';
+
+        fetch('fonctions_envoie_avis.php', {
+          method: 'POST',
+          body: params
+        }).then(response => response.json())
+        .then(data => {
+          addavis(data[0]);
+          modifAvis();
+          console.log(data);
+        });
+      }
     });
   }
 }
@@ -1115,6 +1166,7 @@ function addMarker(pos, nom, code) {
     var params = new URLSearchParams();
     params.append('clave1', '6');
     params.append('clave2', adresse);
+    params.append('clave3', '8');
 
     fetch('fonction_php.php', {
       method: 'POST',
@@ -1122,8 +1174,8 @@ function addMarker(pos, nom, code) {
     })
     .then(response => response.json())
     .then(data => {
-      for (var i = 0; i < Number(data[0]); i++) {
-        Savis.innerHTML += '<div class="avi">'
+      for (var i = 0; i < data.length; i++) {
+        Savis.innerHTML += '<div class="avi" id="avis_' + data[i] + '">'
                           + '<div class="compte-note">'
                             + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
                             + '<div class="nom"></div>'
@@ -1145,16 +1197,22 @@ function addMarker(pos, nom, code) {
 
 function modifAvis(){
     
-    adresse = null;
+  console.log(document.getElementById('user'));
+    var user = document.getElementById('user').getAttribute("data");
+    var fichier = 'fonction_php.php';
+
+    var adresse = null;
     if(document.getElementById("adresse-note") != null){
-      var adresse = document.getElementById("adresse-note").textContent;
+      adresse = document.getElementById("adresse-note").textContent;
     }
 
     /* Image Lieu */
     var params = new URLSearchParams();
     params.append('clave1', '0');
     params.append('clave2', adresse);
-    fetch('fonction_php.php', {
+    params.append('clave3', user);
+
+    fetch(fichier, {
         method: 'POST',
         body: params
       })
@@ -1170,8 +1228,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '5');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1187,8 +1246,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '1');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1204,8 +1264,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '2');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1224,8 +1285,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '4');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1241,8 +1303,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '7');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1258,8 +1321,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '8');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1275,8 +1339,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '9');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1292,8 +1357,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '10');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1307,6 +1373,69 @@ function modifAvis(){
       }
       let note_lieu = document.getElementsByClassName('barres-notations');
       note_lieu[0].textContent = Number(Math.round(moy / data.length * 100) / 100) + ' / 5';
+    });
+
+    /* Test avis like bool */
+    var params = new URLSearchParams();
+    params.append('clave1', '11');
+    params.append('clave2', adresse);
+    params.append('clave3', user);
+
+    fetch(fichier, {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      for(var i = 0; i < data.length; i++){
+        var pouceBleu = document.querySelector('#avis_' + data[i] + ' .actions .up');
+        action_avis(pouceBleu, '1');
+
+        var NbPouceBleu = document.querySelector('#avis_' + data[i] + ' .actions .b_up');
+        NbPouceBleu.textContent = Number(NbPouceBleu.textContent - 1);
+      }
+    });
+
+    /* Test avis dislike bool */
+    var params = new URLSearchParams();
+    params.append('clave1', '12');
+    params.append('clave2', adresse);
+    params.append('clave3', user);
+
+    fetch(fichier, {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      for(var i = 0; i < data.length; i++){
+        var pouceRouge = document.querySelector('#avis_' + data[i] + ' .actions .down');
+        action_avis(pouceRouge, '1');
+
+        var NbPouceRouge = document.querySelector('#avis_' + data[i] + ' .actions .b_down');
+        NbPouceRouge.textContent = Number(NbPouceRouge.textContent - 1);
+      }
+    });
+
+    /* Test report dislike bool */
+    var params = new URLSearchParams();
+    params.append('clave1', '13');
+    params.append('clave2', adresse);
+    params.append('clave3', user);
+
+    fetch(fichier, {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      for(var i = 0; i < data.length; i++){
+        var report = document.querySelector('#avis_' + data[i] + ' .actions .report');
+        action_avis(report, '1');
+
+        var Nbreport = document.querySelector('#avis_' + data[i] + ' .actions .b_report');
+        Nbreport.textContent = Number(Nbreport.textContent - 1);
+      }
     });
 }
 
@@ -1438,7 +1567,31 @@ for(var i = 0; i < Bvilles.length; i++){
 /*=======================================================================================================*/
 /*================================== Changement couleur like / dislike / report =========================*/
 
-function action_avis(e) {
+function addActionBdd(avis, nb, type, bool){
+    
+    var user = document.getElementById('user').getAttribute("data");
+    fichier = 'maj_like_bdd';
+
+    /* Maj like */
+    var params = new URLSearchParams();
+    params.append('nombre', nb);
+    params.append('avis', avis);
+    params.append('type', type);
+    params.append('user', user);
+    params.append('bool', bool);
+
+    console.log(user, avis);
+
+    fetch(fichier, {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(type + " = " + data);
+    });
+}
+function action_avis(e, save) {
 
   // like dislike report
   let Bup = document.querySelectorAll(".up");
@@ -1449,48 +1602,92 @@ function action_avis(e) {
   let Cdown = document.querySelectorAll(".b_down");
   let Creport = document.querySelectorAll(".b_report");
 
+  let Davis = document.getElementsByClassName("avi");
+
   for(var i = 0; i < Bup.length; i++) {
-    if(e.target == Bup[i]) {
+    
+    var avis = '';
+    for(var j = 5; j < Davis[i].getAttribute("id").length; j++) {
+      avis += Davis[i].getAttribute("id")[j];
+    }
+
+    if(e == Bup[i]) {
       if(Bup[i].style.color == "green"){
         Bup[i].style.color = "black";
         Cup[i].textContent = Number(Cup[i].textContent) - 1;
+        if(save == '0'){
+          addActionBdd(avis, Cup[i].textContent, 'CptPouceBleu', 0);
+        }
       }else{
         Bup[i].style.color = "green";
         Cup[i].textContent = Number(Cup[i].textContent) + 1;
+        if(save == '0'){
+          addActionBdd(avis, Cup[i].textContent, 'CptPouceBleu', 1);
+        }
       }
 
       if(Bdown[i].style.color == "red"){
         Bdown[i].style.color = "black";
         Cdown[i].textContent = Number(Cdown[i].textContent) - 1;
+        if(save == '0'){
+          addActionBdd(avis, Cdown[i].textContent, 'CptPouceRouge', 0);
+        }
       }
+      
+      
+
     }
-    if(e.target == Bdown[i]) {
+    if(e == Bdown[i]) {
       if(Bdown[i].style.color == "red"){
         Bdown[i].style.color = "black";
         Cdown[i].textContent = Number(Cdown[i].textContent) - 1;
+        if(save == '0'){
+          addActionBdd(avis, Cdown[i].textContent, 'CptPouceRouge', 0);
+        }
       }else{
         Bdown[i].style.color = "red";
         Cdown[i].textContent = Number(Cdown[i].textContent) + 1;
+        if(save == '0'){
+          addActionBdd(avis, Cdown[i].textContent, 'CptPouceRouge', 1);
+        }
       }
 
       if(Bup[i].style.color == "green"){
         Bup[i].style.color = "black";
         Cup[i].textContent = Number(Cup[i].textContent) - 1;
+        if(save == '0'){
+          addActionBdd(avis, Cup[i].textContent, 'CptPouceBleu', 0);
+        }
       }
+
     }
-    if(e.target == Breport[i]) {
+    if(e == Breport[i]) {
       if(Breport[i].style.color == "orange"){
         Breport[i].style.color = "black";
         Creport[i].textContent = Number(Creport[i].textContent) - 1;
+        if(save == '0'){
+          addActionBdd(avis, Creport[i].textContent, 'CptReport', 0);
+        }
       }else{
         Breport[i].style.color = "orange";
         Creport[i].textContent = Number(Creport[i].textContent) + 1;
+        if(save == '0'){
+          addActionBdd(avis, Creport[i].textContent, 'CptReport', 1);
+        }
       }
+
     }
   }
 }
 
-Savi.addEventListener('click', action_avis, false);
+Savi.onclick = function(e){
+  var user = document.getElementById('user').getAttribute("data");
+  if(user != "0"){
+    action_avis(e.target, '0');
+  }else{
+    alert("Vous devez être connecté pour pouvoir faire ça");
+  }
+}
 
 
 /*=======================================================================================================*/
@@ -1884,9 +2081,21 @@ function addFiltres(){
   }
 
   createFilActu(text_input);
-  currentSlide(1);
 }
 
 addFiltres();
 
 document.getElementById("BoutonEnvoieFiltres").addEventListener("click", addFiltres, false);
+
+function griserBouttons(){
+
+  var user = document.getElementById('user').getAttribute("data");
+
+  if(user == "0"){
+    document.getElementById("creer-avis").style.display = 'none';
+  }else{
+    document.getElementById("creer-avis").style.display = 'block';
+  }
+}
+
+griserBouttons();

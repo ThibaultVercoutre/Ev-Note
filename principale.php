@@ -92,7 +92,7 @@ if(($_SESSION['email']) !== ""){
     </div>
     <div id="compte"><ul id="menu-demo2"> 
           <li class="menu-deroulant">
-            <div id="menu"><h2 id="connect"><a href="#"><?php echo $donnees['Prenom']." ".$donnees['Nom'] ; ?>
+            <div id="menu"><h2 id="connect"><a href="#" id="user" data="<?php echo $donnees['id_user']; ?>"><?php echo $donnees['Prenom']." ".$donnees['Nom'] ; ?>
             <div id="logo-connexion">
           <span class="material-symbols-outlined">account_circle</span>
           </div></a></div>
