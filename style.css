@@ -1222,7 +1222,11 @@ nav, #interact{
 }
 
 nav{
-	justify-content: center;
+	justify-content: left;
+}
+
+#la-page-actu {
+  margin-left: 120px;
 }
 
 #interact{
@@ -1253,6 +1257,11 @@ nav .drop{
   animation: fadeInAnimation ease 3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+}
+
+#map {
+  margin-left: 100px;
+  margin-right: 19px;
 }
   
 @keyframes fadeInAnimation {
@@ -1940,12 +1949,12 @@ main {
 
 /* Slideshow container */
 #section-fil-actu .slideshow-container {
-  background-color: whitesmoke;
-  width: 1000px;
+  background-color: #222;
+  width: 700px;
   position: relative;
   margin: auto;
   border: solid;
-  height: 100%;
+  height: 500px;
 }
 
 /* Hide the images by default */
@@ -2036,7 +2045,7 @@ main {
 }
 
 #section-fil-actu img {
-  max-width:100%;
+  object-fit: cover;
 }
 
 #section-fil-actu .avator {
@@ -2050,15 +2059,17 @@ main {
 #section-fil-actu #Article {
   max-width:490px;
   height: 100%;
+  max-height: 380px;
   background: #5FAEBE;
   margin: 0 auto;
   margin-top: 20px;
-  margin-bottom: 20px;
   border-radius:3px;
-  padding: 30px;
+  padding: 30px 30px 70px 30px;
   border-bottom: 1px solid #e6ecf0;
   border-top: 1px solid #e6ecf0;
 }
+
+
 
 /*
 #section-fil-actu #Article {
