@@ -90,7 +90,17 @@ if(($_SESSION['email']) !== ""){
       <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
       <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     </div>
-    <div id="compte"><ul id="menu-demo2"> 
+    <div id="compte_connect">
+      <div id="actions_compte">
+        <div id="monprofil"><a href="pages/php/monprofil.php"><span class="material-symbols-outlined button drop">account_circle</span></a></div>
+        <div id="deconnexion"><a  href="pages/php/user_deconnexion.php"><span class="material-symbols-outlined button drop">power_settings_new</span></a></div>
+      </div>
+      <div id="boutton_compte" class="button drop" etat="0">
+        <div id="user" data="<?php echo $donnees['id_user']; ?>"><?php echo $donnees['Prenom']?></div>
+        <div><?php echo $donnees['Nom']?></div>
+      </div>
+    </div>
+<!--<ul id="menu-demo2"> 
           <li class="menu-deroulant">
             <div id="menu"><h2 id="connect"><a href="#" id="user" data="<?php echo $donnees['id_user']; ?>"><?php echo $donnees['Prenom']." ".$donnees['Nom'] ; ?>
             <div id="logo-connexion">
@@ -101,8 +111,8 @@ if(($_SESSION['email']) !== ""){
               <li><a  href="pages/php/user_deconnexion.php">Déconnexion</a></li></h2>
             </ul>
           </li>
-        </ul>
-    </div>
+        </ul> -->
+
   </header>
 
   <div id="general">

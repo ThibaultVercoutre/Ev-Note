@@ -69,6 +69,22 @@ command.addTo(mymap);
 let texte = "";
 
 /*=======================================================================================================*/
+/*===================================== Menu deroulant ==================================================*/
+
+if(document.getElementById("boutton_compte") != null){
+  document.getElementById("boutton_compte").onclick = function (){
+    if(document.getElementById("boutton_compte").getAttribute("etat") == "0"){
+      document.getElementById("actions_compte").style.transform = "translate(0, 100%)";
+      
+      document.getElementById("boutton_compte").setAttribute("etat", "1");
+    }else{
+      document.getElementById("actions_compte").style.transform = "translate(0, 0)";
+      document.getElementById("boutton_compte").setAttribute("etat", "0");
+    }
+  }
+}
+
+/*=======================================================================================================*/
 /*===================================== Ajout section choix villes ======================================*/
 
 var villes = ["Calais", "Dunkerque", "Saint-Omer", "Blendecques"];
