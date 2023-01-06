@@ -340,6 +340,9 @@ let Bloupe = document.getElementById("la-loupe");
 let Bcalais = document.getElementById("ville_Calais");
 let Bdunkerque = document.getElementById("ville_Dunkerque");
 let Bsaintomer = document.getElementById("ville_Saint-Omer");
+let BcreerAvis = document.getElementById("creer-avis");
+let BcloseCreerAvis = document.getElementById("closeCreerAvis");
+let BenvoyerAvis = document.getElementById("envoyer_avis");
 
 /* Test ==================================*/
 let Tadresse = document.getElementById("batiment-name");
@@ -359,6 +362,7 @@ let Sfooter = document.getElementById("le-footer");
 let Smap = document.getElementById("pages-map");
 let Sactu = document.getElementById("pages-actu");
 let Snotation = document.getElementById("section-notation");
+let ScreerAvis = document.getElementById("section_creer_avis");
 let Sgps = document.getElementById("section-gps");
 let ScreerArt = document.getElementById("section-creer-article");
 let SpartieMap = document.getElementById("section-map");
@@ -641,16 +645,6 @@ Scommand.addEventListener('click', add_Marker_Command, false);
 
 /*=======================================================================================================*/
 /*============================== Menu déroulant VILLE clique ============================================*/
-
-/* Init style menu déroulant */
-
-function init_couleur_menu_deroulant(){
-  for(var i = 0; i < rubriques.length; i++) {
-    
-  }
-}
-
-init_couleur_menu_deroulant();
 
 /* clique */
 
@@ -972,6 +966,14 @@ BcloseFiltre.onclick = function() {
   Bactu.style.display = "block";
 }
 
+BcreerAvis.onclick = function(){
+  ScreerAvis.style.transform = "translate(0%,0px)";
+}
+
+BcloseCreerAvis.onclick = function(){
+  ScreerAvis.style.transform = "translate(-100%,0px)";
+}
+
 /* Si on clique sur la section checkbox */
 Scheckbox.style.display = "block";
   var ScheckboxPosition = 0;
@@ -982,6 +984,32 @@ Scheckbox.style.display = "block";
   }else{
     Scheckbox.style.transform = "scaleY(1)";
     ScheckboxPosition = 0;
+  }
+}
+
+BenvoyerAvis.onclick = function(){
+  let element_champs_rep = document.querySelectorAll(".champ_rep");
+  let lieu = document.getElementById("batiment-name").textContent;
+  if(element_champs_rep[0].value.length == 0 || element_champs_rep[1].value.length == 0 || element_champs_rep[0].value < 0 || element_champs_rep[0].value > 5){
+    document.getElementById("message_envoie_avis").textContent = "Recommencez, valeurs non conformes";
+  }else{
+    document.getElementById("message_envoie_avis").textContent = "";
+
+    var params = new URLSearchParams();
+    params.append('etoile', element_champs_rep[0].value);
+    params.append('avis', element_champs_rep[1].value.replace("'", "\'"));
+    params.append('lieu', lieu);
+
+    element_champs_rep[0].value = '';
+    element_champs_rep[1].value = '';
+
+    fetch('fonctions_envoie_avis.php', {
+      method: 'POST',
+      body: params
+    }).then(response => response.json())
+    .then(result => {
+      console.log(lieu, result);
+    });
   }
 }
 
@@ -1075,13 +1103,52 @@ function addMarker(pos, nom, code) {
   Bnotation = document.getElementById("adresse-note");
   Bgps = document.getElementById("itineraire");
   mymap.setView([pos.lat, pos.lng]);
+
+
+  if(texte != ''){
+
+    var adresse = texte;
+    let Savis = document.getElementById('section-avis');
+    Savis.innerHTML = '';
+
+    /* creation n avis */
+    var params = new URLSearchParams();
+    params.append('clave1', '6');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      for (var i = 0; i < Number(data[0]); i++) {
+        Savis.innerHTML += '<div class="avi">'
+                          + '<div class="compte-note">'
+                            + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
+                            + '<div class="nom"></div>'
+                            + '<span class="material-symbols-outlined verified"></span>'
+                            + '<div class="barres-notations-user">'
+                            + '</div>'
+                          + '</div>'
+                          + '<div class="text-avi"></div>'
+                          + '<div class="actions">'
+                            + '<span class="material-symbols-outlined up">thumb_up</span><div class="b_up"></div>'
+                            + '<span class="material-symbols-outlined down">thumb_down</span><div class="b_down"></div>'
+                            + '<span class="material-symbols-outlined report">priority_high</span><div class="b_report"></div>'
+                          + '</div>'
+                        + '</div>';
+      }
+    });
+  }
 };
 
 function modifAvis(){
     
-    var avis = [];
-    var adresse = document.getElementById("adresse-note").textContent;
-    let Savis = document.getElementById('section-avis');
+    adresse = null;
+    if(document.getElementById("adresse-note") != null){
+      var adresse = document.getElementById("adresse-note").textContent;
+    }
 
     /* Image Lieu */
     var params = new URLSearchParams();
@@ -1097,51 +1164,6 @@ function modifAvis(){
         imageElement.src = result;
     });
 
-    /* creation n avis */
-    var params = new URLSearchParams();
-    params.append('clave1', '6');
-    params.append('clave2', adresse);
-
-    fetch('fonction_php.php', {
-      method: 'POST',
-      body: params
-    })
-    .then(response => response.json())
-    .then(data => {
-      Savis.innerHTML = '';
-      for (var i = 0; i < Number(data[0]); i++) {
-        Savis.innerHTML += '<div class="avi">'
-                          + '<div class="compte-note">'
-                            + '<div class="img-profil-note"><img src="" alt="image-profil"></div>'
-                            + '<div class="nom"></div>'
-                            + '<span class="material-symbols-outlined verified"></span>'
-                            + '<div class="barres-notations">'
-                              + '<div class="barres-1">'
-                                + '<div class="barre-notation"></div>'
-                                + '<div class="barre-notation"></div>'
-                                + '<div class="barre-notation"></div>'
-                                + '<div class="barre-notation"></div>'
-                                + '<div class="barre-notation"></div>'
-                              + '</div>'
-                              + '<div class="barres-2">'
-                                + '<div class="barre-notation"></div>'
-                                + '<div class="barre-notation"></div>'
-                                + '<div class="barre-notation"></div>'
-                                + '<div class="barre-notation"></div>'
-                                + '<div class="barre-notation"></div>'
-                              + '</div>'
-                            + '</div>'
-                          + '</div>'
-                          + '<div class="text-avi"></div>'
-                          + '<div class="actions">'
-                            + '<span class="material-symbols-outlined up">thumb_up</span>'
-                            + '<span class="material-symbols-outlined down">thumb_down</span>'
-                            + '<span class="material-symbols-outlined report">priority_high</span>'
-                          + '</div>'
-                        + '</div>';
-      }
-    });
-
     sleep(100);
 
     /* PP personnes ayant commenté lieu */
@@ -1155,9 +1177,9 @@ function modifAvis(){
     })
     .then(response => response.json())
     .then(data => {
-      let image_profils = document.getElementsByClassName('img-profil-note');
+      let image_profils = document.getElementsByClassName('img-profil-note-balise');
       for (var i = 0; i < data.length; i++) {
-        image_profils[i].firstChild.src = data[i].replace('../../', '');
+        image_profils[i].src = data[i].replace('../../', '');
       }
     });
 
@@ -1174,7 +1196,7 @@ function modifAvis(){
     .then(data => {
       let nom_profils = document.getElementsByClassName('nom');
       for (var i = 0; i < data.length; i++) {
-        nom_profils[i].innerHTML = data[i];
+        nom_profils[i].textContent = data[i];
       }
     });
 
@@ -1192,7 +1214,7 @@ function modifAvis(){
       let verification_dev = document.getElementsByClassName("verified");
       for (var i = 0; i < data.length; i++) {
         if(data[i] == "Developpeur"){
-          verification_dev[i].innerHTML = 'verified';
+          verification_dev[i].textContent = 'verified';
         }
       }
       //console.log(avis);
@@ -1211,11 +1233,81 @@ function modifAvis(){
     .then(data => {
       let commentaires = document.getElementsByClassName('text-avi');
       for (var i = 0; i < data.length; i++) {
-        commentaires[i].innerHTML = data[i];
+        commentaires[i].textContent = data[i];
+      }
+    });
+
+    /* Pouce up avis lieu */
+    var params = new URLSearchParams();
+    params.append('clave1', '7');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      let b_up = document.getElementsByClassName('b_up');
+      for (var i = 0; i < data.length; i++) {
+        b_up[i].textContent = data[i];
+      }
+    });
+
+    /* Pouce down avis lieu */
+    var params = new URLSearchParams();
+    params.append('clave1', '8');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      let b_down = document.getElementsByClassName('b_down');
+      for (var i = 0; i < data.length; i++) {
+        b_down[i].textContent = data[i];
       }
     });
     
+    /* Pouce report avis lieu */
+    var params = new URLSearchParams();
+    params.append('clave1', '9');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      let b_report = document.getElementsByClassName('b_report');
+      for (var i = 0; i < data.length; i++) {
+        b_report[i].textContent = data[i];
+      }
+    });
     
+    /* Note avis lieu */
+    var params = new URLSearchParams();
+    params.append('clave1', '10');
+    params.append('clave2', adresse);
+
+    fetch('fonction_php.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      let note = document.getElementsByClassName('barres-notations-user');
+      var moy = 0;
+      for (var i = 0; i < data.length; i++) {
+        note[i].textContent = data[i] + ' / 5';
+        moy += Number(data[i]);
+      }
+      let note_lieu = document.getElementsByClassName('barres-notations');
+      note_lieu[0].textContent = Number(Math.round(moy / data.length * 100) / 100) + ' / 5';
+    });
 }
 
 /* Activation bouton pour acceder au avis de l'adresse */
@@ -1352,32 +1444,47 @@ function action_avis(e) {
   let Bup = document.querySelectorAll(".up");
   let Bdown = document.querySelectorAll(".down");
   let Breport = document.querySelectorAll(".report");
+  
+  let Cup = document.querySelectorAll(".b_up");
+  let Cdown = document.querySelectorAll(".b_down");
+  let Creport = document.querySelectorAll(".b_report");
 
   for(var i = 0; i < Bup.length; i++) {
     if(e.target == Bup[i]) {
-      console.log("bouton up");
       if(Bup[i].style.color == "green"){
         Bup[i].style.color = "black";
+        Cup[i].textContent = Number(Cup[i].textContent) - 1;
       }else{
         Bup[i].style.color = "green";
+        Cup[i].textContent = Number(Cup[i].textContent) + 1;
       }
-      Bdown[i].style.color = "black";
-    }
-    if(e.target == Bdown[i]) {
-      console.log("bouton down");
+
       if(Bdown[i].style.color == "red"){
         Bdown[i].style.color = "black";
+        Cdown[i].textContent = Number(Cdown[i].textContent) - 1;
+      }
+    }
+    if(e.target == Bdown[i]) {
+      if(Bdown[i].style.color == "red"){
+        Bdown[i].style.color = "black";
+        Cdown[i].textContent = Number(Cdown[i].textContent) - 1;
       }else{
         Bdown[i].style.color = "red";
+        Cdown[i].textContent = Number(Cdown[i].textContent) + 1;
       }
-      Bup[i].style.color = "black";
+
+      if(Bup[i].style.color == "green"){
+        Bup[i].style.color = "black";
+        Cup[i].textContent = Number(Cup[i].textContent) - 1;
+      }
     }
     if(e.target == Breport[i]) {
-      console.log("bouton report");
       if(Breport[i].style.color == "orange"){
         Breport[i].style.color = "black";
+        Creport[i].textContent = Number(Creport[i].textContent) - 1;
       }else{
         Breport[i].style.color = "orange";
+        Creport[i].textContent = Number(Creport[i].textContent) + 1;
       }
     }
   }
@@ -1764,7 +1871,7 @@ function createFilActu(text){
   }
 }
 
-createFilActu('');
+//createFilActu('');
 
 function addFiltres(){
   var inputs = document.querySelectorAll("input[name='filter']:checked");
@@ -1777,7 +1884,9 @@ function addFiltres(){
   }
 
   createFilActu(text_input);
-  showSlides(1);
+  currentSlide(1);
 }
+
+addFiltres();
 
 document.getElementById("BoutonEnvoieFiltres").addEventListener("click", addFiltres, false);

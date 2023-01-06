@@ -106,10 +106,6 @@
         <h2 id="connect">Connexion</h2>
         <div id="logo-connexion">
           <span class="material-symbols-outlined">account_circle</span>
-          <!--<div id="rond-connexion">
-            <div id="rond-corps"></div>
-            <div id="rond-tete"></div>
-          </div>-->
         </div>
       </a>
     </div>
@@ -276,6 +272,28 @@
       <div id="map-actu"></div>
 <!-- ===================================================================================================================== Page map -->
         <div class="parent" id="pages-map">
+<!-- -------------------------------------------------------------------------------------------------------------- Page Creer avis -->
+          <div class="page child1" id="section_creer_avis">
+            <div id="closeCreerAvis">
+              <div class="logo-close button">
+                <div class="croix1"></div>
+                <div class="croix2"></div>
+              </div>
+            </div>
+            <div id="formulaire_creer_avis">
+              <p id="message_envoie_avis"></p>
+              <div>
+                <p class="titre_champ">Mettez une note au lieu</p>
+                <input type="number" min="0" max="5" class="champ_rep"></input>
+              </div>
+              <div>
+                <p class="titre_champ">Quel est votre avis sur le lieu ?</p>
+                <textarea type="text" class="champ_rep"></textarea>
+              </div>
+              <div id="envoyer_avis" class="button drop">Envoyer</div>
+              <p id="message_envoie_validation"></p>
+            </div>
+          </div>
 <!-- --------------------------------------------------------------------------------------------------------------- Page notations -->
           <div class="page child1" id="section-notation">
             <div id="details-notations">

@@ -97,7 +97,7 @@ $img_user = json_encode($resultats);
 /*=======================================================================================================*/
 /*========================================= N avis ======================================================*/
 
-$sql = "SELECT count(user.Prenom)
+$sql = "SELECT count(*)
         FROM utilisateur
         JOIN avis ON avis.id_user = utilisateur.id_user
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
@@ -111,25 +111,101 @@ $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 $n_avis = json_encode($resultats);
 
+/*=======================================================================================================*/
+/*========================================= N pouce up ==================================================*/
+
+$sql = "SELECT CptPouceBleu
+        FROM avis
+        JOIN lieu ON lieu.id_lieu = avis.id_lieu
+        WHERE lieu.Adresse = '".$clave2."'";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$n_up = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= N pouce down ================================================*/
+
+$sql = "SELECT CptPouceRouge
+        FROM avis
+        JOIN lieu ON lieu.id_lieu = avis.id_lieu
+        WHERE lieu.Adresse = '".$clave2."'";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$n_down = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= N pouce report ==============================================*/
+
+$sql = "SELECT CptReport
+        FROM avis
+        JOIN lieu ON lieu.id_lieu = avis.id_lieu
+        WHERE lieu.Adresse = '".$clave2."'";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$n_report = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= Note avis lieu ==============================================*/
+
+$sql = "SELECT CptEtoile
+        FROM avis
+        JOIN lieu ON lieu.id_lieu = avis.id_lieu
+        WHERE lieu.Adresse = '".$clave2."'";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$note = json_encode($resultats);
+
 switch ($clave1) {
-  case '0':
-      echo $img_lieu;
-      break;
-  case '1':
-      echo $noms;
-      break;
-  case '2':
-      echo $type;
-      break;
-  case '4':
-      echo $avis;
-      break;
-  case '5':
-      echo $img_user;
-      break;
-  case '6':
-      echo $n_avis;
-      break;
+    case '0':
+        echo $img_lieu;
+        break;
+    case '1':
+        echo $noms;
+        break;
+    case '2':
+        echo $type;
+        break;
+    case '4':
+        echo $avis;
+        break;
+    case '5':
+        echo $img_user;
+        break;
+    case '6':
+        echo $n_avis;
+        break;
+    case '7':
+        echo $n_up;
+        break;
+    case '8':
+        echo $n_down;
+        break;
+    case '9':
+        echo $n_down;
+        break;
+    case '10':
+        echo $note;
+        break;
 }
 
 ?>
