@@ -263,7 +263,7 @@ input:checked + .slider:before{
 
 .button, .leaflet-control-zoom-in, .leaflet-control-zoom-out{
   background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-6), var(--couleur-principale-5));
-  border-radius: 16px;
+  border-radius: 8px;
 	box-shadow: -1px 2px 2px grey;
   cursor: pointer;
   transition: 0.3s;
@@ -272,7 +272,7 @@ input:checked + .slider:before{
 .drop::before, .leaflet-control-zoom-in::before, .leaflet-control-zoom-out::before{
   content:'';
   position: absolute;
-  border-radius: 16px;
+  border-radius: 8px;
   top: 0;
   left: 0;
   width: 100%;
@@ -432,7 +432,7 @@ div:has(> .command-villes){
   transform: scale(1);
 }
 
-#compte:hover, #loupe:hover, #creer-avis:hover{
+#compte:hover, #loupe:hover{
   /*box-shadow: -1px 2px 2px grey;*/
   background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-4));
 }
@@ -464,7 +464,8 @@ div:has(> .command-villes){
 
 #note .carre .material-symbols-outlined, 
 #checkbox .carre .material-symbols-outlined, 
-#creer-avis .carre .material-symbols-outlined{
+#creer-avis .carre .material-symbols-outlined
+#filter_check .carre .material-symbols-outlined{
   transform: scale(1.2,1.2);
 }
 
@@ -836,7 +837,7 @@ header div{
 }
 
 #div-search input {
-  
+  transition: 0.3s;
   border-radius: 16px;
   position: relative;
   width: 100%;
@@ -848,6 +849,10 @@ header div{
   color: #555;
   background: linear-gradient(#dbdae1, #aaa3ba);
   box-shadow: 5px 5px 5px rgba(0,0,0,0,1), 15px 15px 15px rgba(0,0,0,0,1), 20px 20px 15px rgba(0,0,0,0,1), 30px 30px 15px rgba(0,0,0,0,1), inset 1px 1px 2px #fff;
+}
+
+#div-search:hover input{
+  border-radius: 8px;
 }
 
 #div-search input::placeholder {
@@ -962,7 +967,7 @@ ion-icon {
 }
 
 #compte .menu-deroulant > a:after{
-  content: '❯';
+  content: '>';
   font-size: 15px;
   margin-left: 7px;
   display: inline-block;
@@ -1039,8 +1044,6 @@ ion-icon {
 
 /* Phrase présentation */
 
-
-
 #phrase-presentation{
   margin-top: 2vh;
   width: 100vw;
@@ -1076,7 +1079,8 @@ ion-icon {
   color: var(--couleur-principale-3);
   font-family: 'Alkalami', 'Alkalami', Arial, sans-serif;
   margin: 4px 0 4px 0;
-  animation: scrollingPhrase 30s linear infinite;
+  text-align: center;
+  /*animation: scrollingPhrase 30s linear infinite;*/
   width: 100%;
   font-size: 24px;
 }
@@ -1265,8 +1269,12 @@ nav .drop{
   100% { transform: scale(1,1) translateY(50px); }
 }
 
-#note, #checkbox{
-  transform: translate(0px, 50px);
+#creer-avis, #envoyer_avis{
+  opacity: 1;
+  transform: scale(1, 1) translate(0,0);
+}
+
+#note, #checkbox, #filter_check{
   animation: fadeInAnimation2 ease 3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
@@ -1283,7 +1291,7 @@ nav .drop{
     transform: scale(0.95, 1.05) translate(-45px, 35px);
   }
   60% { transform: scale(1.025, 0.975) translate(-10px, 35px); }
-  100% { transform: scale(1,1) translate(-20px, 35px); }
+  100% { transform: scale(1, 1) translate(-20px, 35px); }
 }
 
 /*=======================================================================================================*/
@@ -1479,7 +1487,7 @@ nav .drop{
 /*======================================================== SECTION PARAMETRES ===========================*/
 
 
-#section-map, #section-fil-actu, #section-notation, #section-creer-article{
+#section-map, #section-fil-actu, #section-notation, #section-creer-article, #filtres_actu{
   transition: 1s;
   border-radius: 20px;
   flex: 1;
@@ -1491,6 +1499,7 @@ nav .drop{
   min-height: 74vh;
   opacity: 0;
   transform-origin: right;
+  backdrop-filter: blur(10px);
 }
 
 #section-notation {
@@ -1508,11 +1517,17 @@ nav .drop{
 #section-creer-article{
   display: none;
   transform-origin: top left;
-  position: relative;
   transform: translate(100%,0px);
   border-width: 4px;
   z-index: 5;
   backdrop-filter: blur(10px);
+  width: 100%;
+}
+
+#filtres_actu{
+  display: none;
+  transform: translate(100%,0px);
+  transform-origin: top right;
   width: 100%;
 }
 
@@ -1577,16 +1592,15 @@ nav .drop{
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #elements-notations .img img{
   flex: 1;
-  width: 100%;
-}
-
-#elements-notations .img .barres-notations{
-  width: 100%;
-  flex: auto;
+  height: 80%;
+  aspect-ratio: 3/2;
+  object-fit: contain;
 }
 
 #elements-notations #section-avis{
@@ -1663,7 +1677,6 @@ nav .drop{
   flex: 1;
   display: flex;
   height: 50px;
-  width: 50%;
   padding: 2px;
   margin-left: 20px;
   border-bottom: 2px solid #082374;
@@ -1700,6 +1713,11 @@ nav .drop{
   position: relative;
   text-align: center;
   align-items: center;
+}
+
+.barres-notations-user{
+  font-size: 30px;
+  margin-left: 20px;
 }
 
 .barres-1, .barres-2{
@@ -1844,6 +1862,73 @@ nav .drop{
 #itineraire span {
   scale: 1.5;
 }
+
+.b_up, .b_down, .b_report{
+  font-size: 20px;
+}
+
+/*=======================================================================================================*/
+/*================================================== SECTION CREER AVIS ===================================*/
+
+#section_creer_avis {
+  transform: translate(-100%, 0);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  z-index: 10;
+  transition: 0.3s;
+}
+
+#section_creer_avis{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#closeCreerAvis{
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+#formulaire_creer_avis{
+  border: 1px solid black;
+  background-color: var(--couleur-principale-4);
+  border-radius: 16px;
+  box-shadow: -3px 3px 0px 0px;
+  padding: 20px;
+  min-width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.titre_champ{
+  text-align: center;
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color: var(--couleur-principale-4);
+  border-radius: 8px;
+}
+
+.champ_rep{
+  border: 0px solid black;
+}
+
+input.champ_rep{
+  width: 100%;
+}
+
+textarea.champ_rep{
+  width: 100%;
+  height: 50px;
+}
+
+#envoyer_avis{
+  margin-top: 20px;
+  padding: 10px;
+}
+
 
 /*=======================================================================================================*/
 /*================================================== SECTION FIL ACTU ===================================*/
@@ -1999,6 +2084,8 @@ main {
 }
 #section-fil-actu .article-header-info {
   font-weight:bold;
+  flex: 1;
+
 }
 #section-fil-actu .article-header-info span {
   color:#657786;
@@ -2075,7 +2162,7 @@ main {
   border-radius: 16px;
 }
 
-fieldset{
+#section-creer-article fieldset{
   background-color: var(--couleur-principale-2);
   width: 740px;
   margin-left: auto;
@@ -2089,7 +2176,7 @@ fieldset{
   margin : auto;
 }
 
-fieldset input{
+#section-creer-article fieldset input:not([type='checkbox']){
   background-color: var(--couleur-principale-4);
   height: 20px;
   border-radius: 16px;
@@ -2116,6 +2203,76 @@ fieldset input{
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
+}
+
+/*=======================================================================================================*/
+/*========================================== PAGE APPLIQUE FILTRE =======================================*/
+
+#filtres_actu{
+  backdrop-filter: blur(10px);
+  width: 100%;
+  overflow-y: scroll;
+}
+
+#filtre-button {
+  border:none; /* Supprime la bordure */
+  color: black; /* Couleur du texte */
+  text-decoration: none; /* Supprime la surbrillance */
+  display: block; /* Affiche le bouton sur une ligne */
+  font-size: 16px; /* Taille de police */
+  cursor: pointer; /* Change le curseur en main lorsque la souris passe sur le bouton */
+  border-radius: 6px; /* Transforme le bouton en rond en utilisant une bordure arrondie */
+  height: 36px;
+  width: 36px;
+  text-align: center;
+	padding: 8px 8px;
+	transition: 0.3s;
+	margin-right: 2px;
+	margin-left: 2px;
+  box-shadow: -1px 2px 2px grey;
+  float: right;
+}
+  
+#filtre-menu {
+  list-style-type: none; /* Supprimer les marqueurs de liste */
+  margin: 0; /* Mettre à zéro les marges */
+  margin-top: 5px;
+  padding: 0; /* Mettre à zéro les espacements intérieurs */
+  overflow: hidden; /* Cacher les éléments dépassant */
+}
+
+/* menu */
+
+#filtres_actu Legend{
+  text-align: center;
+
+}
+
+#BoutonEnvoie{
+  width: 200px;
+  display: block;
+  margin : auto;
+  margin-bottom: 20px;
+  background-color: var(--couleur-principale-2);
+  border-radius: 6px;
+}
+
+#filtres_actu fieldset{
+  background-color: var(--couleur-principale-2);
+  width: 740px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 16px;
+  border: 2px solid var(--couleur-principale-1);
+}
+
+#Ligne{
+  display: flex;
+  justify-content: space-around;
+}
+
+#Ligne div{
+  flex: 1;
 }
 
 /*=======================================================================================================*/

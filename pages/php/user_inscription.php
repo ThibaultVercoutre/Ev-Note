@@ -1,5 +1,5 @@
 <?php 
-    $bdd = mysqli_connect("localhost", "utilisateur", "projetweb2022", "projet");// On inclut la connexion à la bdd
+    $bdd = mysqli_connect("localhost", "root", "", "projet");// On inclut la connexion à la bdd
     // Si les variables existent et qu'elles ne sont pas vides
     if(isset($_POST['upload'])){
       $image = $_FILES['image']['name'];
@@ -22,7 +22,7 @@
       //          if($verif2){//si adresse présente dans la BDD
           //          echo "L'adresse possede deja un compte sur ce site...<br/>";                   
          //       }
-      $select = mysqli_query($bdd, "SELECT * FROM user WHERE Mail = '".$email."'");
+      $select = mysqli_query($bdd, "SELECT * FROM utilisateur WHERE Mail = '".$email."'");
       if(mysqli_num_rows($select)){
         header('Location: user_inscription.php?reg_err=already'); 
         die();
@@ -34,9 +34,17 @@
         $sql2 = $bdd->query("INSERT INTO photo_user(chemin) VALUES ('$path')");
         $reponse = mysqli_query($bdd, "SELECT * FROM photo_user");
         $test = mysqli_num_rows($reponse);
-        $sql = $bdd->query("INSERT INTO user(Nom, Prenom, NumEtudiant, Mail, MotDePasse, TypeCompte, id_image_user) VALUES ('$nom','$prenom','$num_etud','$email','$password','$type_compte', '$test')");
+        $sql = $bdd->query("INSERT INTO utilisateur(Nom, Prenom, NumEtudiant, Mail, MotDePasse, TypeCompte, id_image_user) VALUES ('$nom','$prenom','$num_etud','$email','$password','$type_compte', '$test')");
         move_uploaded_file($_FILES['image']['tmp_name'], $path);
-        header('Location:user_inscription.php?reg_err=success');
+        ?>
+        <script> 
+        function Inscription_reussie(){
+          alert("Inscription réussie !");
+        }
+        </script>
+        <?php
+        header('Location: ../../index.php?reg_err=success');
+        //header('Location:user_inscription.php?reg_err=success');
         die();
 
       }else{ header('Location: user_inscription.php?reg_err=email'); die();}
@@ -192,7 +200,7 @@
       <!--demander numero etudiant seulement si compte de type etudiant -->
     
       <hr>
-      <button type="submit" name="upload" class="inscription">S'inscrire</button>
+      <button type="submit" name="upload" onclick="Inscription_reussie()" class="inscription">S'inscrire</button>
   </form>
 </div>
 
