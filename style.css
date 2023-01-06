@@ -432,7 +432,7 @@ div:has(> .command-villes){
   transform: scale(1);
 }
 
-#compte:hover, #loupe:hover, #creer-avis:hover{
+#compte:hover, #loupe:hover{
   /*box-shadow: -1px 2px 2px grey;*/
   background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-4));
 }
@@ -967,7 +967,7 @@ ion-icon {
 }
 
 #compte .menu-deroulant > a:after{
-  content: '❯';
+  content: '>';
   font-size: 15px;
   margin-left: 7px;
   display: inline-block;
@@ -1269,8 +1269,12 @@ nav .drop{
   100% { transform: scale(1,1) translateY(50px); }
 }
 
+#creer-avis, #envoyer_avis{
+  opacity: 1;
+  transform: scale(1, 1) translate(0,0);
+}
+
 #note, #checkbox, #filter_check{
-  transform: translate(0px, 50px);
   animation: fadeInAnimation2 ease 3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
@@ -1287,7 +1291,7 @@ nav .drop{
     transform: scale(0.95, 1.05) translate(-45px, 35px);
   }
   60% { transform: scale(1.025, 0.975) translate(-10px, 35px); }
-  100% { transform: scale(1,1) translate(-20px, 35px); }
+  100% { transform: scale(1, 1) translate(-20px, 35px); }
 }
 
 /*=======================================================================================================*/
@@ -1588,6 +1592,8 @@ nav .drop{
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #elements-notations .img img{
@@ -1595,11 +1601,6 @@ nav .drop{
   height: 80%;
   aspect-ratio: 3/2;
   object-fit: contain;
-}
-
-#elements-notations .img .barres-notations{
-  width: 100%;
-  flex: auto;
 }
 
 #elements-notations #section-avis{
@@ -1676,7 +1677,6 @@ nav .drop{
   flex: 1;
   display: flex;
   height: 50px;
-  width: 50%;
   padding: 2px;
   margin-left: 20px;
   border-bottom: 2px solid #082374;
@@ -1713,6 +1713,11 @@ nav .drop{
   position: relative;
   text-align: center;
   align-items: center;
+}
+
+.barres-notations-user{
+  font-size: 30px;
+  margin-left: 20px;
 }
 
 .barres-1, .barres-2{
@@ -1857,6 +1862,73 @@ nav .drop{
 #itineraire span {
   scale: 1.5;
 }
+
+.b_up, .b_down, .b_report{
+  font-size: 20px;
+}
+
+/*=======================================================================================================*/
+/*================================================== SECTION CREER AVIS ===================================*/
+
+#section_creer_avis {
+  transform: translate(-100%, 0);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  z-index: 10;
+  transition: 0.3s;
+}
+
+#section_creer_avis{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#closeCreerAvis{
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+#formulaire_creer_avis{
+  border: 1px solid black;
+  background-color: var(--couleur-principale-4);
+  border-radius: 16px;
+  box-shadow: -3px 3px 0px 0px;
+  padding: 20px;
+  min-width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.titre_champ{
+  text-align: center;
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color: var(--couleur-principale-4);
+  border-radius: 8px;
+}
+
+.champ_rep{
+  border: 0px solid black;
+}
+
+input.champ_rep{
+  width: 100%;
+}
+
+textarea.champ_rep{
+  width: 100%;
+  height: 50px;
+}
+
+#envoyer_avis{
+  margin-top: 20px;
+  padding: 10px;
+}
+
 
 /*=======================================================================================================*/
 /*================================================== SECTION FIL ACTU ===================================*/

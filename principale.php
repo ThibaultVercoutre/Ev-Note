@@ -73,14 +73,15 @@ if(($_SESSION['email']) !== ""){
 <body>
 <div id="page-principale">
   <header>
-    <div id="titre">
+  <div id="titre">
       <div id="effecten">
         <h1 data-text="Ev'Note" id="evnote">Ev'Note</h1>
         <div id = "gradient" class="gradient"></div>
         <div class="spotlight"></div>
       </div>
-      <div id="time-animation"></div>
+      <span id="time-animation" class="material-symbols-outlined"></span>
       <div id="time"></div>
+      <span id="meteo" class="material-symbols-outlined"></span>
       <div id="div-search">
         <input type="text" id="search" placeholder="Rechercher un lieu..."/>
         <ion-icon id="la-loupe" name="search-outline"></ion-icon>
@@ -94,9 +95,6 @@ if(($_SESSION['email']) !== ""){
             <div id="menu"><h2 id="connect"><a href="#"><?php echo $donnees['Prenom']." ".$donnees['Nom'] ; ?>
             <div id="logo-connexion">
           <span class="material-symbols-outlined">account_circle</span>
-          <!--<div id="rond-connexion">
-            <div id="rond-corps"></div>
-            <div id="rond-tete"></div>-->
           </div></a></div>
             <ul class="sous-menu"> 
               <li><a  href="pages/php/monprofil.php">Voir mon profil</a></li></h2>
@@ -114,7 +112,7 @@ if(($_SESSION['email']) !== ""){
 <!-- ================================================================================================================================ -->
 <!-- ======================================================================================================================== MARQUEE -->
 <!-- ================================================================================================================================ -->
-    <div class="marquee">
+<div class="marquee">
       <div class="elements-marquee">
         <div class="element">
           <div class="photo 1"></div>
@@ -223,7 +221,6 @@ if(($_SESSION['email']) !== ""){
         </div>
       </div>
     </div>
-
 <!-- ============================================================================================================================== -->
 <!-- ======================================================================================================================== Pages -->
 <!-- ============================================================================================================================== -->
@@ -245,8 +242,8 @@ if(($_SESSION['email']) !== ""){
             <div class="barre" id="barre2"></div>
             <div class="barre" id="barre3"></div>
           </div>
-        </div>
-      </nav>
+          </div>
+        </nav>
 
 <!-- ========================================================================================================== Boutons interaction -->
       <div id="interact">
@@ -257,17 +254,40 @@ if(($_SESSION['email']) !== ""){
         </div>
         <div class="button drop" id="checkbox">
           <div class="carre">
-            
             <span class="material-symbols-outlined">checklist</span>
-            <!--<div id="manche"></div>
-            <div id="pointe-stylo"></div>
-            <div id="ecriture"></div>-->
+          </div>
+        </div>
+        <div class="button drop" id="filter_check">
+          <div class="carre">
+            <span class="material-symbols-outlined">filter_alt</span>
           </div>
         </div>
       </div>
       <div id="map-actu"></div>
 <!-- ===================================================================================================================== Page map -->
         <div class="parent" id="pages-map">
+<!-- -------------------------------------------------------------------------------------------------------------- Page Creer avis -->
+          <div class="page child1" id="section_creer_avis">
+            <div id="closeCreerAvis">
+              <div class="logo-close button">
+                <div class="croix1"></div>
+                <div class="croix2"></div>
+              </div>
+            </div>
+            <div id="formulaire_creer_avis">
+              <p id="message_envoie_avis"></p>
+              <div>
+                <p class="titre_champ">Mettez une note au lieu</p>
+                <input type="number" min="0" max="5" class="champ_rep"></input>
+              </div>
+              <div>
+                <p class="titre_champ">Quel est votre avis sur le lieu ?</p>
+                <textarea type="text" class="champ_rep"></textarea>
+              </div>
+              <div id="envoyer_avis" class="button drop">Envoyer</div>
+              <p id="message_envoie_validation"></p>
+            </div>
+          </div>
 <!-- --------------------------------------------------------------------------------------------------------------- Page notations -->
           <div class="page child1" id="section-notation">
             <div id="details-notations">
@@ -285,7 +305,7 @@ if(($_SESSION['email']) !== ""){
               <div id="elements-notations">
                 <div class="img">
                   
-                  <img src="img/TheatreCalais.jpg" alt="Image">
+                  <img src="" id="image_batiment_section_avis" alt="Image">
                   <div class="barres-notations">
                     <div class="barres-1">
                       <div class="barre-notation"></div>
@@ -304,135 +324,6 @@ if(($_SESSION['email']) !== ""){
                   </div>
                 </div>
                 <div id="section-avis">
-                  <div class="avi">
-                    <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/alexis.webp" alt="image-profil"></div>
-                      <div class="nom">Alexis</div>
-                      <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-avi">
-                      J'adore m'y rendre. J'y vais quasiment tout les soirs. Je vais commencer à parler latin car j'aurais plus d'inspi.
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam debitis nam similique dolores vero quae dolorum, optio eligendi asperiores sunt quam consectetur necessitatibus! Dicta, rerum illum! Pariatur iste officia ratione!
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam sunt provident debitis, repellat velit voluptatum quidem consequatur, nostrum aliquid nisi iste ut? Molestias odit placeat eius deleniti? Rem, rerum delectus?
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis error iusto maiores molestiae, dicta magni ab laborum nulla accusantium iure nihil vitae quia saepe eum nostrum dolores commodi debitis vel.
-                      
-                    </div>
-                    <div class="actions">
-                      <span class="material-symbols-outlined up">thumb_up</span>
-                      <span class="material-symbols-outlined down">thumb_down</span>
-                      <span class="material-symbols-outlined report">priority_high</span>
-                    </div>
-                  </div>
-                  <div class="avi">
-                    <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/julien.png" alt="image-profil"></div>
-                      <div class="nom">Julien</div>
-                      <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-avi">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam rerum labore sit, vitae mollitia tenetur unde vero voluptatibus tempore. Quas consequuntur excepturi laboriosam quod temporibus, magni reiciendis. Voluptate, reprehenderit ipsam.
-                    </div>
-                    <div class="actions">
-                      <span class="material-symbols-outlined up">thumb_up</span>
-                      <span class="material-symbols-outlined down">thumb_down</span>
-                      <span class="material-symbols-outlined report">priority_high</span>
-                    </div>
-                  </div>
-                  <div class="avi">
-                    <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/florian.webp" alt="image-profil"></div>
-                      <div class="nom">Florian</div>
-                      <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-avi">
-                      Alors oui bonjour, C'est pour dire que l'endroit est superbe, je prend beaucoup de plaisir à y être.
-                      Cela me permet de me recentrer sur moi même et mes chakras, surtout le 3eme chakras.
-                    </div>
-                    <div class="actions">
-                      <span class="material-symbols-outlined up">thumb_up</span>
-                      <span class="material-symbols-outlined down">thumb_down</span>
-                      <span class="material-symbols-outlined report">priority_high</span>
-                    </div>
-                  </div>
-                  <div class="avi">
-                    <div class="compte-note">
-                      <div class="img-profil-note"><img src="pages/img/thibault.jpg" alt="image-profil"></div>
-                      <div class="nom">Thibault</div>
-                      <span class="material-symbols-outlined verified">verified</span>
-                      <div class="barres-notations">
-                        <div class="barres-1">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                        <div class="barres-2">
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                          <div class="barre-notation"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="text-avi">
-                      C'était pas mal en vrai
-                    </div>
-                    <div class="actions">
-                      <span class="material-symbols-outlined up">thumb_up</span>
-                      <span class="material-symbols-outlined down">thumb_down</span>
-                      <span class="material-symbols-outlined report">priority_high</span>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -479,31 +370,25 @@ if(($_SESSION['email']) !== ""){
         </div>
 <!-- ==================================================================================================================== Page actu -->
         <div class="parent" id="pages-actu">
-
-        <div class="page child1" id="section-fil-actu">
+<!-- -------------------------------------------------------------------------------------------------------------------- Page actu -->
+          <div class="page child1" id="section-fil-actu">
             <main>
-              <div class="slideshow-container">
-              <?php 
-                mysqli_data_seek($table_inner, 0);
-                for($i=0; $i<$cpt_row;$i++){
-                  while ($test = mysqli_fetch_assoc($table_inner)){
-                  ?>
-                  <div class="mySlides fade">
+              <div class="slideshow-container" id="articles">
+                <div class="mySlides fade">
                   <div id="Article">
                     <div class ="article-header">
-                      <img src="<?php echo $test['chemin'];?>" class="avator">
+                      <img src="" class="avator">
                         <!--<div class="container" id="ArticleSansDesc">-->
                       <div class="article-header-info">
-                        <?php echo $test['Prenom']." ".$test['Nom']?>
-                    <span> <?php echo $test['DateCreation'] ; ?> </span>
-                        
-                        <p class="TitreArticle"><br/><b><u><?php echo $test['NomEvent'];?></u></b></p>
-                        <p> <?php echo $test['Annonce'] ; ?></p>
+                        Prenom
+                        <span>date de creation</span>
+                        <p class="TitreArticle"><br/><b><u>Nom Event</u></b></p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti sunt dolorem est perspiciatis, odit voluptate sint neque delectus officiis explicabo distinctio? Ex in cumque nihil beatae. In tempore animi nam!</p>
                       </div>
                     </div>
                     
                     <div class="article-img-wrap">
-                        <img src="<?php echo $test['Chemin'];?>" class="article-img">
+                        <img src="img_event\photo 1.png" class="article-img">
                     </div>
                     
                     <div class="article-info-counts">
@@ -513,19 +398,15 @@ if(($_SESSION['email']) !== ""){
                       </div>
                       <div class="likes">
                         <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                        <div class="likes-count"><?php echo $test['CptPouceBleu'] ;?></div>
+                        <div class="likes-count">Pouce Bleu</div>
                       </div>
                       <div class="retweets">
                         <svg class="feather feather-repeat sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
-                        <div class="retweet-count"><?php echo $test['CptPouceRouge'] ;?></div>
+                        <div class="retweet-count">Pouce Rouge</div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <?php
-                    }
-                  }
-              ?>
                 <!-- Next and previous buttons -->
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -534,14 +415,10 @@ if(($_SESSION['email']) !== ""){
             <br>
 
               <!-- The dots/circles -->
-              <div style="text-align:center">
-              <?php 
-              for($i=1; $i<$cpt_row+1;$i++){ 
-                ?>
-                <span class="dot" onclick="currentSlide(<?php echo $i ;?>)"></span>
+              <div style="text-align:center" id="dot_points">
+                <span class="dot" onclick="currentSlide(1)"></span>
                 <!--<span class="dot" onclick="currentSlide(2)"></span>
                 <span class="dot" onclick="currentSlide(3)"></span>-->
-                <?php } ?>
               </div>
             </main>
           </div>
@@ -551,7 +428,16 @@ if(($_SESSION['email']) !== ""){
             <div class="clickScrollbar"></div>
             <div id="champ-remplit-art">
               <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
-              <form method="post" action="principale.php" enctype="multipart/form-data">
+              <form method="post" action="./pages/php/donnees_formulaire.php">
+               <fieldset>
+                  <legend>Vos coordonnées</legend><br />
+                  <label for="Nom">Nom</label><br />
+                  <input type="text" name="Nom" id="Nom" placeholder="Exemple : Vercoutre" size="50" required /><br /><br />
+                  <label for="Prenom">Prénom</label><br />
+                  <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50" required /><br /><br />
+                  <label for="Mail">E-Mail</label><br />
+                  <input type="email" name="Mail" id="Mail" placeholder="Exemple : xyz@leraciste.noob" size="50" required /><br /><br />
+                </fieldset><br />
                 <fieldset>
                   <legend>Informations sur l'événement</legend><br />
                   <label for="NomEvent">Nom de l'événement</label><br />
@@ -565,8 +451,8 @@ if(($_SESSION['email']) !== ""){
                 </fieldset><br />
                 <fieldset>
                   <legend>Image (optionnel)</legend>
-                  <label for="image">Inserez une image</label><br />
-                  <input type="file" name="image" id="image" accept="image/png, image/jpeg" required/>
+                  <label for="IMG">Inserez une image</label><br />
+                  <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" required/>
                 </fieldset>
                 <br />
                 <fieldset>
@@ -575,13 +461,227 @@ if(($_SESSION['email']) !== ""){
                   <textarea name="Annonce" id="Description" placeholder="Quel est votre évènement ?" rows="20" cols="100" required></textarea>
                 </fieldset>
                 <br />
-                <input type="submit" value="Envoyer" name="upload" id="BoutonEnvoie" />
+                <fieldset>
+                  <legend>Tri par Thème</legend>
+                  <p id="Accroche"><u>Veuillez selectionner un thème</u> :</p>
+                  <div id="ListeTheme">
+                    <div id="Ligne">
+                      <div>
+                        <input type="checkbox" id="filter1" name="filter1" value="1">
+                        <label for="filter1">Jeux vidéos</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter2" name="filter2" value="1">
+                        <label for="filter2">Sport</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter3" name="filter3" value="1">
+                        <label for="filter3">Littérature</label>
+                      </div>
+                    </div>
+                    <div id="Ligne">
+                      <div>
+                        <input type="checkbox" id="filter4" name="filter4" value="1">
+                        <label for="filter4">Culture</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter5" name="filter5" value="1">
+                        <label for="filter5">Peinture</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter6" name="filter6" value="1">
+                        <label for="filter6">Exposition</label>
+                      </div>
+                    </div>
+
+                    <div id="Ligne">
+
+                      <div>
+                        <input type="checkbox" id="filter7" name="filter7" value="1">
+                        <label for="filter7">Soirée</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter8" name="filter8" value="1">
+                        <label for="filter8">Bar</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter9" name="filter9" value="1">
+                        <label for="filter9">Politique</label>
+                      </div>
+
+                    </div>
+
+                    <div id="Ligne">
+
+                      <div>
+                        <input type="checkbox" id="filter10" name="filter10" value="10">
+                        <label for="filter10">Réduction/Offre</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter11" name="filter11" value="1">
+                        <label for="filter11">Cinéma</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter12" name="filter12" value="1">
+                        <label for="filter12">Rencontre</label>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </fieldset>
+                <br /><br />
+                <input type="submit" value="Envoyer" id="BoutonEnvoie" />
+                <br /><br /><br /><br /><br />
               </form>
             </div>
             <div id="closeCreerArticle">
               <div class="logo-close button">
                 <div class="croix1"></div>
                 <div class="croix2"></div>
+              </div>
+            </div>
+          </div>
+<!-- --------------------------------------------------------------------------------------------------------- Page applique filtre -->
+          <div class="page child1 child2" id="filtres_actu">
+            <button id="filtre-button"><span class="material-symbols-outlined">close</span></button>
+            <div class="carre"></div>
+            <div id="filtre-menu" style="">
+              <p><u>Bienvenue dans l'interface de tri des postes</u></p>
+              <div method="post" action="./pages/php/donnees_formulaire.php">
+                <fieldset>
+                  <legend>Tri par Thème</legend>
+                  <p id="Accroche"><u>Veuillez selectionner les thèmes que vous désirez afficher</u> :</p>
+                  <div id="ListeTheme">
+                    <div id="Ligne">
+                      <div>
+                        <input type="checkbox" id="filter1" name="filter" value="1">
+                        <label for="filter1">Jeux vidéos</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter2" name="filter" value="1">
+                        <label for="filter2">Sport</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter3" name="filter" value="1">
+                        <label for="filter3">Littérature</label>
+                      </div>
+                    </div>
+                    <div id="Ligne">
+                      <div>
+                        <input type="checkbox" id="filter4" name="filter" value="1">
+                        <label for="filter4">Culture</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter5" name="filter" value="1">
+                        <label for="filter5">Peinture</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" id="filter6" name="filter" value="1">
+                        <label for="filter6">Exposition</label>
+                      </div>
+                    </div>
+
+                    <div id="Ligne">
+
+                      <div>
+                        <input type="checkbox" id="filter7" name="filter" value="1">
+                        <label for="filter7">Soirée</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter8" name="filter" value="1">
+                        <label for="filter8">Bar</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter9" name="filter" value="1">
+                        <label for="filter9">Politique</label>
+                      </div>
+
+                    </div>
+
+                    <div id="Ligne">
+
+                      <div>
+                        <input type="checkbox" id="filter10" name="filter10" value="10">
+                        <label for="filter10">Réduction/Offre</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter11" name="filter11" value="1">
+                        <label for="filter11">Cinéma</label>
+                      </div>
+
+                      <div>
+                        <input type="checkbox" id="filter12" name="filter12" value="1">
+                        <label for="filter12">Rencontre</label>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </fieldset><br />
+
+                <fieldset class="Filtrage">
+                  <legend>Autres méthodes de filtrage</legend>
+
+                  <p id="Accroche"><u>Voici une liste d'autres fonctionalités de filtrage</u> :</p>
+
+                  <div id="Titre">
+
+                    <div id="TriLike">
+
+                      <p class="SectionTri">Par nombre de Likes :</p>
+                      <br>
+                      <label for="filterlike1">Du plus liké au moins liké</label>
+                      <input type="radio" id="filterlike1" name="filtercommentslikedate" value="1">
+                      <input type="radio" id="filterlike2" name="filtercommentslikedate" value="1">
+                      <label for="filterlike2">Du moins liké au plus liké</label>
+
+                    </div>
+
+                    <br>
+
+                    <div id="TriComments">
+
+                      <p class="SectionTri">Par nombre de commentaires :</p>
+                      <br>
+                      <label for="filtercomments1">Du plus commenté au moins commenté</label>
+                      <input type="radio" id="filtercomments1" name="filtercommentslikedate" value="1">
+                      <input type="radio" id="filtercomments2" name="filtercommentslikedate" value="1">
+                      <label for="filtercomments2">Du moins commenté au plus commenté</label>
+
+                    </div>
+
+                    <br>
+
+                    <div id="TriDate">
+
+                      <p class="SectionTri">Par date de création :</p>
+                      <br>
+                      <label for="filterdate1">Du plus récent au moins récent</label>
+                      <input type="radio" id="filterdate1" name="filtercommentslikedate" value="1">
+                      <input type="radio" id="filterdate2" name="filtercommentslikedate" value="1">
+                      <label for="filterdate2">Du moins récent au plus récent</label>
+
+                    </div>
+
+                    <br>
+
+                  </div>
+
+                </fieldset><br />
+
+                <br />
+                <button value="Appliquer" name="uploadfiltre" id="BoutonEnvoieFiltres" >Appliquer</button>
+                <br /><br /><br /><br /><br />
               </div>
             </div>
           </div>
@@ -607,7 +707,6 @@ if(($_SESSION['email']) !== ""){
     </div>
     <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
     <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
-    <script src="script.js"></script>
   </footer>
 </div>
 
@@ -619,3 +718,23 @@ if(($_SESSION['email']) !== ""){
 
 
 </html>
+
+<!--
+  <div class="stars-notations">
+    <div class="stars-1">
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">star</span>
+  </div>
+  <div class="stars-2">
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">star</span>
+    <span class="material-symbols-outlined">star</span>
+  </div>
+</div>
+-->
+<script src="script.js"></script>
