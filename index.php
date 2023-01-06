@@ -105,7 +105,7 @@
     <div id="compte"><a href="pages/php/user_connexion.php">
         <h2 id="connect">Connexion</h2>
         <div id="logo-connexion">
-          <span class="material-symbols-outlined">account_circle</span>
+          <span class="material-symbols-outlined" id="user" data="0">account_circle</span>
         </div>
       </a>
     </div>

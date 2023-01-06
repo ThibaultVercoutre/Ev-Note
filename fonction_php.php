@@ -210,6 +210,40 @@ $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 $dislike_bool = json_encode($resultats);
 
+/*=======================================================================================================*/
+/*========================================= Report avis bool ============================================*/
+
+$sql = "SELECT avis.id_avis
+        FROM reports_avis
+        JOIN avis ON avis.id_avis = reports_avis.id_avis 
+        JOIN lieu ON lieu.id_lieu = avis.id_lieu 
+        WHERE lieu.Adresse = '".$clave2."' AND reports_avis.id_user = '".$clave3."' AND reports_avis.report_bool = '1'";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$report_bool = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= Verif User Avis =============================================*/
+
+$sql = "SELECT count(*)
+        FROM utilisateur
+        JOIN avis ON avis.id_user = utilisateur.id_user 
+        JOIN lieu ON lieu.id_lieu = avis.id_lieu
+        WHERE lieu.Adresse = '".$clave3."' AND avis.id_user = '".$clave2."'";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$nb_avis_user = json_encode($resultats);
+
 switch ($clave1) {
     case '0':
         echo $img_lieu;
@@ -247,6 +281,11 @@ switch ($clave1) {
     case '12':
         echo $dislike_bool;
         break;
+    case '13':
+        echo $report_bool;
+        break;
+    case '14':
+        echo $nb_avis_user;
+        break;
 }
-
 ?>
