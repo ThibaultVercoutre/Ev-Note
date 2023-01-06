@@ -1115,6 +1115,7 @@ function addMarker(pos, nom, code) {
     var params = new URLSearchParams();
     params.append('clave1', '6');
     params.append('clave2', adresse);
+    params.append('clave3', '8');
 
     fetch('fonction_php.php', {
       method: 'POST',
@@ -1122,8 +1123,8 @@ function addMarker(pos, nom, code) {
     })
     .then(response => response.json())
     .then(data => {
-      for (var i = 0; i < Number(data[0]); i++) {
-        Savis.innerHTML += '<div class="avi">'
+      for (var i = 0; i < data.length; i++) {
+        Savis.innerHTML += '<div class="avi" id="avis_' + data[i] + '">'
                           + '<div class="compte-note">'
                             + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
                             + '<div class="nom"></div>'
@@ -1145,16 +1146,21 @@ function addMarker(pos, nom, code) {
 
 function modifAvis(){
     
-    adresse = null;
+    var user = '8';
+    var fichier = 'fonction_php.php';
+
+    var adresse = null;
     if(document.getElementById("adresse-note") != null){
-      var adresse = document.getElementById("adresse-note").textContent;
+      adresse = document.getElementById("adresse-note").textContent;
     }
 
     /* Image Lieu */
     var params = new URLSearchParams();
     params.append('clave1', '0');
     params.append('clave2', adresse);
-    fetch('fonction_php.php', {
+    params.append('clave3', user);
+
+    fetch(fichier, {
         method: 'POST',
         body: params
       })
@@ -1170,8 +1176,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '5');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1187,8 +1194,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '1');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1204,8 +1212,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '2');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1224,8 +1233,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '4');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1241,8 +1251,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '7');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1258,8 +1269,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '8');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1275,8 +1287,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '9');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1292,8 +1305,9 @@ function modifAvis(){
     var params = new URLSearchParams();
     params.append('clave1', '10');
     params.append('clave2', adresse);
+    params.append('clave3', user);
 
-    fetch('fonction_php.php', {
+    fetch(fichier, {
       method: 'POST',
       body: params
     })
@@ -1307,6 +1321,48 @@ function modifAvis(){
       }
       let note_lieu = document.getElementsByClassName('barres-notations');
       note_lieu[0].textContent = Number(Math.round(moy / data.length * 100) / 100) + ' / 5';
+    });
+
+    /* Test avis like bool */
+    var params = new URLSearchParams();
+    params.append('clave1', '11');
+    params.append('clave2', adresse);
+    params.append('clave3', user);
+
+    fetch(fichier, {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      for(var i = 0; i < data.length; i++){
+        var pouceBleu = document.querySelector('#avis_' + data[i] + ' .actions .up');
+        action_avis(pouceBleu);
+
+        var NbPouceBleu = document.querySelector('#avis_' + data[i] + ' .actions .b_up');
+        NbPouceBleu.textContent = Number(NbPouceBleu.textContent - 1);
+      }
+    });
+
+    /* Test avis dislike bool */
+    var params = new URLSearchParams();
+    params.append('clave1', '12');
+    params.append('clave2', adresse);
+    params.append('clave3', user);
+
+    fetch(fichier, {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      for(var i = 0; i < data.length; i++){
+        var pouceRouge = document.querySelector('#avis_' + data[i] + ' .actions .down');
+        action_avis(pouceRouge);
+
+        var NbPouceRouge = document.querySelector('#avis_' + data[i] + ' .actions .b_down');
+        NbPouceRouge.textContent = Number(NbPouceRouge.textContent - 1);
+      }
     });
 }
 
@@ -1439,7 +1495,7 @@ for(var i = 0; i < Bvilles.length; i++){
 /*================================== Changement couleur like / dislike / report =========================*/
 
 function action_avis(e) {
-
+  
   // like dislike report
   let Bup = document.querySelectorAll(".up");
   let Bdown = document.querySelectorAll(".down");
@@ -1450,7 +1506,7 @@ function action_avis(e) {
   let Creport = document.querySelectorAll(".b_report");
 
   for(var i = 0; i < Bup.length; i++) {
-    if(e.target == Bup[i]) {
+    if(e == Bup[i]) {
       if(Bup[i].style.color == "green"){
         Bup[i].style.color = "black";
         Cup[i].textContent = Number(Cup[i].textContent) - 1;
@@ -1464,7 +1520,7 @@ function action_avis(e) {
         Cdown[i].textContent = Number(Cdown[i].textContent) - 1;
       }
     }
-    if(e.target == Bdown[i]) {
+    if(e == Bdown[i]) {
       if(Bdown[i].style.color == "red"){
         Bdown[i].style.color = "black";
         Cdown[i].textContent = Number(Cdown[i].textContent) - 1;
@@ -1478,7 +1534,7 @@ function action_avis(e) {
         Cup[i].textContent = Number(Cup[i].textContent) - 1;
       }
     }
-    if(e.target == Breport[i]) {
+    if(e == Breport[i]) {
       if(Breport[i].style.color == "orange"){
         Breport[i].style.color = "black";
         Creport[i].textContent = Number(Creport[i].textContent) - 1;
@@ -1490,7 +1546,9 @@ function action_avis(e) {
   }
 }
 
-Savi.addEventListener('click', action_avis, false);
+Savi.onclick = function(e){
+  action_avis(e.target);
+}
 
 
 /*=======================================================================================================*/

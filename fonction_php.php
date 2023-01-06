@@ -2,6 +2,7 @@
 require_once 'pages/php/login.php';
 $clave1 = $_POST['clave1'];
 $clave2 = $_POST['clave2'];
+$clave3 = $_POST['clave3'];
 
 
 /*=======================================================================================================*/
@@ -97,7 +98,7 @@ $img_user = json_encode($resultats);
 /*=======================================================================================================*/
 /*========================================= N avis ======================================================*/
 
-$sql = "SELECT count(*)
+$sql = "SELECT id_avis
         FROM utilisateur
         JOIN avis ON avis.id_user = utilisateur.id_user
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
@@ -175,6 +176,40 @@ $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 $note = json_encode($resultats);
 
+/*=======================================================================================================*/
+/*========================================= Like avis bool ==============================================*/
+
+$sql = "SELECT avis.id_avis
+        FROM likes_avis 
+        JOIN avis ON avis.id_avis = likes_avis.id_avis 
+        JOIN lieu ON lieu.id_lieu = avis.id_lieu 
+        WHERE lieu.Adresse = '".$clave2."' AND likes_avis.id_user = '".$clave3."' AND likes_avis.like_bool = '1'";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$like_bool = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= DisLike avis bool ===========================================*/
+
+$sql = "SELECT avis.id_avis
+        FROM dislikes_avis 
+        JOIN avis ON avis.id_avis = dislikes_avis.id_avis 
+        JOIN lieu ON lieu.id_lieu = avis.id_lieu 
+        WHERE lieu.Adresse = '".$clave2."' AND dislikes_avis.id_user = '".$clave3."' AND dislikes_avis.dislike_bool = '1'";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$dislike_bool = json_encode($resultats);
+
 switch ($clave1) {
     case '0':
         echo $img_lieu;
@@ -205,6 +240,12 @@ switch ($clave1) {
         break;
     case '10':
         echo $note;
+        break;
+    case '11':
+        echo $like_bool;
+        break;
+    case '12':
+        echo $dislike_bool;
         break;
 }
 
