@@ -1,5 +1,5 @@
 <?php
-$bdd = mysqli_connect("localhost", "utilisateur", "projetweb2022", "projet");// On inclut la connexion à la bdd
+$bdd = mysqli_connect("localhost", "root", "", "projet");// On inclut la connexion à la bdd
 session_start();
   if(($_SESSION['email']) !== ""){
     $email = $_SESSION['email'];
@@ -98,6 +98,8 @@ session_start();
     <p>Prénom : <?php echo $donnees_user['Prenom']; ?></p>
     <p>Adresse mail : <?php echo $donnees_user['Mail']; ?></p>
     <p>Nombre de posts : 0</p> <!-- Faire une table pour enregistrer tous les posts (une sauvegarde) -->
+    <p>Avis liké :</p>
+    <div id="section-avis"></div>
     <p>Posts likés : liste des posts depuis bdd sauvegarde</p> 
     <!--Slider des posts likés -->
     <div class="post_like">
@@ -162,56 +164,7 @@ session_start();
 <button type="submit" name="supprimer" id="button_suppr">Supprimer mon compte</button>
 </form>
 
-<script>
-document.getElementById("button_suppr").addEventListener("click", function() {
-  if (confirm("Voulez-vous vraiment supprimer votre compte ?")) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "ev-note/pages/php/monprofil.php", true);
-    xhr.send();
-  }
-});
-
-let slideIndex = 1;
-showSlides(slideIndex);
-
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
-
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";
-  }
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " active";
-}
-
-var formulaireAffiche = false;
-document.getElementById("button_mdp").addEventListener("click", function() {
-  if (formulaireAffiche) {
-    formulaireAffiche = false;
-    document.getElementById("formulaire_mdp").style.display = "none";
-  } else {
-    formulaireAffiche = true;
-    document.getElementById("formulaire_mdp").style.display = "block";
-  }
-});
-
-</script>
+<script src="scriptprofil.js"></script>
 
 </body>
 
