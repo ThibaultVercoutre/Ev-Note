@@ -1277,6 +1277,10 @@ nav{
 	justify-content: left;
 }
 
+nav#nav-fin{
+  justify-content: center;
+}
+
 #la-page-actu {
   margin-left: 120px;
 }
@@ -1312,10 +1316,14 @@ nav .drop{
 }
 
 #map {
-  margin-left: 100px;
-  margin-right: 19px;
+  margin-left: 75px;
+  margin-right: 10px;
 }
-  
+
+:root{
+  --dacalage : 30px;
+}
+
 @keyframes fadeInAnimation {
 
   0% {
@@ -1324,10 +1332,10 @@ nav .drop{
   }
   30% {
     opacity: 1;
-    transform: scale(1.05,0.95) translateY(75px);
+    transform: scale(1.05,0.95) translateY(calc(var(--dacalage) + 25px));
   }
-  60% { transform: scale(0.975,1.025) translateY(40px); }
-  100% { transform: scale(1,1) translateY(50px); }
+  60% { transform: scale(0.975,1.025) translateY(calc(var(--dacalage) - 10px)); }
+  100% { transform: scale(1,1) translateY(var(--dacalage)); }
 }
 
 #creer-avis, #envoyer_avis{

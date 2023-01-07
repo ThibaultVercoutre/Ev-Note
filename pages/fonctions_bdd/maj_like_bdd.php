@@ -1,5 +1,5 @@
 <?php
-require_once 'pages/php/login.php';
+require_once '../php/login.php';
 $nb = $_POST['nombre'];
 $avis = $_POST['avis'];
 $type = $_POST['type'];

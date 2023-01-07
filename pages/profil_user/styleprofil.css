@@ -153,3 +153,83 @@ html{
     background-color: #456fa0;
   }
   
+/*=======================================================================================================*/
+/*========================================================= SECTION AVIS ================================*/
+
+#section-avis{
+  width: 1fr;
+  height: 100px;
+  overflow: auto;
+  border: 2px solid black;
+  border-radius: 16px;
+  margin: 10px;
+  scroll-snap-type: y mandatory;
+}
+  
+#section-avis::-webkit-scrollbar{
+  width: 5px;
+  background: transparent;
+}
+  
+#section-avis::-webkit-scrollbar-thumb{
+  width:10px;
+  border-radius: 5px;
+  height: 5px;
+  background: linear-gradient(var(--couleur-principale-1), #082374);
+}
+
+.avi{
+  scroll-snap-align: center;
+  width: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.avi .actions{
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  width: 25%;
+}
+
+.avi .text-avi{
+  flex: 6;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: left;
+  padding: 20px;
+}
+
+.avi .compte-note{
+  flex: 1;
+  display: flex;
+  height: 50px;
+  padding: 2px;
+  margin-left: 20px;
+  border-bottom: 2px solid #082374;
+}
+
+.avi .compte-note .img-profil-note{
+  width: 50px;
+  height: 100%;
+  border-radius: 16px;
+  border: 2px solid #082374;
+  margin: 0px;
+  transform: translateX(-15px);
+}
+
+.avi .compte-note .img-profil-note img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.avi .compte-note .nom{
+  font-size: 100%;
+}
+
+.avi .compte-note span.verified{
+  color: green;
+}
