@@ -38,7 +38,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Ev'Note</title>
-  <link href="../css/styleconnexion.css" rel="stylesheet" media="screen" type="text/css">
+  <link href="styleconnexion.css" rel="stylesheet" media="screen" type="text/css">
 </head>
 
 <body>

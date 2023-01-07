@@ -102,7 +102,7 @@
       <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
       <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     </div>
-    <div id="compte"><a href="pages/php/user_connexion.php">
+    <div id="compte"><a href="pages/connexion/user_connexion.php">
         <h2 id="connect">Connexion</h2>
         <div id="logo-connexion">
           <span class="material-symbols-outlined" id="user" data="0">account_circle</span>
@@ -700,12 +700,12 @@
   <footer id="le-footer">
     <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
     <div id="foot-gauche">
-      <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
+      <a class="lien-footer" href="./pages/CGUs/conditions.html">Conditions d'utilisation</a>
       <a class="lien-footer"
         href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
     </div>
     <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
-    <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
+    <a class="lien-footer" href="pages/devs/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
   </footer>
 </div>
 

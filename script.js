@@ -933,7 +933,9 @@ Bmap.onclick = function() {
 
 /* Si on clique sur le bouton actu */
 Bactu.onclick = function() {
-  currentSlide(1);
+  if(document.getElementsByClassName("dot").length > 0) {
+    currentSlide(1);
+  }
   Snotation.style.transform = "translate(-100%,0px)";
   afficheBarre(Sactu);
   affiche(Sactu, Smap);
@@ -1029,7 +1031,7 @@ BenvoyerAvis.onclick = function(){
     params.append('clave2', user);
     params.append('clave3', lieu);
 
-    fetch('fonction_php.php', {
+    fetch('pages/fonctions_bdd/fonction_php.php', {
       method: 'POST',
       body: params
     })
@@ -1050,7 +1052,7 @@ BenvoyerAvis.onclick = function(){
         element_champs_rep[0].value = '';
         element_champs_rep[1].value = '';
 
-        fetch('fonctions_envoie_avis.php', {
+        fetch('pages/fonctions_bdd/fonctions_envoie_avis.php', {
           method: 'POST',
           body: params
         }).then(response => response.json())
@@ -1168,7 +1170,7 @@ function addMarker(pos, nom, code) {
     params.append('clave2', adresse);
     params.append('clave3', '8');
 
-    fetch('fonction_php.php', {
+    fetch('pages/fonctions_bdd/fonction_php.php', {
       method: 'POST',
       body: params
     })
@@ -1199,7 +1201,7 @@ function modifAvis(){
     
   console.log(document.getElementById('user'));
     var user = document.getElementById('user').getAttribute("data");
-    var fichier = 'fonction_php.php';
+    var fichier = 'pages/fonctions_bdd/fonction_php.php';
 
     var adresse = null;
     if(document.getElementById("adresse-note") != null){
@@ -1567,7 +1569,7 @@ for(var i = 0; i < Bvilles.length; i++){
 function addActionBdd(avis, nb, type, bool){
     
     var user = document.getElementById('user').getAttribute("data");
-    fichier = 'maj_like_bdd';
+    fichier = 'pages/fonctions_bdd/maj_like_bdd.php';
 
     /* Maj like */
     var params = new URLSearchParams();
@@ -1700,7 +1702,7 @@ function plusSlides(n) {
   params.append('clave1', '18');
   params.append('clave2', slideIndex);
   console.log(slideIndex);
-  fetch('fonction_php_FA.php', {
+  fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
     method: 'POST',
     body: params
   })
@@ -1750,7 +1752,7 @@ function createFilActu(text){
   }
   params.append('clave2', text);
 
-  fetch('fonction_php_FA.php', {
+  fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
     method: 'POST',
     body: params
   })
@@ -1804,7 +1806,7 @@ function createFilActu(text){
     params.append('clave1', '2');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1820,7 +1822,7 @@ function createFilActu(text){
     params.append('clave1', '3');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1839,7 +1841,7 @@ function createFilActu(text){
     params.append('clave1', '4');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1855,7 +1857,7 @@ function createFilActu(text){
     params.append('clave1', '5');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1874,7 +1876,7 @@ function createFilActu(text){
     params.append('clave1', '6');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1890,7 +1892,7 @@ function createFilActu(text){
     params.append('clave1', '7');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1909,7 +1911,7 @@ function createFilActu(text){
     params.append('clave1', '8');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1925,7 +1927,7 @@ function createFilActu(text){
     params.append('clave1', '9');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1944,7 +1946,7 @@ function createFilActu(text){
     params.append('clave1', '10');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1960,7 +1962,7 @@ function createFilActu(text){
     params.append('clave1', '11');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1979,7 +1981,7 @@ function createFilActu(text){
     params.append('clave1', '12');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -1995,7 +1997,7 @@ function createFilActu(text){
     params.append('clave1', '13');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -2014,7 +2016,7 @@ function createFilActu(text){
     params.append('clave1', '14');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -2030,7 +2032,7 @@ function createFilActu(text){
     params.append('clave1', '15');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -2049,7 +2051,7 @@ function createFilActu(text){
     params.append('clave1', '16');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })
@@ -2065,7 +2067,7 @@ function createFilActu(text){
     params.append('clave1', '17');
     params.append('clave2', text);
 
-    fetch('fonction_php_FA.php', {
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
       method: 'POST',
       body: params
     })

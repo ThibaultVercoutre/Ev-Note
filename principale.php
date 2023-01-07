@@ -129,7 +129,7 @@ if(isset($_POST['uploadfiltre']))
     </div>
     <div id="compte_connect">
       <div id="actions_compte">
-        <div id="monprofil"><a href="pages/php/monprofil.php"><span class="material-symbols-outlined button drop">account_circle</span></a></div>
+        <div id="monprofil"><a href="pages/profil_user/monprofil.php"><span class="material-symbols-outlined button drop">account_circle</span></a></div>
         <div id="deconnexion"><a  href="pages/php/user_deconnexion.php"><span class="material-symbols-outlined button drop">power_settings_new</span></a></div>
       </div>
       <div id="boutton_compte" class="button drop" etat="0">
@@ -761,12 +761,12 @@ if(isset($_POST['uploadfiltre']))
   <footer id="le-footer">
     <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
     <div id="foot-gauche">
-      <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
+      <a class="lien-footer" href="./pages/CGUs/conditions.html">Conditions d'utilisation</a>
       <a class="lien-footer"
         href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
     </div>
     <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
-    <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
+    <a class="lien-footer" href="pages/devs/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
   </footer>
 </div>
 

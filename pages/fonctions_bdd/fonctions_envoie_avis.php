@@ -1,5 +1,5 @@
 <?php
-require_once 'pages/php/login.php';
+require_once '../php/login.php';
 $etoile = $_POST['etoile'];
 $avis = $_POST['avis'];
 $lieu = $_POST['lieu'];

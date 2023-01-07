@@ -78,7 +78,7 @@ session_start();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Ev'Note</title>
-  <link href="../css/styleprofil.css" rel="stylesheet" media="screen" type="text/css">
+  <link href="styleprofil.css" rel="stylesheet" media="screen" type="text/css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
