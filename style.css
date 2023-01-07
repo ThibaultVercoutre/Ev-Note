@@ -905,6 +905,58 @@ ion-icon {
     100% { transform: scale(1, 1); }
 }
 
+/* Bouton compte */
+
+#compte_connect{
+  padding: 0px 5px 0px 5px;
+  transition: 0.3s;
+  box-shadow: -1px 2px 2px grey;
+  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-6), var(--couleur-principale-5));
+  width: 170px;
+  position: relative;
+}
+
+#boutton_compte{
+  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-6), var(--couleur-principale-5));
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  z-index: 0;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#actions_compte{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  background-color: transparent;
+}
+
+#actions_compte > div{
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#actions_compte > div > a > span{
+  transform: scale(1.5) translate(0,0);
+}
+
+#compte_connect > div > div {
+  background-color: transparent;
+}
+
 /* Connexion */
 
 #compte{
