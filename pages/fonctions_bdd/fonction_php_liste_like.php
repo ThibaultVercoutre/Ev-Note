@@ -239,12 +239,22 @@ $sql_suppr3 = "DELETE FROM `dislikes_avis` WHERE id_avis = $bool";
 
 $sql_suppr4 = "DELETE FROM `reports_avis` WHERE id_avis = $bool";
 
+/* savoir si dev ou pas */
+
+$sql = "SELECT id_user from $table WHERE TypeCompte = '$bool' AND id_user = $user";
+$stmt = $bdd->prepare($sql);
+$stmt->execute();
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+$typeCompte = json_encode($resultats);
+
+
 switch($type){
     case '0': echo($nb_like); break;
     case '1': echo(json_encode([$photos_users, $prenoms, $verif, $notes, $avis, $up, $down, $report])); break;
     case '2': echo($nb_report); break;
     case '3': echo(json_encode([$photos_usersR, $prenomsR, $verifR, $notesR, $avisR, $upR, $downR, $reportR])); break;
     case '4': $bdd->exec($sql_suppr1); $bdd->exec($sql_suppr2); $bdd->exec($sql_suppr3); $bdd->exec($sql_suppr4); break;
+    case '5': echo($typeCompte); break;
 }
 
 ?>

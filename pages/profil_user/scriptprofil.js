@@ -226,6 +226,35 @@ function afficherLieuAvis(avis){
 }
 
 /*=======================================================================================================*/
+/*========================================= Afficher ou pas section admin ===============================*/
+
+function afficheAdmin(){
+  var user = document.getElementById("user").getAttribute("data");
+  var section_admin = document.getElementById("sectionAdmin");
+  var section_suppr_avis = document.getElementById("section-report");
+
+  var params = new URLSearchParams();
+  params.append('user', user);
+  params.append('table', 'utilisateur');
+  params.append('bool', 'Developpeur');
+  params.append('type', '5');
+
+  fetch('/pages/fonctions_bdd/fonction_php_liste_like.php', {
+    method: 'POST',
+    body: params
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    if(data.length == 0){
+      section_admin.parentElement.removeChild(section_admin);
+    }
+  });
+}
+
+afficheAdmin();
+
+/*=======================================================================================================*/
 /*========================================= Slides actu =================================================*/
 /*
 document.getElementById("button_suppr").addEventListener("click", function() {
