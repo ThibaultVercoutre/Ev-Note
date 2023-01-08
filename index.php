@@ -311,7 +311,7 @@
               <div id="elements-notations">
                 <div class="img">
                   
-                  <img src="" id="image_batiment_section_avis" alt="Image">
+                  <img src="" id="image_batiment_section_avis" alt="Image" data="1">
                   <div class="barres-notations">
                     <div class="barres-1">
                       <div class="barre-notation"></div>

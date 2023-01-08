@@ -1199,7 +1199,6 @@ function addMarker(pos, nom, code) {
 
 function modifAvis(){
     
-  console.log(document.getElementById('user'));
     var user = document.getElementById('user').getAttribute("data");
     var fichier = 'pages/fonctions_bdd/fonction_php.php';
 
@@ -1213,6 +1212,8 @@ function modifAvis(){
     params.append('clave1', '0');
     params.append('clave2', adresse);
     params.append('clave3', user);
+    
+    var imageElement = document.getElementById("image_batiment_section_avis");
 
     fetch(fichier, {
         method: 'POST',
@@ -1220,8 +1221,12 @@ function modifAvis(){
       })
       .then(response => response.json())
       .then(result => {
-        var imageElement = document.getElementById("image_batiment_section_avis");
-        imageElement.src = result;
+        if(result.length != 0){
+          imageElement.src = result;
+        }else{
+          imageElement.src = "";
+          imageElement.setAttribute("data", "0");
+        }
     });
 
     sleep(100);
@@ -1374,7 +1379,17 @@ function modifAvis(){
         moy += Number(data[i]);
       }
       let note_lieu = document.getElementsByClassName('barres-notations');
-      note_lieu[0].textContent = Number(Math.round(moy / data.length * 100) / 100) + ' / 5';
+      
+      console.log(document.querySelector(".img img").src);
+
+      if(data.length != 0){
+        note_lieu[0].textContent = Number(Math.round(moy / data.length * 100) / 100) + ' / 5';
+      }else if(imageElement.getAttribute == '1'){
+        note_lieu[0].textContent = 'Aucune note';
+      }else{
+        note_lieu[0].innerHTML = '<div id="creer_lieu" class="drop button">Créer un lieu</div>';
+      }
+      
     });
 
     /* Test avis like bool */

@@ -313,6 +313,12 @@ if(isset($_POST['uploadfiltre']))
       <div id="map-actu"></div>
 <!-- ===================================================================================================================== Page map -->
         <div class="parent" id="pages-map">
+
+<!-- -------------------------------------------------------------------------------------------------------------- Page Creer avis -->
+          <div class="page child1" id="section_creer_lieu">
+            <div>Coucou</div>
+          </div>
+
 <!-- -------------------------------------------------------------------------------------------------------------- Page Creer avis -->
           <div class="page child1" id="section_creer_avis">
             <div id="closeCreerAvis">
@@ -352,7 +358,7 @@ if(isset($_POST['uploadfiltre']))
               <div id="elements-notations">
                 <div class="img">
                   
-                  <img src="" id="image_batiment_section_avis" alt="Image">
+                  <img src="" id="image_batiment_section_avis" alt="Image" data="1">
                   <div class="barres-notations">
                     <div class="barres-1">
                       <div class="barre-notation"></div>

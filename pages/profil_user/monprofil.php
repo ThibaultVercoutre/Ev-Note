@@ -90,6 +90,11 @@ session_start();
     </div>
   </header>
 
+  <div id="verif_suppr">
+    <p>Recopiez la suite de caractères suivante pour valider la suppression :</p>
+    <p id="suite_carac"></p>
+    <input type="text" id="champ_verif">
+  </div>
   <div id="contenu">
     <h2 id="user" data="<?php echo $donnees_user['id_user']?>">Mon profil</h2>
     <hr>
@@ -107,6 +112,11 @@ session_start();
       <div id="section-avis-like" class="section"></div>
       <div id="section-avis-dislike" class="section"></div>
       <div id="section-avis-report" class="section"></div>
+    </div>
+    <div id="sectionAdmin">
+      <p>En temps que développeur, vous pouvez supprimer les avis signalés</p>
+      <div class="bouton_avis_signalés">Voir tout les avis signalés</div>
+      <div id="section-report" class="section2"></div>
     </div>
     <p>Posts likés : liste des posts depuis bdd sauvegarde</p> 
     <!--Slider des posts likés -->
@@ -153,6 +163,7 @@ session_start();
 
             </main>
           </div>
+    
   </div>
 <button type="submit" name="change" id="button_mdp">Changer de mot de passe</button>
 

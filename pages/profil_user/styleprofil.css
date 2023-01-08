@@ -156,7 +156,7 @@ html{
 /*=======================================================================================================*/
 /*========================================================= SECTION AVIS ================================*/
 
-.section{
+.section, .section2{
   flex: 1;
   height: 500px;
   overflow: auto;
@@ -166,12 +166,12 @@ html{
   scroll-snap-type: y none;
 }
   
-.section::-webkit-scrollbar{
+.section::-webkit-scrollbar, .section2::-webkit-scrollbar{
   width: 5px;
   background: transparent;
 }
   
-.section::-webkit-scrollbar-thumb{
+.section::-webkit-scrollbar-thumb, .section2::-webkit-scrollbar-thumb{
   width:10px;
   border-radius: 5px;
   height: 5px;
@@ -241,19 +241,20 @@ html{
   width: 100%;
 }
 
-#choix_like_dislike_report > div{
+#choix_like_dislike_report > div, .bouton_avis_signalés{
   flex: 1;
   text-align: center;
   position: relative;
   border: 1px solid #456fa0;
   padding: 15px;
   margin: 10px;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   transition: 0.3s;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
 }
 
-#choix_like_dislike_report > div:hover{
+#choix_like_dislike_report > div:hover, .bouton_avis_signalés:hover{
   background-color: #456fa0;
 }
 
@@ -261,20 +262,67 @@ html{
   display: flex;
 }
 
-#sections > div {
+#sections > div , .section2{
   display: none;
 }
 
-.go_avis{
+.go_avis, .suppr_avis{
   padding: 5px;
   position: absolute;
   right: 0;
   top: 0;
   border: 1px solid black;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.go_avis{ 
+  border: 1px solid black;
+}
+
+.suppr_avis{
+  border: 1px solid red;
+  color: red;
 }
 
 .go_avis:hover{
   background-color: #4377B2;
+}
+
+.suppr_avis:hover{
+  background-color: rgb(150,0,0);
+}
+
+#sectionAdmin .go_avis{
+ display: none;
+}
+
+#sections .suppr_avis{
+  display: none;
+}
+
+#verif_suppr{
+  position: absolute;;
+  width: 30%;
+  height: 150px;
+  background-color: red;
+  z-index: 2;
+  left: calc(50% - 15%);
+  top: 100px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+}
+
+#verif_suppr p{
+  text-align: center;
+  margin: 0px;
+}
+
+#suite_carac{
+  height: 30px;
+  margin-top: 10px;
 }
