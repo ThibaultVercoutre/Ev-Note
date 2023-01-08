@@ -1,7 +1,7 @@
 /*=======================================================================================================*/
 /*========================================= Chargement avis =============================================*/
 
-function ListeNavisLike(section, type){
+function ListeNavisLike(section, type, reponse){
 
   user = document.getElementById("user").getAttribute("data");
   let Savis = document.getElementById(section);
@@ -12,12 +12,17 @@ function ListeNavisLike(section, type){
     case '2': var table = 'reports_avis'; var bool = 'report_bool'; break; 
   }
 
+  switch(section){
+    case 'section-report': var b1 = '<div class="suppr_avis" onclick="genererCode('; var b2 =')">Supprimer cet Avis</div>'; break;
+    default: var b1 = '<div class="go_avis" onclick="afficherLieuAvis('; var b2 = ')">Se rendre au lieu de cet avis</div>'; break;
+  }
+
   /* creation n avis */
   var params = new URLSearchParams();
   params.append('user', user);
   params.append('table', table);
   params.append('bool', bool);
-  params.append('type', '0');
+  params.append('type', reponse);
 
   fetch('/pages/fonctions_bdd/fonction_php_liste_like.php', {
     method: 'POST',
@@ -25,8 +30,6 @@ function ListeNavisLike(section, type){
   })
   .then(response => response.json())
   .then(data => {
-    console.log(user, table, bool);
-    console.log(data);
     for(var i = 0; i < data.length; i++) {
       Savis.innerHTML += '<div class="avi" id="avis_' + data[i] + '">'
                           + '<div class="compte-note">'
@@ -34,7 +37,7 @@ function ListeNavisLike(section, type){
                             + '<div class="nom"></div>'
                             + '<span class="material-symbols-outlined verified"></span>'
                             + '<div class="barres-notations-user"></div>'
-                            + '<div class="go_avis">Se rendre au lieu de cet avis</div>'
+                            + b1 + data[i] + b2
                           + '</div>'
                           + '<div class="text-avi"></div>'
                           + '<div class="actions">'
@@ -47,13 +50,13 @@ function ListeNavisLike(section, type){
   });
 }
 
-ListeNavisLike('section-avis-like', '0');
-ListeNavisLike('section-avis-dislike', '1');
-ListeNavisLike('section-avis-report', '2');
+ListeNavisLike('section-avis-like', '0', '0');
+ListeNavisLike('section-avis-dislike', '1', '0');
+ListeNavisLike('section-avis-report', '2', '0');
+ListeNavisLike('section-report', '2', '0');
 
-function PlaceElement(s, type){
+function PlaceElement(s, type, reponse){
   user = document.getElementById("user").getAttribute("data");
-  let Savis = document.getElementById(s);
 
   switch(type){
     case '0': var table = 'likes_avis'; var bool = 'like_bool'; break; 
@@ -66,7 +69,7 @@ function PlaceElement(s, type){
   params.append('user', user);
   params.append('table', table);
   params.append('bool', bool);
-  params.append('type', '1');
+  params.append('type', reponse);
 
   fetch('/pages/fonctions_bdd/fonction_php_liste_like.php', {
     method: 'POST',
@@ -74,7 +77,8 @@ function PlaceElement(s, type){
   })
   .then(response => response.json())
   .then(data => {
-    /* Image */
+    console.log(data);
+
     var images = document.querySelectorAll('#' + s.getAttribute("id") + ' .img-profil-note-balise');
     var prenoms = document.querySelectorAll('#' + s.getAttribute("id") + ' .nom');
     var verif = document.querySelectorAll('#' + s.getAttribute("id") + ' .verified');
@@ -99,39 +103,127 @@ function PlaceElement(s, type){
   });
 }
 
-
 var button = document.getElementsByClassName('bouton_avis');
 var sections = document.getElementsByClassName('section');
 
-console.log(button);
-
-function TestBoutonsAvis(i, b){
-  b[i].style.backgroundColor = "#456fa0";
-  sections[i].style.display = "block";
-  i += 1;
-  b[i%3].style.backgroundColor = "";
-  sections[i%3].style.display = "none";
-  i += 1;
-  b[i%3].style.backgroundColor = "";
-  sections[i%3].style.display = "none";
+function TestBoutonsAvis(i, b, type){
+  if(type == '0'){
+    if(sections[i].style.display != "block"){
+      b[i].style.backgroundColor = "#456fa0";
+      sections[i].style.display = "block";
+    }else{
+      b[i].style.backgroundColor = "";
+      sections[i].style.display = "none";
+    }
+    i += 1;
+    b[i%3].style.backgroundColor = "";
+    sections[i%3].style.display = "none";
+    i += 1;
+    b[i%3].style.backgroundColor = "";
+    sections[i%3].style.display = "none";
+  }else{
+    if(sectionReport[0].style.display != "block"){
+      b[0].style.backgroundColor = "#456fa0";
+      sectionReport[0].style.display = "block";
+    }else{
+      b[0].style.backgroundColor = "";
+      sectionReport[0].style.display = "none";
+    }
+  }
 }
 
 button[0].onclick = function(){
-  TestBoutonsAvis(0, button);
-  PlaceElement(sections[0], '0');
+  TestBoutonsAvis(0, button, '0');
+  PlaceElement(sections[0], '0', '1');
 }
 
 button[1].onclick = function(){
-  TestBoutonsAvis(1, button);
-  PlaceElement(sections[1], '1');
+  TestBoutonsAvis(1, button, '0');
+  PlaceElement(sections[1], '1', '1');
 }
 
 button[2].onclick = function(){
-  TestBoutonsAvis(2, button);
-  PlaceElement(sections[2], '2');
+  TestBoutonsAvis(2, button, '0');
+  PlaceElement(sections[2], '2', '1');
 }
 
+/*=======================================================================================================*/
+/*========================================= Afficher les avis signalés ==================================*/
 
+var button2 = document.getElementsByClassName('bouton_avis_signalés');
+var sectionReport = document.getElementsByClassName('section2');
+
+button2[0].onclick = function(){
+  TestBoutonsAvis(0, button2, '1');
+  PlaceElement(sectionReport[0], '2', '3');
+}
+
+/*=======================================================================================================*/
+/*========================================= supprimer un avis ===========================================*/
+
+function generateString(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+var txt = '';
+var avis_suppr = 0;
+
+function genererCode(avis){
+    txt = generateString(10);
+    document.getElementById("suite_carac").textContent = txt;
+    document.getElementById("verif_suppr").style.display = "flex";
+    avis_suppr = avis;
+}
+
+function supprimerAvis(avis){
+  document.getElementById("verif_suppr").style.display = "none";
+
+  var elements = [document.querySelector('#section-report #avis_' + avis),
+                document.querySelector('#section-avis-like #avis_' + avis),
+                document.querySelector('#section-avis-dislike #avis_' + avis),
+                document.querySelector('#section-avis-report #avis_' + avis)];
+  
+  for(var i = 0; i < elements.length; i++) {
+    if(elements[i] != null){
+      var parent = elements[i].parentNode;
+      parent.removeChild(elements[i]);
+    }
+  }  
+
+  var params = new URLSearchParams();
+  params.append('user', '');
+  params.append('table', 'avis');
+  params.append('bool', avis);
+  params.append('type', '4');
+
+  fetch('/pages/fonctions_bdd/fonction_php_liste_like.php', {
+    method: 'POST',
+    body: params
+  })
+}
+
+const input = document.querySelector('#champ_verif');
+
+input.addEventListener('input', () => {
+  if(input.value == txt){
+    supprimerAvis(avis_suppr)
+  }
+});
+
+/*=======================================================================================================*/
+/*========================================= Aller au lieu de l'avis =====================================*/
+
+var go_avis = document.getElementById("go_avis");
+
+function afficherLieuAvis(avis){
+  window.open('../../principale.php', '_self');
+}
 
 /*=======================================================================================================*/
 /*========================================= Slides actu =================================================*/
