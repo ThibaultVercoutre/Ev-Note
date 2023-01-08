@@ -48,7 +48,7 @@
         }
     }
     ?>
-  <form action="verification.php" method="post">
+  <form action="../php/verification.php" method="post">
     
       <h1>Se connecter</h1>
       <hr>

@@ -91,15 +91,23 @@ session_start();
   </header>
 
   <div id="contenu">
-    <h2>Mon profil</h2>
+    <h2 id="user" data="<?php echo $donnees_user['id_user']?>">Mon profil</h2>
     <hr>
     <img src="<?php echo $donnees_user['chemin'];?>" class="photo_profil">
     <p>Nom : <?php echo $donnees_user['Nom']; ?></p>
     <p>Prénom : <?php echo $donnees_user['Prenom']; ?></p>
     <p>Adresse mail : <?php echo $donnees_user['Mail']; ?></p>
     <p>Nombre de posts : 0</p> <!-- Faire une table pour enregistrer tous les posts (une sauvegarde) -->
-    <p>Avis liké :</p>
-    <div id="section-avis"></div>
+    <div id="choix_like_dislike_report">
+      <div class="bouton_avis">Avis likés</div>
+      <div class="bouton_avis">Avis dislikés</div>
+      <div class="bouton_avis">Avis signalés</div>
+    </div>
+    <div id="sections">
+      <div id="section-avis-like" class="section"></div>
+      <div id="section-avis-dislike" class="section"></div>
+      <div id="section-avis-report" class="section"></div>
+    </div>
     <p>Posts likés : liste des posts depuis bdd sauvegarde</p> 
     <!--Slider des posts likés -->
     <div class="post_like">
