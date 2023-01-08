@@ -156,22 +156,22 @@ html{
 /*=======================================================================================================*/
 /*========================================================= SECTION AVIS ================================*/
 
-#section-avis{
-  width: 1fr;
-  height: 100px;
+.section{
+  flex: 1;
+  height: 500px;
   overflow: auto;
   border: 2px solid black;
   border-radius: 16px;
   margin: 10px;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y none;
 }
   
-#section-avis::-webkit-scrollbar{
+.section::-webkit-scrollbar{
   width: 5px;
   background: transparent;
 }
   
-#section-avis::-webkit-scrollbar-thumb{
+.section::-webkit-scrollbar-thumb{
   width:10px;
   border-radius: 5px;
   height: 5px;
@@ -181,9 +181,10 @@ html{
 .avi{
   scroll-snap-align: center;
   width: auto;
-  height: 100%;
+  height: 20%;
   display: flex;
   flex-direction: column;
+  margin: 10px;
 }
 
 .avi .actions{
@@ -195,41 +196,85 @@ html{
 
 .avi .text-avi{
   flex: 6;
-  font-size: 15px;
+  font-size: 10px;
   font-weight: bold;
   text-align: left;
-  padding: 20px;
+  padding: 10px;
 }
 
 .avi .compte-note{
-  flex: 1;
   display: flex;
-  height: 50px;
+  height: 25px;
   padding: 2px;
   margin-left: 20px;
   border-bottom: 2px solid #082374;
+  position: relative;
 }
 
 .avi .compte-note .img-profil-note{
-  width: 50px;
-  height: 100%;
-  border-radius: 16px;
+  width: 25px;
+  height: 25px;
+  border-radius: 8px;
   border: 2px solid #082374;
   margin: 0px;
   transform: translateX(-15px);
 }
 
 .avi .compte-note .img-profil-note img{
-  height: 100%;
-  width: 100%;
+  height: 25px;
+  width: 25px;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 7px;
 }
 
 .avi .compte-note .nom{
-  font-size: 100%;
+  font-size: 25px;
 }
 
 .avi .compte-note span.verified{
   color: green;
+}
+
+#choix_like_dislike_report{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#choix_like_dislike_report > div{
+  flex: 1;
+  text-align: center;
+  position: relative;
+  border: 1px solid #456fa0;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#choix_like_dislike_report > div:hover{
+  background-color: #456fa0;
+}
+
+#sections{
+  display: flex;
+}
+
+#sections > div {
+  display: none;
+}
+
+.go_avis{
+  padding: 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 1px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.go_avis:hover{
+  background-color: #4377B2;
 }
