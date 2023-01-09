@@ -10,13 +10,7 @@
 <body>
   <header>
     <div id="titre">
-      <div id="effecten">
-        <h1 data-text="Ev'Note" id="evnote">Ev'Note</h1>
-        <div id = "gradient" class="gradient"></div>
-        <div class="spotlight"></div>
-      </div>
-      <span id="time-animation" class="material-symbols-outlined"></span>
-      <div id="time">Page de Connexion</div>
+      <h1>Ev'Note</h1>
     </div>
   </header>
   
@@ -78,4 +72,4 @@
 
 </body>
 </html>
-<script src="../../header.js"></script>
+

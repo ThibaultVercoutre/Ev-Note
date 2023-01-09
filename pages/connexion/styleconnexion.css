@@ -1,12 +1,3 @@
-:root{
-  --couleur-principale-1 : #4377B2;
-  --couleur-principale-2 : #4D98BF;
-  --couleur-principale-3 : #5FAEBE;
-  --couleur-principale-4 : #81C3C3;
-  --couleur-principale-5 : #F3FbF8;
-  --couleur-principale-6 : #76BBEC;
-}
-
 html{
   background-color: #F3FBF8;
   font-family: 'ZT Grafton', sans-serif;
@@ -19,169 +10,36 @@ body{
 /* HEADER */
 
 header{
-  z-index: 5;
-  height: 7vh;
+  height: 60px;
   display: flex;
-	position: sticky;
-	top: 0;
-	left: 0;
 }
 
 header div{
-  background-color: var(--couleur-principale-1);
+  background-color: #4377B2;
   margin: 0px 0px 0px 0px;
   border-radius: 0rem 0rem .5rem .5rem;
 }
 
-/* Meteo */
-
-#weatherbackground {
-  position: absolute;
-  left: 0px;
-  height: 7vh;
-  width: 80%;
-  animation: rain 5s linear infinite;
-}
-
-#weatherbackground::before {
-  content:'';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  animation: lighting 10s linear infinite;
-  opacity: 0;
-}
-
-@keyframes rain{
-  0%{background-position: 0% 100%;}
-  100%{background-position: 28% 0%;}
-}
-
-@keyframes clouds{
-  0%{background-position: 0% 0%;}
-  100%{background-position: 100% 0%;}
-}
-
-/* Titre */
-
 #titre {
-  flex: 8;
+  flex: 80%;
   display: flex;
   align-items: center;
 }
 
-#effecten {
-  overflow: hidden;
-  filter: contrast(150%) brightness(1000%);
-  position: relative;
-  background: black;
-  width: 130px;
-  height: 100%;
-  border-radius: 0;
-  display: flex;
-  align-items: center;
-  padding: 0 10px 0 20px;
-}
-
-#evnote {
-  color: #fff;
-  margin: 0;
-  font-size: 32px;
-  text-transform: uppercase;
-  text-align: center;
-  background:  black;
+#titre h1 {
+  padding: 0 0 0 90px;
+  margin-left: 150px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  position: relative;
-  border: 0;
+  flex: 1;
 }
 
-#evnote::before, #evnote::after {
-  content: attr(data-text);
-  color: #fff;
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  filter: blur(0.02em);
-}
-
-#evnote::after {
-  mix-blend-mode: difference;
-}
-
-.gradient, .spotlight {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
-}
-
-.gradient {
-  background: linear-gradient(45deg, red, yellow);
-  mix-blend-mode: multiply;
-}
-
-.spotlight {
-  top: -100%;
-  left: -100%;
-  background: radial-gradient(circle, white, transparent 25%) 0 0 / 25% 25%, radial-gradient(circle, white, black 25%) 50% 50% / 12.5% 12.5%;
-  mix-blend-mode: color-dodge;
-  animation: Fire 5s linear infinite;
-}
-
-@keyframes Fire {
-  100% {
-    transform: translate(50%, 50%);
-  }
-}
-
-#time-animation, #meteo{
-  margin: 0 10px;
-}
-
-#time-animation{
-  animation: timeAnimation 10s ease infinite;
-}
-
-@keyframes timeAnimation {
-  0% {
-    transform: rotate(-10deg);
-  }
-  50% {
-    transform: rotate(+10deg);
-  }
-  100% {
-    transform: rotate(-10deg);
-  }
-}
-
-#meteo{
-  animation: meteoAnimation 10s ease infinite;
-}
-
-@keyframes meteoAnimation {
-  0% {
-    transform: scale(0.9);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(0.9);
-  }
-}
-
-#time {  
-  background: transparent;
-  position: relative;
-  font-size: 23px;
-  margin: 0 0 0 0;
-  color: #222;
-  border-radius: 0;
-  border-bottom: 2px solid #222;
+#titre #div-search{
+  flex: 1;
+	transition: 0.3s;
+  transform-origin: right;
+  display: flex;
+  z-index: 0;
+  padding: 0px;
 }
 
 #compte a{
