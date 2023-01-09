@@ -103,10 +103,10 @@
       <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
       <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     </div>
-    <div id="compte"><a href="pages/php/user_connexion.php">
+    <div id="compte"><a href="pages/connexion/user_connexion.php">
         <h2 id="connect">Connexion</h2>
         <div id="logo-connexion">
-          <span class="material-symbols-outlined">account_circle</span>
+          <span class="material-symbols-outlined" id="user" data="0">account_circle</span>
         </div>
       </a>
     </div>
@@ -312,7 +312,7 @@
               <div id="elements-notations">
                 <div class="img">
                   
-                  <img src="" id="image_batiment_section_avis" alt="Image">
+                  <img src="" id="image_batiment_section_avis" alt="Image" data="1">
                   <div class="barres-notations">
                     <div class="barres-1">
                       <div class="barre-notation"></div>
@@ -345,13 +345,6 @@
 <!-- --------------------------------------------------------------------------------------------------------------------- Page GPS -->
 
           <div class="page child1" id="section-gps">
-            <div id="title-gps">
-              <h3>Voulez-vous autoriser Ev'Note à accéder à votre localisation ?</h3>
-              <div id="boutons-popup">
-                <div class="button anim-button" id="oui-gps">Oui</div>
-                <div class="button anim-button" id="non-gps">Non</div>
-              </div>
-            </div>
           </div>
           <div class="page child1" id="itineraire-gps">
             <div>
@@ -415,8 +408,8 @@
                   </div>
                 </div>
                 <!-- Next and previous buttons -->
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                <a id ="bprev" class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a id="bnext" class="next" onclick="plusSlides(1)">&#10095;</a>
               </div>
               
             <br>
@@ -708,12 +701,12 @@
   <footer id="le-footer">
     <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
     <div id="foot-gauche">
-      <a class="lien-footer" href="./pages/conditions.html">Conditions d'utilisation</a>
+      <a class="lien-footer" href="./pages/CGUs/conditions.html">Conditions d'utilisation</a>
       <a class="lien-footer"
         href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
     </div>
     <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
-    <a class="lien-footer" href="pages/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
+    <a class="lien-footer" href="pages/devs/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
   </footer>
 </div>
 

@@ -905,6 +905,58 @@ ion-icon {
     100% { transform: scale(1, 1); }
 }
 
+/* Bouton compte */
+
+#compte_connect{
+  padding: 0px 5px 0px 5px;
+  transition: 0.3s;
+  box-shadow: -1px 2px 2px grey;
+  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-6), var(--couleur-principale-5));
+  width: 170px;
+  position: relative;
+}
+
+#boutton_compte{
+  background: linear-gradient(45deg, var(--couleur-principale-1), var(--couleur-principale-2), var(--couleur-principale-3), var(--couleur-principale-4), var(--couleur-principale-6), var(--couleur-principale-5));
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  z-index: 0;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#actions_compte{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  background-color: transparent;
+}
+
+#actions_compte > div{
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#actions_compte > div > a > span{
+  transform: scale(1.5) translate(0,0);
+}
+
+#compte_connect > div > div {
+  background-color: transparent;
+}
+
 /* Connexion */
 
 #compte{
@@ -1222,7 +1274,15 @@ nav, #interact{
 }
 
 nav{
-	justify-content: center;
+	justify-content: left;
+}
+
+nav#nav-fin{
+  justify-content: center;
+}
+
+#la-page-actu {
+  margin-left: 120px;
 }
 
 #interact{
@@ -1254,7 +1314,16 @@ nav .drop{
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
-  
+
+#map {
+  margin-left: 75px;
+  margin-right: 10px;
+}
+
+:root{
+  --dacalage : 30px;
+}
+
 @keyframes fadeInAnimation {
 
   0% {
@@ -1263,10 +1332,10 @@ nav .drop{
   }
   30% {
     opacity: 1;
-    transform: scale(1.05,0.95) translateY(75px);
+    transform: scale(1.05,0.95) translateY(calc(var(--dacalage) + 25px));
   }
-  60% { transform: scale(0.975,1.025) translateY(40px); }
-  100% { transform: scale(1,1) translateY(50px); }
+  60% { transform: scale(0.975,1.025) translateY(calc(var(--dacalage) - 10px)); }
+  100% { transform: scale(1,1) translateY(var(--dacalage)); }
 }
 
 #creer-avis, #envoyer_avis{
@@ -1868,7 +1937,22 @@ nav .drop{
 }
 
 /*=======================================================================================================*/
-/*================================================== SECTION CREER AVIS ===================================*/
+/*================================================== SECTION CREER LIEU =================================*/
+
+#section_creer_lieu{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*=======================================================================================================*/
+/*================================================== SECTION CREER AVIS =================================*/
+
+#creer_lieu{
+  font-size: 30px;
+  padding: 5px;
+  transform: translateY(-10px);
+}
 
 #section_creer_avis {
   transform: translate(-100%, 0);
@@ -1940,12 +2024,12 @@ main {
 
 /* Slideshow container */
 #section-fil-actu .slideshow-container {
-  background-color: whitesmoke;
-  width: 1000px;
+  background-color: #222;
+  width: 700px;
   position: relative;
   margin: auto;
   border: solid;
-  height: 100%;
+  height: 500px;
 }
 
 /* Hide the images by default */
@@ -2036,7 +2120,7 @@ main {
 }
 
 #section-fil-actu img {
-  max-width:100%;
+  object-fit: cover;
 }
 
 #section-fil-actu .avator {
@@ -2050,15 +2134,17 @@ main {
 #section-fil-actu #Article {
   max-width:490px;
   height: 100%;
+  max-height: 380px;
   background: #5FAEBE;
   margin: 0 auto;
   margin-top: 20px;
-  margin-bottom: 20px;
   border-radius:3px;
-  padding: 30px;
+  padding: 30px 30px 70px 30px;
   border-bottom: 1px solid #e6ecf0;
   border-top: 1px solid #e6ecf0;
 }
+
+
 
 /*
 #section-fil-actu #Article {
