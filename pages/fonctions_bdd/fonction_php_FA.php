@@ -6,7 +6,7 @@ $clave2 = $_POST['clave2'];
 /*=======================================================================================================*/
 /*========================================= N avis ======================================================*/
 
-$sql = "SELECT COUNT(*) FROM form_fil";
+$sql = "SELECT id_forum FROM form_fil";
 
 $stmt = $bdd->prepare($sql);
 
@@ -287,6 +287,35 @@ $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 $Report = json_encode($resultats);
 
+/*=======================================================================================================*/
+/*========================================= Dislike Post =================================================*/
+
+$sql = "SELECT CptPouceRouge
+        FROM form_fil";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$Dislike = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= Dislike Post Filtre =================================================*/
+
+$sql = "SELECT CptPouceRouge
+        FROM form_fil
+        WHERE TypeEvenement IN ($clave2)";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$Dislike_filtre = json_encode($resultats);
+
 switch ($clave1) {
     case '0':
         echo $n_article;
@@ -343,8 +372,11 @@ switch ($clave1) {
         echo $Report;
         break;
     case '18':
-        echo $Fond;
-        break;    
+        echo $Dislike_filtre;
+        break;  
+    case '19':
+        echo $Dislike;
+        break;       
 }
 
 
