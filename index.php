@@ -76,7 +76,6 @@
   <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js"
     integrity="sha512-zdT4Pc2tIrc6uoYly2Wp8jh6EPEWaveqqD3sT0lf5yei19BC1WulGuh5CesB0ldBKZieKGD7Qyf/G0jdSe016A=="
     crossorigin=""></script>
-  <script src='https://api.mapbox.com/directions/v5/mapbox/driving/{origin},{destination}?geometries=geojson&access_token=YOUR_MAPBOX_API_KEY'></script>  
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 

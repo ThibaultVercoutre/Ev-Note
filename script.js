@@ -368,15 +368,13 @@ let Tville = document.getElementById("ville-name-notation");
 
 /* GPS ===================================*/
 let Bgps = document.getElementById("itineraire");
-<<<<<<< HEAD
 /*
 let Bouigps = document.getElementById("oui-gps");
 let Bnongps = document.getElementById("non-gps");
 let Stitlegps = document.getElementById("title-gps");
 */
-=======
 let Bitineraire = document.getElementById("go-itineraire");
->>>>>>> c78677e64e3732917355a979b1e1ac08be092df4
+
 let Sitineraire = document.getElementById("itineraire-gps");
 let GoGPS = document.getElementById("go-itineraire");
 
@@ -812,7 +810,6 @@ Bscroll.onclick = function() {
 /*=======================================================================================================*/
 /*============================================ GPS ======================================================*/
 
-<<<<<<< HEAD
 
 /*
 Bouigps.onclick = function() {
@@ -831,10 +828,8 @@ Bnongps.onclick = function() {
   Sitineraire.style.transition = "0.3s";
   Sitineraire.style.transform = "translate(0px,0px)";
   document.getElementById("input-arrivee-gps").value = texte;
-=======
 Bitineraire.onclick = function() {
   
->>>>>>> c78677e64e3732917355a979b1e1ac08be092df4
 }
 */
 
@@ -1545,17 +1540,12 @@ function boutongps(e) {
       ContentPopup.innerHTML = '<h3>Voulez-vous autoriser Ev\'Note à accéder à votre localisation ?</h3><div id="boutons-popup"><div class="button anim-button" id="oui-gps">Oui</div><div class="button anim-button" id="non-gps">Non</div></div></br>';*/
       Sgps.style.transition = "0.3s";
       Sgps.style.transform = "translate(0px,0px)";
-<<<<<<< HEAD
       /*
       Stitlegps.style.transition = "0.3s";
       Stitlegps.style.transform = "translate(0px,0px)";
       */
       Sitineraire.style.transition = "0.3s";
       Sitineraire.style.transform = "translate(0px,0px)";
-=======
-      Sitineraire.style.transition = "0.3s";
-      Sitineraire.style.transform = "translate(0,0px)";
->>>>>>> c78677e64e3732917355a979b1e1ac08be092df4
       document.getElementById("input-arrivee-gps").value = texte;
     }
   }
