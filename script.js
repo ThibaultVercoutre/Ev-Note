@@ -368,8 +368,15 @@ let Tville = document.getElementById("ville-name-notation");
 
 /* GPS ===================================*/
 let Bgps = document.getElementById("itineraire");
+/*
+let Bouigps = document.getElementById("oui-gps");
+let Bnongps = document.getElementById("non-gps");
+let Stitlegps = document.getElementById("title-gps");
+*/
 let Bitineraire = document.getElementById("go-itineraire");
+
 let Sitineraire = document.getElementById("itineraire-gps");
+let GoGPS = document.getElementById("go-itineraire");
 
 /* Sections ==============================*/
 let Sfooter = document.getElementById("le-footer");
@@ -803,9 +810,59 @@ Bscroll.onclick = function() {
 /*=======================================================================================================*/
 /*============================================ GPS ======================================================*/
 
+
+/*
+Bouigps.onclick = function() {
+  Stitlegps.style.transition = "0.3s";
+  Stitlegps.style.transform = "translate(-100%,0px)";
+  Sitineraire.style.transition = "0.3s";
+  Sitineraire.style.transform = "translate(0px,0px)";
+  var localisation = "Pas d'accès encore";
+  document.getElementById("input-depart-gps").value = localisation;
+  document.getElementById("input-arrivee-gps").value = texte;
+}
+
+Bnongps.onclick = function() {
+  Stitlegps.style.transition = "0.3s";
+  Stitlegps.style.transform = "translate(-100%,0px)";
+  Sitineraire.style.transition = "0.3s";
+  Sitineraire.style.transform = "translate(0px,0px)";
+  document.getElementById("input-arrivee-gps").value = texte;
 Bitineraire.onclick = function() {
   
 }
+*/
+
+var watchId;
+
+GoGPS.addEventListener ("click", function() {
+  // Vérifier si le navigateur prend en charge la géolocalisation
+  if ("geolocation" in navigator) {
+    navigator.permissions.query({name:'geolocation'}).then(function(permissionStatus) {
+      // Vérifier si la géolocalisation est autorisée
+      if (permissionStatus.state === 'granted') {
+        // La géolocalisation est autorisée, lancer le suivi du GPS en continu
+        watchId = navigator.geolocation.watchPosition(function(position) {
+          // Récupérer les coordonnées de la position actuelle de l'utilisateur
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+    
+          // Mettre à jour les coordonnées du marqueur et centrer la carte sur la position actuelle de l'utilisateur
+          marker.setLatLng([lat, lng]);
+          map.setView([lat, lng], 13);
+        });
+      } else if (permissionStatus.state === 'prompt') {
+        // La géolocalisation n'est pas autorisée, demander à l'utilisateur de l'autoriser
+        alert("Veuillez autoriser la géolocalisation pour lancer le suivi de votre position sur la carte.");
+      } else {
+        // La géolocalisation est bloquée, afficher un message d'erreur
+        alert("La géolocalisation est désactivée ou bloquée par votre navigateur ou votre système d'exploitation.");
+      }
+    });
+  } else {
+    alert("La géolocalisation n'est pas prise en charge par votre navigateur.");
+  }
+});
 
 /*=======================================================================================================*/
 /*===================================== Chargement des notes des avis ===================================*/
@@ -1483,8 +1540,12 @@ function boutongps(e) {
       ContentPopup.innerHTML = '<h3>Voulez-vous autoriser Ev\'Note à accéder à votre localisation ?</h3><div id="boutons-popup"><div class="button anim-button" id="oui-gps">Oui</div><div class="button anim-button" id="non-gps">Non</div></div></br>';*/
       Sgps.style.transition = "0.3s";
       Sgps.style.transform = "translate(0px,0px)";
+      /*
+      Stitlegps.style.transition = "0.3s";
+      Stitlegps.style.transform = "translate(0px,0px)";
+      */
       Sitineraire.style.transition = "0.3s";
-      Sitineraire.style.transform = "translate(0,0px)";
+      Sitineraire.style.transform = "translate(0px,0px)";
       document.getElementById("input-arrivee-gps").value = texte;
     }
   }
