@@ -358,7 +358,9 @@ let Bdunkerque = document.getElementById("ville_Dunkerque");
 let Bsaintomer = document.getElementById("ville_Saint-Omer");
 let BcreerAvis = document.getElementById("creer-avis");
 let BcloseCreerAvis = document.getElementById("closeCreerAvis");
+let BcloseCreerLieu = document.getElementById("closeCreerLieu");
 let BenvoyerAvis = document.getElementById("envoyer_avis");
+let BenvoyerLieu = document.getElementById("envoyer_lieu");
 
 /* Test ==================================*/
 let Tadresse = document.getElementById("batiment-name");
@@ -975,6 +977,11 @@ BcreerAvis.onclick = function(){
 
 BcloseCreerAvis.onclick = function(){
   ScreerAvis.style.transform = "translate(-100%,0px)";
+  ScreerLieu.style.transform = "translate(-100%, 0px)";
+}
+
+BcloseCreerLieu.onclick = function(){
+  ScreerLieu.style.transform = "translate(-100%, 0px)";
 }
 
 /* Si on clique sur la section checkbox */
@@ -1007,6 +1014,10 @@ function addavis(id){
                             + '<span class="material-symbols-outlined report">priority_high</span><div class="b_report"></div>'
                           + '</div>'
                         + '</div>';
+}
+
+BenvoyerLieu.onclick = function(){
+  
 }
 
 BenvoyerAvis.onclick = function(){
@@ -1379,8 +1390,6 @@ function modifAvis(){
         moy += Number(data[i]);
       }
       let note_lieu = document.getElementsByClassName('barres-notations');
-      
-      console.log(document.querySelector(".img img").src);
 
       if(data.length != 0){
         note_lieu[0].textContent = Number(Math.round(moy / data.length * 100) / 100) + ' / 5';
@@ -2313,3 +2322,59 @@ function griserBouttons(){
 }
 
 griserBouttons();
+
+
+/*=======================================================================================================*/
+/*========================================= Génération top 10 ===========================================*/
+
+function raccourcis(text){
+  text = text.replace(' de Calais', '');
+
+  return text;
+}
+
+function Top10(){
+  var top = document.querySelectorAll(".element h4");
+  var top_note = document.querySelectorAll(".element .note");
+  var top_img = document.querySelectorAll(".element .image_top");
+
+  var params = new URLSearchParams();
+    params.append('type', '0');
+
+    fetch('/pages/fonctions_bdd/fonction_php_top.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      for(var i = 0; i < data[0].length; i++){
+        var text = raccourcis(data[0][i]);
+        top[i].textContent = text;
+        top_note[i].textContent = data[1][i] + " / 5";
+        top_img[i].src = data[2][i];
+        if(i < 5){
+          top[i+10].textContent = text;
+          top_note[i+10].textContent = data[1][i] + " / 5";
+          top_img[i+10].src = data[2][i];
+        }
+      }
+    });
+}
+
+Top10();
+
+let ScreerLieu = document.getElementById("section_creer_lieu");
+let Snot = document.getElementById("details-notations");
+
+Snot.onclick = function(e){
+  let BcreerLieu = document.getElementById("creer_lieu");
+  if(e.target = BcreerLieu){
+    ScreerLieu.style.transform = "translate(0px, 0px)";
+    var NomBat = document.getElementById("batiment-name").textContent;
+    var Ville = ville_active;
+    document.getElementById("batiment_creer_lieu").textContent = NomBat;
+    document.getElementById("batiment_creer_lieu_input").value = NomBat;
+    document.getElementById("ville_creer_lieu").textContent = Ville;
+    document.getElementById("ville_creer_lieu_input").value = Ville;
+  }
+}

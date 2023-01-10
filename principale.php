@@ -49,8 +49,42 @@ if(isset($_POST['upload']))
     move_uploaded_file($_FILES['image']['tmp_name'], $path);
                         // On redirige avec le message de succès
     header('Location:../../principale.php?reg_err=success');
+}
+
+// Envoyer Lieu
+
+if(isset($_POST['uploadLieu']))
+{
+    $image = $_FILES['imageLieu']['name'];
+    $path = 'img_lieu/'.$image;
+
+    $id_user = $donnees['id_user'];
+    $nomBat = htmlspecialchars($_POST['batiment_creer_lieu_input']);
+    $ville = htmlspecialchars($_POST['ville_creer_lieu_input']);
+
+    $count_ligne = $bdd->query("SELECT id_lieu FROM lieu_tmp");
+    $id_max = mysqli_num_rows($count_ligne) + 1;
+
+    $result = $bdd->query("SELECT max(id_lieu) FROM lieu_tmp");
+    $id_max= mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+
+    $result = $bdd->query("SELECT max(id_p_eta) FROM photo_eta");
+    $id_img_max= mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+
+    $id_lieu = $id_max['max(id_lieu)'] + 1;
+    $id_photo = $id_img_max['max(id_p_eta)'] + 1;
+    $sql2 = $bdd->query("INSERT INTO photo_eta (id_p_eta, Chemin) VALUES ('$id_photo', '$path')");
+    $sql = $bdd->query("INSERT INTO lieu_tmp (id_lieu, id_p_eta, Adresse, Ville) VALUES ('$id_lieu', '$id_photo','$nomBat','$ville')");
+    
+    move_uploaded_file($_FILES['imageLieu']['tmp_name'], $path);
+
+    header('Location:../../principale.php');
+
     die();
 }
+
 $checkboxValuesfiltre = [];
 $checkboxValuescommentlike = 1;
 if(isset($_POST['uploadfiltre']))
@@ -162,105 +196,135 @@ if(isset($_POST['uploadfiltre']))
 <div class="marquee">
       <div class="elements-marquee">
         <div class="element">
-          <div class="photo 1"></div>
+          <div class="photo 1">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 1</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 2"></div>
+          <div class="photo 2">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 2</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 3"></div>
+          <div class="photo 3">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 3</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 4"></div>
+          <div class="photo 4">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 4</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 5"></div>
+          <div class="photo 5">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 5</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 6"></div>
+          <div class="photo 6">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 6</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 7"></div>
+          <div class="photo 7">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 7</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 8"></div>
+          <div class="photo 8">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 8</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 9"></div>
+          <div class="photo 9">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 9</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 10"></div>
+          <div class="photo 10">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 10</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 1"></div>
+          <div class="photo 1">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 1</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 2"></div>
+          <div class="photo 2">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 2</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 3"></div>
+          <div class="photo 3">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 3</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 4"></div>
+          <div class="photo 4">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 4</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 5"></div>
+          <div class="photo 5">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 5</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
@@ -314,9 +378,31 @@ if(isset($_POST['uploadfiltre']))
 <!-- ===================================================================================================================== Page map -->
         <div class="parent" id="pages-map">
 
-<!-- -------------------------------------------------------------------------------------------------------------- Page Creer avis -->
+<!-- -------------------------------------------------------------------------------------------------------------- Page Creer lieu -->
+<!--  onsubmit="return checkForm(this);" -->
           <div class="page child1" id="section_creer_lieu">
-            <div>Coucou</div>
+            <div id="closeCreerLieu">
+              <div class="logo-close button">
+                <div class="croix1"></div>
+                <div class="croix2"></div>
+              </div>
+            </div>
+            <form method="post" action="principale.php" enctype="multipart/form-data">
+              <div id="formulaire_creer_avis">
+                <p id="message_envoie_avis"></p>
+                <div>
+                  <div class="titre_champ" id="batiment_creer_lieu" name="batiment_creer_lieu"></div>
+                  <input type="text" id="batiment_creer_lieu_input" name="batiment_creer_lieu_input" style="display: none;">
+                  <div class="titre_champ" id="ville_creer_lieu" name="ville_creer_lieu"></div>
+                  <input type="text" id="ville_creer_lieu_input" name="ville_creer_lieu_input" style="display: none;">
+                  <p class="titre_champ">Choisissez une image pour ce lieu</p>
+                  <input type="file" name="imageLieu" class="champ_rep_lieu" id="imageLieu" accept="image/png, image/jpeg" required/>
+                </div>
+                <input type="submit" value="Envoyer" name="uploadLieu" id="envoyer_lieu" class="button drop"/>
+                <!-- <div id="BoutonEnvoie" >Envoyer</div> -->
+                <p id="message_envoie_validation"></p>
+              </div>
+            </form>
           </div>
 
 <!-- -------------------------------------------------------------------------------------------------------------- Page Creer avis -->

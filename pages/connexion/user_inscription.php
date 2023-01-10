@@ -39,12 +39,19 @@
   <meta name="viewport" content="width=device-width">
   <title>Ev'Note</title>
   <link href="styleconnexion.css" rel="stylesheet" media="screen" type="text/css">
+  <link rel="shortcut icon" href="../../img/favicon-32x32.png" type="image/x-icon">
 </head>
 
 <body>
   <header>
     <div id="titre">
-      <h1>Ev'Note</h1>
+      <div id="effecten">
+        <h1 data-text="Ev'Note" id="evnote">Ev'Note</h1>
+        <div id = "gradient" class="gradient"></div>
+        <div class="spotlight"></div>
+      </div>
+      <span id="time-animation" class="material-symbols-outlined"></span>
+      <div id="time">Page de Inscription</div>
     </div>
   </header>
 
@@ -131,3 +138,5 @@
 
 </body>
 </html>
+
+<script src="../../header.js"></script>

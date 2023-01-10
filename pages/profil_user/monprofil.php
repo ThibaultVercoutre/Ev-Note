@@ -79,14 +79,19 @@ session_start();
   <meta name="viewport" content="width=device-width">
   <title>Ev'Note</title>
   <link href="styleprofil.css" rel="stylesheet" media="screen" type="text/css">
+  <link rel="shortcut icon" href="../../img/favicon-32x32.png" type="image/x-icon">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
   <header>
     <div id="titre">
-      <h1>Ev'Note</h1>
-      <a href="../../principale.php"><span class="material-symbols-outlined">home</span></a>
-      
+      <div id="effecten">
+        <h1 data-text="Ev'Note" id="evnote">Ev'Note</h1>
+        <div id = "gradient" class="gradient"></div>
+        <div class="spotlight"></div>
+      </div>
+      <span id="time-animation" class=""></span>
+      <div id="time">Mon profil</div>
     </div>
   </header>
 
@@ -96,13 +101,14 @@ session_start();
     <input type="text" id="champ_verif">
   </div>
   <div id="contenu">
-    <h2 id="user" data="<?php echo $donnees_user['id_user']?>">Mon profil</h2>
+    <h2 id="user" data="<?php echo $donnees_user['id_user']?>"></h2>
     <hr>
     <img src="<?php echo $donnees_user['chemin'];?>" class="photo_profil">
     <p>Nom : <?php echo $donnees_user['Nom']; ?></p>
     <p>Prénom : <?php echo $donnees_user['Prenom']; ?></p>
     <p>Adresse mail : <?php echo $donnees_user['Mail']; ?></p>
     <p>Nombre de posts : 0</p> <!-- Faire une table pour enregistrer tous les posts (une sauvegarde) -->
+    
     <div id="choix_like_dislike_report">
       <div class="bouton_avis">Avis likés</div>
       <div class="bouton_avis">Avis dislikés</div>
@@ -113,11 +119,19 @@ session_start();
       <div id="section-avis-dislike" class="section"></div>
       <div id="section-avis-report" class="section"></div>
     </div>
+
     <div id="sectionAdmin">
-      <p>En temps que développeur, vous pouvez supprimer les avis signalés</p>
+      <p>En tant que développeur, vous pouvez supprimer les avis signalés</p>
       <div class="bouton_avis_signalés">Voir tout les avis signalés</div>
       <div id="section-report" class="section2"></div>
+
+      <p>Vous pouvez aussi valider les nouveaux lieux</p>
+      <div class="bouton_nouveau_lieu">Voir les nouveaux lieux créés</div>
+      <div id="section-nouveau-lieu" class="section3"></div>
     </div>
+
+
+
     <p>Posts likés : liste des posts depuis bdd sauvegarde</p> 
     <!--Slider des posts likés -->
     <div class="post_like">
@@ -183,8 +197,11 @@ session_start();
 <button type="submit" name="supprimer" id="button_suppr">Supprimer mon compte</button>
 </form>
 
+
+<script src="../../header.js"></script>
 <script src="scriptprofil.js"></script>
 
 </body>
 
 </html>
+

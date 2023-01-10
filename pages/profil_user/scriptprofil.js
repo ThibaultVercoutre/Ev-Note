@@ -50,10 +50,72 @@ function ListeNavisLike(section, type, reponse){
   });
 }
 
+function ListeNlieuCree(section, type, reponse){
+
+  user = document.getElementById("user").getAttribute("data");
+  let Slieu = document.getElementById(section);
+
+  /* creation n lieu */
+  var params = new URLSearchParams();
+  params.append('user', user);
+  params.append('table', 'lieu_tmp');
+  params.append('bool', type);
+  params.append('type', reponse);
+
+  fetch('/pages/fonctions_bdd/fonction_php_liste_like.php', {
+    method: 'POST',
+    body: params
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    for(var i = 0; i < data[0].length; i++) {
+      console.log(data);
+      Slieu.innerHTML += '<div class="avi" id="lieu_' + data[0][i] + '" data = "' + data[1][i] + '">'
+                          + '<div class="compte-note">'
+                            + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
+                            + '<div class="nom"></div>'
+                            + '<div class="ajout_suppr">'
+                              + '<div class="ajout_lieu" onclick="ajouterLieuCode(' + data[0][i] + ')">Ajouter cet avis</div>'
+                              + '<div class="suppr_lieu" onclick="supprimerLieuCode(' + data[0][i] + ')">Supprimer cet avis</div>'
+                            + '</div>'
+                          + '</div>'
+                        + '</div>';
+    }
+  });
+}
+
 ListeNavisLike('section-avis-like', '0', '0');
 ListeNavisLike('section-avis-dislike', '1', '0');
 ListeNavisLike('section-avis-report', '2', '0');
 ListeNavisLike('section-report', '2', '0');
+
+ListeNlieuCree('section-nouveau-lieu', '2', '6');
+
+function PlaceElementLieux(s, type, reponse){
+
+  /* Image BDD */
+  var params = new URLSearchParams();
+  params.append('user', user);
+  params.append('table', type);
+  params.append('bool', '1  ');
+  params.append('type', reponse);
+
+  fetch('/pages/fonctions_bdd/fonction_php_liste_like.php', {
+    method: 'POST',
+    body: params
+  })
+  .then(response => response.json())
+  .then(data => {
+    var images = document.querySelectorAll('#' + s.getAttribute("id") + ' .img-profil-note-balise');
+    var adresses = document.querySelectorAll('#' + s.getAttribute("id") + ' .nom');
+    
+    for(var i = 0; i < data[0].length; i++) {
+      images[i].src = "../../" + data[0][i];
+      adresses[i].textContent = data[1][i] + " - " + data[2][i];
+    }
+  });
+}
 
 function PlaceElement(s, type, reponse){
   user = document.getElementById("user").getAttribute("data");
@@ -77,7 +139,6 @@ function PlaceElement(s, type, reponse){
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data);
 
     var images = document.querySelectorAll('#' + s.getAttribute("id") + ' .img-profil-note-balise');
     var prenoms = document.querySelectorAll('#' + s.getAttribute("id") + ' .nom');
@@ -121,13 +182,21 @@ function TestBoutonsAvis(i, b, type){
     i += 1;
     b[i%3].style.backgroundColor = "";
     sections[i%3].style.display = "none";
-  }else{
+  }else if(type == '1'){
     if(sectionReport[0].style.display != "block"){
       b[0].style.backgroundColor = "#456fa0";
       sectionReport[0].style.display = "block";
     }else{
       b[0].style.backgroundColor = "";
       sectionReport[0].style.display = "none";
+    }
+  }else{
+    if(SectionLieu[0].style.display != "block"){
+      b[0].style.backgroundColor = "#456fa0";
+      SectionLieu[0].style.display = "block";
+    }else{
+      b[0].style.backgroundColor = "";
+      SectionLieu[0].style.display = "none";
     }
   }
 }
@@ -159,6 +228,17 @@ button2[0].onclick = function(){
 }
 
 /*=======================================================================================================*/
+/*========================================= Afficher les avis signalés ==================================*/
+
+var button3 = document.getElementsByClassName('bouton_nouveau_lieu');
+var SectionLieu = document.getElementsByClassName('section3');
+
+button3[0].onclick = function(){
+  TestBoutonsAvis(0, button3, '2');
+  PlaceElementLieux(SectionLieu[0], '2', '7');
+}
+
+/*=======================================================================================================*/
 /*========================================= supprimer un avis ===========================================*/
 
 function generateString(length) {
@@ -178,12 +258,27 @@ function genererCode(avis){
     txt = generateString(10);
     document.getElementById("suite_carac").textContent = txt;
     document.getElementById("verif_suppr").style.display = "flex";
+    document.getElementById("verif_suppr").setAttribute("data", "0");
     avis_suppr = avis;
 }
 
-function supprimerAvis(avis){
-  document.getElementById("verif_suppr").style.display = "none";
+function ajouterLieuCode(avis){
+  txt = generateString(10);
+  document.getElementById("suite_carac").textContent = txt;
+  document.getElementById("verif_suppr").style.display = "flex";
+  document.getElementById("verif_suppr").setAttribute("data", "1");
+  avis_suppr = avis;
+}
 
+function supprimerLieuCode(avis){
+  txt = generateString(10);
+  document.getElementById("suite_carac").textContent = txt;
+  document.getElementById("verif_suppr").style.display = "flex";
+  document.getElementById("verif_suppr").setAttribute("data", "2");
+  avis_suppr = avis;
+}
+
+function supprimerAvis(avis){
   var elements = [document.querySelector('#section-report #avis_' + avis),
                 document.querySelector('#section-avis-like #avis_' + avis),
                 document.querySelector('#section-avis-dislike #avis_' + avis),
@@ -208,11 +303,69 @@ function supprimerAvis(avis){
   })
 }
 
+function supprimerLieu(lieu){
+  var elements = [document.querySelector('#section-nouveau-lieu #lieu_' + lieu)];
+
+  for(var i = 0; i < elements.length; i++) {
+    if(elements[i] != null){
+      var parent = elements[i].parentNode;
+      parent.removeChild(elements[i]);
+    }
+  }  
+
+  var params = new URLSearchParams();
+  params.append('user', '');
+  params.append('table', 'lieu_tmp');
+  params.append('bool', lieu);
+  params.append('type', '8');
+
+  fetch('/pages/fonctions_bdd/fonction_php_liste_like.php', {
+    method: 'POST',
+    body: params
+  })
+}
+
+function ajouterLieu(lieu){
+  var elements = [document.querySelector('#section-nouveau-lieu #lieu_' + lieu)];
+
+  var adresse = document.querySelector('#lieu_' + lieu + ' .nom').textContent;
+  var photo = document.querySelector('#lieu_' + lieu).getAttribute('data');
+
+  adresse = adresse.split(' - ');
+  console.log(photo);
+
+  for(var i = 0; i < elements.length; i++) {
+    if(elements[i] != null){
+      var parent = elements[i].parentNode;
+      parent.removeChild(elements[i]);
+    }
+  }  
+
+  var params = new URLSearchParams();
+  params.append('user', adresse[0]);
+  params.append('table', adresse[1]);
+  params.append('bool', lieu);
+  params.append('type', photo);
+
+  fetch('/pages/fonctions_bdd/fonction_php_liste_like.php', {
+    method: 'POST',
+    body: params
+  })
+}
+
 const input = document.querySelector('#champ_verif');
 
 input.addEventListener('input', () => {
-  if(input.value == txt){
-    supprimerAvis(avis_suppr)
+  if(input.value == txt){  
+    document.getElementById("verif_suppr").style.display = "none";
+    if(document.getElementById("verif_suppr").getAttribute("data") == "0"){
+      supprimerAvis(avis_suppr);
+    }else if(document.getElementById("verif_suppr").getAttribute("data") == "1"){
+      ajouterLieu(avis_suppr);
+      supprimerLieu(avis_suppr);
+    }else if(document.getElementById("verif_suppr").getAttribute("data") == "2"){
+      supprimerLieu(avis_suppr);
+    }
   }
 });
 
@@ -245,7 +398,6 @@ function afficheAdmin(){
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data);
     if(data.length == 0){
       section_admin.parentElement.removeChild(section_admin);
     }
@@ -253,6 +405,45 @@ function afficheAdmin(){
 }
 
 afficheAdmin();
+
+/*=======================================================================================================*/
+/*========================================= Header ======================================================*/
+
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var njour = today.getDate();
+  var mois = today.getMonth();
+  var jour = today.getDay();
+  var start = new Date(today.getFullYear(), 0, 0);
+  var diff = today - start;
+  var oneDay = 1000 * 60 * 60 * 24;
+  var day = Math.floor(diff / oneDay);
+  var couleur = convertColor(day);
+  document.getElementById("gradient").style.background = couleur;
+}
+
+function convertColor(jour) {
+  var couleur;
+  if (jour >= 79 && jour < 171) {
+    couleur = "linear-gradient(45deg, rgb(51, 144, 2), rgb(133, 255, 108))";
+  }
+  else if (jour >= 171 && jour < 265) {
+    couleur = "linear-gradient(45deg, yellow, rgb(3, 208, 254))";
+  }
+  else if (jour >= 265 && jour < 355) {
+    couleur = "linear-gradient(45deg, red, yellow)";
+  }
+  else {
+    couleur = "linear-gradient(45deg, rgb(57, 229, 255), rgb(234, 255, 254))";
+  }
+  return couleur;
+}
+
+ 
+startTime();
+
 
 /*=======================================================================================================*/
 /*========================================= Slides actu =================================================*/

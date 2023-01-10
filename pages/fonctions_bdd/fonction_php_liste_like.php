@@ -247,6 +247,69 @@ $stmt->execute();
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 $typeCompte = json_encode($resultats);
 
+/* Nb lieu */
+
+$sql = "SELECT id_lieu FROM $table";
+$stmt = $bdd->prepare($sql);
+$stmt->execute();
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+$nb_lieu = $resultats;
+
+/* Nb image lieu */
+
+$sql = "SELECT id_p_eta FROM $table";
+$stmt = $bdd->prepare($sql);
+$stmt->execute();
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+$nb_p_eta = $resultats;
+
+/* Images Lieu */
+
+$sql = "SELECT photo_eta.Chemin
+        FROM lieu_tmp
+        JOIN photo_eta ON photo_eta.id_p_eta = lieu_tmp.id_p_eta";
+
+$stmt = $bdd->prepare($sql);
+$stmt->execute();
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+$photos_lieu = $resultats;
+
+/* Noms Lieu*/
+
+$sql = "SELECT lieu_tmp.Adresse
+        FROM lieu_tmp";
+
+$stmt = $bdd->prepare($sql);
+$stmt->execute();
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+$adresse_lieu = $resultats;
+
+/* Ville */
+
+$sql = "SELECT lieu_tmp.Ville
+        FROM lieu_tmp";
+
+$stmt = $bdd->prepare($sql);
+$stmt->execute();
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+$ville_lieu = $resultats;
+
+/* supprimer lieu dans table lieu_tmp */
+
+$sql_suppr_lieu = "DELETE FROM `lieu_tmp` WHERE id_lieu = $bool";
+
+/* ajouter lieu dans table lieu*/
+
+$sql = "SELECT max(id_lieu) + 1
+        FROM lieu";
+
+$stmt = $bdd->prepare($sql);
+$stmt->execute();
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0)[0];
+$id_lieu = $resultats;
+
+$ajout_lieu = "INSERT INTO `lieu`(`id_lieu`, `id_p_eta`, `Adresse`, `Ville`) 
+                VALUES ('$id_lieu','$type', '$user', '$table')";
 
 switch($type){
     case '0': echo($nb_like); break;
@@ -255,6 +318,10 @@ switch($type){
     case '3': echo(json_encode([$photos_usersR, $prenomsR, $verifR, $notesR, $avisR, $upR, $downR, $reportR])); break;
     case '4': $bdd->exec($sql_suppr1); $bdd->exec($sql_suppr2); $bdd->exec($sql_suppr3); $bdd->exec($sql_suppr4); break;
     case '5': echo($typeCompte); break;
+    case '6': echo(json_encode([$nb_lieu, $nb_p_eta])); break;
+    case '7': echo(json_encode([$photos_lieu, $adresse_lieu, $ville_lieu])); break;
+    case '8': $bdd->exec($sql_suppr_lieu); break;
+    default : $bdd->exec($ajout_lieu); echo(json_encode([$n_photo, $user, $table])); break;
 }
 
 ?>
