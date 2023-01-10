@@ -118,108 +118,138 @@
 <!-- ================================================================================================================================ -->
 <!-- ======================================================================================================================== MARQUEE -->
 <!-- ================================================================================================================================ -->
-    <div class="marquee">
+<div class="marquee">
       <div class="elements-marquee">
         <div class="element">
-          <div class="photo 1"></div>
+          <div class="photo 1">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 1</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 2"></div>
+          <div class="photo 2">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 2</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 3"></div>
+          <div class="photo 3">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 3</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 4"></div>
+          <div class="photo 4">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 4</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 5"></div>
+          <div class="photo 5">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 5</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 6"></div>
+          <div class="photo 6">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 6</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 7"></div>
+          <div class="photo 7">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 7</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 8"></div>
+          <div class="photo 8">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 8</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 9"></div>
+          <div class="photo 9">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 9</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 10"></div>
+          <div class="photo 10">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 10</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 1"></div>
+          <div class="photo 1">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 1</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 2"></div>
+          <div class="photo 2">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 2</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 3"></div>
+          <div class="photo 3">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 3</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 4"></div>
+          <div class="photo 4">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 4</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
           </div>
         </div>
         <div class="element">
-          <div class="photo 5"></div>
+          <div class="photo 5">
+            <img src="" class="image_top">
+          </div>
           <div class="informations">
             <h4>Bar 5</h4>
             <div class="note">⭐⭐⭐⭐⭐</div>
@@ -272,6 +302,32 @@
       <div id="map-actu"></div>
 <!-- ===================================================================================================================== Page map -->
         <div class="parent" id="pages-map">
+
+<!-- -------------------------------------------------------------------------------------------------------------- Page Creer lieu -->
+<!--  onsubmit="return checkForm(this);" -->
+          <div class="page child1" id="section_creer_lieu">
+            <div id="closeCreerLieu">
+              <div class="logo-close button">
+                <div class="croix1"></div>
+                <div class="croix2"></div>
+              </div>
+            </div>
+            <form method="post" action="principale.php" enctype="multipart/form-data">
+              <div id="formulaire_creer_avis">
+                <p id="message_envoie_avis"></p>
+                <div>
+                  <div class="titre_champ" id="batiment_creer_lieu"></div>
+                  <div class="titre_champ" id="ville_creer_lieu"></div>
+                  <p class="titre_champ">Choisissez une image pour ce lieu</p>
+                  <input type="file" name="imageLieu" class="champ_rep_lieu" id="imageLieu" accept="image/png, image/jpeg" required/>
+                </div>
+                <input type="submit" value="Envoyer" name="uploadLieu" id="envoyer_lieu" class="button drop"/>
+                <!-- <div id="BoutonEnvoie" >Envoyer</div> -->
+                <p id="message_envoie_validation"></p>
+              </div>
+            </form>
+          </div>
+
 <!-- -------------------------------------------------------------------------------------------------------------- Page Creer avis -->
           <div class="page child1" id="section_creer_avis">
             <div id="closeCreerAvis">
@@ -344,6 +400,13 @@
 <!-- --------------------------------------------------------------------------------------------------------------------- Page GPS -->
 
           <div class="page child1" id="section-gps">
+            <div id="title-gps">
+              <h3>Voulez-vous autoriser Ev'Note à accéder à votre localisation ?</h3>
+              <div id="boutons-popup">
+                <div class="button anim-button" id="oui-gps">Oui</div>
+                <div class="button anim-button" id="non-gps">Non</div>
+              </div>
+            </div>
           </div>
           <div class="page child1" id="itineraire-gps">
             <div>
@@ -407,8 +470,8 @@
                   </div>
                 </div>
                 <!-- Next and previous buttons -->
-                <a id ="bprev" class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a id="bnext" class="next" onclick="plusSlides(1)">&#10095;</a>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
               </div>
               
             <br>
@@ -427,17 +490,8 @@
             <div class="clickScrollbar"></div>
             <div id="champ-remplit-art">
               <p><u>Renseignez les éléments suivants pour créer votre article</u></p>
-              <form method="post" action="./pages/php/donnees_formulaire.php">
+              <form method="post" action="principale.php" onsubmit="return checkForm(this);" enctype="multipart/form-data">
                <fieldset>
-                  <legend>Vos coordonnées</legend><br />
-                  <label for="Nom">Nom</label><br />
-                  <input type="text" name="Nom" id="Nom" placeholder="Exemple : Vercoutre" size="50" required /><br /><br />
-                  <label for="Prenom">Prénom</label><br />
-                  <input type="text" name="Prenom" id="Prenom" placeholder="Exemple : Thibault" size="50" required /><br /><br />
-                  <label for="Mail">E-Mail</label><br />
-                  <input type="email" name="Mail" id="Mail" placeholder="Exemple : xyz@leraciste.noob" size="50" required /><br /><br />
-                </fieldset><br />
-                <fieldset>
                   <legend>Informations sur l'événement</legend><br />
                   <label for="NomEvent">Nom de l'événement</label><br />
                   <input type="text" name="NomEvent" id="NomEvent" placeholder="Exemple : Compet OW2, qui aura un meilleur shoot que tibo ??" size="50" required /><br /><br />
@@ -449,15 +503,9 @@
                   <input type="number" name="CP" id="CP" placeholder="Exemple : 62575" required /><br /><br />
                 </fieldset><br />
                 <fieldset>
-                  <legend>Image (optionnel)</legend>
-                  <label for="IMG">Inserez une image</label><br />
-                  <input type="file" name="IMG" id="IMG" accept="image/png, image/jpeg" required/>
-                </fieldset>
-                <br />
-                <fieldset>
-                  <legend>Description de l'événement</legend>
-                  <label for="Annonce">Décrivez l'événement en quelques lignes :</label><br /><br />
-                  <textarea name="Annonce" id="Description" placeholder="Quel est votre évènement ?" rows="20" cols="100" required></textarea>
+                  <legend>Image</legend>
+                  <label for="image">Inserez une image</label><br />
+                  <input type="file" name="image" id="image" accept="image/png, image/jpeg" required/>
                 </fieldset>
                 <br />
                 <fieldset>
@@ -466,29 +514,29 @@
                   <div id="ListeTheme">
                     <div id="Ligne">
                       <div>
-                        <input type="checkbox" id="filter1" name="filter1" value="1">
-                        <label for="filter1">Jeux vidéos</label>
+                        <input type="checkbox" id="filter1" name="filter1" value="Jeux videos">
+                        <label for="filter1">Jeux videos</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="filter2" name="filter2" value="1">
+                        <input type="checkbox" id="filter2" name="filter2" value="Sport">
                         <label for="filter2">Sport</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="filter3" name="filter3" value="1">
-                        <label for="filter3">Littérature</label>
+                        <input type="checkbox" id="filter3" name="filter3" value="Litterature">
+                        <label for="filter3">Litterature</label>
                       </div>
                     </div>
                     <div id="Ligne">
                       <div>
-                        <input type="checkbox" id="filter4" name="filter4" value="1">
+                        <input type="checkbox" id="filter4" name="filter4" value="Culture">
                         <label for="filter4">Culture</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="filter5" name="filter5" value="1">
+                        <input type="checkbox" id="filter5" name="filter5" value="Peinture">
                         <label for="filter5">Peinture</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="filter6" name="filter6" value="1">
+                        <input type="checkbox" id="filter6" name="filter6" value="Exposition">
                         <label for="filter6">Exposition</label>
                       </div>
                     </div>
@@ -496,17 +544,17 @@
                     <div id="Ligne">
 
                       <div>
-                        <input type="checkbox" id="filter7" name="filter7" value="1">
-                        <label for="filter7">Soirée</label>
+                        <input type="checkbox" id="filter7" name="filter7" value="Soiree">
+                        <label for="filter7">Soiree</label>
                       </div>
 
                       <div>
-                        <input type="checkbox" id="filter8" name="filter8" value="1">
+                        <input type="checkbox" id="filter8" name="filter8" value="Bar">
                         <label for="filter8">Bar</label>
                       </div>
 
                       <div>
-                        <input type="checkbox" id="filter9" name="filter9" value="1">
+                        <input type="checkbox" id="filter9" name="filter9" value="Politique">
                         <label for="filter9">Politique</label>
                       </div>
 
@@ -534,9 +582,14 @@
                   </div>
 
                 </fieldset>
-                <br /><br />
-                <input type="submit" value="Envoyer" id="BoutonEnvoie" />
-                <br /><br /><br /><br /><br />
+                <br />
+                <fieldset>
+                  <legend>Description de l'événement</legend>
+                  <label for="Annonce">Décrivez l'événement en quelques lignes :</label><br /><br />
+                  <textarea name="Annonce" id="Description" placeholder="Quel est votre évènement ?" rows="20" cols="100" required></textarea>
+                </fieldset>
+                <br />
+                <input type="submit" value="Envoyer" name="upload" id="BoutonEnvoie" />
               </form>
             </div>
             <div id="closeCreerArticle">
@@ -546,6 +599,29 @@
               </div>
             </div>
           </div>
+          <script>
+            function checkForm(form) {
+              var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+              var checkedOne = false;
+              for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                  if (checkedOne) {
+                    alert("Vous ne pouvez sélectionner qu'une seule option.");
+                    checkboxes[i].checked = false;
+                  }
+                  else {
+                    checkedOne = true;
+                  }
+                }
+              }
+              if (!checkedOne) {
+                alert("Vous devez sélectionner au moins une option.");
+                return false;
+              }
+              return true;
+            }
+
+          </script>
 <!-- --------------------------------------------------------------------------------------------------------- Page applique filtre -->
           <div class="page child1 child2" id="filtres_actu">
             <button id="filtre-button"><span class="material-symbols-outlined">close</span></button>

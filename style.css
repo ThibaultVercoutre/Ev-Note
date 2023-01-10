@@ -413,13 +413,7 @@ div:has(> .command-villes){
 /*=======================================================================================================*/
 /*==================================================== BOUTONS CLOSE ====================================*/
 
-#closeNotation{
-  position: absolute;
-  right: 15px;
-  top: 15px;
-}
-
-#closeCreerArticle{
+#closeNotation, #closeCreerLieu, #closeCreerArticle{
   position: absolute;
   right: 15px;
   top: 15px;
@@ -1233,7 +1227,7 @@ ion-icon {
   margin: 0px;
   color: whitesmoke;
 }
-  
+
 /*scroll bar design (probablement à retirer) */
 
 .scrollbar{
@@ -1338,7 +1332,7 @@ nav .drop{
   100% { transform: scale(1,1) translateY(var(--dacalage)); }
 }
 
-#creer-avis, #envoyer_avis{
+#creer-avis, #envoyer_avis, #envoyer_lieu{
   opacity: 1;
   transform: scale(1, 1) translate(0,0);
 }
@@ -1667,9 +1661,9 @@ nav .drop{
 
 #elements-notations .img img{
   flex: 1;
-  height: 80%;
-  aspect-ratio: 3/2;
-  object-fit: contain;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 #elements-notations #section-avis{
@@ -1760,7 +1754,7 @@ nav .drop{
   transform: translateX(-15px);
 }
 
-.avi .compte-note .img-profil-note img{
+.avi .compte-note .img-profil-note img, .image_top{
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -1940,9 +1934,15 @@ nav .drop{
 /*================================================== SECTION CREER LIEU =================================*/
 
 #section_creer_lieu{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 5;
+  width: 100%;
+  transform: translate(-100%, 0px);
+  transition: 0.3s;
+  backdrop-filter: blur(10px);
+}
+
+#batiment_creer_lieu_input, #ville_creer_lieu_input{
+  height: 0px;
 }
 
 /*=======================================================================================================*/
@@ -1954,15 +1954,12 @@ nav .drop{
   transform: translateY(-10px);
 }
 
-#section_creer_avis {
+#section_creer_avis, #section_creer_lieu {
   transform: translate(-100%, 0);
   backdrop-filter: blur(10px);
   width: 100%;
   z-index: 10;
   transition: 0.3s;
-}
-
-#section_creer_avis{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1995,11 +1992,11 @@ nav .drop{
   border-radius: 8px;
 }
 
-.champ_rep{
+.champ_rep, .champ_rep_lieu{
   border: 0px solid black;
 }
 
-input.champ_rep{
+input.champ_rep, input.champ_rep_lieu{
   width: 100%;
 }
 
@@ -2008,7 +2005,7 @@ textarea.champ_rep{
   height: 50px;
 }
 
-#envoyer_avis{
+#envoyer_avis, #envoyer_lieu{
   margin-top: 20px;
   padding: 10px;
 }
