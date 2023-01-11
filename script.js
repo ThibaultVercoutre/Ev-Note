@@ -817,39 +817,6 @@ const NotBarresImg = document.querySelector(".img .barres-notations .barres-2");
 const Noms = document.querySelectorAll(".compte-note .nom");
 var noteTotale = 0;
 
-function chargementNotesAvis(){
-  for(barres of NotBarres) {
-    //console.log(barres);
-    var nom = barres.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
-    var note = nom.length%5;
-    noteTotale += note;
-    //  note = le note de l'avis du nom courant
-    for(var i = 1; i <= Math.floor(note/1)*2-1; i += 2){
-      barres.childNodes[i].style.width = "50px";
-    }
-    barres.childNodes[i].style.width = note%1*50 + "px";
-    barres.childNodes[i].style.borderRadius = "10px " + (note%1)*10 + "px " + (note%1)*10 + "px 10px";
-    for(i += 2; i <= 9; i += 2){
-      barres.childNodes[i].style.width = "0px";
-    }
-    //}
-  }
-
-  var noteFinale = noteTotale/NotBarres.length;
-  //console.log(noteFinale);
-
-  for(var i = 1; i <= Math.floor(noteFinale/1)*2-1; i += 2){
-    NotBarresImg.childNodes[i].style.width = "50px";
-  }
-  NotBarresImg.childNodes[i].style.width = noteFinale%1*50 + "px";
-  NotBarresImg.childNodes[i].style.borderRadius = "10px " + (noteFinale%1)*10 + "px " + (noteFinale%1)*10 + "px 10px";
-  for(i += 2; i <= 9; i += 2){
-    NotBarresImg.childNodes[i].style.width = "0px";
-  }
-}
-
-chargementNotesAvis();
-
 /*=======================================================================================================*/
 /*========================================= Passage de pages en page ===================================*/
 
@@ -922,6 +889,7 @@ affiche(Smap, Sactu);
 
 /* Si on clique sur le bouton map */
 Bmap.onclick = function() {
+  ListeNactu('');
   window.scrollTo({
     top: 0,
     behavior: 'smooth'
@@ -935,6 +903,7 @@ Bmap.onclick = function() {
 
 /* Si on clique sur le bouton actu */
 Bactu.onclick = function() {
+  createFilActu('');
   if(document.getElementsByClassName("dot").length > 0) {
     currentSlide(1);
   }
@@ -1016,10 +985,6 @@ function addavis(id){
                         + '</div>';
 }
 
-BenvoyerLieu.onclick = function(){
-  
-}
-
 BenvoyerAvis.onclick = function(){
 
   var user = document.getElementById('user').getAttribute("data");
@@ -1049,7 +1014,7 @@ BenvoyerAvis.onclick = function(){
     .then(response => response.json())
     .then(result => {
       deja_poster = result[0];
-
+      console.log(result);
       if(deja_poster != '0'){
         document.getElementById("message_envoie_avis").textContent = "Vous-avez déjà posté un avis";
       }else{
@@ -1057,7 +1022,7 @@ BenvoyerAvis.onclick = function(){
 
         var params = new URLSearchParams();
         params.append('etoile', element_champs_rep[0].value);
-        params.append('avis', element_champs_rep[1].value.replace("'", "\'"));
+        params.append('avis', element_champs_rep[1].value);
         params.append('lieu', lieu);
 
         element_champs_rep[0].value = '';
@@ -1066,11 +1031,11 @@ BenvoyerAvis.onclick = function(){
         fetch('pages/fonctions_bdd/fonctions_envoie_avis.php', {
           method: 'POST',
           body: params
-        }).then(response => response.json())
+        })
+        .then(response => response.json())
         .then(data => {
           addavis(data[0]);
           modifAvis();
-          console.log(data);
         });
       }
     });
@@ -1128,7 +1093,7 @@ function addMarker(pos, nom, code) {
   // On crée le marqueur aux coordonnées "pos"
   marqueur = L.marker(
     pos, {
-    // On rend le marqueur déplaçable
+    // On rend le marqueur déplaçableTadresse
     draggable: true
   }
   )
@@ -1187,8 +1152,9 @@ function addMarker(pos, nom, code) {
     })
     .then(response => response.json())
     .then(data => {
-      for (var i = 0; i < data.length; i++) {
-        Savis.innerHTML += '<div class="avi" id="avis_' + data[i] + '">'
+      console.log(data);
+      for (var i = 0; i < data[0].length; i++) {
+        Savis.innerHTML += '<div class="avi" id="avis_' + data[0][i] + '">'
                           + '<div class="compte-note">'
                             + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
                             + '<div class="nom"></div>'
@@ -1229,18 +1195,16 @@ function modifAvis(){
     fetch(fichier, {
         method: 'POST',
         body: params
-      })
-      .then(response => response.json())
-      .then(result => {
-        if(result.length != 0){
-          imageElement.src = result;
-        }else{
-          imageElement.src = "";
-          imageElement.setAttribute("data", "0");
-        }
+    })
+    .then(response => response.json())
+    .then(result => {
+      if(result.length != 0){
+        imageElement.src = result;
+      }else{
+        imageElement.src = "";
+        imageElement.setAttribute("data", "0");
+      }
     });
-
-    sleep(100);
 
     /* PP personnes ayant commenté lieu */
     var params = new URLSearchParams();
@@ -1311,6 +1275,7 @@ function modifAvis(){
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       let commentaires = document.getElementsByClassName('text-avi');
       for (var i = 0; i < data.length; i++) {
         commentaires[i].textContent = data[i];
@@ -1393,7 +1358,7 @@ function modifAvis(){
 
       if(data.length != 0){
         note_lieu[0].textContent = Number(Math.round(moy / data.length * 100) / 100) + ' / 5';
-      }else if(imageElement.getAttribute == '1'){
+      }else if(imageElement.getAttribute("data") == '1'){
         note_lieu[0].textContent = 'Aucune note';
       }else{
         note_lieu[0].innerHTML = '<div id="creer_lieu" class="drop button">Créer un lieu</div>';
@@ -1763,7 +1728,8 @@ function showSlides(n) {
 /*=======================================================================================================*/
 /*========================================= Génération fil actu =========================================*/
 
-function createFilActu(text){
+function ListeNactu(text){
+  
   SartActu = document.getElementById("articles");
   Sdot = document.getElementById("dot_points");
 
@@ -1819,8 +1785,13 @@ function createFilActu(text){
     SartActu.innerHTML += '<a class="prev" onclick="plusSlides(-1)">&#10094;</a>'
                         + '<a class="next" onclick="plusSlides(1)">&#10095;</a>';
   });
+}
 
-  sleep(100);
+ListeNactu('');
+
+function createFilActu(text){
+  SartActu = document.getElementById("articles");
+  Sdot = document.getElementById("dot_points");
 
   
   
@@ -2116,7 +2087,7 @@ function addFiltres(){
       text_input += ", '" + inputs[i].nextSibling.nextSibling.textContent + "'";
     }
   }
-
+  ListeNactu(text_input);
   createFilActu(text_input);
 }
 
@@ -2143,7 +2114,7 @@ griserBouttons();
 
 function raccourcis(text){
   text = text.replace(' de Calais', '');
-
+  text = text.replace("Université du Littoral Côte d'Opale - Centre Universitaire de la Mi-Voix", 'ULCO - EILCO');
   return text;
 }
 

@@ -624,7 +624,7 @@
           </script>
 <!-- --------------------------------------------------------------------------------------------------------- Page applique filtre -->
           <div class="page child1 child2" id="filtres_actu">
-            <button id="filtre-button"><span class="material-symbols-outlined">close</span></button>
+            <button id="filtre-button" class="button drop"><span class="material-symbols-outlined">close</span></button>
             <div class="carre"></div>
             <div id="filtre-menu" style="">
               <p><u>Bienvenue dans l'interface de tri des postes</u></p>
