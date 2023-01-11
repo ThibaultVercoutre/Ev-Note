@@ -10,11 +10,11 @@ $clave3 = $_POST['clave3'];
 
   //Reupération des données pour les avis d'un lieu
   // Préparation de la requête SQL
-  $sql = "SELECT Chemin FROM photo_eta WHERE id_p_eta = (SELECT id_p_eta FROM lieu WHERE Adresse = '".$clave2."')";
+  $sql = "SELECT Chemin FROM photo_eta WHERE id_p_eta = (SELECT id_p_eta FROM lieu WHERE Adresse = ?)";
   $stmt = $bdd->prepare($sql);
 
   // Exécution de la requête
-  $stmt->execute();
+  $stmt->execute([$clave2]);
 
   // Récupération des résultats
   $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
@@ -33,11 +33,11 @@ $clave3 = $_POST['clave3'];
           FROM avis
           WHERE id_lieu = (SELECT id_lieu
                             FROM lieu 
-                            WHERE Adresse = '".$clave2."')";
+                            WHERE Adresse = ?)";
 
   $stmt = $bdd->prepare($sql);
 
-  $stmt->execute();
+  $stmt->execute([$clave2]);
 
   $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -50,11 +50,11 @@ $clave3 = $_POST['clave3'];
           FROM utilisateur
           JOIN avis ON avis.id_user = utilisateur.id_user
           JOIN lieu ON lieu.id_lieu = avis.id_lieu
-          WHERE lieu.Adresse = '".$clave2."'";
+          WHERE lieu.Adresse = ?";
 
   $stmt = $bdd->prepare($sql);
 
-  $stmt->execute();
+  $stmt->execute([$clave2]);
 
   $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -67,11 +67,11 @@ $sql = "SELECT utilisateur.TypeCompte
         FROM utilisateur
         JOIN avis ON avis.id_user = utilisateur.id_user
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
-        WHERE lieu.Adresse = '".$clave2."'";
+        WHERE lieu.Adresse = ?";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -85,11 +85,11 @@ $sql = "SELECT photo_user.chemin
         JOIN photo_user ON photo_user.id_image_user = utilisateur.id_image_user
         JOIN avis ON avis.id_user = utilisateur.id_user
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
-        WHERE lieu.Adresse = '".$clave2."'";
+        WHERE lieu.Adresse = ?";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -102,15 +102,27 @@ $sql = "SELECT id_avis
         FROM utilisateur
         JOIN avis ON avis.id_user = utilisateur.id_user
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
-        WHERE lieu.Adresse = '".$clave2."'";
+        WHERE lieu.Adresse = ?";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
-$n_avis = json_encode($resultats);
+$n_avis = $resultats;
+
+$sql = "SELECT Adresse
+        FROM lieu
+        WHERE lieu.Adresse = ?";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute([$clave2]);
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$n_adresse = $resultats;
 
 /*=======================================================================================================*/
 /*========================================= N pouce up ==================================================*/
@@ -118,11 +130,11 @@ $n_avis = json_encode($resultats);
 $sql = "SELECT CptPouceBleu
         FROM avis
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
-        WHERE lieu.Adresse = '".$clave2."'";
+        WHERE lieu.Adresse = ?";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -134,11 +146,11 @@ $n_up = json_encode($resultats);
 $sql = "SELECT CptPouceRouge
         FROM avis
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
-        WHERE lieu.Adresse = '".$clave2."'";
+        WHERE lieu.Adresse = ?";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -150,11 +162,11 @@ $n_down = json_encode($resultats);
 $sql = "SELECT CptReport
         FROM avis
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
-        WHERE lieu.Adresse = '".$clave2."'";
+        WHERE lieu.Adresse = ?";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -166,11 +178,11 @@ $n_report = json_encode($resultats);
 $sql = "SELECT CptEtoile
         FROM avis
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
-        WHERE lieu.Adresse = '".$clave2."'";
+        WHERE lieu.Adresse = ?";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -183,11 +195,11 @@ $sql = "SELECT avis.id_avis
         FROM likes_avis 
         JOIN avis ON avis.id_avis = likes_avis.id_avis 
         JOIN lieu ON lieu.id_lieu = avis.id_lieu 
-        WHERE lieu.Adresse = '".$clave2."' AND likes_avis.id_user = '".$clave3."' AND likes_avis.like_bool = '1'";
+        WHERE lieu.Adresse = ? AND likes_avis.id_user = '".$clave3."' AND likes_avis.like_bool = '1'";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -200,11 +212,11 @@ $sql = "SELECT avis.id_avis
         FROM dislikes_avis 
         JOIN avis ON avis.id_avis = dislikes_avis.id_avis 
         JOIN lieu ON lieu.id_lieu = avis.id_lieu 
-        WHERE lieu.Adresse = '".$clave2."' AND dislikes_avis.id_user = '".$clave3."' AND dislikes_avis.dislike_bool = '1'";
+        WHERE lieu.Adresse = ? AND dislikes_avis.id_user = '".$clave3."' AND dislikes_avis.dislike_bool = '1'";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -217,11 +229,11 @@ $sql = "SELECT avis.id_avis
         FROM reports_avis
         JOIN avis ON avis.id_avis = reports_avis.id_avis 
         JOIN lieu ON lieu.id_lieu = avis.id_lieu 
-        WHERE lieu.Adresse = '".$clave2."' AND reports_avis.id_user = '".$clave3."' AND reports_avis.report_bool = '1'";
+        WHERE lieu.Adresse = ? AND reports_avis.id_user = '".$clave3."' AND reports_avis.report_bool = '1'";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave2]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -234,11 +246,11 @@ $sql = "SELECT count(*)
         FROM utilisateur
         JOIN avis ON avis.id_user = utilisateur.id_user 
         JOIN lieu ON lieu.id_lieu = avis.id_lieu
-        WHERE lieu.Adresse = '".$clave3."' AND avis.id_user = '".$clave2."'";
+        WHERE lieu.Adresse = ? AND avis.id_user = '".$clave2."'";
 
 $stmt = $bdd->prepare($sql);
 
-$stmt->execute();
+$stmt->execute([$clave3]);
 
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
@@ -261,7 +273,7 @@ switch ($clave1) {
         echo $img_user;
         break;
     case '6':
-        echo $n_avis;
+        echo json_encode([$n_avis, $clave2, $n_adresse]);
         break;
     case '7':
         echo $n_up;

@@ -413,7 +413,7 @@ div:has(> .command-villes){
 /*=======================================================================================================*/
 /*==================================================== BOUTONS CLOSE ====================================*/
 
-#closeNotation, #closeCreerLieu, #closeCreerArticle{
+#closeNotation, #closeCreerLieu, #closeCreerArticle, #filtre-button{
   position: absolute;
   right: 15px;
   top: 15px;
@@ -1220,12 +1220,29 @@ ion-icon {
 .marquee .elements-marquee .element .informations{
   flex:1;
   padding-left:10px;
+
+  overflow: hidden;
 }
 
 .marquee .elements-marquee .element .informations h4{
   height: 50%;
   margin: 0px;
   color: whitesmoke;
+
+  display: inline-block;
+  padding-right: 2em;
+  padding-left: 100%;
+  white-space: nowrap;
+  animation: defilement-rtl 15s infinite linear;
+}
+
+@keyframes defilement-rtl {
+  0% {
+    transform: translate3d(0,0,0);      /* position initiale à droite */
+  }
+  100% {
+    transform: translate3d(-100%,0,0);  /* position finale à gauche */
+  }
 }
 
 /*scroll bar design (probablement à retirer) */
@@ -2305,7 +2322,7 @@ main {
   font-size: 16px; /* Taille de police */
   cursor: pointer; /* Change le curseur en main lorsque la souris passe sur le bouton */
   border-radius: 6px; /* Transforme le bouton en rond en utilisant une bordure arrondie */
-  height: 36px;
+  /*height: 36px;
   width: 36px;
   text-align: center;
 	padding: 8px 8px;
@@ -2313,7 +2330,8 @@ main {
 	margin-right: 2px;
 	margin-left: 2px;
   box-shadow: -1px 2px 2px grey;
-  float: right;
+  float: right;*/
+  transform: translate(0,0);
 }
   
 #filtre-menu {

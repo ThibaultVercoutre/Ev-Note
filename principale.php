@@ -446,20 +446,6 @@ if(isset($_POST['uploadfiltre']))
                   
                   <img src="" id="image_batiment_section_avis" alt="Image" data="1">
                   <div class="barres-notations">
-                    <div class="barres-1">
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                    </div>
-                    <div class="barres-2">
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                      <div class="barre-notation"></div>
-                    </div>
                   </div>
                 </div>
                 <div id="section-avis">
@@ -701,7 +687,7 @@ if(isset($_POST['uploadfiltre']))
           </script>
 <!-- --------------------------------------------------------------------------------------------------------- Page applique filtre -->
           <div class="page child1 child2" id="filtres_actu">
-            <button id="filtre-button"><span class="material-symbols-outlined">close</span></button>
+            <button id="filtre-button" class="button drop"><span class="material-symbols-outlined">close</span></button>
             <div class="carre"></div>
             <div id="filtre-menu" style="">
               <p><u>Bienvenue dans l'interface de tri des postes</u></p>
