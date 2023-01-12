@@ -990,10 +990,9 @@ ion-icon {
   display: flex;
   width: 100%;
 } 
-
+/*
 #compte a:visited{
-  color : black;
-}
+}*/
 
 #connect{
   flex: 3;
@@ -2469,10 +2468,9 @@ footer{
 .lien-footer:hover {
   color:rgb(139, 0, 0);
 }
-
+/*
 .lien-footer:visited {
-  color: black;
-}
+}*/
 
 #nos-devs{
   margin-right: 15%;

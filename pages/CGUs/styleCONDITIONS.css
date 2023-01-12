@@ -24,17 +24,125 @@ header div{
   border-radius: 0rem 0rem .5rem .5rem;
 }
 
+
+
 #titre {
-  flex: 80%;
+  flex: 8;
   display: flex;
   align-items: center;
 }
 
-#titre h1 {
-  /*flex: 1;*/
-  padding: 0px 5% 0px 5%;
-  /*margin-left: 150px;*/
+#effecten {
+  overflow: hidden;
+  filter: contrast(150%) brightness(1000%);
+  position: relative;
+  background: black;
+  width: 130px;
+  height: 100%;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 20px;
+}
+
+#evnote {
+  color: #fff;
+  margin: 0;
+  font-size: 32px;
+  text-transform: uppercase;
+  text-align: center;
+  background:  black;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  position: relative;
+  border: 0;
+}
+
+#evnote::before, #evnote::after {
+  content: attr(data-text);
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  filter: blur(0.02em);
+}
+
+#evnote::after {
+  mix-blend-mode: difference;
+}
+
+.gradient, .spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+}
+
+.gradient {
+  background: linear-gradient(45deg, red, yellow);
+  mix-blend-mode: multiply;
+}
+
+.spotlight {
+  top: -100%;
+  left: -100%;
+  background: radial-gradient(circle, white, transparent 25%) 0 0 / 25% 25%, radial-gradient(circle, white, black 25%) 50% 50% / 12.5% 12.5%;
+  mix-blend-mode: color-dodge;
+  animation: Fire 5s linear infinite;
+}
+
+@keyframes Fire {
+  100% {
+    transform: translate(50%, 50%);
+  }
+}
+
+#time-animation, #meteo{
+  margin: 0 10px;
+}
+
+#time-animation{
+  animation: timeAnimation 10s ease infinite;
+}
+
+@keyframes timeAnimation {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(+10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+#meteo{
+  animation: meteoAnimation 10s ease infinite;
+}
+
+@keyframes meteoAnimation {
+  0% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+#time {  
+  background: transparent;
+  position: relative;
+  font-size: 23px;
+  margin: 0 0 0 0;
+  color: #222;
+  border-radius: 0;
+  border-bottom: 2px solid #222;
 }
 
 /*=======================================================================================================*/
@@ -179,10 +287,6 @@ footer{
   color:rgb(139, 0, 0);
 }
 
-.lien-footer:visited {
-  color: black;
-}
-
 #nos-devs{
   margin-right: 15%;
   padding: 4px;
@@ -297,3 +401,4 @@ p {
       display: none;
     }
 }
+
