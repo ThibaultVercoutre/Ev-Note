@@ -1783,6 +1783,8 @@ function createFilActu(text){
                           + '<div class="article-header-info">'
                             + '<p class="article_auteur">' + i +'</p>'
                             + '<span class="article_date">date de creation</span>'
+                            + '<span class="adresse_event">adresse</span>'
+                            + '<span class="lieu_event">lieu</span>'
                             + '<p class="TitreArticle"><br/><b><u>Nom Event</u></b></p>'
                             + '<p class="AnnonceArticle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti sunt dolorem est perspiciatis, odit voluptate sint neque delectus officiis explicabo distinctio? Ex in cumque nihil beatae. In tempore animi nam!</p>'
                           + '</div>'
@@ -1804,7 +1806,7 @@ function createFilActu(text){
                             + '<span class="material-symbols-outlined down">thumb_down</span>'
                             + '<div class="dislikes-count"></div>'
                           + '</div>'
-                          + '<div class="report">'
+                          + '<div class="reports">'
                             + '<span class="material-symbols-outlined report">priority_high</span>'
                             + '<div class="report-count"></div>'
                           + '</div>'
@@ -2135,6 +2137,76 @@ function createFilActu(text){
       }
     });
   }
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '20');
+    params.append('clave2', text);
+
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      adresse = document.querySelectorAll(".adresse_event");
+      console.log(data);
+      for(var i = 0; i < data.length; i++){
+        Sadresse[i].textContent = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '21');
+    params.append('clave2', text);
+
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      adresse = document.querySelectorAll(".adresse_event");
+      console.log(Srouge);
+      for(var i = 0; i < data.length; i++){
+        Sadresse[i].textContent = data[i];
+      }
+    });
+  }
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '22');
+    params.append('clave2', text);
+
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      lieu = document.querySelectorAll(".lieu_event");
+      console.log(data);
+      for(var i = 0; i < data.length; i++){
+        Slieu[i].textContent = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '23');
+    params.append('clave2', text);
+
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      lieu = document.querySelectorAll(".lieu_event");
+      console.log(Srouge);
+      for(var i = 0; i < data.length; i++){
+        Slieu[i].textContent = data[i];
+      }
+    });
+  }
 }
 
 //createFilActu('');
@@ -2153,13 +2225,6 @@ function addFiltres(){
 }
 
 addFiltres();
-
-
-function modifActu(){
-    
-  
-}
-
 
 function addActionBdd_actu(actu, nb, type, bool){
     
@@ -2201,6 +2266,8 @@ let Ccomment = document.querySelectorAll(".comment-count");
 let Cup = document.querySelectorAll(".likes-count");
 let Cdown = document.querySelectorAll(".dislikes-count");
 let Creport = document.querySelectorAll(".report-count");
+
+console.log(Creport);
 
 let Dactu = document.getElementsByClassName("mySlides");
 

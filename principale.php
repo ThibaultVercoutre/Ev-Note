@@ -435,6 +435,7 @@ if(isset($_POST['uploadfiltre']))
                       <div class="article-header-info">
                         Prenom
                         <span>date de creation</span>
+                        <span>Lieu</span>
                         <p class="TitreArticle"><br/><b><u>Nom Event</u></b></p>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti sunt dolorem est perspiciatis, odit voluptate sint neque delectus officiis explicabo distinctio? Ex in cumque nihil beatae. In tempore animi nam!</p>
                       </div>
