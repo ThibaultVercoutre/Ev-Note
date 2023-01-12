@@ -6,7 +6,7 @@ $clave2 = $_POST['clave2'];
 /*=======================================================================================================*/
 /*========================================= N avis ======================================================*/
 
-$sql = "SELECT id_forum FROM form_fil";
+$sql = "SELECT id_forum FROM form_fil ORDER BY id_forum DESC";
 
 $stmt = $bdd->prepare($sql);
 
@@ -316,6 +316,64 @@ $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 $Dislike_filtre = json_encode($resultats);
 
+/*=======================================================================================================*/
+/*========================================= Lieu Filtre =================================================*/
+
+$sql = "SELECT Ville
+        FROM form_fil
+        WHERE TypeEvenement IN ($clave2)";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$Lieu_filtre = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= Lieu Post Filtre =================================================*/
+
+$sql = "SELECT Ville
+        FROM form_fil";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$Lieu = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= Adresse Filtre =================================================*/
+
+$sql = "SELECT Adresse
+        FROM form_fil
+        WHERE TypeEvenement IN ($clave2)";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$Adresse_filtre = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= Adresse Post Filtre =================================================*/
+
+$sql = "SELECT Adresse
+        FROM form_fil";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$Adresse = json_encode($resultats);
+
 switch ($clave1) {
     case '0':
         echo $n_article;
@@ -377,6 +435,18 @@ switch ($clave1) {
     case '19':
         echo $Dislike;
         break;       
+    case '20':
+        echo $Lieu_filtre;
+        break; 
+    case '21':
+        echo $Lieu;
+        break; 
+    case '22':
+        echo $Adresse_filtre;
+        break; 
+    case '23':
+        echo $Adresse;
+        break;
 }
 
 

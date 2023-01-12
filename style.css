@@ -2038,11 +2038,9 @@ main {
 
 /* Slideshow container */
 #section-fil-actu .slideshow-container {
-  background-color: #222;
   width: 700px;
   position: relative;
   margin: auto;
-  border: solid;
   height: 500px;
 }
 
@@ -2059,7 +2057,7 @@ main {
   width: auto;
   margin-top: -22px;
   padding: 16px;
-  color: #5FAEBE;
+  color:black;
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
@@ -2114,16 +2112,18 @@ main {
   to {opacity: 1}
 }
 
-#section-fil-actu img{
+#section-fil-actu .article-img{
   border-style: solid;
   border-color: whitesmoke;
   border-width: 3px;
   border-radius: 16px;
   width: 270px;
+  height: 280px;
   text-align:center;
   margin: auto;
   display:flex;
   margin-top: 0px;
+  object-fit: cover;
   /*margin-bottom : 5px;*/
 }
 
@@ -2131,10 +2131,6 @@ main {
   background: #939495;
   font-family: 'Asap', sans-serif;
   font-family: 'Roboto', sans-serif;
-}
-
-#section-fil-actu img {
-  object-fit: cover;
 }
 
 #section-fil-actu .avator {
@@ -2146,9 +2142,10 @@ main {
 
 
 #section-fil-actu #Article {
-  max-width:490px;
+  max-width:1000px;
   height: 100%;
-  max-height: 380px;
+  height: 400px;
+  max-height: 450px;
   background: #5FAEBE;
   margin: 0 auto;
   margin-top: 20px;
@@ -2174,7 +2171,9 @@ main {
 #section-fil-actu .TitreArticle{
   font-size: 20px;
   font-style: Arial; 
-  padding-left: 50px
+  text-align: center;
+  text-decoration: underline;
+
 }
   
 #section-fil-actu .article-header {
