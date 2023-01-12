@@ -58,7 +58,24 @@ $clave3 = $_POST['clave3'];
 
   $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
-  $noms = json_encode($resultats);
+  $noms = $resultats;
+
+/*=======================================================================================================*/
+/*========================================= Recherche des commenteurs ===================================*/
+
+$sql = "SELECT utilisateur.id_user
+        FROM utilisateur
+        JOIN avis ON avis.id_user = utilisateur.id_user
+        JOIN lieu ON lieu.id_lieu = avis.id_lieu
+        WHERE lieu.Adresse = ?";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute([$clave2]);
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$id_noms = $resultats;
 
 /*=======================================================================================================*/
 /*========================================= Verification du compte ======================================*/
@@ -256,48 +273,36 @@ $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 $nb_avis_user = json_encode($resultats);
 
+/*=======================================================================================================*/
+/*========================================= Verif User Avis =============================================*/
+
+$sql = "SELECT TypeCompte
+        FROM utilisateur
+        WHERE id_user = '$clave2'";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$dev = json_encode($resultats);
+
 switch ($clave1) {
-    case '0':
-        echo $img_lieu;
-        break;
-    case '1':
-        echo $noms;
-        break;
-    case '2':
-        echo $type;
-        break;
-    case '4':
-        echo $avis;
-        break;
-    case '5':
-        echo $img_user;
-        break;
-    case '6':
-        echo json_encode([$n_avis, $clave2, $n_adresse]);
-        break;
-    case '7':
-        echo $n_up;
-        break;
-    case '8':
-        echo $n_down;
-        break;
-    case '9':
-        echo $n_down;
-        break;
-    case '10':
-        echo $note;
-        break;
-    case '11':
-        echo $like_bool;
-        break;
-    case '12':
-        echo $dislike_bool;
-        break;
-    case '13':
-        echo $report_bool;
-        break;
-    case '14':
-        echo $nb_avis_user;
-        break;
+    case '0': echo $img_lieu; break;
+    case '1': echo json_encode([$noms, $id_noms]); break;
+    case '2': echo $type; break;
+    case '4': echo $avis; break;
+    case '5': echo $img_user; break;
+    case '6': echo json_encode([$n_avis, $clave2, $n_adresse]); break;
+    case '7': echo $n_up; break;
+    case '8': echo $n_down; break;
+    case '9': echo $n_down; break;
+    case '10': echo $note; break;
+    case '11': echo $like_bool; break;
+    case '12': echo $dislike_bool; break;
+    case '13': echo $report_bool; break;
+    case '14': echo $nb_avis_user; break;
+    case '15': echo $dev; break;
 }
 ?>
