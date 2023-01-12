@@ -400,13 +400,6 @@
 <!-- --------------------------------------------------------------------------------------------------------------------- Page GPS -->
 
           <div class="page child1" id="section-gps">
-            <div id="title-gps">
-              <h3>Voulez-vous autoriser Ev'Note à accéder à votre localisation ?</h3>
-              <div id="boutons-popup">
-                <div class="button anim-button" id="oui-gps">Oui</div>
-                <div class="button anim-button" id="non-gps">Non</div>
-              </div>
-            </div>
           </div>
           <div class="page child1" id="itineraire-gps">
             <div>
@@ -774,7 +767,7 @@
     </div>
   </nav>
   <footer id="le-footer">
-    <p id="copyright">© 2022 Ev'Note Tous droits réservés</p>
+    <p id="copyright">© 2023 Ev'Note Tous droits réservés</p>
     <div id="foot-gauche">
       <a class="lien-footer" href="./pages/CGUs/conditions.html">Conditions d'utilisation</a>
       <a class="lien-footer"

@@ -1124,7 +1124,7 @@ function addMarker(pos, nom, code) {
   }
   
   if(nom.search(" " + code + ",") != -1){  
-    marqueur.addTo(mymap).bindPopup('<div id="element-popup"><h1>Adresse du lieu : </h1><div id="boutons-popup"><div class="button anim-button" id="adresse-note">' + texte + '</div><div class="button anim-button" id="itineraire"><span class="material-symbols-outlined">google_plus_reshare</span></div></div></br></div>').openPopup();
+    marqueur.addTo(mymap).bindPopup('<div id="element-popup"><h1>Adresse du lieu : </h1><div id="boutons-popup"><div class="drop button anim-button" id="adresse-note">' + texte + '</div><div class="drop button anim-button" id="itineraire"><span class="material-symbols-outlined">google_plus_reshare</span></div></div></br></div>').openPopup();
   }else{
       marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
   }
@@ -1152,7 +1152,6 @@ function addMarker(pos, nom, code) {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       for (var i = 0; i < data[0].length; i++) {
         Savis.innerHTML += '<div class="avi" id="avis_' + data[0][i] + '">'
                           + '<div class="compte-note">'
@@ -1439,6 +1438,8 @@ function boutonavis(e) {
     if (e.target.id == Bnotation.id) {
       Sgps.style.transition = "0.3s";
       Sgps.style.transform = "translate(-100%,0px)";
+      Sitineraire.style.transition = "0.3s";
+      Sitineraire.style.transform = "translate(-100%,0px)";
       Snotation.style.transition = "0.3s";
       Bcheckbox.style.display = "none";
       Snotation.style.transform = "translate(0px,0px)";
@@ -1455,6 +1456,8 @@ function boutongps(e) {
     if (e.target.parentElement.id == Bgps.id || e.target.id == Bgps.id) {
       /*let ContentPopup = document.getElementById("element-popup");
       ContentPopup.innerHTML = '<h3>Voulez-vous autoriser Ev\'Note à accéder à votre localisation ?</h3><div id="boutons-popup"><div class="button anim-button" id="oui-gps">Oui</div><div class="button anim-button" id="non-gps">Non</div></div></br>';*/
+      Bmap.style.display = 'none';
+      Bactu.style.display = 'none';
       Sgps.style.transition = "0.3s";
       Sgps.style.transform = "translate(0px,0px)";
       Sitineraire.style.transition = "0.3s";
@@ -1468,6 +1471,8 @@ Smap.addEventListener('click', boutongps, false);
 /* Si on clique sur la map */
 mymap.on('click', function(e) {
   if(e.originalEvent.path.length < 12){
+    Bmap.style.display = 'block';
+    Bactu.style.display = 'block';
     Snotation.style.transition = "0s";
     Snotation.style.transform = "translate(-100%,0px)";
     Sgps.style.transition = "0.3s";
@@ -1503,6 +1508,8 @@ mymap.on('click', function(e) {
 function searchAdresse() {
   Sgps.style.transition = "0.3s";
   Sgps.style.transform = "translate(-100%,0px)";
+  Sitineraire.style.transition = "0.3s";
+  Sitineraire.style.transform = "translate(-100%,0px)";
   let adresse = Isearch.value;
   let regex = "[Cc][Aa][Ll][Aa][Ii][Ss]"
   if(adresse.search(regex) == -1){
@@ -1668,11 +1675,33 @@ function action_avis(e, save) {
   }
 }
 
+function interactionValable(e){
+  let Bup = document.querySelectorAll(".up");
+  let Bdown = document.querySelectorAll(".down");
+  let Breport = document.querySelectorAll(".report");
+
+  let BcreerAvis = document.getElementById("creer-avis");
+
+  rep = 0;
+
+  if(e = BcreerAvis){
+    rep = 1;
+  }
+
+  for (let i = 0; i < Bup.length; i++) {
+    if(Bup[i] == e || Bdown[i] == e || Breport[i] == e){
+      rep = 1;
+    }
+  }
+  console.log(rep);
+  return rep;
+}
+
 Savi.onclick = function(e){
   var user = document.getElementById('user').getAttribute("data");
-  if(user != "0"){
+  if(user != "0" && interactionValable(e.target) == 1){
     action_avis(e.target, '0');
-  }else{
+  }else if(interactionValable(e.target) == 1 && user == "0"){
     alert("Vous devez être connecté pour pouvoir faire ça");
   }
 }
@@ -2372,12 +2401,14 @@ function raccourcis(text){
 }
 
 function Top10(){
-  var top = document.querySelectorAll(".element h4");
-  var top_note = document.querySelectorAll(".element .note");
-  var top_img = document.querySelectorAll(".element .image_top");
+    var top = document.querySelectorAll(".element h4");
+    var informations = document.querySelectorAll(".element");
+    var top_note = document.querySelectorAll(".element .note");
+    var top_img = document.querySelectorAll(".element .image_top");
 
-  var params = new URLSearchParams();
+    var params = new URLSearchParams();
     params.append('type', '0');
+    params.append('id_lieu', '');
 
     fetch('/pages/fonctions_bdd/fonction_php_top.php', {
       method: 'POST',
@@ -2385,15 +2416,18 @@ function Top10(){
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       for(var i = 0; i < data[0].length; i++){
         var text = raccourcis(data[0][i]);
         top[i].textContent = text;
         top_note[i].textContent = data[1][i] + " / 5";
         top_img[i].src = data[2][i];
+        informations[i].setAttribute("data",data[3][i]);
         if(i < 5){
           top[i+10].textContent = text;
           top_note[i+10].textContent = data[1][i] + " / 5";
           top_img[i+10].src = data[2][i];
+          informations[i+10].setAttribute("data",data[3][i]);
         }
       }
     });
@@ -2414,5 +2448,61 @@ Snot.onclick = function(e){
     document.getElementById("batiment_creer_lieu_input").value = NomBat;
     document.getElementById("ville_creer_lieu").textContent = Ville;
     document.getElementById("ville_creer_lieu_input").value = Ville;
+  }
+}
+
+let Etop10 = document.getElementsByClassName("element");
+let Stop10 = document.getElementsByClassName("elements-marquee")[0];
+
+function rechercheInfo(id_lieu){
+  var params = new URLSearchParams();
+  params.append('type', '1');
+  params.append('id_lieu', id_lieu);
+
+  fetch('/pages/fonctions_bdd/fonction_php_top.php', {
+    method: 'POST',
+    body: params
+  })
+  .then(response => response.json())
+  .then(data => {
+    codePostal(data[0], data[1]);
+  });
+}
+
+function codePostal(lieu, ville){
+  lieu_tmp = lieu.replaceAll(" ", "%20");
+  var url = new URL("https://nominatim.openstreetmap.org/search?q=" + lieu_tmp + "%20" + ville + "&format=json&limit=2");
+  tableUniversites = [];
+
+  $.getJSON(url, function(data) {
+    let str = data[data.length - 1].display_name;
+    let regex = /\d{5}/;
+    let result = str.match(regex)[0];
+
+    trouverPos(data[data.length - 1].display_name, result);
+  });
+}
+
+function trouverPos(lieu, code) {
+  let url = new URL("http://nominatim.openstreetmap.org/search?q=" + lieu + "%20" + code + "&format=json&limit=1");
+  $.getJSON(url, function(data) {
+    let pos = {lat : data[0].lat, lng : data[0].lon};
+    mymap.setView(pos, 20, {animate: true, duration: 2000});
+    addMarker(pos, lieu, code);
+  });
+}
+
+Stop10.onclick = function(e){
+  let element = e.target;
+
+  while (element.className != "element"){
+    element = element.parentElement;
+  }
+  
+  for(var i = 0; i < Etop10.length; i++){
+    if(element == Etop10[i]){
+      id_lieu = Number(element.getAttribute("data"));
+      rechercheInfo(id_lieu);
+    }
   }
 }

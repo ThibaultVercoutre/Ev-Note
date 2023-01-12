@@ -267,6 +267,7 @@ input:checked + .slider:before{
 	box-shadow: -1px 2px 2px grey;
   cursor: pointer;
   transition: 0.3s;
+  transform: translate(0,0);
 }
 
 .drop::before, .leaflet-control-zoom-in::before, .leaflet-control-zoom-out::before{
@@ -281,6 +282,14 @@ input:checked + .slider:before{
   background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-3));
   transform: scale(0);
   transition: 0.3s;
+}
+
+.leaflet-control-zoom-in::before{
+  border-radius: 8px 8px 0px 0px;
+}
+
+.leaflet-control-zoom-out::before{
+  border-radius: 0px 0px 8px 8px;
 }
 
 .button-villes{
@@ -1190,6 +1199,7 @@ ion-icon {
 }
 
 .element{
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1921,6 +1931,7 @@ nav .drop{
 	margin-left: 2px;
 	box-shadow: -1px 2px 2px grey;
   font-size: 20px;
+  transform: translate(0,0);
 }
 
 #itineraire {
@@ -1937,6 +1948,7 @@ nav .drop{
   font-size: 20px;
   width: 30px;
   height: 30px;
+  transform: translate(0,0);
 }
 
 #itineraire span {
