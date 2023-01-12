@@ -87,24 +87,29 @@ if(document.getElementById("boutton_compte") != null){
 /*=======================================================================================================*/
 /*===================================== Ajout section choix villes ======================================*/
 
-var villes = ["Calais", "Dunkerque", "Saint-Omer", "Blendecques"];
+function ajoutChoixVille(){
+  var villes = ["Calais", "Dunkerque", "Saint-Omer", "Blendecques"];
 
-var stamen = new L.StamenTileLayer("toner-lite");
+  var stamen = new L.StamenTileLayer("toner-lite");
 
-var command = L.control({position: 'bottomleft',});
-command.onAdd = function (mymap) {
-  var div = L.DomUtil.create('div', 'command command-villes');
-  var txt ='';
-  var txt1 = '<div style="text-align:center;"><span data-value="' + 0 + '" id="ville_selector_menu" style="font-size:18px;"><div>Villes</div><span class="material-symbols-outlined">chevron_right</span></span></div><div id="liste-villes">';
-  var txt = '';
-  for (var i = 0; i < villes.length; i++) {
-    txt += '<div class="button-villes .drop anim-button" id="ville_' + villes[i] + '"><p>' + villes[i] + '</p></div>';
-  }
-  var txt2 = '</div><input type="search" id="input-villes"/>';
-  div.innerHTML += txt1 + txt + txt2;
-  return div;
-};
-command.addTo(mymap);
+  var command = L.control({position: 'bottomleft',});
+
+  command.onAdd = function (mymap) {
+    var div = L.DomUtil.create('div', 'command command-villes');
+    var txt ='';
+    var txt1 = '<div style="text-align:center;"><span data-value="' + 0 + '" id="ville_selector_menu" style="font-size:18px;"><div>Villes</div><span class="material-symbols-outlined">chevron_right</span></span></div><div id="liste-villes">';
+    var txt = '';
+    for (var i = 0; i < villes.length; i++) {
+      txt += '<div class="button-villes .drop anim-button" id="ville_' + villes[i] + '"><p>' + villes[i] + '</p></div>';
+    }
+    var txt2 = '</div><input type="search" id="input-villes"/>';
+    div.innerHTML += txt1 + txt + txt2;
+    return div;
+  };
+  command.addTo(mymap);
+}
+
+ajoutChoixVille();
 
 /*=======================================================================================================*/
 /*============================== Icon Leaflet pour bar / parcs ... ======================================*/
@@ -361,6 +366,7 @@ let BcloseCreerAvis = document.getElementById("closeCreerAvis");
 let BcloseCreerLieu = document.getElementById("closeCreerLieu");
 let BenvoyerAvis = document.getElementById("envoyer_avis");
 let BenvoyerLieu = document.getElementById("envoyer_lieu");
+let BnavFin = document.getElementById("nav-fin");
 
 /* Test ==================================*/
 let Tadresse = document.getElementById("batiment-name");
@@ -527,22 +533,22 @@ startTime();
 let inputVilles = document.getElementById("input-villes");
 
 inputVilles.onkeyup = function(){
-for(var i = 0; i < Bvilles.length; i++){
-  if(inputVilles.value.length != 0){
-    var ville = inputVilles.value;
-    ville = ville.replace(ville[0], ville[0].toUpperCase());
-    for(var k = 1; k < ville.length; k++){
-      ville = ville.replace(ville[k], ville[k].toLowerCase());
-    }
-    if(Bvilles[i].firstChild.textContent.search(ville) == -1){
-      Bvilles[i].style.display = "none";
+  for(var i = 0; i < Bvilles.length; i++){
+    if(inputVilles.value.length != 0){
+      var ville = inputVilles.value;
+      ville = ville.replace(ville[0], ville[0].toUpperCase());
+      for(var k = 1; k < ville.length; k++){
+        ville = ville.replace(ville[k], ville[k].toLowerCase());
+      }
+      if(Bvilles[i].firstChild.textContent.search(ville) == -1){
+        Bvilles[i].style.display = "none";
+      }else{
+        Bvilles[i].style.display = "block";
+      }
     }else{
       Bvilles[i].style.display = "block";
     }
-  }else{
-    Bvilles[i].style.display = "block";
   }
-}
 }
 
 /*=======================================================================================================*/
@@ -894,6 +900,7 @@ Bmap.onclick = function() {
     top: 0,
     behavior: 'smooth'
   })
+  BnavFin.style.display = 'flex';
   Snotation.style.transform = "translate(-100%,0px)";
   ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
   SfiltreActu.style.transform = "translate(100%,0px) scaleY(0)";
@@ -907,6 +914,7 @@ Bactu.onclick = function() {
   if(document.getElementsByClassName("dot").length > 0) {
     currentSlide(1);
   }
+  BnavFin.style.display = "none";
   Snotation.style.transform = "translate(-100%,0px)";
   afficheBarre(Sactu);
   affiche(Sactu, Smap);
@@ -967,13 +975,15 @@ Scheckbox.style.display = "block";
 }
 
 function addavis(id){
+  
   let Savis = document.getElementById('section-avis');
-  Savis.innerHTML += '<div class="avi" id="avis_' + id + '">'
+  Savis.innerHTML += '<div class="avi" id="avis_' + id + '" data="avis_' + id + '">'
                           + '<div class="compte-note">'
                             + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
                             + '<div class="nom"></div>'
                             + '<span class="material-symbols-outlined verified"></span>'
                             + '<div class="barres-notations-user">'
+                            + '<div class="boutton_suppr_avis" onclick="supprimer_avis(' + id + ')">Supprimer mon avis</div>'
                             + '</div>'
                           + '</div>'
                           + '<div class="text-avi"></div>'
@@ -1046,6 +1056,7 @@ BenvoyerAvis.onclick = function(){
 /*===================================================== boutons close ===================================*/
 
 BcloseNotation.onclick = function() {
+  BnavFin.style.display = 'flex';
   var imageElement = document.getElementById("image_batiment_section_avis");
   imageElement.src = "";
   Snotation.style.transform = "translate(-100%,0px)";
@@ -1145,6 +1156,8 @@ function addMarker(pos, nom, code) {
     params.append('clave1', '6');
     params.append('clave2', adresse);
     params.append('clave3', '8');
+    
+    console.log(adresse);
 
     fetch('pages/fonctions_bdd/fonction_php.php', {
       method: 'POST',
@@ -1153,13 +1166,13 @@ function addMarker(pos, nom, code) {
     .then(response => response.json())
     .then(data => {
       for (var i = 0; i < data[0].length; i++) {
-        Savis.innerHTML += '<div class="avi" id="avis_' + data[0][i] + '">'
+        Savis.innerHTML += '<div class="avi" id="avis_' + data[0][i] + '" data="avis_' + data[0][i]  + '">'
                           + '<div class="compte-note">'
                             + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
                             + '<div class="nom"></div>'
                             + '<span class="material-symbols-outlined verified"></span>'
-                            + '<div class="barres-notations-user">'
-                            + '</div>'
+                            + '<div class="barres-notations-user"></div>'
+                            + '<div class="boutton_suppr_avis" onclick="supprimer_avis(' + data[0][i] + ')">Supprimer mon avis</div>'
                           + '</div>'
                           + '<div class="text-avi"></div>'
                           + '<div class="actions">'
@@ -1235,9 +1248,14 @@ function modifAvis(){
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       let nom_profils = document.getElementsByClassName('nom');
-      for (var i = 0; i < data.length; i++) {
-        nom_profils[i].textContent = data[i];
+      let boutons_suppr = document.getElementsByClassName('compte-note');
+      for (var i = 0; i < data[0].length; i++) {
+        nom_profils[i].textContent = data[0][i];
+        if(Number(data[1][i]) != user && boutons_suppr[i].childNodes.length == 5){
+          boutons_suppr[i].removeChild(boutons_suppr[i].childNodes[boutons_suppr[i].childNodes.length - 1]);
+        }
       }
     });
 
@@ -1274,7 +1292,6 @@ function modifAvis(){
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       let commentaires = document.getElementsByClassName('text-avi');
       for (var i = 0; i < data.length; i++) {
         commentaires[i].textContent = data[i];
@@ -1436,6 +1453,8 @@ function boutonavis(e) {
       modifAvis();
     }
     if (e.target.id == Bnotation.id) {
+      
+      BnavFin.style.display = 'none';
       Sgps.style.transition = "0.3s";
       Sgps.style.transform = "translate(-100%,0px)";
       Sitineraire.style.transition = "0.3s";
@@ -1590,20 +1609,20 @@ function addActionBdd(avis, nb, type, bool){
 function action_avis(e, save) {
 
   // like dislike report
-  let Bup = document.querySelectorAll(".up");
-  let Bdown = document.querySelectorAll(".down");
-  let Breport = document.querySelectorAll(".report");
+  let Bup = document.querySelectorAll("#section-avis .up");
+  let Bdown = document.querySelectorAll("#section-avis .down");
+  let Breport = document.querySelectorAll("#section-avis .report");
   
-  let Cup = document.querySelectorAll(".b_up");
-  let Cdown = document.querySelectorAll(".b_down");
-  let Creport = document.querySelectorAll(".b_report");
+  let Cup = document.querySelectorAll("#section-avis .b_up");
+  let Cdown = document.querySelectorAll("#section-avis .b_down");
+  let Creport = document.querySelectorAll("#section-avis .b_report");
 
   let Davis = document.getElementsByClassName("avi");
 
   for(var i = 0; i < Bup.length; i++) {
-    var avis = '';
-    for(var j = 5; j < Davis[i].getAttribute("id").length; j++) {
-      avis += Davis[i].getAttribute("id")[j];
+    var avis = '';  
+    for(var j = 5; j < Davis[i].getAttribute("data").length; j++) {
+      avis += Davis[i].getAttribute("data")[j];
     }
 
     if(e == Bup[i]) {
@@ -2140,7 +2159,6 @@ function createFilActu(text){
     .then(response => response.json())
     .then(data => {
       Srouge = document.querySelectorAll(".dislikes-count");
-      console.log(Srouge);
       for(var i = 0; i < data.length; i++){
         Srouge[i].textContent = data[i];
       }
@@ -2416,7 +2434,6 @@ function Top10(){
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       for(var i = 0; i < data[0].length; i++){
         var text = raccourcis(data[0][i]);
         top[i].textContent = text;
@@ -2479,11 +2496,11 @@ function codePostal(lieu, ville){
     let regex = /\d{5}/;
     let result = str.match(regex)[0];
 
-    trouverPos(data[data.length - 1].display_name, result);
+    trouverPos(data[data.length - 1].display_name, result, lieu);
   });
 }
 
-function trouverPos(lieu, code) {
+function trouverPos(lieu, code, lieu2) {
   let url = new URL("http://nominatim.openstreetmap.org/search?q=" + lieu + "%20" + code + "&format=json&limit=1");
   $.getJSON(url, function(data) {
     let pos = {lat : data[0].lat, lng : data[0].lon};
@@ -2505,4 +2522,46 @@ Stop10.onclick = function(e){
       rechercheInfo(id_lieu);
     }
   }
+}
+
+function afficherActionBeta(){
+  var user = document.getElementById('user').getAttribute("data");
+
+  var params = new URLSearchParams();
+  params.append('clave1', '15');
+  params.append('clave2', user);
+  params.append('clave3', '');
+
+  fetch('/pages/fonctions_bdd/fonction_php.php', {
+    method: 'POST',
+    body: params
+  })
+  .then(response => response.json())
+  .then(data => {
+    if(data[0] != "Developpeur"){
+      document.querySelectorAll('.leaflet-bottom.leaflet-left')[0].style.display = 'none';
+    }
+  });
+
+}
+
+afficherActionBeta();
+
+function supprimer_avis(id_avis){
+  var user = Number(document.getElementById('user').getAttribute("data"));
+
+  let avis = document.getElementById('avis_' + id_avis);
+
+  avis.parentElement.removeChild(avis);
+
+  var params = new URLSearchParams();
+  params.append('user', user);
+  params.append('avis', id_avis);
+
+  console.log(user, id_avis);
+
+  fetch('/pages/fonctions_bdd/fonction_suppr_avis.php', {
+    method: 'POST',
+    body: params
+  })
 }
