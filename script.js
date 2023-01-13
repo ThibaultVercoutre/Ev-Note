@@ -364,6 +364,7 @@ let Bsaintomer = document.getElementById("ville_Saint-Omer");
 let BcreerAvis = document.getElementById("creer-avis");
 let BcloseCreerAvis = document.getElementById("closeCreerAvis");
 let BcloseCreerLieu = document.getElementById("closeCreerLieu");
+let BcloseComments = document.getElementById("closeCommentsSlider");
 let BenvoyerAvis = document.getElementById("envoyer_avis");
 let BenvoyerLieu = document.getElementById("envoyer_lieu");
 let BnavFin = document.getElementById("nav-fin");
@@ -387,6 +388,7 @@ let Snotation = document.getElementById("section-notation");
 let ScreerAvis = document.getElementById("section_creer_avis");
 let Sgps = document.getElementById("section-gps");
 let ScreerArt = document.getElementById("section-creer-article");
+let Scomments = document.getElementById("comments_filtre");
 let SpartieMap = document.getElementById("section-map");
 let SpartieActu = document.getElementById("section-fil-actu");
 let Spages = document.getElementById("pages");
@@ -858,6 +860,7 @@ function affiche(S, S2) {
     progressBarClick.style.width = "0px";
     BcreerArt.style.display = "none";
     SfiltreActu.style.display = "none";
+    Scomments.style.display = "none";
     Bcheckbox.style.display = "block";
     BfiltreArt.style.display = "none";
   }
@@ -866,6 +869,7 @@ function affiche(S, S2) {
     SpartieMap.style.opacity = 0;
     ScreerArt.style.display = "block";
     SfiltreActu.style.display = "block";
+    Scomments.style.display = "block";
     S.style.transform = "scaleX(1)";
     S2.style.transform = "scaleX(0)";
     progressBar.style.width = "8px";
@@ -904,6 +908,7 @@ Bmap.onclick = function() {
   Snotation.style.transform = "translate(-100%,0px)";
   ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
   SfiltreActu.style.transform = "translate(100%,0px) scaleY(0)";
+  Scomments.style.transform = "translate(100%, 0)";
   afficheBarre(Smap);
   affiche(Smap, Sactu);
 };
@@ -955,6 +960,18 @@ BcreerAvis.onclick = function(){
 BcloseCreerAvis.onclick = function(){
   ScreerAvis.style.transform = "translate(-100%,0px)";
   ScreerLieu.style.transform = "translate(-100%, 0px)";
+}
+
+BcloseComments.onclick = function(){
+  Scomments.style.transform = "translate(100%, 0)";
+  BfiltreArt.style.display = "block";
+  BcreerArt.style.display = "block";
+  Bmap.style.display = "block";
+  Bactu.style.display = "block";
+  let comments = document.getElementsByClassName("comment");
+  for(var i = 0; i < comments.length; i++){
+    comments[i].style.color = "black";
+  }
 }
 
 BcloseCreerLieu.onclick = function(){
@@ -1699,20 +1716,13 @@ function interactionValable(e){
   let Bdown = document.querySelectorAll(".down");
   let Breport = document.querySelectorAll(".report");
 
-  let BcreerAvis = document.getElementById("creer-avis");
-
   rep = 0;
-
-  if(e = BcreerAvis){
-    rep = 1;
-  }
 
   for (let i = 0; i < Bup.length; i++) {
     if(Bup[i] == e || Bdown[i] == e || Breport[i] == e){
       rep = 1;
     }
   }
-  console.log(rep);
   return rep;
 }
 
@@ -2193,7 +2203,6 @@ function createFilActu(text){
     .then(response => response.json())
     .then(data => {
       Sadresse = document.querySelectorAll(".adresse_event");
-      console.log(Srouge);
       for(var i = 0; i < data.length; i++){
         Sadresse[i].textContent = data[i];
       }
@@ -2228,7 +2237,6 @@ function createFilActu(text){
     .then(response => response.json())
     .then(data => {
       Slieu = document.querySelectorAll(".lieu_event");
-      console.log(Srouge);
       for(var i = 0; i < data.length; i++){
         Slieu[i].textContent = data[i];
       }
@@ -2293,8 +2301,6 @@ let Ccomment = document.querySelectorAll(".comment-count");
 let Cup = document.querySelectorAll(".likes-count");
 let Cdown = document.querySelectorAll(".dislikes-count");
 let Creport = document.querySelectorAll(".report-count");
-
-console.log(Creport);
 
 let Dactu = document.getElementsByClassName("mySlides");
 
@@ -2369,28 +2375,51 @@ for(var i = 0; i < Bup.length; i++) {
         addActionBdd_actu(actu, Creport[i].textContent, 'CptReport', 1);
       }
     }
-
+    
   }
+  console.log(e);
+  if(e == Bcomment[i]){
+    console.log("Je suis là")
+    if(Bcomment[i].style.color == "violet"){
+      Bcomment[i].style.color == "black";
+      Scomments.style.transform = "translate(100%, 0)";
+    }else{
+      Bcomment[i].style.color = "violet";
+      Scomments.style.transform = "translate(0, 0)";
+      BfiltreArt.style.display = "none";
+      BcreerArt.style.display = "none";
+      Bmap.style.display = "none";
+      Bactu.style.display = "none";
+    }
+  }
+  
 }
 }
 
-Savi.onclick = function(e){
-var user = document.getElementById('user').getAttribute("data");
-if(user != "0"){
-  action_avis(e.target, '0');
-}else{
-  alert("Vous devez être connecté pour pouvoir faire ça");
-}
+function interactionValableActu(e){
+  let Bup = document.querySelectorAll(".up");
+  let Bdown = document.querySelectorAll(".down");
+  let Breport = document.querySelectorAll(".report");
+
+  rep = 0;
+
+  for (let i = 0; i < Bup.length; i++) {
+    if(Bup[i] == e || Bdown[i] == e || Breport[i] == e){
+      rep = 1;
+    }
+  }
+  return rep;
 }
 
 Sactu.onclick = function(e){
   var user = document.getElementById('user').getAttribute("data");
-  if(user != "0"){
+  console.log(e.target.className);
+  if((user != "0" && interactionValableActu(e.target) == 1) || e.target.className == 'material-symbols-outlined comment'){
     action_actu(e.target, '0');
-  }else{
+  }else if(interactionValableActu(e.target) == 1 && user == "0"){
     alert("Vous devez être connecté pour pouvoir faire ça");
   }
-  }
+}
 
 
 document.getElementById("BoutonEnvoieFiltres").addEventListener("click", addFiltres, false);
@@ -2456,7 +2485,7 @@ let Snot = document.getElementById("details-notations");
 
 Snot.onclick = function(e){
   let BcreerLieu = document.getElementById("creer_lieu");
-  if(e.target = BcreerLieu){
+  if(e.target == BcreerLieu){
     ScreerLieu.style.transform = "translate(0px, 0px)";
     var NomBat = document.getElementById("batiment-name").textContent;
     var Ville = ville_active;

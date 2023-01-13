@@ -820,6 +820,49 @@ if(isset($_POST['uploadfiltre']))
               </div>
             </div>
           </div>
+<!-- ------------------------------------------------------------------------------------------------------------ Page Commenaitres -->
+
+          <div class="page child1 child2" id="comments_filtre">
+            <div class="scrollbar"></div>
+            <div class="clickScrollbar"></div>
+            <div id="comment-menu" style="">
+              <div id="comment_head">
+                <h2>Section Commentaires</h2>
+              </div>
+              <div id="champs_commentaire">
+                <textarea name="Annonce" id="Description" placeholder="Exprimez vous sur l'événement où repondez au autre..." rows="10" cols="50" required></textarea>
+                <input type="submit" value="Publier" name="upload" id="BoutonEnvoie" />
+              </div>
+              <div id="commentaire">
+                <div class="conversation-container" id="C1">
+                  <div class="message">
+                    <p>Bonjour, comment vas-tu? fsfsjfsofjsofkslfks kfjskfjsfjskfjskfjsk fsjofjsofjsofjsofjs kfjsojfsojfsojfosf fjsojfosjfosjfosfskfjsofjspojfosf sofjosjfsojfosfjs ojfosjfosjfosjf ojfosjosjfosjfos ofjsojfosjfosjf ofsjfosjfosjfo jfosjfosjfosjf sojfosjfosjfos fpsjfosjofsjofs fksofjsojsofjj osfjsojvosj</p>
+                    <div class="message-info">
+                      <p class="username">ZEbiiiii</p>
+                      <p class="timestamp">10:30 AM</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="conversation-container" id="C2">
+                  <div class="message">
+                    <p>Salut! Je vais bien, et toi?</p>
+                  </div>
+                  <div class="message-info">
+                    <p class="username">Jean eude tes grands morts</p>
+                    <p class="timestamp">10:31 AM</p>
+                  </div>
+                </div>
+              </div> 
+              <div id="closeCommentsSlider">
+                <div class="logo-close button">
+                  <div class="croix1"></div>
+                  <div class="croix2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
         <nav id="bouton-scroll"></nav>
     </div> <!-- ==================================================== FIN Corps de la page -->

@@ -1613,6 +1613,16 @@ nav .drop{
   width: 100%;
 }
 
+#comments_filtre{
+  transform: translate(100%, 0px);
+  transition: 0.3s;
+  transform-origin: top right;
+}
+
+.comments{
+  cursor: pointer;
+}
+
 #filtres_actu{
   display: none;
   transform: translate(100%,0px);
@@ -1749,17 +1759,17 @@ nav .drop{
 }
 
 
-.up, .down, .report{
+.up, .down, .report, .comment{
   transform-origin: bottom;
   transition: 0.3s;
   cursor: pointer;
 }
 
-.up:hover, .down:hover, .report:hover{
+.up:hover, .down:hover, .report:hover, .comment:hover{
   transform: scale(1.1);
 }
 
-.up:active, .down:active, .report:active{
+.up:active, .down:active, .report:active, .comment:active{
   transform: scale(1);
 }
 
@@ -2488,6 +2498,103 @@ footer{
   margin-right: 15%;
   padding: 4px;
   text-align: center;
+}
+
+/*=======================================================================================================*/
+/*========================================== PAGE COMMENTAIRES ==========================================*/
+
+#comments_filtre{
+  backdrop-filter: blur(10px);
+  width: 100%;
+  overflow-y: auto;
+}
+
+#comment-menu {
+  list-style-type: none; /* Supprimer les marqueurs de liste */
+  margin: 0; /* Mettre à zéro les marges */
+  margin-top: 5px;
+  padding: 0; /* Mettre à zéro les espacements intérieurs */
+  overflow: hidden; /* Cacher les éléments dépassant */
+}
+
+#comment-menu h2 {
+  margin: 5px 50px;
+  text-align: center;
+  border: solid;
+  border-width: 3px;
+  border-radius: 8px;
+  font-weight: bold;
+  padding : 15px;
+  font-size: 1.2em;
+}
+
+#comments_filtre textarea{
+  background-color: var(--couleur-principale-4);
+  border: 1px solid var(--couleur-principale-2);
+  border-radius: 8px;
+  width: 40%;
+  padding: 15px;
+  margin: 0 auto;
+  display: inline-block;
+}
+
+#champs_commentaire {
+  text-align: center; /* pour centrer le contenu */
+  padding: 15px;
+}
+
+#comment_head {
+  margin: 0auto;
+}
+
+#commentaire, #champs_commentaire{
+  border: solid;
+  border-radius: 8px;
+  border-width: 2px;
+  margin: 20px 150px;
+  padding : 10px;
+
+}
+
+#comments_filtre .conversation-container {
+  width: 50%;
+  margin: 0 auto;
+  padding: 5px;
+  border-radius: 16px;
+  overflow-y: auto;
+  height: 150px;
+  font-size: small;
+
+}
+
+#comments_filtre .message-container {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+#comments_filtre #C1 {
+  margin-bottom: 10px;
+  background-color: var(--couleur-principale-6) ;
+}
+
+#comments_filtre #C2 {
+  background-color: var(--couleur-principale-1);
+}
+
+#comments_filtre .message {
+  padding: 10px;
+}
+
+#comments_filtre .message-info {
+  text-align: right;
+  font-size: 12px;
+  color: #666;
+}
+
+#comments_filtre .username {
+  font-weight: bold;
 }
 
 /*=======================================================================================================*/
