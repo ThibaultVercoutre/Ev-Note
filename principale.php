@@ -659,25 +659,28 @@ if(isset($_POST['uploadfiltre']))
           <script>
             function checkForm(form) {
               var checkboxes = form.querySelectorAll('input[type="checkbox"]');
-              var checkedOne = false;
+              var checkedCount = 0;
+
               for (var i = 0; i < checkboxes.length; i++) {
                 if (checkboxes[i].checked) {
-                  if (checkedOne) {
+                  checkedCount++;
+                  if (checkedCount > 1) {
                     alert("Vous ne pouvez sélectionner qu'une seule option.");
+                    var firstChecked = form.querySelector('input[type="checkbox"]:checked');
+                    firstChecked.checked = false;
                     checkboxes[i].checked = false;
-                  }
-                  else {
-                    checkedOne = true;
+                    return false;
                   }
                 }
               }
-              if (!checkedOne) {
+
+              if (checkedCount === 0) {
                 alert("Vous devez sélectionner au moins une option.");
                 return false;
               }
-              return true;
-            }
 
+              return true;
+          }
           </script>
 <!-- --------------------------------------------------------------------------------------------------------- Page applique filtre -->
           <div class="page child1 child2" id="filtres_actu">

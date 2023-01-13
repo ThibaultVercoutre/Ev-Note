@@ -74,7 +74,7 @@ html{
 
   #button_mdp {
     border: solid 1px red;
-    background-color: transparent; /* couleur de fond verte */
+    background-color: transparent; 
     color : red;
     font-weight: bold;
     text-decoration: none; /* Supprime la surbrillance */
@@ -91,6 +91,42 @@ html{
     
   }
 
+  #button_suppr {
+    border: solid 1px red;
+    background-color: transparent; 
+    color : red;
+    font-weight: bold;
+    text-decoration: none; /* Supprime la surbrillance */
+    display: inline-block; /* Affiche le bouton sur une ligne */
+    font-size: 16px; /* Taille de police */
+    cursor: pointer; /* Change le curseur en main lorsque la souris passe sur le bouton */
+    border-radius: 4px; /* arrondit les coins du bouton */
+
+    text-align: center;
+    margin: 8px; /* ajoute de la marge autour du bouton */
+    padding: 12px 20px; /* ajoute du padding à l'intérieur du bouton */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: background-color 0.5s; /* transition de 0.5s pour la couleur de fond */
+    
+  }
+
+  #button_suppr_post {
+    border: solid 1px red;
+    background-color: transparent; 
+    color : red;
+    font-weight: bold;
+    text-decoration: none; /* Supprime la surbrillance */
+    left : 100px;
+    font-size: 16px; /* Taille de police */
+    cursor: pointer; /* Change le curseur en main lorsque la souris passe sur le bouton */
+    border-radius: 4px; /* arrondit les coins du bouton */
+    margin: 8px; /* ajoute de la marge autour du bouton */
+    padding: 12px 20px; /* ajoute du padding à l'intérieur du bouton */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: background-color 0.5s; /* transition de 0.5s pour la couleur de fond */
+    
+  }
+
   #menu_mdp {
     list-style-type: none; /* Supprimer les marqueurs de liste */
     margin: 0; /* Mettre à zéro les marges */
@@ -99,7 +135,7 @@ html{
     overflow: hidden; /* Cacher les éléments dépassant */
   }
   
-  form {
+  #formulaire_mdp {
     width: 50%;
     margin: 0 auto;
     text-align: left;
@@ -451,4 +487,297 @@ html{
   color: #222;
   border-radius: 0;
   border-bottom: 2px solid #222;
+}
+
+hr{
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/*==============================BOUTON POST LIKE / DISLIKE / REPORT===============================*/
+#choix_post_like_dislike_report{
+  display: flex;
+  justify-content: space-around;
+}
+
+.bouton_post {
+    flex: 1;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    align-items: center;
+    border: 1px solid #456fa0;
+    height: 50px;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+    justify-content: space-around;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+  
+.bouton_post:hover{
+    background-color: #456fa0;
+  }
+  /*
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px;
+    height : 50px;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px;
+    flex: 1 1 0%;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(69, 111, 160);
+    border-image: initial;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 4px;
+    transition: all 0.3s ease 0s;
+}
+*/
+
+/*==================================SLIDER=======================================*/
+
+main {
+  box-sizing:border-box;
+  height: 90%;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  width: 700px;
+  position: relative;
+  margin: auto;
+  height: 500px;
+}
+
+/* Hide the images by default */
+.slideshow-container .mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.slideshow-container .prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color:black;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.slideshow-container .next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.slideshow-container .prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Number text (1/3 etc) */
+.slideshow-container .numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.slideshow-container .dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.slideshow-container .active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.slideshow-container .fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+.slideshow-container .article-img{
+  border-style: solid;
+  border-color: whitesmoke;
+  border-width: 3px;
+  border-radius: 16px;
+  width: 270px;
+  height: 280px;
+  text-align:center;
+  margin: auto;
+  display:flex;
+  margin-top: 0px;
+  object-fit: cover;
+  /*margin-bottom : 5px;*/
+}
+
+.slideshow-container .avator {
+  border-radius:100px;
+  width: 48px;
+  margin-right: 15px;
+}
+
+.avatorsignale{
+  position: relative;
+  float : left;
+  width: 75px;
+  border-radius: 16px;
+}
+
+.article-imgsignale{
+  position: relative;
+  width: 150px;
+  float: right;
+  bottom: 100px;
+  margin-right: 300px;;
+}
+#Articlesignale {
+  border-width: 3px;
+  border-style: solid;
+  border-color: black;
+  border-radius : 16px;
+  margin-left : 10px;
+  box-sizing: 100px;
+}
+
+
+.slideshow-container #Article {
+  max-width:1000px;
+  height: 100%;
+  height: 400px;
+  max-height: 450px;
+  background: #5FAEBE;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius:3px;
+  padding: 30px 30px 70px 30px;
+  border-bottom: 1px solid #e6ecf0;
+  border-top: 1px solid #e6ecf0;
+}
+
+
+
+/*
+#  #Article {
+  max-width:1000px;
+  height: 100%;
+  position: relative;
+  background: #5FAEBE;
+  margin: auto;
+  border-radius:3px;
+  padding: 238px;
+}*/
+
+.slideshow-container .TitreArticle{
+  font-size: 20px;
+  font-style: Arial; 
+  text-align: center;
+  text-decoration: underline;
+
+}
+  
+.slideshow-container .article-header {
+  display: flex;
+  align-items:flex-start;
+  font-size:14px;
+}
+.slideshow-container .article-header-info {
+  font-weight:bold;
+  flex: 1;
+
+}
+.slideshow-container .article-header-info span {
+  color:#657786;
+  font-weight:normal;
+  margin-left: 5px;
+}
+.slideshow-container .article-header-info p {
+  font-weight:normal;
+  margin-top: 5px;  
+}
+
+.slideshow-container .article-header-info .adresse_event {
+  font-weight:normal;
+  margin-right: 15px;  
+  float: right;
+}
+
+.slideshow-container .article-header-info .lieu_event {
+  font-weight:normal;
+  margin-right: 5px;  
+  float: right;
+}
+
+.slideshow-container .article-img-wrap {
+  padding-left: 60px;
+}
+
+.slideshow-container .article-info-counts {
+  display: flex;
+  margin-left: 60px;
+  margin-top: 10px;
+}
+.slideshow-container .article-info-counts div {
+  display: flex;
+  margin-right: 20px;
+}
+.slideshow-container .article-info-counts div svg {
+  color:#657786;
+  margin-right: 10px;
+}
+@media screen and (max-width:430px){
+  body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .article-header {
+    flex-direction:column;
+  }
+  .article-header img {
+    margin-bottom: 20px;
+  }
+  .article-header-info p {
+    margin-bottom: 30px;
+  }
+  .article-img-wrap {
+    padding-left: 0;
+  }
+  .article-info-counts {
+    display: flex;
+    margin-left: 0;
+  }
+  .article-info-counts div {
+    margin-right: 10px;
+  }
 }
