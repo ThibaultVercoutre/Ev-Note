@@ -2208,6 +2208,18 @@ main {
   margin-top: 5px;  
 }
 
+#section-fil-actu .article-header-info .adresse_event {
+  font-weight:normal;
+  margin-right: 15px;  
+  float: right;
+}
+
+#section-fil-actu .article-header-info .lieu_event {
+  font-weight:normal;
+  margin-right: 5px;  
+  float: right;
+}
+
 #section-fil-actu .article-img-wrap {
   padding-left: 60px;
 }

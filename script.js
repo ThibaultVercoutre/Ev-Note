@@ -1787,8 +1787,8 @@ function ListeNactu(text){
                           + '<div class="article-header-info">'
                             + '<p class="article_auteur">' + i +'</p>'
                             + '<span class="article_date">date de creation</span>'
-                            + '<span class="adresse_event">adresse</span>'
-                            + '<span class="lieu_event">lieu</span>'
+                            + '<div class="adresse_event">adresse</div>'
+                            + '<div class="lieu_event">lieu</div>'
                             + '<p class="TitreArticle"><br/><b><u>Nom Event</u></b></p>'
                             + '<p class="AnnonceArticle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti sunt dolorem est perspiciatis, odit voluptate sint neque delectus officiis explicabo distinctio? Ex in cumque nihil beatae. In tempore animi nam!</p>'
                           + '</div>'
@@ -2157,7 +2157,7 @@ function createFilActu(text){
     })
     .then(response => response.json())
     .then(data => {
-      adresse = document.querySelectorAll(".adresse_event");
+      Sadresse = document.querySelectorAll(".adresse_event");
       console.log(data);
       for(var i = 0; i < data.length; i++){
         Sadresse[i].textContent = data[i];
@@ -2174,7 +2174,7 @@ function createFilActu(text){
     })
     .then(response => response.json())
     .then(data => {
-      adresse = document.querySelectorAll(".adresse_event");
+      Sadresse = document.querySelectorAll(".adresse_event");
       console.log(Srouge);
       for(var i = 0; i < data.length; i++){
         Sadresse[i].textContent = data[i];
@@ -2192,7 +2192,7 @@ function createFilActu(text){
     })
     .then(response => response.json())
     .then(data => {
-      lieu = document.querySelectorAll(".lieu_event");
+      Slieu = document.querySelectorAll(".lieu_event");
       console.log(data);
       for(var i = 0; i < data.length; i++){
         Slieu[i].textContent = data[i];
@@ -2209,7 +2209,7 @@ function createFilActu(text){
     })
     .then(response => response.json())
     .then(data => {
-      lieu = document.querySelectorAll(".lieu_event");
+      Slieu = document.querySelectorAll(".lieu_event");
       console.log(Srouge);
       for(var i = 0; i < data.length; i++){
         Slieu[i].textContent = data[i];
