@@ -76,8 +76,8 @@ function ListeNlieuCree(section, type, reponse){
                             + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
                             + '<div class="nom"></div>'
                             + '<div class="ajout_suppr">'
-                              + '<div class="ajout_lieu" onclick="ajouterLieuCode(' + data[0][i] + ')">Ajouter cet avis</div>'
-                              + '<div class="suppr_lieu" onclick="supprimerLieuCode(' + data[0][i] + ')">Supprimer cet avis</div>'
+                              + '<div class="ajout_lieu" onclick="ajouterLieuCode(' + data[0][i] + ')">Ajouter ce lieu</div>'
+                              + '<div class="suppr_lieu" onclick="supprimerLieuCode(' + data[0][i] + ')">Supprimer ce lieu</div>'
                             + '</div>'
                           + '</div>'
                         + '</div>';
