@@ -2413,7 +2413,6 @@ griserBouttons();
 /*========================================= Génération top 10 ===========================================*/
 
 function raccourcis(text){
-  text = text.replace(' de Calais', '');
   text = text.replace("Université du Littoral Côte d'Opale - Centre Universitaire de la Mi-Voix", 'ULCO - EILCO');
   return text;
 }
