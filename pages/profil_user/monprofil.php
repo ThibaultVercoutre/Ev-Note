@@ -325,11 +325,8 @@ session_start();
                         
                         <p class="TitreArticle"><br/><b><u><?php echo $test_admin['NomEvent'];?></u></b></p>
                         <p> <?php echo $test_admin['Annonce'] ; ?></p>
-                        <img src="../../<?php echo $test_admin['Chemin'];?>" class="article-imgsignale">
-                        <form id="suppr_post" action="monprofil.php" method="post">
-                          
-                        <button type="submit" value="<?php echo $test_admin['id_forum']; ?>" name="supprimer_post" id="button_suppr_post">Supprimer le post</button>
-                        </form>
+                        <img src="../../<?php echo $test_admin['Chemin'];?>" class="article-imgsignale">  
+                        <button type="submit" value="<?php echo $test_admin['id_forum']; ?>" name="supprimer_post" id="button_suppr_post" onclick="deletePost(this)">Supprimer le post</button>
                       </div>
                     </div>
                   </div>
@@ -380,6 +377,21 @@ var user = <?php echo json_encode($user_mail); ?>;
 if (user.TypeCompte !== "Developpeur") {
   document.getElementById("sectionAdmin2").style.display = "none";
 }
+
+function deletePost(element) {
+  var id_forum = element.value;
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "monprofil.php", true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var parent = element.parentNode.parentNode.parentNode;
+      parent.style.display = "none";
+    }
+  };
+  xhr.send("supprimer_post=" + id_forum);
+}
+
 </script>
 <script src="../../header.js"></script>
 <script src="scriptprofil.js"></script>
