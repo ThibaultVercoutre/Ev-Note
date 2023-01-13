@@ -15,8 +15,9 @@ $stmt->execute();
 $id_avis = $stmt->fetchAll(PDO::FETCH_COLUMN, 0)[0];
 
 // Préparation de la requête SQL
-$sql = "INSERT INTO `avis` (`id_avis`, `id_user`, `Avis`, `CptPouceBleu`, `CptPouceRouge`, `CptReport`, `CptEtoile`, `id_commentaire_avis`, `id_lieu`) VALUES ('$id_avis','8','$avis','0','0','0','$etoile','6','$id_lieu')";
-$bdd->exec($sql);
+$sql = "INSERT INTO `avis` (`id_avis`, `id_user`, `Avis`, `CptPouceBleu`, `CptPouceRouge`, `CptReport`, `CptEtoile`, `id_commentaire_avis`, `id_lieu`) VALUES ('$id_avis','8',?,'0','0','0','$etoile','6','$id_lieu')";
+$stmt = $bdd->prepare($sql);
+$stmt->execute([$avis]);
 
 echo(json_encode($id_avis));
 
