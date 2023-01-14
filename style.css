@@ -335,7 +335,7 @@ input:checked + .slider:before{
 div:has(> .command){
   border: 2px solid whitesmoke;
   backdrop-filter: blur(10px);
-  border-radius: 16px;
+  border-radius: 8px;
   transition: 0.3s;
 }
 
@@ -1426,7 +1426,7 @@ nav .drop{
   display: flex;
   flex-direction: row;
   border: 2px solid var(--couleur-principale-1);
-  border-radius: 16px;
+  border-radius: 8px;
   box-shadow: -2px 2px 2px 2px black;
   margin-right: 20px;
   margin-left: 20px;
@@ -1674,7 +1674,7 @@ nav .drop{
   display: flex;
   padding: 10px;
   flex-direction: row;
-  border-radius: 16px;
+  border-radius: 8px;
   box-shadow: -2px 2px 2px 2px black;
   margin: 20px;
   border: 2px solid var(--couleur-principale-1);

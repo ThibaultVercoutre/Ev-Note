@@ -200,8 +200,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 1</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -209,8 +209,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 2</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -218,8 +218,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 3</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -227,8 +227,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 4</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -236,8 +236,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 5</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -245,8 +245,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 6</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -254,8 +254,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 7</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -263,8 +263,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 8</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -272,8 +272,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 9</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -281,8 +281,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 10</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -290,8 +290,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 1</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -299,8 +299,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 2</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -308,8 +308,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 3</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -317,8 +317,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 4</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
         <div class="element">
@@ -326,8 +326,8 @@ if(isset($_POST['uploadfiltre']))
             <img src="" class="image_top">
           </div>
           <div class="informations">
-            <h4>Bar 5</h4>
-            <div class="note">⭐⭐⭐⭐⭐</div>
+            <h4></h4>
+            <div class="note"></div>
           </div>
         </div>
       </div>
@@ -444,7 +444,7 @@ if(isset($_POST['uploadfiltre']))
               <div id="elements-notations">
                 <div class="img">
                   
-                  <img src="" id="image_batiment_section_avis" alt="Image" data="1">
+                  <img src="img_lieu/default.jpg" id="image_batiment_section_avis" alt="Image" data="1">
                   <div class="barres-notations">
                   </div>
                 </div>
