@@ -76,10 +76,14 @@ if(isset($_POST['uploadLieu']))
     $id_lieu = $id_max['max(id_lieu)'] + 1;
     $id_photo = $id_img_max['max(id_p_eta)'] + 1;
     $sql2 = $bdd->query("INSERT INTO photo_eta (id_p_eta, Chemin) VALUES ('$id_photo', '$path')");
-    $sql = $bdd->query("INSERT INTO lieu_tmp (id_lieu, id_p_eta, Adresse, Ville) VALUES ('$id_lieu', '$id_photo','$nomBat','$ville')");
+
+  
+    $sql = "INSERT INTO lieu_tmp (id_lieu, id_p_eta, Adresse, Ville) VALUES (?, ?, ?, ?)";
+    $stmt = $bdd->prepare($sql);
+    $stmt->bind_param('iiss', $id_lieu, $id_photo, $nomBat, $ville);
+    $stmt->execute();
     
     move_uploaded_file($_FILES['imageLieu']['tmp_name'], $path);
-
     header('Location:../../principale.php');
 
     die();
@@ -881,7 +885,7 @@ if(isset($_POST['uploadfiltre']))
     <div id="foot-gauche">
       <a class="lien-footer" href="./pages/CGUs/conditions.html">Conditions d'utilisation</a>
       <a class="lien-footer"
-        href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
+        href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nous contacter</a>
     </div>
     <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
     <a class="lien-footer" href="pages/devs/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>

@@ -309,7 +309,7 @@ $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0)[0];
 $id_lieu = $resultats;
 
 $ajout_lieu = "INSERT INTO `lieu`(`id_lieu`, `id_p_eta`, `Adresse`, `Ville`) 
-                VALUES ('$id_lieu','$type', '$user', '$table')";
+                VALUES ('$id_lieu','$type', ?, '$table')";
 
 switch($type){
     case '0': echo($nb_like); break;
@@ -321,7 +321,7 @@ switch($type){
     case '6': echo(json_encode([$nb_lieu, $nb_p_eta])); break;
     case '7': echo(json_encode([$photos_lieu, $adresse_lieu, $ville_lieu])); break;
     case '8': $bdd->exec($sql_suppr_lieu); break;
-    default : $bdd->exec($ajout_lieu); echo(json_encode([$n_photo, $user, $table])); break;
+    default : $stmt = $bdd->prepare($ajout_lieu); $stmt->execute([$user]); echo(json_encode([$id_lieu, $type, $user, $table])); break;
 }
 
 ?>

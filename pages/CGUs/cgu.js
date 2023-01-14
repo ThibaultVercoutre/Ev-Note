@@ -1,20 +1,14 @@
 let ElementsNav = document.querySelectorAll("#menu nav p");
 //let ElementsNavUnderline = document.querySelectorAll("#menu nav div");
-let TitresCGU = document.querySelectorAll(".categories");
+let TitresCGU = document.querySelectorAll(".categories_pos");
 var PositionTitreCGU = [];
-
-//console.log(ElementsNavUnderline[0].nextElementSibling);
 
 window.onload = () => {
 
     for(var i = 0; i < TitresCGU.length; i++){
         PositionTitreCGU[i] = TitresCGU[i].offsetTop;
     }
-    
-    console.log(PositionTitreCGU);
 }
-
-//console.log(TitresCGU[0].offsetTop);
 
 function resetMenu(elts){
     elts = elts.childNodes;
@@ -26,7 +20,6 @@ function resetMenu(elts){
 
 for(var i = 0; i < ElementsNav.length; i++){
     ElementsNav[i].onclick = function(e){
-        console.log(e.target.className, PositionTitreCGU[parseInt(e.target.className-1)]);
         window.scrollTo({
             top: PositionTitreCGU[parseInt(e.target.className-1)] - 52,
             behavior: 'smooth'
@@ -45,17 +38,6 @@ for(var i = 0; i < ElementsNav.length; i++){
         e.target.nextElementSibling.style.transform = "scaleX(0)";
     });
 }
-
-/*
-window.addEventListener("scroll", () => {
-    for(var i = 0; i < TitresCGU.length; i++) {
-        if(TitresCGU[parseInt(i)].offsetTop <= document.body.scrollTop){
-            resetMenu(ElementsNav[i].parentElement);
-            ElementsNav[i].style.backgroundColor = "#4D98BF";
-            console.log(TitresCGU[parseInt(i)].textContent);
-        }
-    };
-});*/
 
 
 /*=======================================================================================================*/
@@ -93,5 +75,4 @@ function startTime() {
     return couleur;
   }
   
-   
   startTime();
