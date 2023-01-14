@@ -996,7 +996,7 @@ function addavis(id){
   let Savis = document.getElementById('section-avis');
   Savis.innerHTML += '<div class="avi" id="avis_' + id + '" data="avis_' + id + '">'
                           + '<div class="compte-note">'
-                            + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
+                            + '<div class="img-profil-note"><img src="img_lieu/default.jpg" alt="image-profil" class="img-profil-note-balise"></div>'
                             + '<div class="nom"></div>'
                             + '<span class="material-symbols-outlined verified"></span>'
                             + '<div class="barres-notations-user">'
@@ -1041,7 +1041,6 @@ BenvoyerAvis.onclick = function(){
     .then(response => response.json())
     .then(result => {
       deja_poster = result[0];
-      console.log(result);
       if(deja_poster != '0'){
         document.getElementById("message_envoie_avis").textContent = "Vous-avez déjà posté un avis";
       }else{
@@ -1075,7 +1074,7 @@ BenvoyerAvis.onclick = function(){
 BcloseNotation.onclick = function() {
   BnavFin.style.display = 'flex';
   var imageElement = document.getElementById("image_batiment_section_avis");
-  imageElement.src = "";
+  imageElement.src = "img_lieu/default.jpg";
   Snotation.style.transform = "translate(-100%,0px)";
   Bcheckbox.style.display = "block";
   Bmap.style.display = "block";
@@ -1144,17 +1143,18 @@ function addMarker(pos, nom, code) {
 
   //marqueur.addTo(mymap);
   /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-
+/*
   if(nom.search(" " + code + ",") != -1){ 
     marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
   }else{
-      marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
-  }
+    //marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
+    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
+  }*/
   
-  if(nom.search(" " + code + ",") != -1){  
+  if(texte == "Destination impossible"){  
+    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
+   }else{
     marqueur.addTo(mymap).bindPopup('<div id="element-popup"><h1>Adresse du lieu : </h1><div id="boutons-popup"><div class="drop button anim-button" id="adresse-note">' + texte + '</div><div class="drop button anim-button" id="itineraire"><span class="material-symbols-outlined">google_plus_reshare</span></div></div></br></div>').openPopup();
-  }else{
-      marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
   }
     
   Bnotation = document.getElementById("adresse-note");
@@ -1173,8 +1173,6 @@ function addMarker(pos, nom, code) {
     params.append('clave1', '6');
     params.append('clave2', adresse);
     params.append('clave3', '8');
-    
-    console.log(adresse);
 
     fetch('pages/fonctions_bdd/fonction_php.php', {
       method: 'POST',
@@ -1185,7 +1183,7 @@ function addMarker(pos, nom, code) {
       for (var i = 0; i < data[0].length; i++) {
         Savis.innerHTML += '<div class="avi" id="avis_' + data[0][i] + '" data="avis_' + data[0][i]  + '">'
                           + '<div class="compte-note">'
-                            + '<div class="img-profil-note"><img src="" alt="image-profil" class="img-profil-note-balise"></div>'
+                            + '<div class="img-profil-note"><img src="img_lieu/default.jpg" alt="image-profil" class="img-profil-note-balise"></div>'
                             + '<div class="nom"></div>'
                             + '<span class="material-symbols-outlined verified"></span>'
                             + '<div class="barres-notations-user"></div>'
@@ -1230,7 +1228,7 @@ function modifAvis(){
       if(result.length != 0){
         imageElement.src = result;
       }else{
-        imageElement.src = "";
+        imageElement.src = "img_lieu/default.jpg";
         imageElement.setAttribute("data", "0");
       }
     });
@@ -1265,7 +1263,6 @@ function modifAvis(){
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       let nom_profils = document.getElementsByClassName('nom');
       let boutons_suppr = document.getElementsByClassName('compte-note');
       for (var i = 0; i < data[0].length; i++) {
@@ -1294,7 +1291,6 @@ function modifAvis(){
           verification_dev[i].textContent = 'verified';
         }
       }
-      //console.log(avis);
     });
 
     /* Commentaires avis lieu */
@@ -1557,7 +1553,7 @@ function searchAdresse() {
     if(data.length != 0){
       if(data[0].display_name.search(" " + ville_active) != -1){
         let pos = {lat : data[0].lat, lng : data[0].lon};
-        addMarker(pos, data[0].display_name);
+        addMarker(pos, data[0].display_name, '');
       }else{
         pos = VillesPositions[ville_active];
         addMarker(pos, "Destination impossible");
@@ -1611,16 +1607,10 @@ function addActionBdd(avis, nb, type, bool){
     params.append('user', user);
     params.append('bool', bool);
 
-    console.log(user, avis);
-
     fetch(fichier, {
       method: 'POST',
       body: params
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(type + " = " + data);
-    });
 }
 
 function action_avis(e, save) {
@@ -1748,14 +1738,12 @@ function plusSlides(n) {
   var params = new URLSearchParams();
   params.append('clave1', '18');
   params.append('clave2', slideIndex);
-  console.log(slideIndex);
   fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
     method: 'POST',
     body: params
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data[0]);
     Fond = document.getElementById("articles");
     Fond.style.backgroundImage = "url(" + data[0] + ")";
   });
@@ -2152,7 +2140,6 @@ function createFilActu(text){
     .then(response => response.json())
     .then(data => {
       Srouge = document.querySelectorAll(".dislikes-count");
-      console.log(data);
       for(var i = 0; i < data.length; i++){
         Srouge[i].textContent = data[i];
       }
@@ -2186,7 +2173,6 @@ function createFilActu(text){
     .then(response => response.json())
     .then(data => {
       Sadresse = document.querySelectorAll(".adresse_event");
-      console.log(data);
       for(var i = 0; i < data.length; i++){
         Sadresse[i].textContent = data[i];
       }
@@ -2220,7 +2206,6 @@ function createFilActu(text){
     .then(response => response.json())
     .then(data => {
       Slieu = document.querySelectorAll(".lieu_event");
-      console.log(data);
       for(var i = 0; i < data.length; i++){
         Slieu[i].textContent = data[i];
       }
@@ -2266,7 +2251,6 @@ function addActionBdd_actu(actu, nb, type, bool){
     var user = document.getElementById('user').getAttribute("data");
     fichier = 'pages/fonctions_bdd/maj_like_bdd_actu.php';
 
-    console.log(type);
     /* Maj like */
     var params = new URLSearchParams();
     params.append('nombre', nb);
@@ -2275,16 +2259,10 @@ function addActionBdd_actu(actu, nb, type, bool){
     params.append('user', user);
     params.append('bool', bool);
 
-    console.log(nb, actu, type, user, bool);
-
     fetch(fichier, {
       method: 'POST',
       body: params
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(type + " = " + data);
-    });
   
 }
 
@@ -2377,9 +2355,7 @@ for(var i = 0; i < Bup.length; i++) {
     }
     
   }
-  console.log(e);
   if(e == Bcomment[i]){
-    console.log("Je suis là")
     if(Bcomment[i].style.color == "violet"){
       Bcomment[i].style.color == "black";
       Scomments.style.transform = "translate(100%, 0)";
@@ -2413,7 +2389,6 @@ function interactionValableActu(e){
 
 Sactu.onclick = function(e){
   var user = document.getElementById('user').getAttribute("data");
-  console.log(e.target.className);
   if((user != "0" && interactionValableActu(e.target) == 1) || e.target.className == 'material-symbols-outlined comment'){
     action_actu(e.target, '0');
   }else if(interactionValableActu(e.target) == 1 && user == "0"){
@@ -2462,8 +2437,11 @@ function Top10(){
     })
     .then(response => response.json())
     .then(data => {
-      for(var i = 0; i < data[0].length; i++){
+      for(var i = 0; i < top.length - 5; i++){
         var text = raccourcis(data[0][i]);
+        if(text.length > 25){
+          top[i].style.animationName = "";
+        }
         top[i].textContent = text;
         top_note[i].textContent = data[1][i] + " / 5";
         top_img[i].src = data[2][i];
@@ -2473,6 +2451,9 @@ function Top10(){
           top_note[i+10].textContent = data[1][i] + " / 5";
           top_img[i+10].src = data[2][i];
           informations[i+10].setAttribute("data",data[3][i]);
+          if(text.length > 25){
+            top[i+10].style.animationName = "";
+          }          
         }
       }
     });
@@ -2540,6 +2521,21 @@ function trouverPos(lieu, code, lieu2) {
 Stop10.onclick = function(e){
   let element = e.target;
 
+  console.log("je suis là");
+
+  ListeNactu('');
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+  BnavFin.style.display = 'flex';
+  Snotation.style.transform = "translate(-100%,0px)";
+  ScreerArt.style.transform = "translate(100%,0px) scaleY(0)";
+  SfiltreActu.style.transform = "translate(100%,0px) scaleY(0)";
+  Scomments.style.transform = "translate(100%, 0)";
+  afficheBarre(Smap);
+  affiche(Smap, Sactu);
+
   while (element.className != "element"){
     element = element.parentElement;
   }
@@ -2568,6 +2564,7 @@ function afficherActionBeta(){
   .then(data => {
     if(data[0] != "Developpeur"){
       document.querySelectorAll('.leaflet-bottom.leaflet-left')[0].style.display = 'none';
+
     }
   });
 
@@ -2585,8 +2582,6 @@ function supprimer_avis(id_avis){
   var params = new URLSearchParams();
   params.append('user', user);
   params.append('avis', id_avis);
-
-  console.log(user, id_avis);
 
   fetch('/pages/fonctions_bdd/fonction_suppr_avis.php', {
     method: 'POST',
