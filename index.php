@@ -5,49 +5,12 @@
     
     $supp_date = $bdd->query("DELETE FROM form_fil WHERE DateCreation < DATEADD(day, -5, GETDATE())");
     $table_inner = $bdd->query("SELECT * FROM form_fil INNER JOIN utilisateur ON form_fil.id_user = utilisateur.id_user INNER JOIN photo_user ON utilisateur.id_image_user = photo_user.id_image_user INNER JOIN image_event ON form_fil.id_image_event = image_event.id_image_event ORDER BY form_fil.DateCreation DESC;");
-    $post = $bdd->query("SELECT id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport FROM form_fil"); 
     $user = $bdd->query("SELECT utilisateur.id_user, Nom, Prenom, id_image_user FROM utilisateur, form_fil WHERE utilisateur.id_user=form_fil.id_user");
     $img = $bdd->query("SELECT image_event.id_image_event, Chemin FROM image_event, form_fil WHERE image_event.id_image_event = form_fil.id_image_event");
     $img_user = $bdd->query("SELECT photo_user.id_image_user, chemin FROM photo_user, utilisateur WHERE photo_user.id_image_user=utilisateur.id_image_user");
 
     $test = mysqli_fetch_assoc($table_inner);
-    $row = mysqli_fetch_assoc($post);
     $cpt_row = mysqli_num_rows($table_inner);
-
-    /*if(($_SESSION['email']) !== ""){
-      $email = $_SESSION['email'];
-      $table_inner = $bdd->query("SELECT * FROM form_fil INNER JOIN utilisateur ON form_fil.id_user = utilisateur.id_user INNER JOIN photo_user ON utilisateur.id_image_user = photo_user.id_image_user INNER JOIN image_event ON form_fil.id_image_event = image_event.id_image_event ORDER BY form_fil.DateCreation DESC;");
-      $reponse = $bdd->query('SELECT id_user, Nom, Prenom FROM utilisateur WHERE Mail="'.$email.'"');
-      //$post = $bdd->query('SELECT id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport FROM form_fil'); 
-      //$img = $bdd->query('SELECT id_image_event, Chemin FROM image_event, form_fil WHERE image_event.id_image_event = form_fil.id_image_event');
-      $test = mysqli_fetch_assoc($table_inner);
-      $donnees = mysqli_fetch_assoc($reponse);
-      $cpt_row = mysqli_num_rows($table_inner);
-    
-    }
-      date_default_timezone_set('Europe/Paris');
-        // Si les variables existent et qu'elles ne sont pas vides
-        //if(isset($_POST['NomEvent']) && isset($_POST['Adresse']) && isset($_POST['Ville']) && isset($_POST['CP']) && isset($_POST['image']) && isset($_POST['Annonce']))
-        if(isset($_POST['upload']))
-        {
-            $image = $_FILES['image']['name'];
-            $path = 'img_event/'.$image;
-            // Patch XSS
-            $id_user = $donnees['id_user'];
-            $nomevent = htmlspecialchars($_POST['NomEvent']);
-            $lieu = htmlspecialchars($_POST['Adresse']);
-            $ville = htmlspecialchars($_POST['Ville']);
-            $cp = htmlspecialchars($_POST['CP']);
-            $annonce = htmlspecialchars($_POST['Annonce']);
-            $date = date("y-m-d H:i:s"); 
-            $reponse = mysqli_query($bdd, "SELECT * FROM image_event");
-            $nb_ligne = mysqli_num_rows($reponse);
-            $sql4 = $bdd->query("INSERT INTO form_fil(id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '1', '$annonce','$date','0','0','0')");
-            move_uploaded_file($_FILES['image']['tmp_name'], $path);
-                                // On redirige avec le message de succès
-            header('Location:../../principale.php?reg_err=success');
-            die();
-        }*/
 ?>
 
 <!DOCTYPE html>
@@ -753,10 +716,6 @@
             <div id="comment-menu" style="">
               <div id="comment_head">
                 <h2>Section Commentaires</h2>
-              </div>
-              <div id="champs_commentaire">
-                <textarea name="Annonce" id="Description" placeholder="Exprimez vous sur l'événement où repondez au autre..." rows="10" cols="50" required></textarea>
-                <input type="submit" value="Publier" name="upload" id="BoutonEnvoie" />
               </div>
               <div id="commentaire">
                 <div class="conversation-container" id="C1">

@@ -6,7 +6,7 @@ $supp_date = "DELETE FROM form_fil WHERE DateCreation < DATE_SUB(NOW(), INTERVAL
 mysqli_query($bdd, $supp_date);
 if(($_SESSION['email']) !== ""){
   $email = $_SESSION['email'];
-  $table_inner = $bdd->query("SELECT * FROM form_fil INNER JOIN utilisateur ON form_fil.id_user = utilisateur.id_user INNER JOIN photo_user ON utilisateur.id_image_user = photo_user.id_image_user INNER JOIN image_event ON form_fil.id_image_event = image_event.id_image_event ORDER BY form_fil.DateCreation DESC;");
+  $table_inner = $bdd->query("SELECT * FROM form_fil INNER JOIN utilisateur ON form_fil.id_user = utilisateur.id_user INNER JOIN photo_user ON utilisateur.id_image_user = photo_user.id_image_user INNER JOIN image_event ON form_fil.id_image_event = image_event.id_image_event ORDER BY form_fil.DateCreation ASC;");
   $reponse = $bdd->query('SELECT id_user, Nom, Prenom FROM utilisateur WHERE Mail="'.$email.'"');
   //$post = $bdd->query('SELECT id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport FROM form_fil'); 
   //$img = $bdd->query('SELECT id_image_event, Chemin FROM image_event, form_fil WHERE image_event.id_image_event = form_fil.id_image_event');
@@ -45,7 +45,7 @@ if(isset($_POST['upload']))
     //$reponse = mysqli_query($bdd, "SELECT * FROM image_event");
     //$nb_ligne = mysqli_num_rows($reponse);
     $sql = $bdd->query("INSERT INTO testinsertiontypeevenement (TypeEvenement) VALUES ('$checkboxes_string')");
-    $sql4 = $bdd->query("INSERT INTO form_fil(id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, TypeEvenement, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '1', '$checkboxes_string', '$annonce','$date','0','0','0')");
+    $sql4 = $bdd->query("INSERT INTO form_fil(id_user, NomEvent, Adresse, Ville, CP, id_image_event, TypeEvenement, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport, CptCommentaire) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '$checkboxes_string', '$annonce','$date','0','0','0','0')");
     move_uploaded_file($_FILES['image']['tmp_name'], $path);
                         // On redirige avec le message de succès
     header('Location:../../principale.php?reg_err=success');
@@ -105,6 +105,18 @@ if(isset($_POST['uploadfiltre']))
   echo json_encode(['rows' => $test]);*/
   if (isset($_POST['filtercommentslikedate'])){
     $checkboxValuescommentlike = $_POST['filtercommentslikedate'];
+  }
+}
+
+if(isset($_POST['Publier'])){
+  $id_forum = $_POST['id_forum'];
+  $commentaire = htmlspecialchars($_POST['AnnonceCommentaire']);
+  $sql = "INSERT INTO commentaire_post (id_forum, commentaire_avis) VALUES ('$id_forum', '$commentaire')";
+  $result = mysqli_query($bdd, $sql);
+  if ($result) {
+    echo "Commentaire publié avec succès!";
+  } else {
+    echo "Erreur lors de la publication du commentaire: " . mysqli_error($bdd);
   }
 }
 ?>
@@ -820,7 +832,14 @@ if(isset($_POST['uploadfiltre']))
               </div>
             </div>
           </div>
-<!-- ------------------------------------------------------------------------------------------------------------ Page Commenaitres -->
+<!-- ------------------------------------------------------------------------------------------------------------ Page Commentaires 
+
+document.getElementsByClassName("next")[0].addEventListener("click", function() {
+   var currentSlide = document.getElementsByClassName("mySlides")[slideIndex-1];
+   var id_forum = currentSlide.getAttribute("id");
+   document.getElementById("id_forum").value = id_forum;
+});
+-->
 
           <div class="page child1 child2" id="comments_filtre">
             <div class="scrollbar"></div>
@@ -829,30 +848,39 @@ if(isset($_POST['uploadfiltre']))
               <div id="comment_head">
                 <h2>Section Commentaires</h2>
               </div>
+              
               <div id="champs_commentaire">
-                <textarea name="Annonce" id="Description" placeholder="Exprimez vous sur l'événement où repondez au autre..." rows="10" cols="50" required></textarea>
-                <input type="submit" value="Publier" name="upload" id="BoutonEnvoie" />
+                <form action="principale.php" method="post">
+                <textarea name="AnnonceCommentaire" id="Description" placeholder="Exprimez vous sur l'événement où repondez au autre..." rows="10" cols="50" required></textarea>
+                <input type="submit" value="Publier" name="Publier" id="BoutonEnvoie" />  
+                <input type="hidden" id="id_forum" name = "id_forum" value="" />
+                </form>
               </div>
+              <?php
+              $sql_comment = $bdd->query('SELECT *
+              FROM commentaire_post
+              JOIN form_fil ON form_fil.id_forum = commentaire_post.id_forum
+              JOIN utilisateur ON utilisateur.id_user = commentaire_post.id_user
+              ORDER BY DateCreation ASC');
+              $cpt_comment = mysqli_num_rows($sql_comment);
+              for($i=0; $i<$cpt_comment;$i++){
+                    while ($test_comment = mysqli_fetch_assoc($sql_comment)){
+                    ?>
               <div id="commentaire">
                 <div class="conversation-container" id="C1">
                   <div class="message">
-                    <p>Bonjour, comment vas-tu? fsfsjfsofjsofkslfks kfjskfjsfjskfjskfjsk fsjofjsofjsofjsofjs kfjsojfsojfsojfosf fjsojfosjfosjfosfskfjsofjspojfosf sofjosjfsojfosfjs ojfosjfosjfosjf ojfosjosjfosjfos ofjsojfosjfosjf ofsjfosjfosjfo jfosjfosjfosjf sojfosjfosjfos fpsjfosjofsjofs fksofjsojsofjj osfjsojvosj</p>
+                    <p> <?php echo $test_comment['commentaire_avis']; ?></p>
                     <div class="message-info">
-                      <p class="username">ZEbiiiii</p>
-                      <p class="timestamp">10:30 AM</p>
+                      <p class="username"><?php echo $test_comment['Prenom']; ?></p>
+                      <p class="timestamp"><?php echo $test_comment['DateCreationComment']; ?></p>
                     </div>
                   </div>
                 </div>
-                <div class="conversation-container" id="C2">
-                  <div class="message">
-                    <p>Salut! Je vais bien, et toi?</p>
-                  </div>
-                  <div class="message-info">
-                    <p class="username">Jean eude tes grands morts</p>
-                    <p class="timestamp">10:31 AM</p>
-                  </div>
-                </div>
               </div> 
+              <?php 
+                    }
+                  }
+              ?>
               <div id="closeCommentsSlider">
                 <div class="logo-close button">
                   <div class="croix1"></div>

@@ -1,6 +1,6 @@
 <?php
 //Enlever toutes les erreurs PHP car requete false possible
-//error_reporting(0);
+error_reporting(0);
 $bdd = mysqli_connect("localhost", "root", "", "projet");// On inclut la connexion à la bdd
 session_start();
   if(($_SESSION['email']) !== ""){

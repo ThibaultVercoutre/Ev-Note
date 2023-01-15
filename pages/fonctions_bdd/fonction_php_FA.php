@@ -361,7 +361,7 @@ $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 $Adresse_filtre = json_encode($resultats);
 
 /*=======================================================================================================*/
-/*========================================= Adresse Post Filtre =================================================*/
+/*========================================= Adresse =================================================*/
 
 $sql = "SELECT Adresse
         FROM form_fil";
@@ -373,6 +373,37 @@ $stmt->execute();
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 $Adresse = json_encode($resultats);
+
+/*=======================================================================================================*/
+/*========================================= CptComment Post Filtre =================================================*/
+
+$sql = "SELECT CptCommentaire
+        FROM form_fil
+        WHERE TypeEvenement IN ($clave2)";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$CptComment_filtre = json_encode($resultats);
+
+
+/*=======================================================================================================*/
+/*========================================= CptComment Post =================================================*/
+
+$sql = "SELECT CptCommentaire
+        FROM form_fil";
+
+$stmt = $bdd->prepare($sql);
+
+$stmt->execute();
+
+$resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$CptComment = json_encode($resultats);
+
 
 switch ($clave1) {
     case '0':
@@ -446,6 +477,12 @@ switch ($clave1) {
         break; 
     case '23':
         echo $Adresse;
+        break;
+    case '24':
+        echo $CptComment_filtre;
+        break; 
+    case '25':
+        echo $CptComment;
         break;
 }
 

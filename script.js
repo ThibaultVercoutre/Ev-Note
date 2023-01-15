@@ -1817,7 +1817,7 @@ function ListeNactu(text){
                         + '<div class="article-info-counts">'
                           + '<div class="comments">'
                             + '<span class="material-symbols-outlined comment">comment</span>'
-                            + '<div class="comment-count">33</div>'
+                            + '<div class="comment-count"></div>'
                           + '</div>'
                           + '<div class="likes">'
                             + '<span class="material-symbols-outlined up">thumb_up</span>'
@@ -2224,6 +2224,39 @@ function createFilActu(text){
       Slieu = document.querySelectorAll(".lieu_event");
       for(var i = 0; i < data.length; i++){
         Slieu[i].textContent = data[i];
+      }
+    });
+  }
+  if(text != ''){
+    var params = new URLSearchParams();
+    params.append('clave1', '24');
+    params.append('clave2', text);
+
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Scomment = document.querySelectorAll(".comment-count");
+      for(var i = 0; i < data.length; i++){
+        Scomment[i].textContent = data[i];
+      }
+    });
+  }else{
+    var params = new URLSearchParams();
+    params.append('clave1', '25');
+    params.append('clave2', text);
+
+    fetch('/pages/fonctions_bdd/fonction_php_FA.php', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+      Scomment = document.querySelectorAll(".comment-count");
+      for(var i = 0; i < data.length; i++){
+        Scomment[i].textContent = data[i];
       }
     });
   }
