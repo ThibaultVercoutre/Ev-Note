@@ -53,7 +53,7 @@
       </div>
       </a>
       <span id="time-animation" class="material-symbols-outlined"></span>
-      <div id="time">Page de Inscription</div>
+      <div id="time">Page d'Inscription</div>
     </div>
   </header>
 
