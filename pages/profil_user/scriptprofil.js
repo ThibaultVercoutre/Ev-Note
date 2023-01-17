@@ -531,7 +531,7 @@ document.getElementById("button_mdp").addEventListener("click", function() {
   }
 });
 
-
+ 
 /*===========================================================================
 =========================BOUTON POUR AFFICHER SLIDER================*/
 

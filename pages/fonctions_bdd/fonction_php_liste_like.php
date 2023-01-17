@@ -323,5 +323,4 @@ switch($type){
     case '8': $bdd->exec($sql_suppr_lieu); break;
     default : $stmt = $bdd->prepare($ajout_lieu); $stmt->execute([$user]); echo(json_encode([$id_lieu, $type, $user, $table])); break;
 }
-
 ?>

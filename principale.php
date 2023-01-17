@@ -8,8 +8,7 @@ if(($_SESSION['email']) !== ""){
   $email = $_SESSION['email'];
   $table_inner = $bdd->query("SELECT * FROM form_fil INNER JOIN utilisateur ON form_fil.id_user = utilisateur.id_user INNER JOIN photo_user ON utilisateur.id_image_user = photo_user.id_image_user INNER JOIN image_event ON form_fil.id_image_event = image_event.id_image_event ORDER BY form_fil.DateCreation DESC;");
   $reponse = $bdd->query('SELECT id_user, Nom, Prenom FROM utilisateur WHERE Mail="'.$email.'"');
-  //$post = $bdd->query('SELECT id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport FROM form_fil'); 
-  //$img = $bdd->query('SELECT id_image_event, Chemin FROM image_event, form_fil WHERE image_event.id_image_event = form_fil.id_image_event');
+  
   $test = mysqli_fetch_assoc($table_inner);
   $donnees = mysqli_fetch_assoc($reponse);
   $cpt_row = mysqli_num_rows($table_inner);
@@ -17,7 +16,7 @@ if(($_SESSION['email']) !== ""){
 }
  date_default_timezone_set('Europe/Paris');
 // Si les variables existent et qu'elles ne sont pas vides
-//if(isset($_POST['NomEvent']) && isset($_POST['Adresse']) && isset($_POST['Ville']) && isset($_POST['CP']) && isset($_POST['image']) && isset($_POST['Annonce']))
+
 if(isset($_POST['upload']))
 {
     $image = $_FILES['image']['name'];
@@ -42,8 +41,7 @@ if(isset($_POST['upload']))
     $insert_image = $bdd->query("INSERT INTO image_event(Chemin) VALUES ('$path')");
     $count_ligne = $bdd->query("SELECT * FROM image_event");
     $nb_ligne = mysqli_num_rows($count_ligne);
-    //$reponse = mysqli_query($bdd, "SELECT * FROM image_event");
-    //$nb_ligne = mysqli_num_rows($reponse);
+    
     $sql = $bdd->query("INSERT INTO testinsertiontypeevenement (TypeEvenement) VALUES ('$checkboxes_string')");
     $sql4 = $bdd->query("INSERT INTO form_fil(id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, TypeEvenement, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '1', '$checkboxes_string', '$annonce','$date','0','0','0')");
     move_uploaded_file($_FILES['image']['tmp_name'], $path);
@@ -101,12 +99,6 @@ if(isset($_POST['uploadfiltre']))
   $checkboxValuesfiltre = json_encode($checkboxValuesfiltre);
   $checkboxValuesfiltre = json_decode($checkboxValuesfiltre, true);
   $checkboxes_filtre = implode(',', $checkboxValuesfiltre);
-  /*$table_inner = "SELECT * FROM form_fil INNER JOIN utilisateur ON (form_fil.id_user = utilisateur.id_user) INNER JOIN photo_user ON (utilisateur.id_image_user = photo_user.id_image_user) INNER JOIN image_event ON (form_fil.id_image_event = image_event.id_image_event) WHERE form_fil.TypeEvenement LIKE '%";
-  $table_inner .= implode("%' OR TypeEvenement LIKE '%", $checkboxValuesfiltre);
-  $table_inner .= "%'";
-  $table_inner = mysqli_query($bdd, $table_inner);
-  $test = mysqli_fetch_assoc($table_inner);
-  echo json_encode(['rows' => $test]);*/
   if (isset($_POST['filtercommentslikedate'])){
     $checkboxValuescommentlike = $_POST['filtercommentslikedate'];
   }
@@ -175,18 +167,6 @@ if(isset($_POST['uploadfiltre']))
         <div><?php echo $donnees['Nom']?></div>
       </div>
     </div>
-<!--<ul id="menu-demo2"> 
-          <li class="menu-deroulant">
-            <div id="menu"><h2 id="connect"><a href="#" id="user" data="<?php echo $donnees['id_user']; ?>"><?php echo $donnees['Prenom']." ".$donnees['Nom'] ; ?>
-            <div id="logo-connexion">
-          <span class="material-symbols-outlined">account_circle</span>
-          </div></a></div>
-            <ul class="sous-menu"> 
-              <li><a  href="pages/php/monprofil.php">Voir mon profil</a></li></h2>
-              <li><a  href="pages/php/user_deconnexion.php">Déconnexion</a></li></h2>
-            </ul>
-          </li>
-        </ul> -->
 
   </header>
 
@@ -383,7 +363,7 @@ if(isset($_POST['uploadfiltre']))
         <div class="parent" id="pages-map">
 
 <!-- -------------------------------------------------------------------------------------------------------------- Page Creer lieu -->
-<!--  onsubmit="return checkForm(this);" -->
+
           <div class="page child1" id="section_creer_lieu">
             <div id="closeCreerLieu">
               <div class="logo-close button">
@@ -393,7 +373,6 @@ if(isset($_POST['uploadfiltre']))
             </div>
             <form method="post" action="principale.php" enctype="multipart/form-data">
               <div id="formulaire_creer_avis">
-                <p id="message_envoie_avis"></p>
                 <div>
                   <div class="titre_champ" id="batiment_creer_lieu" name="batiment_creer_lieu"></div>
                   <input type="text" id="batiment_creer_lieu_input" name="batiment_creer_lieu_input" style="display: none;">
@@ -403,7 +382,6 @@ if(isset($_POST['uploadfiltre']))
                   <input type="file" name="imageLieu" class="champ_rep_lieu" id="imageLieu" accept="image/png, image/jpeg" required/>
                 </div>
                 <input type="submit" value="Envoyer" name="uploadLieu" id="envoyer_lieu" class="button drop"/>
-                <!-- <div id="BoutonEnvoie" >Envoyer</div> -->
                 <p id="message_envoie_validation"></p>
               </div>
             </form>
@@ -500,7 +478,6 @@ if(isset($_POST['uploadfiltre']))
                   <div id="Article">
                     <div class ="article-header">
                       <img src="" class="avator">
-                        <!--<div class="container" id="ArticleSansDesc">-->
                       <div class="article-header-info">
                         Prenom
                         <span>date de creation</span>
@@ -540,8 +517,6 @@ if(isset($_POST['uploadfiltre']))
               <!-- The dots/circles -->
               <div style="text-align:center" id="dot_points">
                 <span class="dot" onclick="currentSlide(1)"></span>
-                <!--<span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>-->
               </div>
             </main>
           </div>
@@ -900,23 +875,4 @@ if(isset($_POST['uploadfiltre']))
 
 
 </html>
-
-<!--
-  <div class="stars-notations">
-    <div class="stars-1">
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-  </div>
-  <div class="stars-2">
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-  </div>
-</div>
--->
 <script src="script.js"></script>

@@ -29,7 +29,7 @@ body{
   margin: auto;
   width: 40vw;
   height: 42%;
-  border-radius: 50px;
+  border-radius: 16px;
 }
 
 .profile-card{
@@ -111,7 +111,6 @@ body{
   height: 100%;
   flex-direction: column;
   justify-content: space-around;
-  /*gap: calc(50/var(--nb-element)*1px);*/
 }
 
 .profile-card-social a{

@@ -1,4 +1,5 @@
 <?php
+
 require_once '../php/login.php';
 $clave1 = $_POST['clave1'];
 $clave2 = $_POST['clave2'];
@@ -448,6 +449,5 @@ switch ($clave1) {
         echo $Adresse;
         break;
 }
-
 
 ?>

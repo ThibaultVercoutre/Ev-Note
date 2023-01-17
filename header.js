@@ -29,6 +29,5 @@ function startTime() {
     }
     return couleur;
   }
-  
    
   startTime();

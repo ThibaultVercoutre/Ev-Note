@@ -1,5 +1,17 @@
+/*=======================================================================================================*/
+/*================================================== COULEURS PRINCIPALES ===============================*/
+
+:root{
+  --couleur-principale-1 : #4377B2;
+  --couleur-principale-2 : #4D98BF;
+  --couleur-principale-3 : #5FAEBE;
+  --couleur-principale-4 : #81C3C3;
+  --couleur-principale-5 : #F3FbF8;
+  --couleur-principale-6 : #76BBEC;
+}
+
 html{
-  background-color: #F3FBF8;
+  background-color: var(--couleur-principale-5);
   height: 100vh;
   font-family: 'ZT Grafton', sans-serif;
   background-size: cover;
@@ -311,7 +323,7 @@ footer{
 }
 
 .categories {
-  background-color: #F3FBF8;
+  background-color: var(--couleur-principale-5);
   padding: 20px 0 20px 30px;
   margin: 0px;
   font-size: 26px;

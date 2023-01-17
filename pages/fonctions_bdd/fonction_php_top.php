@@ -1,4 +1,5 @@
 <?php
+
 require_once '../php/login.php';
 $type = $_POST['type'];
 $id_lieu = $_POST['id_lieu'];

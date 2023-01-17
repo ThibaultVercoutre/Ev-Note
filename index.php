@@ -1,5 +1,5 @@
 <?php   
-    //require_once 'pages/php/login.php'; // On inclut la connexion à la bdd
+
     $bdd = mysqli_connect("localhost", "root", "", "projet");
     session_start();
     
@@ -14,40 +14,6 @@
     $row = mysqli_fetch_assoc($post);
     $cpt_row = mysqli_num_rows($table_inner);
 
-    /*if(($_SESSION['email']) !== ""){
-      $email = $_SESSION['email'];
-      $table_inner = $bdd->query("SELECT * FROM form_fil INNER JOIN utilisateur ON form_fil.id_user = utilisateur.id_user INNER JOIN photo_user ON utilisateur.id_image_user = photo_user.id_image_user INNER JOIN image_event ON form_fil.id_image_event = image_event.id_image_event ORDER BY form_fil.DateCreation DESC;");
-      $reponse = $bdd->query('SELECT id_user, Nom, Prenom FROM utilisateur WHERE Mail="'.$email.'"');
-      //$post = $bdd->query('SELECT id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport FROM form_fil'); 
-      //$img = $bdd->query('SELECT id_image_event, Chemin FROM image_event, form_fil WHERE image_event.id_image_event = form_fil.id_image_event');
-      $test = mysqli_fetch_assoc($table_inner);
-      $donnees = mysqli_fetch_assoc($reponse);
-      $cpt_row = mysqli_num_rows($table_inner);
-    
-    }
-      date_default_timezone_set('Europe/Paris');
-        // Si les variables existent et qu'elles ne sont pas vides
-        //if(isset($_POST['NomEvent']) && isset($_POST['Adresse']) && isset($_POST['Ville']) && isset($_POST['CP']) && isset($_POST['image']) && isset($_POST['Annonce']))
-        if(isset($_POST['upload']))
-        {
-            $image = $_FILES['image']['name'];
-            $path = 'img_event/'.$image;
-            // Patch XSS
-            $id_user = $donnees['id_user'];
-            $nomevent = htmlspecialchars($_POST['NomEvent']);
-            $lieu = htmlspecialchars($_POST['Adresse']);
-            $ville = htmlspecialchars($_POST['Ville']);
-            $cp = htmlspecialchars($_POST['CP']);
-            $annonce = htmlspecialchars($_POST['Annonce']);
-            $date = date("y-m-d H:i:s"); 
-            $reponse = mysqli_query($bdd, "SELECT * FROM image_event");
-            $nb_ligne = mysqli_num_rows($reponse);
-            $sql4 = $bdd->query("INSERT INTO form_fil(id_user, NomEvent, Adresse, Ville, CP, id_image_event, id_commentaire_fil, Annonce, DateCreation, CptPouceBleu, CptPouceRouge, CptReport) VALUES ('$id_user','$nomevent','$lieu','$ville','$cp','$nb_ligne', '1', '$annonce','$date','0','0','0')");
-            move_uploaded_file($_FILES['image']['tmp_name'], $path);
-                                // On redirige avec le message de succès
-            header('Location:../../principale.php?reg_err=success');
-            die();
-        }*/
 ?>
 
 <!DOCTYPE html>
@@ -304,7 +270,7 @@
         <div class="parent" id="pages-map">
 
 <!-- -------------------------------------------------------------------------------------------------------------- Page Creer lieu -->
-<!--  onsubmit="return checkForm(this);" -->
+
           <div class="page child1" id="section_creer_lieu">
             <div id="closeCreerLieu">
               <div class="logo-close button">
@@ -314,7 +280,6 @@
             </div>
             <form method="post" action="principale.php" enctype="multipart/form-data">
               <div id="formulaire_creer_avis">
-                <p id="message_envoie_avis"></p>
                 <div>
                   <div class="titre_champ" id="batiment_creer_lieu" name="batiment_creer_lieu"></div>
                   <input type="text" id="batiment_creer_lieu_input" name="batiment_creer_lieu_input" style="display: none;">
@@ -324,7 +289,6 @@
                   <input type="file" name="imageLieu" class="champ_rep_lieu" id="imageLieu" accept="image/png, image/jpeg" required/>
                 </div>
                 <input type="submit" value="Envoyer" name="uploadLieu" id="envoyer_lieu" class="button drop"/>
-                <!-- <div id="BoutonEnvoie" >Envoyer</div> -->
                 <p id="message_envoie_validation"></p>
               </div>
             </form>
@@ -421,7 +385,6 @@
                   <div id="Article">
                     <div class ="article-header">
                       <img src="" class="avator">
-                        <!--<div class="container" id="ArticleSansDesc">-->
                       <div class="article-header-info">
                         Prenom
                         <span>date de creation</span>
@@ -461,8 +424,6 @@
               <!-- The dots/circles -->
               <div style="text-align:center" id="dot_points">
                 <span class="dot" onclick="currentSlide(1)"></span>
-                <!--<span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>-->
               </div>
             </main>
           </div>
@@ -806,7 +767,7 @@
     <div id="foot-gauche">
       <a class="lien-footer" href="./pages/CGUs/conditions.html">Conditions d'utilisation</a>
       <a class="lien-footer"
-        href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nouscontacter</a>
+        href="mailto::thibault.vercoutre@etu.eilco.univ-littoral.fr?subject=Contact-Ev'Note&body=Bonjour,">Nous contacter</a>
     </div>
     <h2>Site réalisé dans le cadre d'un projet<br />École d'Ingénieurs du Littoral Côte d'Opale</h2>
     <a class="lien-footer" href="pages/devs/devs.html"><p class="button" id="nos-devs">Nos développeurs</p></a>
@@ -821,23 +782,4 @@
 
 
 </html>
-
-<!--
-  <div class="stars-notations">
-    <div class="stars-1">
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-  </div>
-  <div class="stars-2">
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-    <span class="material-symbols-outlined">star</span>
-  </div>
-</div>
--->
 <script src="script.js"></script>

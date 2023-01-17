@@ -1,5 +1,4 @@
 let ElementsNav = document.querySelectorAll("#menu nav p");
-//let ElementsNavUnderline = document.querySelectorAll("#menu nav div");
 let TitresCGU = document.querySelectorAll(".categories_pos");
 var PositionTitreCGU = [];
 
@@ -18,16 +17,21 @@ function resetMenu(elts){
     }
 }
 
+function DoColors(e){
+  resetMenu(e.parentElement);
+  e.setAttribute("value", "1");
+  e.style.backgroundColor = "#4D98BF";
+  e.nextElementSibling.style.transform = "scaleX(0)";
+}
+
 for(var i = 0; i < ElementsNav.length; i++){
     ElementsNav[i].onclick = function(e){
         window.scrollTo({
             top: PositionTitreCGU[parseInt(e.target.className-1)] - 52,
             behavior: 'smooth'
           })
-        resetMenu(e.target.parentElement);
-        e.target.setAttribute("value", "1");
-        e.target.style.backgroundColor = "#4D98BF";
-        e.target.nextElementSibling.style.transform = "scaleX(0)";
+        DoColors(e.target);
+        
     };
     ElementsNav[i].addEventListener("mouseenter", (e) => {
         if(e.target.getAttribute("value") != "1"){
@@ -39,6 +43,15 @@ for(var i = 0; i < ElementsNav.length; i++){
     });
 }
 
+window.onscroll = function() {
+  for(var i = 1; i < PositionTitreCGU.length; i++) {
+    const scrollPosition = window.pageYOffset;
+    if(scrollPosition >= PositionTitreCGU[i-1] - 60 && scrollPosition < PositionTitreCGU[i] - 60){
+      DoColors(ElementsNav[i-1]);
+    }
+
+  }
+};
 
 /*=======================================================================================================*/
 /*========================================= Header ======================================================*/

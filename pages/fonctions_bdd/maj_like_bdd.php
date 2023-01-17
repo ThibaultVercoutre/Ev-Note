@@ -40,8 +40,6 @@ $stmt->execute();
 $resultats = $stmt->fetchAll(PDO::FETCH_COLUMN, 0)[0];
 $check = json_encode($resultats);
 
-//echo($check);
-
 if($check == '"0"'){
     
     $sql = "SELECT max($id)+1 FROM `$table`";
@@ -61,7 +59,6 @@ if($check == '"0"'){
     $message = "passé par else";
 }
 
-//echo(json_encode($nb_avis_max));
 echo(json_encode([$check, $table, $id, $message]));
 
 ?>

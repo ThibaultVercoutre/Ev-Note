@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once '../php/login.php';
 
@@ -25,4 +26,5 @@ if((isset($_POST['email'])) && isset($_POST['password']))
     }else header('Location:../connexion/user_connexion.php?login_err=email');
   }else header('Location:../connexion/user_connexion.php?login_err=already');
 }else header('Location:../connexion/user_connexion.php');
+
 ?>

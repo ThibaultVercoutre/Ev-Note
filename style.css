@@ -80,33 +80,6 @@ div#page-chargement{
     transform: translateY(-100%);
   }
 }
-/*
-#font-progress-chargement{
-  margin: 10px;
-  height: 30px;
-  border-radius: 16px;
-  background-color: grey;
-  width: 50vw;
-}
-
-#progress-chargement{
-  height: 100%;
-  border-radius: 16px;
-  width: 50%;
-  background-color: var(--couleur-principale-2);
-  animation: AppearInAnimationChargement ease 4s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-
-@keyframes AppearInAnimationChargement {
-  0% {
-    width: 0%;
-  }
-  100%{
-    width: 100%;
-  }
-}*/
 
 #logo-site-chargement {
   position: absolute;
@@ -188,10 +161,6 @@ nav#nav-fin #scroll{
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
-/*
-nav#nav-fin #scroll .carre{
-  transition: 0.3s;
-}*/
 
 @keyframes upLaunch {
   0% {
@@ -300,22 +269,6 @@ input:checked + .slider:before{
   transition: 0.3s;
   margin: 0px 0 0 0;
 }
-
-/*.leaflet-control-zoom-out:hover, .leaflet-control-zoom-in:hover*/
-/*
-.button-villes::before{
-  content:'';
-  position: absolute;
-  border-radius: 16px;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-3));
-  transform: scale(0);
-  transition: 0.3s;
-}*/
 
 .button-villes p {
   flex: 0;
@@ -436,7 +389,6 @@ div:has(> .command-villes){
 }
 
 #compte:hover, #loupe:hover{
-  /*box-shadow: -1px 2px 2px grey;*/
   background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-4));
 }
 
@@ -876,27 +828,6 @@ ion-icon {
 
 /* Recherche */
 
-/*
-
-#titre div input{
-  background: linear-gradient(var(--couleur-principale-3), var(--couleur-principale-3));
-	color: black;
-	transition: 0.3s;
-	border-radius: .9rem 0% 0% .9rem;
-  padding-left: 20px;
-  padding-right: 20px;
-	box-shadow: -1px 2px 2px grey;
-  border: none;
-  width: 100%;
-  height: 30px;
-  transform-origin: right;
-  animation: AppearInAnimation ease 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-
-*/
-
 #search::placeholder {
   color: rgb(74, 74, 74);
 }
@@ -1138,7 +1069,6 @@ ion-icon {
   font-family: 'Alkalami', 'Alkalami', Arial, sans-serif;
   margin: 4px 0 4px 0;
   text-align: center;
-  /*animation: scrollingPhrase 30s linear infinite;*/
   width: 100%;
   font-size: 24px;
 }
@@ -1861,50 +1791,6 @@ nav .drop{
   background-color: red;
 }
 
-/*
-.stars-notations{
-  display: flex;
-  position: relative;
-  text-align: center;
-  align-items: center;
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.stars-1, .stars-2{
-  margin-left: 50px;
-  position: absolute;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  width: 150px;
-  height: 50px;
-}
-
-.stars-1 .material-symbols-outlined{
-  transform: scale(1.5);
-  color: grey;
-  width: 100%;
-}
-
-.stars-2{
-  background-color: blue;
-  width: 100%;
-  overflow: hidden;
-}
-
-.stars-1{
-  background-color: red;
-}
-
-.stars-2 .material-symbols-outlined{
-  transform: scale(1.5);
-  color: rgb(236, 13, 217);
-  width: 100%;
-}
-*/
-
 /*=======================================================================================================*/
 /*================================================== SECTION MAP ========================================*/
 
@@ -2198,19 +2084,6 @@ main {
   border-top: 1px solid #e6ecf0;
 }
 
-
-
-/*
-#section-fil-actu #Article {
-  max-width:1000px;
-  height: 100%;
-  position: relative;
-  background: #5FAEBE;
-  margin: auto;
-  border-radius:3px;
-  padding: 238px;
-}*/
-
 #section-fil-actu .TitreArticle{
   font-size: 20px;
   font-style: Arial; 
@@ -2376,15 +2249,6 @@ main {
   font-size: 16px; /* Taille de police */
   cursor: pointer; /* Change le curseur en main lorsque la souris passe sur le bouton */
   border-radius: 6px; /* Transforme le bouton en rond en utilisant une bordure arrondie */
-  /*height: 36px;
-  width: 36px;
-  text-align: center;
-	padding: 8px 8px;
-	transition: 0.3s;
-	margin-right: 2px;
-	margin-left: 2px;
-  box-shadow: -1px 2px 2px grey;
-  float: right;*/
   transform: translate(0,0);
 }
   
@@ -2494,9 +2358,6 @@ footer{
 .lien-footer:hover {
   color:rgb(139, 0, 0);
 }
-/*
-.lien-footer:visited {
-}*/
 
 #nos-devs{
   margin-right: 15%;
