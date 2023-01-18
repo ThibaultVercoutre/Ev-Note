@@ -1418,8 +1418,8 @@ Smap.addEventListener('click', boutongps, false);
 
 /* Si on clique sur la map */
 mymap.on('click', function(e) {
-  console.log(e);
-  if(e.originalEvent.path.length < 12){
+  let map = document.getElementById("section-map");
+  if(e.originalEvent.target == map){
     Bmap.style.display = 'block';
     Bactu.style.display = 'block';
     Snotation.style.transition = "0s";
