@@ -45,13 +45,15 @@
 <body>
   <header>
     <div id="titre">
+      <a id="home" href="javascript:history.go(-2)" style="text-decoration: none;">
       <div id="effecten">
         <h1 data-text="Ev'Note" id="evnote">Ev'Note</h1>
         <div id = "gradient" class="gradient"></div>
         <div class="spotlight"></div>
       </div>
+      </a>
       <span id="time-animation" class="material-symbols-outlined"></span>
-      <div id="time">Page de Inscription</div>
+      <div id="time">Page d'Inscription</div>
     </div>
   </header>
 
@@ -128,8 +130,6 @@
       <label for="password"><b>Mot de passe</b></label>
       <input type="password" placeholder="Entrer votre mot de passe" name="Mdp" id="Mdp" required>
 
-      <!--demander numero etudiant seulement si compte de type etudiant -->
-    
       <hr>
       <button type="submit" name="upload" class="inscription">S'inscrire</button>
   </form>

@@ -1,4 +1,5 @@
 <?php
+
 require_once '../php/login.php';
 $user = $_POST['user'];
 $table = $_POST['table'];

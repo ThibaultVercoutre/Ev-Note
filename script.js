@@ -16,25 +16,12 @@ L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
   minZoom: 13,
   maxZoom: 18
 }).addTo(mymap);
-//var command = L.control({position: 'topright'});
 
 };
 
 // Temps et Search
 
 let Isearch = document.getElementById("search");
-
-/*
-
-Isearch.addEventListener("mouseenter", function(event) {
-  document.getElementById("time").style.fontSize = "0px";
-});
-
-Isearch.addEventListener("mouseleave", function(event) {
-  document.getElementById("time").style.fontSize = "26px";
-});
-
-*/
 
 /*=======================================================================================================*/
 /*============================= Ajout section filtre map (bars, lycées ...) =============================*/
@@ -88,7 +75,7 @@ if(document.getElementById("boutton_compte") != null){
 /*===================================== Ajout section choix villes ======================================*/
 
 function ajoutChoixVille(){
-  var villes = ["Calais", "Dunkerque", "Saint-Omer", "Blendecques"];
+  var villes = ["Calais", "Dunkerque", "Saint-Omer", "Boulogne"];
 
   var stamen = new L.StamenTileLayer("toner-lite");
 
@@ -119,15 +106,6 @@ var couleur_rubrique = {
 "Detente" : "#25AC22",
 "Etudes" : "#CAC427"
 };
-/*
-var barIcon = new L.Icon({
-iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
-shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-iconSize: [25, 41],
-iconAnchor: [12, 41],
-popupAnchor: [1, -34],
-shadowSize: [41, 41]
-});*/
 
 var detenteIcon = new L.Icon({
 iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -156,15 +134,6 @@ iconAnchor: [12, 41],
 popupAnchor: [1, -34],
 shadowSize: [41, 41]
 });
-/*
-var schoolIcon = new L.Icon({
-iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
-shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-iconSize: [25, 41],
-iconAnchor: [12, 41],
-popupAnchor: [1, -34],
-shadowSize: [41, 41]
-});*/
 
 /*=======================================================================================================*/
 /*============================= Liste bar / restaurant / parcs ... ======================================*/
@@ -495,6 +464,7 @@ function checkTime(i) {
   if (i < 10) {i = "0" + i};
   return i;
 }
+
 function convertJ(jour) {
   var lejour;
   switch (jour) {
@@ -508,6 +478,7 @@ function convertJ(jour) {
   }
   return lejour;
 }
+
 function convertM(mois) {
   var lemois;
   switch (mois) {
@@ -602,24 +573,12 @@ function add_Marker_lieu(e){
     mymap.removeLayer(marqueur);
   }
   switch (e.id) {
-    case 'Bars': //trouverAdresseBar();
-                var type_filtre = 'Bars';
-                break;
-    case 'Parcs': //trouverAdresseParcs();
-                var type_filtre = 'Parcs';
-                break;
-    case 'Culture': //trouverAdresseCulture();
-                var type_filtre = 'Culture';
-                break;
-    case 'FastFood': //trouverAdresseFastFood();
-                var type_filtre = 'FastFood';
-                break;
-    case 'Lycees': //trouverAdresseLycee();
-                var type_filtre = 'Lycees';
-                break;
-    case 'Universites': //trouverAdresseUniversite();
-                var type_filtre = 'Universites';
-                break;
+    case 'Bars': var type_filtre = 'Bars'; break;
+    case 'Parcs': var type_filtre = 'Parcs'; break;
+    case 'Culture': var type_filtre = 'Culture'; break;
+    case 'FastFood': var type_filtre = 'FastFood'; break;
+    case 'Lycees': var type_filtre = 'Lycees'; break;
+    case 'Universites': var type_filtre = 'Universites'; break;
   }
 
   setTimeout(() => {
@@ -632,7 +591,7 @@ function add_Marker_lieu(e){
     }else{
       var view = 18 - (dist_max_V) / taille_max_map(14) * (18 - 13);
     }
-    mymap.setView(center, 14); //
+    mymap.setView(center, 14);
   }, "50")
 }
 
@@ -795,7 +754,7 @@ progressBarClick.addEventListener("mouseleave", () => {
   progressBarClick.style.width = "8px";
 })
 
-/* */
+/* Si on appuis sur le boutton scroll */
 Bscroll.onclick = function() {
   if (document.documentElement.scrollTop == 0) {
     window.scrollTo({
@@ -813,10 +772,6 @@ Bscroll.onclick = function() {
 /*=======================================================================================================*/
 /*============================================ GPS ======================================================*/
 
-Bitineraire.onclick = function() {
-  
-}
-
 /*=======================================================================================================*/
 /*===================================== Chargement des notes des avis ===================================*/
 
@@ -827,27 +782,6 @@ var noteTotale = 0;
 
 /*=======================================================================================================*/
 /*========================================= Passage de pages en page ===================================*/
-
-/* reserStyle non utilisé */
-function resetStyle(S, S2) {
-/*
-var rectBmap = Bmap.getBoundingClientRect();
-var rectBactu = Bactu.getBoundingClientRect();
-var rectSmap = Smap.getBoundingClientRect();
-var rectSactu = Sactu.getBoundingClientRect();
-
-Smap.style.top = (rectBactu.top - 45 - (rectSmap.bottom - rectSmap.top) / 2) + "px";
-Smap.style.left = (rectBactu.left + 14 - (rectSmap.right - rectSmap.left) / 2) + "px";
-
-Sactu.style.top = (rectBmap.top - 45 - (rectSactu.bottom - rectSactu.top) / 2) + "px";
-Sactu.style.left = (rectBmap.left + 14 - (rectSactu.right - rectSactu.left) / 2) + "px";
-
-Sactu.style.transform = "scale(0)";
-Smap.style.transform = "scale(0)";
-
-Sactu.style.opacity = 0;
-Smap.style.opacity = 0;*/
-};
 
 /* Afficher la section S et cacher la section S2 */
 function affiche(S, S2) {
@@ -895,7 +829,6 @@ function afficheBarre(S) {
 
 
 affiche(Smap, Sactu);
-//ScreerArt.style.transform = "scaleY(0)";
 
 /* Si on clique sur le bouton map */
 Bmap.onclick = function() {
@@ -1089,13 +1022,6 @@ BcloseCreerArticle.onclick = function() {
   Bactu.style.display = "block";
 }
 
-/*
-Bnote.onclick = function() {
-resetStyle(Snotation, Smap);
-affiche(Snotation, Smap);
-};*/
-
-
 /*=======================================================================================================*/
 /*========================================= Recherche d'une adresse =====================================*/
 
@@ -1140,16 +1066,6 @@ function addMarker(pos, nom, code) {
     texte = nom;
     Tadresse.textContent = nom;
   }
-
-  //marqueur.addTo(mymap);
-  /*L.marker(pos).addTo(mymap).bindPopup('Your point is at <\br>' + result.address.Match_addr).openPopup();*/
-/*
-  if(nom.search(" " + code + ",") != -1){ 
-    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
-  }else{
-    //marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
-    marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><div class="button anim-button" id="adresse-note">' + texte + '</div></br>').openPopup();
-  }*/
   
   if(texte == "Destination impossible"){  
     marqueur.addTo(mymap).bindPopup('<h1>Adresse du lieu : </h1><p>' + texte + '</p>').openPopup();
@@ -1502,7 +1418,8 @@ Smap.addEventListener('click', boutongps, false);
 
 /* Si on clique sur la map */
 mymap.on('click', function(e) {
-  if(e.originalEvent.path.length < 12){
+  let map = document.getElementById("section-map");
+  if(e.originalEvent.target == map){
     Bmap.style.display = 'block';
     Bactu.style.display = 'block';
     Snotation.style.transition = "0s";
@@ -1564,7 +1481,6 @@ function searchAdresse() {
 
 
 Bloupe.addEventListener('click', searchAdresse, false);
-
 Bsearch.addEventListener('change', searchAdresse, false);
 
 /*=======================================================================================================*/
@@ -2228,8 +2144,6 @@ function createFilActu(text){
     });
   }
 }
-
-//createFilActu('');
 
 function addFiltres(){
   var inputs = document.querySelectorAll("input[name='filter']:checked");

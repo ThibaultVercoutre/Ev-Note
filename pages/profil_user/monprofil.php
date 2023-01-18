@@ -1,6 +1,5 @@
 <?php
 //Enlever toutes les erreurs PHP car requete false possible
-//error_reporting(0);
 $bdd = mysqli_connect("localhost", "root", "", "projet");// On inclut la connexion à la bdd
 session_start();
   if(($_SESSION['email']) !== ""){
@@ -130,11 +129,13 @@ session_start();
 <body>
   <header>
     <div id="titre">
+      <a id="home" href="javascript:history.go(-1)" style="text-decoration: none;">
       <div id="effecten">
         <h1 data-text="Ev'Note" id="evnote">Ev'Note</h1>
         <div id = "gradient" class="gradient"></div>
         <div class="spotlight"></div>
       </div>
+      </a>
       <span id="time-animation" class=""></span>
       <div id="time">Mon profil</div>
     </div>
@@ -164,7 +165,7 @@ session_start();
       <div id="section-avis-report" class="section"></div>
     </div>
 
-    <div id="sectionAdmin1">
+    <div id="sectionAdmin">
       <p>En tant que développeur, vous pouvez supprimer les avis signalés</p>
       <div class="bouton_avis_signalés">Voir tout les avis signalés</div>
       <div id="section-report" class="section2"></div>
@@ -244,7 +245,6 @@ session_start();
                 } else {
                   $test = mysqli_fetch_assoc($sql);
                 }
-                //mysqli_data_seek($sql, 0);
                   for($i=0; $i<$cpt_row;$i++){
                     while ($test = mysqli_fetch_assoc($sql)){
                     ?>
@@ -252,7 +252,6 @@ session_start();
                   <div id="Article">
                     <div class ="article-header">
                       <img src="<?php echo $test['chemin'];?>" class="avator">
-                        <!--<div class="container" id="ArticleSansDesc">-->
                       <div class="article-header-info">
                         <?php echo $test['Prenom']." ".$test['Nom']?>
                     <span> <?php echo $test['DateCreation'] ; ?> </span>
@@ -308,7 +307,6 @@ session_start();
       <hr/>
       <p>En tant que développeur, vous pouvez supprimer les posts signalés</p>
       <main>
-        <!--A MODIFIER LE CSS-->
         <?php
                   for($i=0; $i<$cpt_signale;$i++){
                     while ($test_admin = mysqli_fetch_assoc($sql_admin)){
@@ -316,7 +314,6 @@ session_start();
                   <div id="Articlesignale">
                     <div class ="article-header">
                       <img src="<?php echo $test_admin['chemin'];?>" class="avatorsignale">
-                        <!--<div class="container" id="ArticleSansDesc">-->
                       <div class="article-header-infosignale">
                         <?php echo $test_admin['Prenom']." ".$test_admin['Nom'];?>
                     <span> <?php echo $test_admin['DateCreation'] ; ?> </span>
@@ -350,8 +347,7 @@ session_start();
   <input type="password" id="new_password" name="new_password"><br>
   <label for="confirm_password">Confirmez le nouveau mot de passe :</label><br>
   <input type="password" id="confirm_password" name="confirm_password"><br>
-  <button type="submit" class="change_mdp">Changer de mot de passe</button> 
-  <!--<input type="submit" value="Changer de mot de passe">-->
+  <button type="submit" class="change_mdp">Changer de mot de passe</button>
 </form> 
 </div>
 <form id="suppr" action="monprofil.php" method="post">

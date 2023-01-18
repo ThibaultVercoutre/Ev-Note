@@ -11,5 +11,4 @@
     {
         die('Erreur : '.$e->getMessage());
     }
-
 ?>

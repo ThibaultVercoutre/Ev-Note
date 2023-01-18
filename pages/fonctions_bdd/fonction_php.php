@@ -1,4 +1,5 @@
 <?php
+
 require_once '../php/login.php';
 $clave1 = $_POST['clave1'];
 $clave2 = $_POST['clave2'];
@@ -305,4 +306,5 @@ switch ($clave1) {
     case '14': echo $nb_avis_user; break;
     case '15': echo $dev; break;
 }
+
 ?>

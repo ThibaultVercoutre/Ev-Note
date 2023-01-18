@@ -341,6 +341,8 @@ function ajouterLieu(lieu){
     }
   }  
 
+  console.log(adresse, lieu, photo);
+
   var params = new URLSearchParams();
   params.append('user', adresse[0]);
   params.append('table', adresse[1]);
@@ -351,6 +353,10 @@ function ajouterLieu(lieu){
     method: 'POST',
     body: params
   })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  });
 }
 
 const input = document.querySelector('#champ_verif');
@@ -525,7 +531,7 @@ document.getElementById("button_mdp").addEventListener("click", function() {
   }
 });
 
-
+ 
 /*===========================================================================
 =========================BOUTON POUR AFFICHER SLIDER================*/
 

@@ -26,11 +26,7 @@ html{
   
   #titre a {
     text-decoration: none;
-    font-weight: bold;
-    text-transform: uppercase;
-    position: relative;
-    right: 60px;
-    top: -20px;
+    height: 100%;
   }
   
   #titre a:hover{
@@ -376,6 +372,10 @@ html{
   align-items: center;
 }
 
+#home {
+  text-decoration-color: rgba(0, 0, 0, 0);
+}
+
 #effecten {
   overflow: hidden;
   filter: contrast(150%) brightness(1000%);
@@ -387,9 +387,11 @@ html{
   display: flex;
   align-items: center;
   padding: 0 10px 0 20px;
+  cursor: pointer;
 }
 
 #evnote {
+  text-decoration: none;
   color: #fff;
   margin: 0;
   font-size: 32px;
@@ -520,29 +522,6 @@ hr{
 .bouton_post:hover{
     background-color: #456fa0;
   }
-  /*
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 20px;
-    height : 50px;
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px;
-    flex: 1 1 0%;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(69, 111, 160);
-    border-image: initial;
-    padding: 15px;
-    margin: 10px;
-    border-radius: 4px;
-    transition: all 0.3s ease 0s;
-}
-*/
 
 /*==================================SLIDER=======================================*/
 
@@ -685,19 +664,6 @@ main {
   border-bottom: 1px solid #e6ecf0;
   border-top: 1px solid #e6ecf0;
 }
-
-
-
-/*
-#  #Article {
-  max-width:1000px;
-  height: 100%;
-  position: relative;
-  background: #5FAEBE;
-  margin: auto;
-  border-radius:3px;
-  padding: 238px;
-}*/
 
 .slideshow-container .TitreArticle{
   font-size: 20px;
